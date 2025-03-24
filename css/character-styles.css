@@ -48,6 +48,25 @@
 .character-image {
     height: 250px;
     overflow: hidden;
+    position: relative; /* Add this */
+}
+
+.character-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center; /* Changed from left to center */
+    position: absolute; /* Add this */
+    top: 0;
+    left: 0;
+}
+
+/* For the individual character profile images */
+.character-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
 }
 
 .placeholder-character {

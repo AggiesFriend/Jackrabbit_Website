@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // Scroll reveal animation
+document.addEventListener('DOMContentLoaded', () => {
     const revealElements = document.querySelectorAll('.reveal');
     
     function checkReveal() {
@@ -65,23 +66,36 @@ document.addEventListener('DOMContentLoaded', () => {
         
         revealElements.forEach(element => {
             const elementTop = element.getBoundingClientRect().top;
+            const elementBottom = element.getBoundingClientRect().bottom;
             
-            if (elementTop < triggerBottom) {
+            if (elementTop < triggerBottom && elementBottom > 0) {
+                element.classList.add('active');
+            } else {
+                element.classList.remove('active');
+            }
+        });
+    }
+    
+    // Initial reveal of elements already in view
+    function initialReveal() {
+        revealElements.forEach(element => {
+            if (element.getBoundingClientRect().top < window.innerHeight * 0.8) {
                 element.classList.add('active');
             }
         });
     }
     
-    window.addEventListener('scroll', checkReveal);
+    // Call initial reveal when DOM is fully loaded
+    initialReveal();
     
-    // Initial check for elements in view on page load
-    checkReveal();
+    // Add scroll event listener
+    window.addEventListener('scroll', checkReveal);
     
     // Add reveal class to appropriate elements
     document.querySelectorAll('.book-card, .character-card, .book-section, .character-section').forEach(element => {
         element.classList.add('reveal');
     });
-    
+});    
     // Dark mode toggle functionality (placeholder)
     const darkModeToggle = document.querySelector('.dark-mode-toggle');
     if (darkModeToggle) {

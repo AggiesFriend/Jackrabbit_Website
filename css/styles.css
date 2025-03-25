@@ -188,11 +188,11 @@ section {
     overflow: hidden;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
+    transform-origin: center center;
 }
 
 .book-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .book-cover {

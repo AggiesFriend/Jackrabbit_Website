@@ -187,12 +187,14 @@ section {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: var(--box-shadow);
-    transition: var(--transition);
+    transition: var(--transition); /* This is already defined as all 0.3s ease */
     transform-origin: center center;
+    transform: scale(1); /* Add this explicit starting scale */
 }
 
 .book-card:hover {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05); /* Add this to scale up */
 }
 
 .book-cover {

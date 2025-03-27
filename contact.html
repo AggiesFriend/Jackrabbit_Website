@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact the Author - The Jackrabbit Series</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/character-styles.css">
+    <link rel="stylesheet" href="css/book-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Add EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        .contact-section {
+            background-color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .contact-info h2 {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-details {
+            margin-top: 2rem;
+        }
+        
+        .contact-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .contact-form {
+            background-color: #f5f5f5;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .contact-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-family: var(--font-heading);
+        }
+        
+        .contact-form input, 
+        .contact-form textarea, 
+        .contact-form select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border 0.3s;
+            font-family: var(--font-body);
+        }
+        
+        .contact-form input:focus, 
+        .contact-form textarea:focus, 
+        .contact-form select:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+        
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .contact-form button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+            font-family: var(--font-heading);
+        }
+        
+        .contact-form button:hover {
+            background-color: #2980b9;
+        }
+        
+        .success-message, .error-message {
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+            display: none;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .sending {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        .loader {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .contact-form {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html">The Jackrabbit</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="books.html">Books</a></li>
+                <li><a href="characters.html">Characters</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Contact the Author</h1>
+                <p>Get in touch with questions, comments, or feedback about The Jackrabbit Series</p>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2>Get in Touch</h2>
+                    <p>Thank you for your interest in The Jackrabbit Series. Whether you have questions about the books, are interested in collaboration opportunities, or simply want to share your thoughts about the series, I'd love to hear from you.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <h3>About Your Message</h3>
+                            <p>Feel free to ask questions about the series, characters, or upcoming releases. I'm also open to feedback and suggestions!</p>
+                        </div>
+                        <div class="contact-item">
+                            <h3>Response Time</h3>
+                            <p>I aim to respond to all messages within 3-5 business days.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        
+                        <button type="submit" id="submit-btn">
+                            <span id="btn-text">Send Message</span>
+                            <div class="loader" id="loader"></div>
+                        </button>
+                    </form>
+                    
+                    <div class="success-message" id="success-message">
+                        Your message has been sent successfully! I'll get back to you soon.
+                    </div>
+                    
+                    <div class="error-message" id="error-message">
+                        There was an error sending your message. Please try again.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>The Jackrabbit</h3>
+                    <p>A science fiction series</p>
+                </div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="books.html">Books</a></li>
+                        <li><a href="characters.html">Characters</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 The Jackrabbit Series. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+        // Wait until the document is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contact-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btn-text');
+            const loader = document.getElementById('loader');
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+            
+            // Initialize EmailJS with public key
+            emailjs.init("KfNncejUqtcEph6Ja");
+            
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                // Show loader and disable button
+                btnText.style.display = 'none';
+                loader.style.display = 'block';
+                submitBtn.classList.add('sending');
+                
+                // Hide any previous messages
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
+                
+                // Get form data with hardcoded subject and current time
+                const now = new Date();
+                const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    subject: "Jackrabbit website contact",
+                    message: document.getElementById('message').value,
+                    time: timeString
+                };
+                
+                // Using your actual service and template IDs
+                emailjs.send("service_2jtsqw4", "template_794za7n", formData)
+                    .then(function(response) {
+                        console.log('SUCCESS!', response.status, response.text);
+                        
+                        // Reset form
+                        form.reset();
+                        
+                        // Show success message
+                        successMessage.style.display = 'block';
+                        
+                        // Reset button
+                        btnText.style.display = 'block';
+                        loader.style.display = 'none';
+                        submitBtn.classList.remove('sending');
+                    })
+                    .catch(function(error) {
+                        console.log('FAILED...', error);
+                        
+                        // Show error message
+                        errorMessage.style.display = 'block';
+                        
+                        // Reset button
+                        btnText.style.display = 'block';
+                        loader.style.display = 'none';
+                        submitBtn.classList.remove('sending');
+                    });
+            });
+        });
+    </script>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

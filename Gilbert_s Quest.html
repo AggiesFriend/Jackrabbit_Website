@@ -209,9 +209,9 @@ You know the risk.
 
 You know the stakes.
 
-[[Speak out - stand up for yourself!|Defiance]]
-[[Do your best to fit in with the other new arrivals|Balanced]]
-[[Show your subservience by cowering.|Subservience]]
+&lt;ul&gt;&lt;li&gt;[[Speak out - stand up for yourself!|Defiance]]&lt;/li&gt;
+&lt;li&gt;[[Do your best to fit in with the other new arrivals|Balanced]]&lt;/li&gt;
+&lt;li&gt;[[Show your subservience by cowering.|Subservience]]&lt;/li&gt;&lt;/ul&gt;
 </tw-passagedata><tw-passagedata pid="5" name="Defiance" tags="" position="450,150" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
 You choose to stand up for yourself. Nobody should be treated this inhumanely! You stride over to the nearest guard and square up to them.
 Before you even have a chance to speak, you feel a sharp jab in your back, and sense your legs giving way just before you black out.
@@ -367,17 +367,15 @@ Following your long shift, you are mentally and physically drained, but your mis
 
 You decide that the next logical step, under cover of curfew, is to search for equipment that will be helpful in your eventual escape.
 
-&lt;&lt;if $searchedAccommodation == false&gt;&gt;&lt;&lt;= &quot;[[Search the accommodation area|Accommodation search]]&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $searchedMinehead == false&gt;&gt;&lt;&lt;= &quot;[[Search the minehead area|Minehead search]]&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $searchedWorkersArea == false&gt;&gt;&lt;&lt;= &quot;[[Search the workers&#39; areas thoroughly|Workers search]]&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
-[[Continue to plan your sabotage|Sabotage planning]]</tw-passagedata><tw-passagedata pid="22" name="Accommodation search" tags="" position="200,1375" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
+&lt;ul&gt;&lt;li&gt;&lt;&lt;if $searchedAccommodation == false&gt;&gt;&lt;&lt;= &quot;[[Search the accommodation area|Accommodation search]]&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;if $searchedMinehead == false&gt;&gt;&lt;&lt;= &quot;[[Search the minehead area|Minehead search]]&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;if $searchedWorkersArea == false&gt;&gt;&lt;&lt;= &quot;[[Search the workers&#39; areas thoroughly|Workers search]]&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;/li&gt;
+&lt;li&gt;[[Continue to plan your sabotage|Sabotage planning]]&lt;/li&gt;&lt;/ul&gt;</tw-passagedata><tw-passagedata pid="22" name="Accommodation search" tags="" position="200,1375" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
 &lt;&lt;set $searchedAccommodation = true&gt;&gt;
 Searching the accommodation area, you find a store room you hadn&#39;t noticed before.
 
 [[Explore the store room|Accommodation Storeroom]]
-&lt;&lt;if $searchedWorkersArea == false&gt;&gt;[[Search the workers&#39; areas thoroughly|Workers search]]&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $searchedMinehead == false&gt;&gt;[[Search the minehead area|Minehead search]]&lt;&lt;/if&gt;&gt;
-[[Continue to plan your sabotage|Sabotage planning]]</tw-passagedata><tw-passagedata pid="23" name="Workers search" tags="" position="575,1400" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
+&lt;&lt;if $searchedWorkersArea == false&gt;&gt;[[Search the workers&#39; areas thoroughly|Workers search]]&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $searchedMinehead == false&gt;&gt;[[Search the minehead area|Minehead search]]&lt;br&gt;&lt;&lt;/if&gt;&gt;[[Continue to plan your sabotage|Sabotage planning]]</tw-passagedata><tw-passagedata pid="23" name="Workers search" tags="" position="575,1400" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
 &lt;&lt;set $searchedWorkersArea = true&gt;&gt;
 &lt;&lt;set $numberOfRopes += 1&gt;&gt;
 Performing a thorough search of the communal workers&#39; area, you discover a rope, tucked in a corner.
@@ -385,20 +383,14 @@ Performing a thorough search of the communal workers&#39; area, you discover a r
 You also spot a cupboard along a short corridor.
 
 [[Explore the cupboard|WorkersCupboard]]
-&lt;&lt;if $searchedAccommodation == false&gt;&gt;[[Search the accommodation area|Accommodation search]]&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $searchedMinehead == false&gt;&gt;[[Search the minehead area|Minehead search]]&lt;&lt;/if&gt;&gt;
-[[Continue to plan your sabotage|Sabotage planning]]</tw-passagedata><tw-passagedata pid="24" name="Minehead search" tags="" position="25,1375" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
+&lt;&lt;if $searchedAccommodation == false&gt;&gt;[[Search the accommodation area|Accommodation search]]&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $searchedMinehead == false&gt;&gt;[[Search the minehead area|Minehead search]]&lt;br&gt;&lt;&lt;/if&gt;&gt;[[Continue to plan your sabotage|Sabotage planning]]</tw-passagedata><tw-passagedata pid="24" name="Minehead search" tags="" position="25,1375" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
 &lt;&lt;set $searchedMinehead = true&gt;&gt;
 &lt;&lt;set $hasTether = true&gt;&gt;
 Carefully exploring the minehead area, keeping to the shadows as much as possible, you discover a strap, with clips at both ends.
 
 You also notice an illuminated store room on one side of the area - its light shining through the door which seems to be stuck ajar.
 
-&lt;&lt;if $tetherExamined == false&gt;&gt;[[Examine the strap|Examine Tether]]&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $storeroomExplored == false&gt;&gt;[[Explore the storeroom|Minehead Storeroom]]&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $searchedAccommodation == false&gt;&gt;[[Search the accommodation area|Accommodation search]]&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $searchedWorkersArea == false&gt;&gt;[[Search the workers&#39; areas thoroughly|Workers search]]&lt;&lt;/if&gt;&gt;
-[[Continue to plan your sabotage|Sabotage planning]]</tw-passagedata><tw-passagedata pid="25" name="Sabotage planning" tags="" position="200,1775" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
+&lt;&lt;if $tetherExamined == false&gt;&gt;[[Examine the strap|Examine Tether]]&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $storeroomExplored == false&gt;&gt;[[Explore the storeroom|Minehead Storeroom]]&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $searchedAccommodation == false&gt;&gt;[[Search the accommodation area|Accommodation search]]&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $searchedWorkersArea == false&gt;&gt;[[Search the workers&#39; areas thoroughly|Workers search]]&lt;br&gt;&lt;&lt;/if&gt;&gt;[[Continue to plan your sabotage|Sabotage planning]]</tw-passagedata><tw-passagedata pid="25" name="Sabotage planning" tags="" position="200,1775" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
 According to your information, there are three principal systems which might be effective targets for your sabotage.
 
 The air filtration system uses explosive gases to de-carbonise the atmosphere.
@@ -536,18 +528,10 @@ At the end of the work shift, tired and dirty, you head back to your accommodati
 
 About half an hour after the curfew klaxon, once the noise of the guard patrols has subsided, you lay out the equipment you have gathered and give it all an examination.
 
-You have: &lt;&lt;if $numberOfRopes == 0&gt;&gt;&lt;&lt;if $hasEvaSuit == false&gt;&gt;&lt;&lt;if $hasWelder == false&gt;&gt;&lt;&lt;if $hasNavModule == false&gt;&gt;&lt;&lt;if $hasTether == false&gt;&gt;Nothing useful&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $numberOfRopes &gt; 0&gt;&gt;&lt;&lt;print $numberOfRopes+&quot; rope(s)&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $hasEvaSuit == true&gt;&gt;&lt;&lt;print &quot;an EVA suit&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $hasWelder == true&gt;&gt;&lt;&lt;print &quot;a portable welder&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $hasNavModule == true&gt;&gt;&lt;&lt;print &quot;an EVA suit module&quot;&gt;&gt;&lt;&lt;if $isNavAttached == true&gt;&gt;&lt;&lt;print &quot; (attached to EVA suit)&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $hasTether == true&gt;&gt;&lt;&lt;print &quot;an industrial-strength tether&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
-
+You have: &lt;&lt;if $numberOfRopes == 0&gt;&gt;&lt;&lt;if $hasEvaSuit == false&gt;&gt;&lt;&lt;if $hasWelder == false&gt;&gt;&lt;&lt;if $hasNavModule == false&gt;&gt;&lt;&lt;if $hasTether == false&gt;&gt;Nothing useful&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $numberOfRopes &gt; 0&gt;&gt;&lt;&lt;print $numberOfRopes+&quot; rope(s)&quot;&gt;&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $hasEvaSuit == true&gt;&gt;&lt;&lt;print &quot;an EVA suit&quot;&gt;&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $hasWelder == true&gt;&gt;&lt;&lt;print &quot;a portable welder&quot;&gt;&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $hasNavModule == true&gt;&gt;&lt;&lt;print &quot;an EVA suit module&quot;&gt;&gt;&lt;&lt;if $isNavAttached == true&gt;&gt;&lt;&lt;print &quot; (attached to EVA suit)&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $hasTether == true&gt;&gt;&lt;&lt;print &quot;an industrial-strength tether&quot;&gt;&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
 What will you do next?
 
-&lt;&lt;if $hasEvaSuit == true&gt;&gt;&lt;&lt;if $suitExamined == false&gt;&gt;[[Carefully examine the EVA suit|Examine Suit]]&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $hasNavModule == true&gt;&gt;&lt;&lt;if $isNavAttached == false&gt;&gt;[[Carefully examine the EVA suit module|Examine NAV]]&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-[[Scout the nearest waste disposal chute|Scout Chute]]</tw-passagedata><tw-passagedata pid="41" name="Examine Suit" tags="" position="325,2650" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
+&lt;&lt;if $hasEvaSuit == true&gt;&gt;&lt;&lt;if $suitExamined == false&gt;&gt;[[Carefully examine the EVA suit|Examine Suit]]&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $hasNavModule == true&gt;&gt;&lt;&lt;if $isNavAttached == false&gt;&gt;[[Carefully examine the EVA suit module|Examine NAV]]&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;[[Scout the nearest waste disposal chute|Scout Chute]]</tw-passagedata><tw-passagedata pid="41" name="Examine Suit" tags="" position="325,2650" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
 &lt;&lt;set $suitExamined = true&gt;&gt;
 You carefully examine the EVA suit. Upon close inspection, you notice that there are some small cracks you hadn&#39;t noticed before.
 
@@ -563,10 +547,7 @@ You gather your items and head for the nearest waste disposal chute.
 
 The chute is about thirty metres away from your accommodation.
 
-&lt;&lt;if $hasEvaSuit == true&gt;&gt;[[Put on the EVA suit and climb into the chute|In Chute]]&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $numberOfRopes &gt; 0&gt;&gt;&lt;&lt;if $isRopeAttached == false&gt;&gt;&lt;&lt;if $isTetherAttached == false&gt;&gt;[[Tie a rope to something secure as an anchor|Tie Rope]]&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $hasTether == true&gt;&gt;&lt;&lt;if $isRopeAttached == false&gt;&gt;&lt;&lt;if $isTetherAttached == false&gt;&gt;[[Attach the industrial tether to something secure as an anchor|Attach Tether]]&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-[[Climb into the waste chute|In Chute]]</tw-passagedata><tw-passagedata pid="44" name="Attach Nav to Suit" tags="" position="600,2650" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
+&lt;nobr&gt;&lt;&lt;if $hasEvaSuit == true&gt;&gt;[[Put on the EVA suit and climb into the chute|In Chute]]&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $numberOfRopes &gt; 0&gt;&gt;&lt;&lt;if $isRopeAttached == false&gt;&gt;&lt;&lt;if $isTetherAttached == false&gt;&gt;[[Tie a rope to something secure as an anchor|Tie Rope]]&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $hasTether == true&gt;&gt;&lt;&lt;if $isRopeAttached == false&gt;&gt;&lt;&lt;if $isTetherAttached == false&gt;&gt;[[Attach the industrial tether to something secure as an anchor|Attach Tether]]&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;[[Climb into the waste chute|In Chute]]&lt;/nobr&gt;</tw-passagedata><tw-passagedata pid="44" name="Attach Nav to Suit" tags="" position="600,2650" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
 &lt;&lt;set $isNavAttached = true&gt;&gt;
 You carefully align the EVA navigation module with the back of the suit. It clips into place with a satisfying clunk.
 
@@ -575,11 +556,17 @@ You carefully align the EVA navigation module with the back of the suit. It clip
 Using the portable welder, you carefully re-seal the cracks in the EVA suit.
 
 [[Continue|Chute Escape Planning]]</tw-passagedata><tw-passagedata pid="46" name="In Chute" tags="" position="125,2925" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
-&lt;&lt;if $hasEvaSuit&gt;&gt;&lt;&lt;print &quot;You put on the suit and&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $isRopeAttached&gt;&gt;&lt;&lt;print &quot; tie the free end of the rope to it. Then you&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $isTetherAttached&gt;&gt;&lt;&lt;print &quot; clip the free end of the tether to it. Then you&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $hasEvaSuit == false&gt;&gt;&lt;&lt;print &quot;You&quot;&gt;&gt;&lt;&lt;/if&gt;&gt; clamber into the waste disposal chute, feet-first. As you slide in, the hatch behind you closes automatically, and one at your feet opens, sending you speeding through the smooth tube into outer space.
+&lt;&lt;if $hasEvaSuit&gt;&gt;&lt;&lt;print &quot;You put on the suit and&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $isRopeAttached&gt;&gt;&lt;&lt;print &quot; tie the free end of the rope to it. Then you&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $isTetherAttached&gt;&gt;&lt;&lt;if $hasEvaSuit&gt;&gt;&lt;&lt;print &quot; clip the free end of the tether to it. Then you&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $hasEvaSuit == false&gt;&gt;&lt;&lt;print &quot;You&quot;&gt;&gt;&lt;&lt;/if&gt;&gt; clamber into the waste disposal chute, feet-first. As you slide in, the hatch behind you closes automatically, and one at your feet opens, sending you speeding through the smooth tube into outer space.
 
-&lt;&lt;if $isTetherAttached&gt;&gt;[[Continue|Tethered Outside]]&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $isRopeAttached&gt;&gt;[[Continue|Roped Outside]]&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $isRopeAttached == false&gt;&gt;&lt;&lt;if $isTetherAttached == false&gt;&gt;[[Continue|Freefall]]&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="47" name="Tie Rope" tags="" position="200,2800" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
+&lt;&lt;if $hasEvaSuit&gt;&gt;
+	&lt;&lt;if $isTetherAttached&gt;&gt;[[Continue|Tethered Outside]]&lt;&lt;/if&gt;&gt;
+	&lt;&lt;if $isRopeAttached&gt;&gt;[[Continue|Roped Outside]]&lt;&lt;/if&gt;&gt;
+ &lt;&lt;else&gt;&gt;
+  	[[Continue|Freefall]]
+  &lt;&lt;/if&gt;&gt;
+  &lt;&lt;if $hasEvaSuit = false&gt;&gt;
+  	[[Continue|Freefall]]
+    &lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="47" name="Tie Rope" tags="" position="200,2800" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
 &lt;&lt;set $isRopeAttached = true&gt;&gt;
 You tie one end of a rope to a solid nearby railing.
 
@@ -681,7 +668,7 @@ Alas, even if you had been able to gain entry, there is no way the ship would ha
 
 As the last of your suit&#39;s oxygen is used up, you are overcome by a wave of euphoria as you gradually die from asphyxiation, the aged corsair the last man-made object you ever see.
 
-[[Continue|End]]</tw-passagedata><tw-passagedata pid="62" name="End" tags="" position="1350,1725" size="100,100">Thanks for paying this little game. I hope is has given you a flavour of the Jackrabbit universe, and particularly life aboard the Alpha-7 mining colony, the main setting for Stolen Freedom.
+[[Continue|End]]</tw-passagedata><tw-passagedata pid="62" name="End" tags="" position="1350,1725" size="100,100">Thanks for paying this little game. I hope is has given you a flavour of the Jackrabbit universe, and particularly life aboard the Alpha-7 mining colony, the main setting for &lt;a href=&quot;https://aggiesfriend.github.io/Jackrabbit_Website/book1.html&quot;&gt;Stolen Freedom&lt;/a&gt;.
 
 You managed to survive &lt;&lt;print $turns&gt;&gt; turns before your demise.
 

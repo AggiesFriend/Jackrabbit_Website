@@ -559,14 +559,13 @@ Using the portable welder, you carefully re-seal the cracks in the EVA suit.
 &lt;&lt;if $hasEvaSuit&gt;&gt;&lt;&lt;print &quot;You put on the suit and&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $isRopeAttached&gt;&gt;&lt;&lt;print &quot; tie the free end of the rope to it. Then you&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $isTetherAttached&gt;&gt;&lt;&lt;if $hasEvaSuit&gt;&gt;&lt;&lt;print &quot; clip the free end of the tether to it. Then you&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $hasEvaSuit == false&gt;&gt;&lt;&lt;print &quot;You&quot;&gt;&gt;&lt;&lt;/if&gt;&gt; clamber into the waste disposal chute, feet-first. As you slide in, the hatch behind you closes automatically, and one at your feet opens, sending you speeding through the smooth tube into outer space.
 
 &lt;&lt;if $hasEvaSuit&gt;&gt;
-	&lt;&lt;if $isTetherAttached&gt;&gt;[[Continue|Tethered Outside]]&lt;&lt;/if&gt;&gt;
-	&lt;&lt;if $isRopeAttached&gt;&gt;[[Continue|Roped Outside]]&lt;&lt;/if&gt;&gt;
+	&lt;&lt;if $isTetherAttached&gt;&gt;[[Continue|Tethered Outside]]
+	&lt;&lt;elseif $isRopeAttached&gt;&gt;[[Continue|Roped Outside]]
+    &lt;&lt;else&gt;&gt;[[Continue|Freefall]]&lt;&lt;/if&gt;&gt;
  &lt;&lt;else&gt;&gt;
   	[[Continue|Freefall]]
   &lt;&lt;/if&gt;&gt;
-  &lt;&lt;if $hasEvaSuit = false&gt;&gt;
-  	[[Continue|Freefall]]
-    &lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="47" name="Tie Rope" tags="" position="200,2800" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
+  </tw-passagedata><tw-passagedata pid="47" name="Tie Rope" tags="" position="200,2800" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
 &lt;&lt;set $isRopeAttached = true&gt;&gt;
 You tie one end of a rope to a solid nearby railing.
 

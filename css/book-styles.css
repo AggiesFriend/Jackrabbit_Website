@@ -192,3 +192,75 @@
         margin: 0 auto;
     }
 }
+/* Prologue Page Styles */
+.prologue-section {
+    background-color: #fff;
+    padding: 4rem 0;
+}
+
+.prologue-container {
+    max-width: 900px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.prologue-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.prologue-header h2 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.prologue-header p {
+    color: var(--secondary-color);
+    font-style: italic;
+}
+
+.prologue-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    font-family: var(--font-body);
+}
+
+.prologue-content p {
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+.prologue-content p:first-of-type::first-letter {
+    font-size: 3.5rem;
+    font-weight: 700;
+    float: left;
+    line-height: 0.7;
+    margin-right: 0.5rem;
+    color: var(--accent-color);
+}
+
+.book-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4rem;
+    border-top: 1px solid #eee;
+    padding-top: 2rem;
+}
+
+.book-nav-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .prologue-content {
+        font-size: 1rem;
+    }
+    
+    .book-navigation {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+}

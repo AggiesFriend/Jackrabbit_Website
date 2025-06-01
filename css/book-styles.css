@@ -37,7 +37,7 @@
     text-align: justify;
 }
 
-.prologue-content p:first-of-type::first-letter {
+.prologue-content > p:first-of-type::first-letter {
     font-size: 3.5rem;
     font-weight: 700;
     float: left;
@@ -69,4 +69,17 @@
         gap: 1rem;
         align-items: center;
     }
+}
+
+/* Base list styling for consistent spacing */
+.prologue-content ul {
+    list-style-type: disc;
+    padding-left: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Extra indentation for nested (child) lists */
+.prologue-content ul ul {
+    list-style-type: circle; /* or square for more contrast */
+    padding-left: 2rem; /* add additional indent */
 }

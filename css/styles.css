@@ -199,7 +199,10 @@ section {
 
 .book-cover {
     height: 300px;
-    overflow: hidden;
+    overflow: hidden;   
+    display: flex;
+    justify-content: center;
+    align-items: center;  
 }
 
 .placeholder-cover {

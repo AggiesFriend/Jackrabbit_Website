@@ -84,7 +84,7 @@
     resize: vertical;
 }
 
-.contact-form button {
+.contact-form .btn {
     background-color: var(--accent-color);
     color: white;
     border: none;
@@ -99,7 +99,7 @@
     font-family: var(--font-heading);
 }
 
-.contact-form button:hover {
+.contact-form .btn:hover {
     background-color: #2980b9;
 }
 

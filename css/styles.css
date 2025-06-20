@@ -407,3 +407,16 @@ footer {
         transform: translateX(0);
     }
 }
+
+.encyclopedia-image {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+    display: block;
+}
+
+.encyclopedia-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}

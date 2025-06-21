@@ -142,17 +142,5 @@
     </footer>
 
     <script src="../js/script.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    fetch("includes/nav.html")
-      .then(res => res.text())
-      .then(html => document.getElementById("nav-container").outerHTML = html);
-
-    fetch("includes/footer.html")
-      .then(res => res.text())
-      .then(html => document.getElementById("footer-container").outerHTML = html);
-  });
-</script>
 </body>
 </html>
-

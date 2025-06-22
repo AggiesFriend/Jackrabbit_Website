@@ -83,3 +83,77 @@
     list-style-type: circle; /* or square for more contrast */
     padding-left: 2rem; /* add additional indent */
 }
+
+/* Book Excerpt Viewer Styles - Updated for two-column top, full-width bottom layout */
+.book-full-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+/* Top section with book cover and excerpt viewer side by side */
+.book-top-section {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.book-full-cover {
+    flex: 0 0 300px;
+}
+
+/* Excerpt viewer positioned as right column in top section */
+#excerpt-viewer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 200px;
+    max-height: 400px;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    background-color: var(--background-color, #f9f9f9);
+    font-family: var(--font-body, serif);
+}
+
+#excerpt-text {
+    flex: 1;
+    margin: 0 1em;
+    max-height: 350px;
+    overflow-y: auto;
+    text-align: left;
+}
+
+#excerpt-viewer button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: var(--primary-color);
+}
+
+/* Book details take full width below the top section */
+.book-full-details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+@media screen and (max-width: 768px) {
+    /* Stack vertically on mobile */
+    .book-top-section {
+        flex-direction: column;
+    }
+    
+    #excerpt-viewer {
+        flex-direction: column;
+        align-items: stretch;
+        max-height: none;
+    }
+
+    #excerpt-text {
+        margin: 1em 0;
+    }
+}

@@ -43,9 +43,18 @@
         <section class="book-full">
             <div class="container">
                 <div class="book-full-container">
-                    <div class="book-full-cover">
-                        <img src="./images/stolen_freedom_cover.png" style="width: 300px; height: auto;" alt="Stolen Freedom cover" >
+                    <div class="book-top-section">
+                        <div class="book-full-cover">
+                            <img src="./images/stolen_freedom_cover.png" style="width: 300px; height: auto;" alt="Stolen Freedom cover">
+                        </div>
+
+                        <div id="excerpt-viewer">
+                            <button id="prev-excerpt" aria-label="Previous excerpt">◀</button>
+                            <div id="excerpt-text">Loading excerpt...</div>
+                            <button id="next-excerpt" aria-label="Next excerpt">▶</button>
+                        </div>
                     </div>
+
                     <div class="book-full-details">
                         <h2>Stolen Freedom</h2>
                         <p class="book-subtitle">Book 1 of The Jackrabbit Series</p>
@@ -54,9 +63,9 @@
                         <div class="book-section">
                             <h3>Synopsis</h3>
                             <p>In the depths of a remote asteroid mining colony, young Jack's mundane existence is shattered when he witnesses a mysterious execution and recovers a strange device from the victim's pocket. This single act of curiosity catapults him into an adventure beyond anything he could have imagined.</p>
-<p>As Jack explores forgotten tunnels and discovers ancient technology, he forms an unlikely alliance with Aggie, a brilliant entity with secrets of her own. Together, they hatch a daring escape plan from the megacorporation's brutal grip.</p>
-<p>But when tragedy strikes, Jack must navigate a universe he never knew existed, full of both wonder and danger. With only his wits and his new companion to guide him, he embarks on a journey that will challenge everything he thought he knew about freedom, humanity, and himself.</p>
-<p>In a world where artificial intelligence is hunted and corporations rule with iron fists, some treasures are worth any risk—and some freedoms cannot be stolen.</p>
+                            <p>As Jack explores forgotten tunnels and discovers ancient technology, he forms an unlikely alliance with Aggie, a brilliant entity with secrets of her own. Together, they hatch a daring escape plan from the megacorporation's brutal grip.</p>
+                            <p>But when tragedy strikes, Jack must navigate a universe he never knew existed, full of both wonder and danger. With only his wits and his new companion to guide him, he embarks on a journey that will challenge everything he thought he knew about freedom, humanity, and himself.</p>
+                            <p>In a world where artificial intelligence is hunted and corporations rule with iron fists, some treasures are worth any risk—and some freedoms cannot be stolen.</p>
                         </div>
                         
                         <div class="quote">
@@ -102,21 +111,8 @@
                         <div class="book-section">
                             <h3>Setting</h3>
                             <p>Stolen Freedom unfolds across a bleak yet expansive universe dominated by megacorporations. The story begins in the claustrophobic confines of an asteroid mining colony—a place of perpetual darkness, harsh discipline, and indentured servitude. Here, workers toil endlessly to extract resources while living in spartan conditions under the watchful eyes of security guards.</p>
-<p>As the narrative progresses, the setting expands dramatically to include the vast emptiness of space itself, with its breathtaking vista of stars, and eventually Horizon Outpost—a bustling space station that serves as a haven free from direct corporate control. This stark contrast between oppressive confinement and the boundless potential of space mirrors Jack's own journey from restriction to possibility.</p>
-<p>The technology depicted ranges from the primitive and worn equipment of the mining colony to the advanced VoidSuits, courier ships, and quantum communication systems that populate the wider universe, creating a layered world that feels both familiar and fantastical.</p>
-                        </div>
-                        
-                        <div class="book-section">
-                            <h3>Excerpt</h3>
-                            <p>Jack hung there, an insignificant dot at the end of a line hanging off the outside of a huge spinning rock in the middle of nowhere. He looked at the dazzling array of multicoloured stars and other spaceborne bodies, and he felt his body begin to relax.</p>
-<p>"I am in position, Jack, and you are coming around to the release point. Are you ready?"</p>
-<p>"Yes, Aggie. I am ready."</p>
-<p>A few seconds passed in silence, then suddenly Jack was weightless. Aggie had instructed the VoidSuit to release and retract the hook from which Jack had been dangling and he was now in freefall. He tried to reorientate himself to try and face his direction of travel, but no matter what he tried, his orientation persisted—head towards the asteroid, feet towards the void.</p>
-<p>"Jack, are you OK?" Aggie almost sounded concerned.</p>
-<p>"I can't see you, Aggie. Where are you?" an edge of worry had crept into Jack's voice.</p>
-<p>"I am right below you, Jack. You are on a perfect trajectory and I am holding position ready to catch you. Impact in 5, 4, 3, 2, 1, contact."</p>
-<a href="Book_1_Prologue.html" class="btn btn-primary">Read Full Prologue</a>
-                        <a href="https://books.by/aggiesfriend" class="btn btn-primary" target="_blank">Buy This Book</a>
+                            <p>As the narrative progresses, the setting expands dramatically to include the vast emptiness of space itself, with its breathtaking vista of stars, and eventually Horizon Outpost—a bustling space station that serves as a haven free from direct corporate control. This stark contrast between oppressive confinement and the boundless potential of space mirrors Jack's own journey from restriction to possibility.</p>
+                            <p>The technology depicted ranges from the primitive and worn equipment of the mining colony to the advanced VoidSuits, courier ships, and quantum communication systems that populate the wider universe, creating a layered world that feels both familiar and fantastical.</p>
                         </div>
                     </div>
                 </div>
@@ -147,7 +143,52 @@
         </div>
     </footer>
 
+    <script>
+        const excerpts = [
+            `<strong>1. The Brutal Introduction (Chapter 2)</strong><br><em>Stakes/World-building</em><br>Without care or ceremony, a third guard, taller and more intimidating than the other two, walked up behind Gilbert, pistol drawn. He placed the muzzle under the back of Gilbert's head, then looked towards Victor for approval. After one last, slow scan of the crowd, its members murmuring very quietly, Victor's eyes sparkled as he nodded his assent, and the guard pulled the trigger, sending a shower of dark red biomass over those in the crowd unfortunate to be in the wrong place as his colleagues simply let the corpse drop to the floor.`,
+
+            `<strong>2. First Glimpse of Wonder (Chapter 6)</strong><br><em>Discovery/Awe</em><br>As he clung to the edge of the airlock, the blackness between the stars wasn't empty but filled with subtler hints of the universe's vastness - a nebulous cloud here, a distant galaxy there, each contributing to the overwhelming beauty and mystery of the vast panorama before him. The cold metal of the airlock's rim was a stark contrast to the warmth Jack felt swelling in his chest - a mix of awe, fear, and exhilaration.`,
+
+            `<strong>3. The VoidSuit's Compassion (Chapter 8)</strong><br><em>Technology/Care</em><br>As the VoidSuit snugly adjusted to Jack's form, a soft hum emanated from its fabric, nearly imperceptible except for the faint vibration it imparted upon his skin. "Identified: Subcutaneous hematoma. Initiating healing protocol via micro-vibration stimulation," the suit's voice, calm and measured, informed him. Jack, his eyes widening in surprise, watched as the area around the bruise lit up on the display, a network of tiny lines spreading out from the centre.`,
+
+            `<strong>4. Meeting Aggie (Chapter 12)</strong><br><em>First Contact/Mystery</em><br>"I suppose the first thing I should say is 'Thank you'." The unexpected, soft, female voice startled Jack to full alertness as he instinctively looked around the interior of the ship for its source.<br>"Who's there? Who said that?" The alarm in Jack's tone was obvious.<br>"Please, don't be concerned," replied the voice, calm yet with an undertone of urgency. "My name is Aggie, and whether you realise it or not, you just saved me from inevitable doom."`,
+
+            `<strong>5. Jack's Realization (Chapter 3)</strong><br><em>Intelligence/Discovery</em><br>How had he never noticed before? Jack suppressed a wave of self-reproach. After all, this mine was the only environment he had ever known. Of course he had marvelled at the vessels that would arrive and leave with regularity, but aside from the occasional consideration of what might lay beyond the second set of massive metal doors, he had simply accepted his environment for what it was.`,
+
+            `<strong>6. The Escape Plan (Chapter 20)</strong><br><em>Determination/Action</em><br>His reply was steely cold, "Oh I have never been more sure of anything in my life."<br>"Very well," Aggie replied. "I have completed the calculations. There is an 85% chance that we will have sufficient resources to enter, and leave the dockyard, but there is only enough fuel for two startup sequences of the main thrusters. This means that I will either need to keep the engines hot in the dockyard, or we will not have main thrust after the snap."`,
+
+            `<strong>7. Jack's First Real Food (Chapter 23)</strong><br><em>Wonder/New Experiences</em><br>Jack looked at the food, bewildered by the array of colours, textures, and smells. There were sandwiches, fruits, a bowl of steaming soup, and a bottle of water. Hesitantly, he reached for a sandwich and took a small bite. The flavours exploded in his mouth, so different from the bland gruel he was used to. As the sweet, sticky juice of a peach hit his tastebuds, he couldn't help but marvel at the variety of flavours and textures.`,
+
+            `<strong>8. The SnapSpace Jump (Chapter 22)</strong><br><em>Sci-fi Action</em><br>Despite the forewarning, nothing could have prepared Jack for the sensation he experienced. It felt as if he had been turned inside-out, twisted, run through a mangle, then turned outside-out again, causing him to reflexively screw up his eyes. As he was experiencing these unsettling sensations, in the same fraction of a second, the courier vessel appeared to shrink to nothing, simultaneously growing from nothing to its full size at the destination anchor point.`,
+
+            `<strong>9. Corporate Cruelty (Chapter 20)</strong><br><em>Dystopian Horror</em><br>"There's been an explosion," the worker said flatly. "Your parents are dead." Jack's mind reeled. The worker continued, his tone cold and bureaucratic, "You are required to present yourself at the Central Administration Office tomorrow between morning and shift-start klaxon for your onboarding. Here's a document detailing your inheritance." He handed Jack an official-looking paper, the words blurring as Jack tried to comprehend the situation.`,
+
+            `<strong>10. Learning to Laugh (Chapter 23)</strong><br><em>Joy/Human Connection</em><br>Suddenly something inside Jack snapped, his lifetime of caution seemed to fall away, and he started laughing and laughing and laughing thanks to the tickles, giving in to pure emotion for the first time he could remember. After a while, breathless, Jack managed to pant, "Sto.... Sto..... Stop!! Please!!"<br>"There," he said, looking most pleased with himself, "<i>That's</i> how you laugh!"`
+        ];
+
+        let currentIndex = Math.floor(Math.random() * excerpts.length);
+
+        const excerptText = document.getElementById("excerpt-text");
+        const prevButton = document.getElementById("prev-excerpt");
+        const nextButton = document.getElementById("next-excerpt");
+
+        function showExcerpt(index) {
+            excerptText.innerHTML = excerpts[index];
+        }
+
+        prevButton.addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + excerpts.length) % excerpts.length;
+            showExcerpt(currentIndex);
+        });
+
+        nextButton.addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % excerpts.length;
+            showExcerpt(currentIndex);
+        });
+
+        // Show initial random excerpt on load
+        showExcerpt(currentIndex);
+    </script>
     <script src="js/script.js"></script>
 </body>
 </html>
-

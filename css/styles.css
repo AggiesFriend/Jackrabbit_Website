@@ -420,3 +420,27 @@ footer {
     height: auto;
     display: block;
 }
+
+/* Encyclopedia Cards */
+.encyclopedia-card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    transform-origin: center center;
+    transform: scale(1);
+}
+
+.encyclopedia-card:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+}
+
+.encyclopedia-cover {
+    height: 300px;
+    overflow: hidden;   
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+}

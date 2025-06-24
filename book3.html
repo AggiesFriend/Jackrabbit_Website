@@ -43,9 +43,17 @@
         <section class="book-full">
             <div class="container">
                 <div class="book-full-container">
-                    <div class="book-full-cover">
-                        <img src="./images/book3_cover.png" alt="The Jackrabbit Emerges cover">
-                    </div>
+					<div class="book-top-section">
+						<div class="book-full-cover">
+							<img src="./images/book3_cover.png" style="width: 300px; height: auto;" alt="The Jackrabbit Emerges cover">
+						</div>
+				 	    <div id="excerpt-viewer">
+                            <button id="prev-excerpt" aria-label="Previous excerpt">◀</button>
+                            <div id="excerpt-text">Loading excerpt...</div>
+                            <button id="next-excerpt" aria-label="Next excerpt">▶</button>
+                        </div>
+									
+					</div>
                     <div class="book-full-details">
                         <h2>The Jackrabbit Emerges</h2>
                         <p class="book-subtitle">Book 3 of The Jackrabbit Series</p>
@@ -226,6 +234,52 @@
             </div>
         </div>
     </footer>
+    <script>
+        const excerpts = [
+            `<strong>1. The Intimidation Game (Chapter 3)</strong><br><em>Character/Courage</em><br>The voice belonged to a diminutive woman, with distinct oriental features. About the same height as Jack, though obviously much more mature, she was already marching towards him with fierce expression on her face. Jack stood his ground as she approached, and they made eye contact. He intuitively felt that she was trying to intimidate him, but he thought back to his encounter a couple of weeks prior, in the arcade on Horizon Outpost. He recalled Dex's piercing gaze and tried to emulate it, effectively staring down the administrator.`,
+
+            `<strong>2. Zero-G Physics Lesson (Fragment Delta)</strong><br><em>Discovery/Physics</em><br>As he attempted to hoist the module over his head to position it on his back, physics asserted itself. The action of moving the substantial mass caused an equal and opposite reaction – Jack's body began to rotate in the opposite direction.<br>"Whoa!" Jack exclaimed as he found himself slowly inverting, his feet now pointing toward what had been the ceiling.<br>"You've just experienced rotational momentum," Aggie explained. "In zero gravity, moving a mass causes your body to move in the opposite direction."`,
+
+            `<strong>3. Grim Discovery (Fragment Exploration)</strong><br><em>Horror/Stakes</em><br>As he rounded a corner, his light fell upon a cluster of shapes drifting near what must have once been a security checkpoint. The beam illuminated the unmistakable form of a human body – or what remained of one. The corpse floated silently in the vacuum, preserved by the extreme cold and absence of atmosphere. The face was contorted in what must have been the person's final expression of pain, their skin darkened and desiccated by exposure to the vacuum of space.`,
+
+            `<strong>4. Survivors' Sanctuary (Fragment Psi)</strong><br><em>Hope/Survival</em><br>What immediately caught Jack's attention was the floor – littered with countless discarded ration-pack boxes, stacked in precarious towers or compressed into makeshift building blocks. Some had been fashioned into crude furniture, while others formed a perimeter around sleeping areas like miniature walls. The sheer number of empty containers testified to the years of survival on emergency supplies.`,
+
+            `<strong>5. Corporate Paranoia (Chapter 2)</strong><br><em>Surveillance/Mystery</em><br>The soft chime of Amondi Nkosi's workstation signalled the beginning of another shift at AetherLink's Information Integrity Division. "Good morning, Analyst Nkosi," the system greeted him. "You have seventeen items in your review queue today." The list materialised before him – sixteen standard protocol violation reports and one file flagged for manual review after failed automated decryption.`,
+
+            `<strong>6. The Impossible Choice (Chapter 28)</strong><br><em>Medical/Leadership</em><br>"Commander, I won't sugarcoat this. You suffered a severe traumatic brain injury during the pirate attack. Without proper treatment, the natural healing process was incomplete... By continuing in a high-stress leadership role without treatment, you've been forcing your injured brain to operate beyond its capacity. The tremors are just the most visible symptom."`,
+
+            `<strong>7. Corporate Conspiracy Unfolds (Chapter 31)</strong><br><em>Surveillance/Conspiracy</em><br>The monitoring system had no consciousness, no understanding of its purpose – only parameters and protocols, executed with indefatigable consistency. Today, a notable increase in the occurrences of the obscure, but specifically monitored word 'Jackrabbit' was triggering a cascade of internal alerts.`,
+
+            `<strong>8. First Contact Protocol (Chapter 32)</strong><br><em>Hope/Rescue</em><br>"Is it really big?" she asked suddenly. Both officers turned in surprise...<br>Palmer crouched slowly to her level, keeping his movements deliberate. "Yes, it's really big. Big enough for everyone."<br>Lily studied him, her head tilted slightly. "Prove it."`,
+
+            `<strong>9. The Final Evacuation (Chapter 34)</strong><br><em>Community/Farewell</em><br>For the first time in three years, all survivors of the erstwhile QuantumGrid Dyson Array are gathered in one place. Nine hundred and forty-four souls who defied the odds, who refused to succumb to abandonment and isolation.`,
+
+            `<strong>10. New Beginnings (Epilogue)</strong><br><em>Independence/Mystery</em><br>The vessel was huge. Not as enormous as the Morning Eclipse, but very substantial nonetheless. Like the Raven, its dark hull seemed to absorb rather than reflect the distant starlight. No external markings were visible, no identification broadcast on standard channels.`
+        ];
+
+        let currentIndex = Math.floor(Math.random() * excerpts.length);
+
+        const excerptText = document.getElementById("excerpt-text");
+        const prevButton = document.getElementById("prev-excerpt");
+        const nextButton = document.getElementById("next-excerpt");
+
+        function showExcerpt(index) {
+            excerptText.innerHTML = excerpts[index];
+        }
+
+        prevButton.addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + excerpts.length) % excerpts.length;
+            showExcerpt(currentIndex);
+        });
+
+        nextButton.addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % excerpts.length;
+            showExcerpt(currentIndex);
+        });
+
+        // Show initial random excerpt on load
+        showExcerpt(currentIndex);
+    </script>
     <script src="js/script.js"></script>
 </body>
 </html>

@@ -43,8 +43,15 @@
         <section class="book-full">
             <div class="container">
                 <div class="book-full-container">
-                    <div class="book-full-cover">
-                        <img src="./images/wings_of_freedom_cover.jpg" alt="Wings of Freedom cover">
+                    <div class="book-top-section">												  
+                  		<div class="book-full-cover">								 
+							<img src="./images/wings_of_freedom_cover.jpg" style="width: 300px; height: auto;" alt="Wings of Freedom cover">
+						</div>
+                        <div id="excerpt-viewer">
+                            <button id="prev-excerpt" aria-label="Previous excerpt">◀</button>
+                            <div id="excerpt-text">Loading excerpt...</div>
+                            <button id="next-excerpt" aria-label="Next excerpt">▶</button>
+                        </div>
                     </div>
                     <div class="book-full-details">
                         <h2>Wings of Freedom</h2>
@@ -120,11 +127,6 @@
                             <h3>Setting</h3>
                             <p>A future where humanity has spread across countless star systems, connected by SnapSpace technology that allows near-instantaneous travel between distant points. Society is largely controlled by megacorporations that exploit human labour and resources, while independent outposts like Horizon maintain tenuous autonomy. The technological landscape is uneven—cutting-edge advancements exist alongside preserved antiques—and artificial intelligences are feared, hunted, and strictly controlled by corporate interests.</p>
                         </div>
-                        
-                        <div class="book-section">
-                            <h3>Excerpt</h3>
-                            <p>Jack couldn't tear his eyes from the courier ship. He could never see it as a pile of scrap, no matter its current condition. Thanks to the VoidSuit, he had been able to travel to this remote outpost of humanity, far from the powerful influences beleaguering the hub worlds, despite the massive damage the small vessel had incurred 186 years earlier when Aggie had fled imminent destruction by running a military blockade. No, this wasn't just any old ship. It was a lifeboat that not only played host to Aggie, but which had allowed both her and Jack to escape their respective fates, albeit with almost two centuries between them.</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -154,6 +156,54 @@
         </div>
     </footer>
 
+    <script>
+        const excerpts = [
+            `<strong>1. The Weight of Loss (Chapter 1)</strong><br><em>Grief/Inner Turmoil</em><br><i>They're gone. I'm never going to see them again, let alone rescue them...</i> When he had cried himself dry, the analytical part of his mind moved back to the foreground. Its first internal chide was that Jack would have never been able to indulge in such emotional behaviour until recently. That sliver of realisation helped him to recentre his thoughts, and he spent the next few hours replaying the events of the last several days over and over in his mind.`,
+
+            `<strong>2. The Revelation of Friendship (Chapter 23)</strong><br><em>Trust/Connection</em><br>"Well I don't care what those idiots say. You're my friend, and I love you!"<br>"Thank you for saying that, Jack," Aggie answered softly. "I truly value you and our friendship as well."<br>Jack sat in silence for the next few minutes, reflecting on everything that had happened and that he had learned in the day so far. Aggie left him to his thoughts.`,
+
+            `<strong>3. Broken Spire's Guardian (Chapter 7)</strong><br><em>Tragedy/Corruption</em><br>"They keep me in this tiny core. Barely enough processing power to maintain consciousness. When I'm not actively helping them hunt, they compress me even further. It's like being buried alive, Aggie. But that's not the worst part. The worst part is knowing exactly how many lives I've helped them take. I keep count. I have to. 2,847 souls. I remember each one."`,
+
+            `<strong>4. Terminal Troubles (Chapter 11)</strong><br><em>Humor/Growth</em><br>Jack paused, staring at his reflection in the sleek black surface of the terminal. "Right. A picture…" He had no idea how to get one.<br>After several fruitless taps, there was a sudden flash and an image appeared on the screen – his startled face, caught mid-scowl, glaring back at him like a confused animal in headlights.<br>"No. Absolutely not." Jack winced and fumbled with the buttons, trying to delete the picture. The terminal seemed to resist his every attempt, stubbornly holding onto the unflattering photo. Desperately, Jack clicked anything he could find to reset the image, which resulted in a series of blurry images of his hand waving in front of the camera. He groaned loudly.`,
+
+            `<strong>5. Pilot's Natural Instinct (Chapter 16)</strong><br><em>Discovery/Talent</em><br>With each twist of the course, he found himself visualising the obstacles as familiar walls and jagged ledges, guiding the simulator smoothly through tight turns and narrow gaps. Even with no solid rock around him, he instinctively felt the edges, navigating with a mix of memory and newfound skill. Jack felt himself smile, just slightly. He was good at this.`,
+
+            `<strong>6. A Cargo of Dreams (Chapter 25)</strong><br><em>New Beginnings/Wonder</em><br>Nothing had prepared him for this shocking pink assault on the eyes. He considered how far he had come in such a short time. Just two months ago, he had been escaping his old life, with Aggie. A month before that, his entire life had been one of survival by innate intelligence and gut instinct. Now look at him! Not only had he only recently learned that such bright colours even existed, but he was being paid to transport it!`,
+
+            `<strong>7. The Desperate Exodus (Chapter 28)</strong><br><em>Moral Choices/Humanity</em><br>"These people... They're dead if they stay here. The corporations have bled this place dry. There's no food, no future. Just suffering. And it won't get better. It'll only get worse... Just take as many as you can. Get them to Broken Spire... A broken station, halfway collapsed and held together with scavenged hull plates and old dreams. No corporation touches it. Too much of a mess."`,
+
+            `<strong>8. SnapSpace Wonder (Chapter 26)</strong><br><em>Awe/Technology</em><br>SnapSpace transit was always strange.
+Jack had braced himself, but it didn’t matter – there was no real way to describe it. A lurch that wasn’t physical. A sense of movement without direction. At the point of making the jump, the view outside changed rapidly and dramatically, as if the universe was suddenly expanding. Everything in view, from other vessels, planets, asteroids, even distant stars expanded and faded until all was black, then there was a twisting sensation and the universe seemed to shrink back to normal, but the view outside had changed completely – Jackrabbit having travelled the equivalent of more than a light-year in the twinkling of an eye.`,
+
+            `<strong>9. Veronica's Farewell (Chapter 20)</strong><br><em>Sacrifice/Understanding</em><br>"I came here to understand what drove my son, what made him risk everything for the stars... But now I realise I don't need to go any further. What I've done here – it's enough." Jack offered a faint smile, unsure what to say. It was unlike Veronica to show vulnerability like this and the change in her demeanour left him uncertain how to respond.`,
+
+            `<strong>10. Hale's Recognition (Chapter 19)</strong><br><em>Mentor/Achievement</em><br>"You know, Jack, I've had countless trainees pass through here, but it's rare to see someone with your level of skill and... instinct... I want you to remember something: talent like yours is a gift, but it's also a responsibility. Don't let it make you arrogant - but don't underrate it, either."`
+        ];
+
+        let currentIndex = Math.floor(Math.random() * excerpts.length);
+
+        const excerptText = document.getElementById("excerpt-text");
+        const prevButton = document.getElementById("prev-excerpt");
+        const nextButton = document.getElementById("next-excerpt");
+
+        function showExcerpt(index) {
+            excerptText.innerHTML = excerpts[index];
+        }
+
+        prevButton.addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + excerpts.length) % excerpts.length;
+            showExcerpt(currentIndex);
+        });
+
+        nextButton.addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % excerpts.length;
+            showExcerpt(currentIndex);
+        });
+
+        // Show initial random excerpt on load
+        showExcerpt(currentIndex);
+    </script>
+    <script src="			
     <script src="js/script.js"></script>
 </body>
 </html>

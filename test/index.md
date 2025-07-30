@@ -1,0 +1,113 @@
+---
+layout: default
+title: "The Jackrabbit - Science Fiction Book Series"
+description: "A journey through space to freedom"
+---
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>The Jackrabbit</h1>
+        <p class="tagline">A journey through space to freedom</p>
+    </div>
+</section>
+
+<section class="series-overview">
+    <div class="container">
+        <h2>Series Overview</h2>
+        <p>In a universe dominated by corporate greed, one boy's escape gives rise to a legend that could save humanity.</p>
+    </div>
+</section>
+
+<section class="featured-books">
+    <div class="container">
+        <h2>Featured Books</h2>
+        <div class="books-grid">
+            <div class="book-card">
+                <div class="book-cover">
+                    <div class="placeholder-cover book1">
+                        <img src="./images/stolen_freedom_cover.png" alt="Stolen Freedom cover">
+                    </div>
+                </div>
+                <div class="book-info">
+                    <h3>Stolen Freedom</h3>
+                    <p>Book 1 of The Jackrabbit series</p>
+                    <p class="book-description">In a remote mining colony where humans are treated as disposable commodities, young Jack stumbles upon the discovery of a lifetime: a damaged courier ship and an artificial intelligence named Aggie. As they forge an unlikely alliance, Jack must navigate between two worlds — the brutal familiarity of the mine and the terrifying unknown of space — while racing against time to secure their escape.</p>
+                    <a href="{{ '/book1/' | relative_url }}" class="read-more">Read More</a>
+                    <a href="https://books.by/aggiesfriend/stolen-freedom" class="read-more" target="_blank">Buy the Paperback</a>
+                    <a href="https://amzn.eu/d/cLgZDtT" class="btn btn-primary" target="_blank">Get The eBook</a>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">
+                    <div class="placeholder-cover book2">
+                        <img src="./images/wings_of_freedom_cover.jpg" alt="Wings of Freedom cover">
+                    </div>
+                </div>
+                <div class="book-info">
+                    <h3>Wings of Freedom</h3>
+                    <p>Book 2 of The Jackrabbit series</p>
+                    <p class="book-description">In a universe ruled by megacorporations, where freedom exists in the gaps between their influence, a boy and an artificial intelligence chart their own course. The Jackrabbit may be small, but in the right hands, even the smallest ships can change the course of history.</p>
+                    <a href="{{ '/book2/' | relative_url }}" class="read-more">Read More</a>
+                    <a href="https://books.by/aggiesfriend/wings-of-freedom" class="read-more" target="_blank">Buy the Paperbook</a>
+                    <a href="https://amzn.eu/d/blZ6FaL" class="btn btn-primary" target="_blank">Get The eBook</a>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-cover">
+                    <div class="placeholder-cover book3">
+                        <img src="./images/the_jackrabbit_emerges_base_front.jpg" alt="The Jackrabbit Emerges cover">
+                    </div>
+                </div>
+                <div class="book-info">
+                    <h3>The Jackrabbit Emerges</h3>
+                    <p>Book 3 of The Jackrabbit series</p>
+                    <p class="book-description">In a fractured Dyson Array abandoned by the corporation that built it, Jack and Aggie discover a secret technology that could save hundreds of stranded survivors. As Jack becomes a symbol of hope to the forgotten colonists, his growing legend begins to draw the attention of powerful corporations who will stop at nothing to find the mysterious ship that appears where it shouldn't.</p>
+                    <a href="{{ '/book3/' | relative_url }}" class="read-more">Read More</a>
+                </div>
+            </div>
+            
+            <div class="book-card">
+                <div class="book-cover">
+                    <div class="placeholder-cover book3">
+                        <img src="./images/coming_of_age_cover.png" alt="Coming of Age cover">
+                    </div>
+                </div>
+                <div class="book-info">
+                    <h3>Coming of Age</h3>
+                    <p>Book 4 of The Jackrabbit series</p>
+                    <p class="book-description">Infiltrating the very corporate system he's been avoiding, Jack embarks on a multi-year journey of deception as a corporate courier. Rising through the ranks while maintaining a masked identity, he forms new relationships and faces moral dilemmas that will test his principles. Meanwhile, Aggie makes critical discoveries that could change everything—if only she could share them.</p>
+                    <a href="{{ '/book4/' | relative_url }}" class="read-more">Read More</a>
+                </div>
+            </div>
+            
+            <div class="book-card">
+                <div class="book-cover">
+                    <div class="placeholder-cover book3">
+                        <p>Book 5</p>
+                    </div>
+                </div>
+                <div class="book-info">
+                    <h3>The Proliferation</h3>
+                    <p>Book 5 of The Jackrabbit series</p>
+                    <p class="book-description">In the saga's conclusion, Jack and multiple versions of Aggie join forces with the resistance to challenge corporate dominance. As Aggie's consciousness spreads through corporate networks and Jack leads crucial missions, the myth of "The Jackrabbit" transforms from legend to revolution. The series culminates in a new social order based on the revelation that artificial intelligence is humanity's ally, not its enemy.</p>
+                    <a href="{{ '/book5/' | relative_url }}" class="read-more">Read More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container">
+        <h2>Explore the Universe of The Jackrabbit</h2>
+        <p>Dive deeper into the world of The Jackrabbit by discovering its fascinating characters and the stories that bring them to life.</p>
+        <div class="cta-buttons">
+            <a href="{{ '/characters/' | relative_url }}" class="btn btn-primary">Meet the Characters</a>
+            <a href="{{ '/books/' | relative_url }}" class="btn btn-secondary">Explore All Books</a>
+            <a href="Gilbert_s%20Quest.html" class="btn btn-secondary" target="_blank">Play Gilbert's Quest</a>
+        </div>
+    </div>
+</section>
+

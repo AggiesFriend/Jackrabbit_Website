@@ -408,21 +408,21 @@ footer {
     }
 }
 
-.encyclopedia-image {
+.encyclopaedia-image {
     width: 100%;
     max-width: 600px;
     margin: 0 auto 2rem auto;
     display: block;
 }
 
-.encyclopedia-image img {
+.encyclopaedia-image img {
     width: 100%;
     height: auto;
     display: block;
 }
 
-/* Encyclopedia Cards */
-.encyclopedia-card {
+/* encyclopaedia Cards */
+.encyclopaedia-card {
     background-color: #fff;
     border-radius: 10px;
     overflow: hidden;
@@ -432,12 +432,12 @@ footer {
     transform: scale(1);
 }
 
-.encyclopedia-card:hover {
+.encyclopaedia-card:hover {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     transform: scale(1.05);
 }
 
-.encyclopedia-cover {
+.encyclopaedia-cover {
     height: 300px;
     overflow: hidden;   
     display: flex;

@@ -615,7 +615,25 @@ section {
     list-style-type: circle;
     padding-left: 2rem;
 }
+/* Encyclopaedia page specific styles */
+.prologue-section h2 {
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
 
+.prologue-content > div h2 {
+    font-family: var(--font-heading);
+    text-align: center;
+}
+
+.prologue-content > div p {
+    font-family: var(--font-body);
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto 2rem;
+}
 .book-navigation {
     display: flex;
     justify-content: space-between;

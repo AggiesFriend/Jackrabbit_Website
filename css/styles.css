@@ -1,4 +1,6 @@
-/* Base Styles */
+/* ============================================
+   BASE STYLES & CSS VARIABLES
+   ============================================ */
 :root {
     --primary-color: #2c3e50;
     --secondary-color: #8e44ad;
@@ -70,7 +72,29 @@ section {
     padding: 4rem 0;
 }
 
-/* Navigation */
+/* ============================================
+   CUSTOM SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -125,7 +149,9 @@ section {
     transition: var(--transition);
 }
 
-/* Hero Section */
+/* ============================================
+   HERO SECTION (Homepage)
+   ============================================ */
 .hero {
     height: 100vh;
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/space-background.jpg');
@@ -158,7 +184,32 @@ section {
     font-weight: 400;
 }
 
-/* Series Overview */
+/* ============================================
+   PAGE HEADER (Other pages)
+   ============================================ */
+.page-header {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/space-background.jpg');
+    background-size: cover;
+    background-position: center;
+    color: var(--light-text);
+    text-align: center;
+    padding: 8rem 0 4rem;
+}
+
+.page-header h1 {
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.page-header p {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.2rem;
+}
+
+/* ============================================
+   SERIES OVERVIEW
+   ============================================ */
 .series-overview {
     background-color: #fff;
     text-align: center;
@@ -170,7 +221,45 @@ section {
     font-size: 1.2rem;
 }
 
-/* Featured Books */
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    border-radius: 5px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    transition: var(--transition);
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.btn-secondary:hover {
+    background-color: white;
+    color: var(--primary-color);
+}
+
+/* ============================================
+   FEATURED BOOKS SECTION (Homepage)
+   ============================================ */
 .featured-books {
     background-color: #f5f5f5;
 }
@@ -187,14 +276,14 @@ section {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: var(--box-shadow);
-    transition: var(--transition); /* This is already defined as all 0.3s ease */
+    transition: var(--transition);
     transform-origin: center center;
-    transform: scale(1); /* Add this explicit starting scale */
+    transform: scale(1);
 }
 
 .book-card:hover {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    transform: scale(1.05); /* Add this to scale up */
+    transform: scale(1.05);
 }
 
 .book-cover {
@@ -257,7 +346,646 @@ section {
     color: white;
 }
 
-/* CTA Section */
+/* ============================================
+   BOOKS OVERVIEW PAGE
+   ============================================ */
+.books-overview {
+    background-color: #f5f5f5;
+    padding: 4rem 0;
+}
+
+.books-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.book-item {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 2rem;
+}
+
+.book-item .book-cover {
+    height: 100%;
+    min-height: 400px;
+}
+
+.book-details {
+    padding: 2rem;
+}
+
+.book-subtitle {
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.book-status {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.book-description p {
+    margin-bottom: 1rem;
+}
+
+.book-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.feature h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+}
+
+.feature ul {
+    list-style: none;
+}
+
+.feature li {
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.feature li::before {
+    content: "•";
+    color: var(--accent-color);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+/* ============================================
+   INDIVIDUAL BOOK PAGE
+   ============================================ */
+.book-full {
+    padding: 4rem 0;
+    background-color: #fff;
+}
+
+.book-full-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+/* Top section with book cover and excerpt viewer side by side */
+.book-top-section {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.book-full-cover {
+    flex: 0 0 300px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Excerpt viewer positioned as right column in top section */
+#excerpt-viewer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 200px;
+    max-height: 400px;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    background-color: var(--background-color, #f9f9f9);
+    font-family: var(--font-body, serif);
+}
+
+#excerpt-text {
+    flex: 1;
+    margin: 0 1em;
+    max-height: 350px;
+    overflow-y: auto;
+    text-align: left;
+}
+
+#excerpt-viewer button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: var(--primary-color);
+}
+
+/* Book details take full width below the top section */
+.book-full-details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.book-full-details h2 {
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+
+.book-section {
+    margin-bottom: 2rem;
+}
+
+.book-section h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.character-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.character-item {
+    background-color: #f5f5f5;
+    padding: 1rem;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.character-item h4 {
+    margin-bottom: 0.5rem;
+}
+
+.character-item p {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+}
+
+.theme-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.theme-item {
+    background-color: #f5f5f5;
+    padding: 0.8rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.quote {
+    font-style: italic;
+    border-left: 4px solid var(--accent-color);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+}
+
+/* ============================================
+   PROLOGUE PAGE
+   ============================================ */
+.prologue-section {
+    background-color: #fff;
+    padding: 4rem 0;
+}
+
+.prologue-container {
+    max-width: 900px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.prologue-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.prologue-header h2 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.prologue-header p {
+    color: var(--secondary-color);
+    font-style: italic;
+}
+
+.prologue-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    font-family: var(--font-body);
+}
+
+.prologue-content p {
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+.prologue-content > p:first-of-type::first-letter {
+    font-size: 3.5rem;
+    font-weight: 700;
+    float: left;
+    line-height: 0.7;
+    margin-right: 0.5rem;
+    color: var(--accent-color);
+}
+
+.prologue-content ul {
+    list-style-type: disc;
+    padding-left: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.prologue-content ul ul {
+    list-style-type: circle;
+    padding-left: 2rem;
+}
+
+.book-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4rem;
+    border-top: 1px solid #eee;
+    padding-top: 2rem;
+}
+
+.book-nav-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+/* ============================================
+   CHARACTER PAGES
+   ============================================ */
+.characters-grid {
+    background-color: #f5f5f5;
+    padding: 4rem 0;
+}
+
+.character-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.character-card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+}
+
+.character-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.character-image {
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+}
+
+.character-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.placeholder-character {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.char1 {
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+}
+
+.char2 {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.char3 {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+}
+
+.char4 {
+    background: linear-gradient(135deg, #16a085, #1abc9c);
+}
+
+.char5 {
+    background: linear-gradient(135deg, #8e44ad, #9b59b6);
+}
+
+.char6 {
+    background: linear-gradient(135deg, #f39c12, #f1c40f);
+}
+
+.character-info {
+    padding: 1.5rem;
+}
+
+.character-role {
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Individual Character Profile Page */
+.character-profile {
+    padding: 4rem 0;
+    background-color: #fff;
+}
+
+.character-profile-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+}
+
+.character-portrait {
+    height: 400px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.character-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+}
+
+.character-details h2 {
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.character-details .role {
+    color: var(--secondary-color);
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.character-section {
+    margin-bottom: 2rem;
+}
+
+.character-section h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.character-traits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.trait {
+    background-color: #f5f5f5;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.appearances {
+    margin-bottom: 1.5rem;
+}
+
+.appearances li {
+    margin-bottom: 0.5rem;
+}
+
+.relationships {
+    margin-bottom: 1.5rem;
+}
+
+.relationship {
+    margin-bottom: 1rem;
+}
+
+.relationship h4 {
+    margin-bottom: 0.5rem;
+    color: var(--secondary-color);
+}
+
+/* ============================================
+   ENCYCLOPAEDIA PAGES
+   ============================================ */
+.encyclopaedia-image {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+    display: block;
+}
+
+.encyclopaedia-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.encyclopaedia-card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    transform-origin: center center;
+    transform: scale(1);
+}
+
+.encyclopaedia-card:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+}
+
+.encyclopaedia-cover {
+    height: 300px;
+    overflow: hidden;   
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+}
+
+/* ============================================
+   CONTACT PAGE
+   ============================================ */
+.contact-section {
+    background-color: #fff;
+    padding: 4rem 0;
+}
+
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.contact-info h2 {
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.contact-details {
+    margin-top: 2rem;
+}
+
+.contact-item {
+    margin-bottom: 1.5rem;
+}
+
+.contact-item h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.contact-form-container {
+    background-color: #f5f5f5;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+}
+
+.contact-form {
+    background-color: #f5f5f5;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--primary-color);
+    font-family: var(--font-heading);
+}
+
+.contact-form input,
+.contact-form textarea,
+.contact-form select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border 0.3s;
+    font-family: var(--font-body);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus,
+.contact-form select:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+.contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.contact-form .btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    width: 100%;
+    font-family: var(--font-heading);
+}
+
+.contact-form .btn:hover {
+    background-color: #2980b9;
+}
+
+.success-message, .error-message {
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 4px;
+    display: none;
+    font-weight: 500;
+    text-align: center;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.sending {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.loader {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   CTA SECTION
+   ============================================ */
 .cta {
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('../images/stars-background.jpg');
     background-size: cover;
@@ -279,40 +1007,9 @@ section {
     flex-wrap: wrap;
 }
 
-.btn {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    display: inline-block;
-    padding: 0.8rem 2rem;
-    border-radius: 5px;
-    font-family: var(--font-heading);
-    font-weight: 600;
-    transition: var(--transition);
-    text-align: center;
-}
-
-.btn-primary {
-    background-color: var(--accent-color);
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: #2980b9;
-    color: white;
-}
-
-.btn-secondary {
-    background-color: transparent;
-    color: white;
-    border: 2px solid white;
-}
-
-.btn-secondary:hover {
-    background-color: white;
-    color: var(--primary-color);
-}
-
-/* Footer */
+/* ============================================
+   FOOTER
+   ============================================ */
 footer {
     background-color: var(--primary-color);
     color: var(--light-text);
@@ -353,7 +1050,53 @@ footer {
     font-size: 0.9rem;
 }
 
-/* Responsive Design */
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes navLinkFade {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.hero-content {
+    animation: fadeIn 1.5s ease-out;
+}
+
+.hero-content h1 {
+    animation: slideInUp 1.2s ease-out;
+}
+
+.hero-content .tagline {
+    animation: slideInUp 1.2s ease-out 0.3s forwards;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
 @media screen and (max-width: 768px) {
     h1 {
         font-size: 2.5rem;
@@ -361,6 +1104,14 @@ footer {
     
     h2 {
         font-size: 2rem;
+    }
+    
+    .hero h1 {
+        font-size: 3rem;
+    }
+    
+    .tagline {
+        font-size: 1.2rem;
     }
     
     .nav-links {
@@ -395,52 +1146,60 @@ footer {
         flex-direction: column;
         gap: 2rem;
     }
-}
-
-@keyframes navLinkFade {
-    from {
-        opacity: 0;
-        transform: translateX(50px);
+    
+    .book-item {
+        grid-template-columns: 1fr;
     }
-    to {
-        opacity: 1;
-        transform: translateX(0);
+    
+    .book-item .book-cover {
+        min-height: 300px;
     }
-}
+    
+    .book-features {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .book-top-section {
+        flex-direction: column;
+    }
+    
+    #excerpt-viewer {
+        flex-direction: column;
+        align-items: stretch;
+        max-height: none;
+    }
 
-.encyclopaedia-image {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto 2rem auto;
-    display: block;
-}
+    #excerpt-text {
+        margin: 1em 0;
+    }
+    
+    .character-profile-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .character-portrait {
+        height: 300px;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    
+    .prologue-content {
+        font-size: 1rem;
+    }
+    
+    .book-navigation {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+    
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
 
-.encyclopaedia-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* encyclopaedia Cards */
-.encyclopaedia-card {
-    background-color: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: var(--box-shadow);
-    transition: var(--transition);
-    transform-origin: center center;
-    transform: scale(1);
-}
-
-.encyclopaedia-card:hover {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    transform: scale(1.05);
-}
-
-.encyclopaedia-cover {
-    height: 300px;
-    overflow: hidden;   
-    display: flex;
-    justify-content: center;
-    align-items: center;  
+    .contact-form {
+        padding: 20px;
+    }
 }

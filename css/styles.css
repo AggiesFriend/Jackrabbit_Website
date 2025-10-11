@@ -1220,4 +1220,96 @@ footer {
     .contact-form {
         padding: 20px;
     }
+		
+		/* Reviews */
+		.review-highlight {
+		background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
+		padding: 3rem 0;
+		margin: 2rem 0;
+	}
+
+	.featured-review {
+		text-align: center;
+		margin: 0;
+		padding: 2rem;
+		border-left: 4px solid #4FACFE;
+	}
+
+	.review-quote {
+		font-size: 1.5rem;
+		font-family: 'Merriweather', serif;
+		font-style: italic;
+		color: #333;
+		margin-bottom: 1.5rem;
+		line-height: 1.6;
+	}
+
+	.review-attribution {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 1rem;
+	}
+
+	.review-rating {
+		color: #FFD700;
+		font-size: 1.2rem;
+		font-weight: bold;
+	}
+
+	.review-source {
+		color: #4FACFE;
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	.review-source:hover {
+		color: #00F2FE;
+	}
+}
+
+/* ============================================
+   REVIEW SNIPPETS / PULL QUOTES
+   ============================================ */
+.review-snippet, .book-reviews blockquote, .character-quote {
+  font-style: italic;
+  background: #f5f5f5;
+  border-left: 4px solid var(--accent-color);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 6px;
+}
+
+.review-snippet cite, .book-reviews cite, .character-quote cite {
+  display: block;
+  margin-top: 0.5rem;
+  font-style: normal;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.character-quote {
+  background: linear-gradient(135deg, rgba(79,172,254,0.1), rgba(0,242,254,0.1));
+  border-left: 4px solid var(--secondary-color);
+  padding: 1rem 1.2rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.character-quote cite {
+  text-align: right;
+}
+
+.book-reviews h2 {
+  color: var(--primary-color);
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .review-snippet, .character-quote {
+    font-size: 0.95rem;
+    padding: 0.8rem 1rem;
+  }
 }

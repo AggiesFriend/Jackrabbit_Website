@@ -1306,7 +1306,11 @@ footer {
   text-align: left;
   margin-bottom: 1rem;
 }
-
+/* Slight visual lift for review snippets within the books listing */
+.books-overview .review-snippet {
+  background: #f0f8ff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
 @media screen and (max-width: 768px) {
   .review-snippet, .character-quote {
     font-size: 0.95rem;

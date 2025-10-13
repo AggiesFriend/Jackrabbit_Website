@@ -1111,6 +1111,55 @@ footer {
     opacity: 0;
     animation-fill-mode: forwards;
 }
+/* ============================================
+   REVIEW SECTION STYLES
+   ============================================ */
+.review-highlight {
+    background: transparent;
+    padding: 3rem 0;
+    margin: 2rem 0;
+}
+
+.featured-review {
+    text-align: center;
+    margin: 0;
+    padding: 2rem;
+}
+
+.review-quote {
+    font-size: 1.5rem;
+    font-family: 'Merriweather', serif;
+    font-style: italic;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.review-attribution {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    color: #ffffff;
+}
+
+.review-rating {
+    color: #FFD700;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.review-source {
+    color: #4FACFE;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.review-source:hover {
+    color: #00F2FE;
+}
+
 
 /* ============================================
    RESPONSIVE DESIGN
@@ -1221,51 +1270,18 @@ footer {
         padding: 20px;
     }
 		
-		/* Reviews */
-		.review-highlight {
-		background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
-		padding: 3rem 0;
-		margin: 2rem 0;
-	}
-
-	.featured-review {
-		text-align: center;
-		margin: 0;
-		padding: 2rem;
-		border-left: 4px solid #4FACFE;
-	}
-
+	/* Mobile review adjustments - only adjust sizing, keep colours from desktop */
 	.review-quote {
-		font-size: 1.5rem;
-		font-family: 'Merriweather', serif;
-		font-style: italic;
-		color: #333;
-		margin-bottom: 1.5rem;
-		line-height: 1.6;
+		font-size: 1.2rem;
 	}
 
 	.review-attribution {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.5rem;
-		font-size: 1rem;
+		font-size: 0.9rem;
 	}
 
 	.review-rating {
-		color: #FFD700;
-		font-size: 1.2rem;
-		font-weight: bold;
+		font-size: 1rem;
 	}
-
-	.review-source {
-		color: #4FACFE;
-		text-decoration: none;
-		transition: color 0.3s ease;
-	}
-
-	.review-source:hover {
-		color: #00F2FE;
 	}
 }
 

@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Jackrabbit - Science Fiction Book Series</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/modal-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
@@ -179,45 +178,6 @@
         </div>
     </footer>
 
-    <!-- Important Notice Modal -->
-    <div id="noticeModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Important Notice</h2>
-            <p>We are currently aware of a potential quality issue with paperback copies of <strong>The Jackrabbit Emerges (Book 3)</strong> ordered through books.by.</p>
-            <p>I am actively pursuing this matter with books.by support and have ordered a fresh proof copy to assess the issue. Please be assured that I am committed to ensuring you receive a high-quality product.</p>
-            <p>Depending on the outcome, I may move all paperback distribution to Amazon KDP, where the eBook editions are already available and performing well.</p>
-            <p>If you have any concerns about a recent order, please don't hesitate to <a href="contact.html">contact me</a> directly.</p>
-            <p><em>Thank you for your patience and continued support.</em></p>
-        </div>
-    </div>
-
     <script src="js/script.js"></script>
-    <script>
-        // Modal functionality
-        window.addEventListener('DOMContentLoaded', function() {
-            var modal = document.getElementById('noticeModal');
-            var span = document.getElementsByClassName('close')[0];
-            
-            // Show modal on page load if not dismissed in this session
-            if (!sessionStorage.getItem('noticeModalDismissed')) {
-                modal.style.display = 'block';
-            }
-            
-            // Close modal when X is clicked
-            span.onclick = function() {
-                modal.style.display = 'none';
-                sessionStorage.setItem('noticeModalDismissed', 'true');
-            }
-            
-            // Close modal when clicking outside of it
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = 'none';
-                    sessionStorage.setItem('noticeModalDismissed', 'true');
-                }
-            }
-        });
-    </script>
 </body>
 </html>

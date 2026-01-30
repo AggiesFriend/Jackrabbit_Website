@@ -1,0 +1,12 @@
+# robots.txt for www.jackrabbit-series.com
+# The Jackrabbit Series by Tony Marks
+
+User-agent: *
+Allow: /
+
+# Exclude misc directory and Gilbert's Quest
+Disallow: /misc/
+Disallow: /Gilbert_s%20Quest.html
+
+# Sitemap location
+Sitemap: https://www.jackrabbit-series.com/sitemap.xml

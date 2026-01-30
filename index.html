@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="In a universe ruled by corporations, one boy and a forbidden AI forge an unlikely alliance. The Jackrabbit series by Tony Marks - a dystopian space opera about freedom, survival, and revolution.">
+    <meta name="author" content="Tony Marks">
+    <meta name="keywords" content="Jackrabbit, AGI, Artificial General Intelligence, dystopian, corporate rule, space opera, science fiction, Tony Marks">
     <title>The Jackrabbit - Science Fiction Book Series</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,8 +13,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header>
-        <nav class="navbar">
+        <nav class="navbar" aria-label="Primary navigation">
             <div class="logo">
                 <a href="index.html">The Jackrabbit</a>
             </div>
@@ -22,7 +26,7 @@
                 <li><a href="encyclopaedia/encyclopaedia.html">Encyclopaedia</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
-            <div class="burger">
+            <div class="burger" role="button" aria-label="Toggle navigation menu" aria-expanded="false" tabindex="0">
                 <div class="line1"></div>
                 <div class="line2"></div>
                 <div class="line3"></div>
@@ -30,7 +34,7 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main-content">
         <section class="hero">
 			<div class="hero-content">
 				<h1>The Jackrabbit</h1>
@@ -162,7 +166,7 @@
                     <h3>The Jackrabbit</h3>
                     <p>A science fiction series</p>
                 </div>
-                <div class="footer-links">
+                <div class="footer-links" role="navigation" aria-label="Footer navigation">
                     <ul>
                         <li><a href="index.html">Home</a></li>
                         <li><a href="books.html">Books</a></li>

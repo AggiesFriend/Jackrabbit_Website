@@ -10,7 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
         burger.addEventListener('click', () => {
             // Toggle nav
             nav.classList.toggle('nav-active');
-            
+
+            // Update aria-expanded for accessibility
+            const isExpanded = nav.classList.contains('nav-active');
+            burger.setAttribute('aria-expanded', isExpanded);
+
             // Animate links
             navLinks.forEach((link, index) => {
                 if (link.style.animation) {
@@ -19,9 +23,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
                 }
             });
-            
+
             // Burger animation
             burger.classList.toggle('toggle');
+        });
+
+        // Allow keyboard activation (Enter and Space)
+        burger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                burger.click();
+            }
         });
     }
 

@@ -174,7 +174,7 @@ a:hover {
   font-family: monospace;
   color: #fff;
 }</tw-passagedata><tw-passagedata pid="3" name="Introduction" tags="" position="275,25" size="100,100">! Gilbert&#39;s Sabotage Mission
-&lt;img src=&quot;./images/gilbert.png&quot; style=&quot;width: 300px; height: auto;&quot; alt=&quot;Gilbert&quot;&gt;
+&lt;img src=&quot;./images/gilbert.jpg&quot; style=&quot;width: 300px; height: auto;&quot; alt=&quot;Gilbert&quot;&gt;
 You are Gilbert, a resistance operative who has successfully infiltrated a GigaSource mining asteroid. Your mission has two objectives:
 
 1. Create a destructive diversion through sabotage, inflicting as much damage as possible on the mine
@@ -183,7 +183,7 @@ You are Gilbert, a resistance operative who has successfully infiltrated a GigaS
 The resistance is counting on you, but the odds are stacked against you. The mining colony is heavily guarded, and escape is far from guaranteed.
 
 [[Begin your mission|FirstChoice]]
-</tw-passagedata><tw-passagedata pid="4" name="FirstChoice" tags="" position="450,25" size="100,100">&lt;img src=&quot;./images/indomitable.png&quot; style=&quot;width: 600px; height: auto;&quot; alt=&quot;The Indomitable arriving at mining colony Alpha-7&quot;&gt;
+</tw-passagedata><tw-passagedata pid="4" name="FirstChoice" tags="" position="450,25" size="100,100">&lt;img src=&quot;./images/indomitable.jpg&quot; style=&quot;width: 600px; height: auto;&quot; alt=&quot;The Indomitable arriving at mining colony Alpha-7&quot;&gt;
 You are jostled awake by the subtle shudder of the Indomitable as it exits SnapSpace. Minutes later, the hum of the ship&#39;s engines softens, replaced by the mechanical sighs of docking clamps and pressurisation systems engaging. For a brief moment, the silence of space is mirrored within, a stillness before the inevitable churn of machinery and movement.
 
 The air is thick with anticipation. A few of the others murmur quietly, casting nervous glances toward the cargo bay doors. No one knows quite what to expect beyond them. You shift on your bunk, the metal frame creaking beneath you, and tighten the strap of your satchel containing what little you’ve been allowed to bring.
@@ -269,7 +269,7 @@ This is your first opportunity to explore the mine when most people will be out 
 [[Explore the maintenance tunnels|Maintenance Tunnels]]
 [[Explore the &#39;public&#39; areas|Worker Areas]]</tw-passagedata><tw-passagedata pid="10" name="Administration Area" tags="" position="500,375" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
 You decide to explore the area around the administration offices, near the dockyard.
-&lt;img src=&quot;./images/admin_area.png&quot; style=&quot;width: 600px; height: auto;&quot; alt=&quot;The bright, clean administration area&quot;&gt;
+&lt;img src=&quot;./images/admin_area.jpg&quot; style=&quot;width: 600px; height: auto;&quot; alt=&quot;The bright, clean administration area&quot;&gt;
 You set off cautiously, alert to the sound of any nearby guard patrols, and tentatively approach the brightly-lit offices.
 
 The first indication you have that something is wrong is when a distant alarm sounds, triggered by your movement being picked up by a security camera.
@@ -280,12 +280,12 @@ A large guard appears from a side corridor and rugby-tackles you to the ground. 
 
 [[Continue|Canonical Ending]]</tw-passagedata><tw-passagedata pid="11" name="Maintenance Tunnels" tags="" position="350,525" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
 You decide to explore the maintenance tunnels.
-&lt;img src=&quot;./images/tunnel.png&quot; style=&quot;width: 600px; height: auto;&quot; alt=&quot;An old, exploratory tunnel&quot;&gt;
+&lt;img src=&quot;./images/tunnel.jpg&quot; style=&quot;width: 600px; height: auto;&quot; alt=&quot;An old, exploratory tunnel&quot;&gt;
 Remaining alert at all times for the sounds of the security guards, you set off away from the administrative and worker-areas, seeking the old tunnels, some of which are still used for maintenance access, but most of which are left over from the original probing of the asteroid, looking for the richest mineral deposits.
 
 [[Explore the tunnels, going where the whim takes you|Whimsical]]
 [[Take a measured approach to exploring the tunnels|Methodical]]</tw-passagedata><tw-passagedata pid="12" name="Worker Areas" tags="" position="175,475" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
-&lt;img src=&quot;./images/worker_area.png&quot; style=&quot;width: 600px; height: auto;&quot; alt=&quot;The workers&#39; area under curfew&quot;&gt;
+&lt;img src=&quot;./images/worker_area.jpg&quot; style=&quot;width: 600px; height: auto;&quot; alt=&quot;The workers&#39; area under curfew&quot;&gt;
 Cautiously, you decide to limit your exploration to those areas that all workers are permitted to access when not working, or under curfew.
 
 Remaining alert at all times for the sounds of the security guards, you successfully familiarise yourself with the layout of these areas, without being discovered.
@@ -581,7 +581,7 @@ You whizz through the waste disposal chute, feet first. Seconds later, you clear
 
 The strap that is tethering you to the asteroid plays out to its full extent, and then snaps taut, holding you securely.
 
-&lt;img src=&quot;./images/tethered.png&quot; style=&quot;width: 600px; height: auto;&quot; alt=&quot;Tethered outside the asteroid&quot;&gt;
+&lt;img src=&quot;./images/tethered.jpg&quot; style=&quot;width: 600px; height: auto;&quot; alt=&quot;Tethered outside the asteroid&quot;&gt;
 
 As you rotate slowly at the end of the tether, you catch a glimpse of something metallic reflecting the starlight a couple of hundred metres from the chute&#39;s exit.
 
@@ -651,7 +651,7 @@ As you use the last of the navigation module&#39;s fuel to approach the ship, yo
 &lt;&lt;if $suitRepaired == false&gt;&gt;&lt;&lt;print &quot;Unfortunately for you, the suit you are wearing is not sound, and has been slowly bleeding oxygen into the void. You are overcome by a wave of euphoria, brought about by oxygen deprivation. The last thing you see before you die of asphyxiation is the hull of the courier ship that you had believed was your salvation.&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;print &quot;With the dying gasp of the navigation module, you manage to reach the ship - an old courier class.&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 
 &lt;&lt;if $suitRepaired&gt;&gt;[[Examine the ship|Examine Ship]]&lt;&lt;else&gt;&gt;[[Continue|End]]&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="59" name="Examine Ship" tags="" position="125,3675" size="100,100">&lt;&lt;set $turns += 1&gt;&gt;
-&lt;img src=&quot;./images/courier.png&quot; style=&quot;width: 600px; height: auto;&quot; alt=&quot;The dilapidated courier ship&quot;&gt;
+&lt;img src=&quot;./images/courier.jpg&quot; style=&quot;width: 600px; height: auto;&quot; alt=&quot;The dilapidated courier ship&quot;&gt;
 The vessel is an old Corsair class courier. The airlock is just in front of you.
 
 [[Open the airlock|Try Airlock]]

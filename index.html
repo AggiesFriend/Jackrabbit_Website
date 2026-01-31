@@ -23,6 +23,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Preload LCP image for faster mobile performance -->
+    <link rel="preload" as="image" href="./images/stolen_freedom_cover.jpg">
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -145,7 +147,7 @@
                     <div class="book-card">
                         <div class="book-cover">
                             <div class="placeholder-cover book1">
-                                <img src="./images/stolen_freedom_cover.jpg" alt="Stolen Freedom cover">
+                                <img src="./images/stolen_freedom_cover.jpg" alt="Stolen Freedom cover" loading="eager" fetchpriority="high">
                             </div>
                         </div>
                         <div class="book-info">
@@ -161,7 +163,7 @@
                     <div class="book-card">
                         <div class="book-cover">
                             <div class="placeholder-cover book2">
-                                <img src="./images/wings_of_freedom_cover.jpg" alt="Wings of Freedom cover">
+                                <img src="./images/wings_of_freedom_cover.jpg" alt="Wings of Freedom cover" loading="lazy">
                             </div>
                         </div>
                         <div class="book-info">
@@ -177,7 +179,7 @@
                     <div class="book-card">
                         <div class="book-cover">
                             <div class="placeholder-cover book3">
-                                <img src="./images/the_jackrabbit_emerges_base_front.jpg" alt="The Jackrabbit Emerges cover">
+                                <img src="./images/the_jackrabbit_emerges_base_front.jpg" alt="The Jackrabbit Emerges cover" loading="lazy">
                             </div>
                         </div>
                         <div class="book-info">
@@ -198,7 +200,7 @@
                     <div class="book-card">
                         <div class="book-cover">
                             <div class="placeholder-cover book3">
-                                <img src="./images/coming_of_age_cover.jpg" alt="Coming of Age cover">
+                                <img src="./images/coming_of_age_cover.jpg" alt="Coming of Age cover" loading="lazy">
                             </div>
                         </div>
                         <div class="book-info">

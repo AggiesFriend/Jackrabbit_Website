@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Consortium Data Standards (CDS) - the mandatory technical and cryptographic framework governing all packetised data transmission across Consortium-administered infrastructure in The Jackrabbit universe.">
+    <meta name="author" content="Tony Marks">
+    <meta name="keywords" content="Consortium Data Standards, CDS, CyberNexus, SnapMesh, cryptography, data governance, Jackrabbit, science fiction">
+    <title>Consortium Data Standards - The Jackrabbit Encyclopaedia</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header>
+        <nav class="navbar" aria-label="Primary navigation">
+            <div class="logo">
+                <a href="../index.html">The Jackrabbit</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../books.html">Books</a></li>
+                <li><a href="../characters.html">Characters</a></li>
+                <li><a href="../encyclopaedia/encyclopaedia.html">Encyclopaedia</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+            <div class="burger" role="button" aria-label="Toggle navigation menu" aria-expanded="false" tabindex="0">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <section class="page-header">
+            <div class="container">
+                <h1>Consortium Data Standards</h1>
+                <p>Encyclopaedia Entry - Data Governance and Cryptographic Framework</p>
+            </div>
+        </section>
+
+        <section class="prologue-section">
+            <div class="prologue-container">
+                <div class="prologue-content">
+                    <div class="encyclopaedia-image">
+                        <img src="../images/encyclopaedia/CDS.jpg" alt="Consortium Data Standards" />
+                    </div>
+
+                    <p>The <strong>Consortium Data Standards (CDS)</strong> define the mandatory technical and cryptographic framework governing all packetised data transmission across infrastructure administered by Consortium and operated centrally by CyberNexus or its licensed subsidiaries.</p>
+
+                    <p>CDS applies to:</p>
+                    <ul>
+                        <li>Public interstellar communications infrastructure</li>
+                        <li>The Secure Consortium Backbone (SCB), physically air-gapped from public systems</li>
+                        <li>The restricted SnapMesh relay network</li>
+                    </ul>
+
+                    <p>Although operational control resides with CyberNexus, CDS compliance is mandatory for all accredited megacorporations and licensed entities operating within Consortium space.</p>
+
+                    <h2>Governance and Operational Oversight</h2>
+                    <p>CyberNexus maintains a centralised AI oversight system embedded within the routing and governance layer of the network.</p>
+                    <p>The system:</p>
+                    <ul>
+                        <li>Has access to all packet metadata</li>
+                        <li>May access encrypted payloads where cryptographic authority permits</li>
+                        <li>Maintains compliance audit records</li>
+                        <li>Monitors for downgrade attempts, routing anomalies, and accreditation violations</li>
+                    </ul>
+                    <p>While the AI possesses access-level visibility across infrastructure, it does not possess sufficient processing capacity to analyse all traffic in real time. Instead, it operates on prioritised heuristics, anomaly scoring, and triggered inspection models.</p>
+                    <p>This structural asymmetry—total access but finite analysis—has become a defining feature of Consortium-era data governance.</p>
+
+                    <h2>Infrastructure Planes</h2>
+
+                    <h3>Public Infrastructure Plane (PIP)</h3>
+                    <p>Open to accredited entities and regulated civil traffic. Encryption requirements vary by classification level.</p>
+
+                    <h3>Secure Consortium Backbone (SCB)</h3>
+                    <p>Physically air-gapped from the public plane. Restricted to Tier I and Tier II megacorporate traffic and strategic communications. Level II encryption is mandatory; Level III is required for strategic data.</p>
+
+                    <h3>SnapMesh Relay Network (SRN)</h3>
+                    <p>An independent, synchronised jump-based relay mesh. Access is limited to registered corporations. Accreditation reflects industrial output, political standing, and historical compliance. SnapMesh nodes interface with CyberNexus governance systems but operate on discrete relay cycles.</p>
+
+                    <h2>Packet Architecture</h2>
+                    <p>All CDS-compliant packets include the following components:</p>
+                    <ul>
+                        <li><strong>Header:</strong> Origin Authority Identifier (OAI), Accreditation Tier, Cipher Level Declaration, Timestamp (Consortium Standard Time), and Routing Intent Flags</li>
+                        <li><strong>Payload:</strong> Encrypted or plaintext data, as permitted by the applicable classification level</li>
+                        <li><strong>Integrity Footer:</strong> Hash commitment, Signature block, and Governance trace token</li>
+                    </ul>
+                    <p>All packets generate immutable compliance commitments recorded within CyberNexus audit systems.</p>
+
+                    <h2>Cryptographic Architecture</h2>
+                    <p>CDS cryptography is structured in hierarchical layers. These layers define encryption strength, key custody, and access authority.</p>
+
+                    <h3>Base Hardware Cryptographic Layer (Level 0)</h3>
+                    <p>At the foundation of all CDS infrastructure is a small set of Consortium Root Keys embedded in certified hardware.</p>
+                    <p>Characteristics:</p>
+                    <ul>
+                        <li>Installed at manufacture</li>
+                        <li>Not electronically transmitted</li>
+                        <li>Updated only via ultra-secure physical storage</li>
+                        <li>Delivered by authorised couriers under military-grade escort</li>
+                        <li>Stored in tamper-resistant hardware modules</li>
+                    </ul>
+                    <p>These keys authenticate infrastructure nodes, enable secure firmware validation, and anchor trust across both public and secure planes. CyberNexus maintains custody of root key generation but does not distribute them electronically under any circumstances.</p>
+                    <p>Compromise of Level 0 keys is considered an existential infrastructure event.</p>
+
+                    <h3>Level I – Integrity and Identity Layer</h3>
+                    <p>Mandatory across all infrastructure. Provides cryptographic hashing of packet contents, digital signature validation of origin identity, anti-downgrade protections, and replay prevention.</p>
+                    <p>Level I does not require payload encryption on public infrastructure, but signatures are compulsory for all identity-bearing transmissions. CyberNexus AI has automatic visibility of metadata and, where unencrypted, payloads.</p>
+
+                    <h3>Level II – Corporate Confidentiality Layer</h3>
+                    <p>Required for sensitive corporate traffic, all Secure Backbone communications, and high-tier SnapMesh transmissions. Provides end-to-end encryption, forward secrecy, compartmentalised session keys, and hardware-backed key storage.</p>
+                    <p>Megacorporations may generate and manage their own private encryption keys at Level II. These private keys are not automatically escrowed to CyberNexus, remain sovereign to the issuing corporation, and are subject only to accreditation-based inspection triggers. CyberNexus can observe metadata and routing behaviour but cannot decrypt payloads protected by sovereign corporate keys without cooperation.</p>
+
+                    <h3>Level III – Strategic Sovereign Encryption</h3>
+                    <p>Restricted to Tier I megacorporations and select Tier II entities. Adds multi-layer encryption envelopes, hardware-bound key derivation, multi-party decryption quorum systems, temporal access constraints (notably for SnapMesh), and air-gapped key custody enforcement.</p>
+                    <p>Level III traffic may employ dual-control decryption requirements, delayed-release cryptographic locks, and SnapMesh jump-synchronised encryption windows. Even CyberNexus does not possess unilateral decryption capability for properly constituted Level III sovereign keys.</p>
+                    <p>However, CyberNexus retains authority over root hardware validation, node certification, and infrastructure-level key revocation.</p>
+
+                    <h3>SnapMesh Cryptographic Constraints</h3>
+                    <p>SnapMesh transmissions occur during tightly synchronised relay windows. Security characteristics include:</p>
+                    <ul>
+                        <li>Pre-committed cryptographic exchange parameters</li>
+                        <li>Jump-window-bound session keys</li>
+                        <li>Single-cycle validity enforcement</li>
+                        <li>Relay authentication anchored to Level 0 hardware keys</li>
+                    </ul>
+                    <p>Missed synchronisation may invalidate encryption contexts and require re-authentication on subsequent relay cycles. Because SnapMesh access is restricted to accredited corporations, access is influenced by industrial scale, political alignment, strategic contribution, and compliance history.</p>
+
+                    <h2>Key Custody Model</h2>
+                    <p>CDS operates under a hybrid sovereignty model in which infrastructure trust and corporate confidentiality are deliberately separated:</p>
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-family: var(--font-body);">
+                        <thead>
+                            <tr style="background-color: var(--primary-color); color: var(--light-text);">
+                                <th style="padding: 0.75rem 1rem; text-align: left; font-family: var(--font-heading);">Key Type</th>
+                                <th style="padding: 0.75rem 1rem; text-align: left; font-family: var(--font-heading);">Custodian</th>
+                                <th style="padding: 0.75rem 1rem; text-align: left; font-family: var(--font-heading);">Electronic Transmission</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 0.75rem 1rem;">Root Hardware Keys</td>
+                                <td style="padding: 0.75rem 1rem;">CyberNexus</td>
+                                <td style="padding: 0.75rem 1rem;">Never</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #ddd; background-color: #f5f5f5;">
+                                <td style="padding: 0.75rem 1rem;">Infrastructure Node Keys</td>
+                                <td style="padding: 0.75rem 1rem;">CyberNexus</td>
+                                <td style="padding: 0.75rem 1rem;">Restricted</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 0.75rem 1rem;">Corporate Private Keys</td>
+                                <td style="padding: 0.75rem 1rem;">Issuing Corporation</td>
+                                <td style="padding: 0.75rem 1rem;">Permitted internally</td>
+                            </tr>
+                            <tr style="background-color: #f5f5f5;">
+                                <td style="padding: 0.75rem 1rem;">Session Keys</td>
+                                <td style="padding: 0.75rem 1rem;">Derived per transmission</td>
+                                <td style="padding: 0.75rem 1rem;">Ephemeral</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>This separation ensures centralised control of infrastructure integrity alongside decentralised control of corporate confidentiality.</p>
+
+                    <h2>Monitoring and Inspection</h2>
+                    <p>The CyberNexus AI oversight system sees all metadata, can access unencrypted payloads, may inspect encrypted payloads where corporate keys permit, and operates heuristic prioritisation for anomaly detection.</p>
+                    <p>Inspection escalation may occur upon accreditation breach, downgrade attempt, routing irregularity, or political sanction. However, bulk real-time decryption of all traffic is computationally infeasible at current processing limits.</p>
+
+                    <h2>Security Model Characteristics</h2>
+                    <p>CDS embodies a layered philosophy combining hardware-rooted trust, sovereign corporate confidentiality, centralised oversight authority, and politically tiered access control.</p>
+                    <p>This structure has been described as both a robust interoperability regime and a mechanism for industrial control.</p>
+
+                    <h2>Criticism</h2>
+                    <p>Common criticisms of the CDS framework include:</p>
+                    <ul>
+                        <li>Concentration of root cryptographic authority within CyberNexus</li>
+                        <li>Political leverage over SnapMesh access</li>
+                        <li>Governance trace logging across all traffic</li>
+                        <li>Asymmetry between infrastructure control and corporate autonomy</li>
+                    </ul>
+                    <p>Independent outposts and non-aligned entities have occasionally argued that CDS encodes political hierarchy directly into technical architecture.</p>
+
+                    <h2>See Also</h2>
+                    <ul>
+                        <li>CyberNexus</li>
+                        <li>Consortium</li>
+                        <li><a href="SnapMesh.html">SnapMesh Relay Network</a></li>
+                        <li>Consortium Technical Directorate</li>
+                    </ul>
+                </div>
+
+                <div class="book-navigation">
+                    <div class="book-nav-buttons">
+                        <a href="../encyclopaedia/encyclopaedia.html" class="btn btn-primary">Back to Encyclopaedia</a>
+                        <a href="../index.html" class="btn btn-secondary">Return Home</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>The Jackrabbit</h3>
+                    <p>A science fiction series</p>
+                </div>
+                <div class="footer-links" role="navigation" aria-label="Footer navigation">
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../books.html">Books</a></li>
+                        <li><a href="../characters.html">Characters</a></li>
+                        <li><a href="../encyclopaedia/encyclopaedia.html">Encyclopaedia</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 The Jackrabbit Series. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

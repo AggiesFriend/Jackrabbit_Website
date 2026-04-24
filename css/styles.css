@@ -1356,3 +1356,63 @@ footer {
     padding: 0.8rem 1rem;
   }
 }
+/* Purchase CTA button groups on book pages */
+.purchase-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 1.2rem 0 2rem;
+}
+.purchase-ctas .btn {
+  flex: 0 0 auto;
+}
+
+/* Homepage Start Here CTA and comparable-authors line */
+.series-overview .comp-authors {
+  margin-top: 0.4rem;
+  font-style: italic;
+  opacity: 0.85;
+}
+.series-overview .start-here {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+}
+.series-overview .start-here-hint {
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+/* Characters page: spoiler notice and book-group headings */
+.spoiler-notice {
+  background-color: #fdf6e3;
+  border-top: 1px solid #e8d9a7;
+  border-bottom: 1px solid #e8d9a7;
+  padding: 1.2rem 0;
+}
+.spoiler-notice p {
+  max-width: 900px;
+  margin: 0 auto;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: #5c4a10;
+}
+.character-group-heading {
+  margin-top: 3rem;
+  margin-bottom: 0.3rem;
+  text-align: center;
+  font-size: 1.8rem;
+}
+.character-group-heading:first-of-type {
+  margin-top: 1rem;
+}
+.character-group-intro {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 1.8rem;
+  font-style: italic;
+  opacity: 0.85;
+}

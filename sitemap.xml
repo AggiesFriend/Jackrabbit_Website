@@ -41,6 +41,13 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Companion Short Story -->
+  <url>
+    <loc>https://www.jackrabbit-series.com/just_burke.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Book 1 Prologue -->
   <url>
     <loc>https://www.jackrabbit-series.com/Book_1_Prologue.html</loc>

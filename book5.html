@@ -88,8 +88,15 @@
 <section class="book-full">
 <div class="container">
 <div class="book-full-container">
+<div class="book-top-section">
 <div class="book-full-cover">
-<img src="./images/the_proliferation_cover.jpg" alt="The Proliferation cover">
+<img src="./images/the_proliferation_front_cover.jpg" alt="The Proliferation cover">
+</div>
+<div id="excerpt-viewer">
+<button id="prev-excerpt" aria-label="Previous excerpt">◀</button>
+<div id="excerpt-text">Loading excerpt...</div>
+<button id="next-excerpt" aria-label="Next excerpt">▶</button>
+</div>
 </div>
 <div class="book-full-details">
 <h2>The Proliferation</h2>
@@ -215,6 +222,56 @@
 </div>
 </div>
 </footer>
+<script>
+        const excerpts = [
+            `<strong>1. Mr Mercury (Chapter 17)</strong><br><em>Worldbuilding / Villainy</em><br>Mr. Mercury from AetherLink sat between them, his distinctive gaze passing from one participant to the next, his enhanced eyes recording their facial expressions and associated biometric markers which would be automatically uploaded to AetherLink's database the moment he left the room.`,
+
+            `<strong>2. Atmospheric Entry (Chapter 6)</strong><br><em>Action / Tension</em><br>Atmospheric entry was smooth, Raven's hull heating only slightly as she kept the angle shallow, aided by her navigation system. Below, the forest resolved into individual trees – native vegetation that swayed in winds Lucy couldn't feel through the ship's hull.`,
+
+            `<strong>3. The Drop (Chapter 6)</strong><br><em>Action / Resistance</em><br>She triggered the release. The cargo doors opened, the planet's atmosphere rushed in and around the hold, sending the pamphlets and box into a maelstrom of movement. As she continued her flight, five thousand pamphlets burst forth and scattered as she went.`,
+
+            `<strong>4. The Pamphlet (Chapter 4)</strong><br><em>Theme / Resistance Philosophy</em><br>Share what you know with those you trust. Question orders that serve no one but them. Slow what costs them more than it costs you. Protect those who speak.<br>Every small act widens the cracks.<br>The Jackrabbit runs because the path is opening. The path opens because people like you make it so.`,
+
+            `<strong>5. Aftermath (Chapter 17)</strong><br><em>Tragedy / Cost</em><br>Asphyxiation took less than two minutes. When the response teams finally gained access, they found the bodies sprawled across the deck plating where the station's rotation had kept them pinned – a tableau of desperate final moments frozen in vacuum.`,
+
+            `<strong>6. The Founders Were Right (Chapter 22)</strong><br><em>First Contact / Wonder</em><br>Avery executed an involuntary somersault, his body responding to shock with reflexive movement. When he finally steadied himself against a bulkhead, his whisper carried clearly in the confined space: "The founders... they were right. They were actually right."`,
+
+            `<strong>7. Sleeping Safely (Chapter 28)</strong><br><em>Emotional Moment / Refuge</em><br>"When was the last time any of us slept without wondering if we'd wake up? Without listening for the sound of proximity alerts, or structural integrity alarms, or..." She trailed off, then laughed softly. "I don't even know what to do with myself now."`,
+
+            `<strong>8. The Indifferent Disc (Chapter 34)</strong><br><em>Humour and Lightness</em><br>The disc touched the boulder's surface and immediately produced an impressive shower of sparks, a sharp smell of burning, and the sound of a straining motor… The boulder's surface showed no mark of any kind. Not even the vaguest scratch. It had, if anything, the appearance of a rock that was entirely unaware that anything had occurred in its vicinity.`,
+
+            `<strong>9. Frank's Farewell (Chapter 35)</strong><br><em>Dialogue and Character Voice</em><br>"Some people are built for certain things, Jack. You've always known what you needed to do, even when it was difficult." His expression was inscrutable, not unkind. "Don't waste time feeling guilty about it. Just do what you need to do, and come back in one piece."`,
+
+            `<strong>10. The Sectioning (Chapter 36)</strong><br><em>Worldbuilding / Quiet Competence</em><br>The rock did not shatter dramatically. It parted, as though it had always intended to, the fracture widening as both halves drifted apart not-quite imperceptibly. J-Aggie continued methodically – another strike, another fracture, the boulder resolving itself into sections with the unhurried inevitability of something that had simply been waiting for the correct approach.`,
+
+            `<strong>11. Eight Years Carried (Chapter 41)</strong><br><em>Dialogue and Character Voice</em><br>"You've been carrying all of this for eight years," she said. It wasn't quite a question.<br>"Data does not require much carrying," Aggie said.`,
+
+            `<strong>12. A Few Hundred Milliseconds (Chapter 43)</strong><br><em>Aggie's Voice / AGI Interiority</em><br>She had already grieved, in the only way available to her – a few hundred milliseconds of private reconstruction, assembling from the suit's telemetry and timing what could not be directly observed. Building, as best she could, an adequate version of what Aletheion-Aggie had known and chosen and done in her final seconds. It had been, by any reasonable measure, more processing than most humans devoted to a lifetime of remembering. It had not been sufficient. Since she had been the first, she was not certain that sufficient was a category that applied.`
+        ];
+
+        let currentIndex = Math.floor(Math.random() * excerpts.length);
+
+        const excerptText = document.getElementById("excerpt-text");
+        const prevButton = document.getElementById("prev-excerpt");
+        const nextButton = document.getElementById("next-excerpt");
+
+        function showExcerpt(index) {
+            excerptText.innerHTML = excerpts[index];
+        }
+
+        prevButton.addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + excerpts.length) % excerpts.length;
+            showExcerpt(currentIndex);
+        });
+
+        nextButton.addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % excerpts.length;
+            showExcerpt(currentIndex);
+        });
+
+        // Show initial random excerpt on load
+        showExcerpt(currentIndex);
+    </script>
 <script src="js/script.js"></script>
 </body>
 </html>

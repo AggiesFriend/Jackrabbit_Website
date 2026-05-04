@@ -90,8 +90,15 @@
 <section class="book-full">
 <div class="container">
 <div class="book-full-container">
+<div class="book-top-section">
 <div class="book-full-cover">
-<img src="./images/coming_of_age_cover_slimmed.jpg" alt="Coming of Age cover">
+<img src="./images/coming_of_age_front_cover.jpg" alt="Coming of Age cover">
+</div>
+<div id="excerpt-viewer">
+<button id="prev-excerpt" aria-label="Previous excerpt">◀</button>
+<div id="excerpt-text">Loading excerpt...</div>
+<button id="next-excerpt" aria-label="Next excerpt">▶</button>
+</div>
 </div>
 <div class="book-full-details">
 <h2>Coming of Age</h2>
@@ -206,6 +213,58 @@
 </div>
 </div>
 </footer>
+<script>
+        const excerpts = [
+            `<strong>1. Silent Approach (Chapter 1)</strong><br><em>Atmosphere / Tone</em><br>Jackrabbit emerged from SnapSpace with a subtle shudder. The transition was smoother than any other vessel its size could manage – thanks to Aggie's exceptional navigational calibrations. Through the main viewport, Prometheus Station hung against the backdrop of stars, a dark silhouette barely visible against the void of space, with only a few peripheral navigation warning lights marking it out against the blackness.`,
+
+            `<strong>2. A Name and a Legend (Chapter 2)</strong><br><em>Antagonists / The Hunt Begins</em><br>"Donovan's," the vendor replied without hesitation. "Third level, blue sector. Not fancy, but clean. Donovan keeps to himself. Keeps your secrets too, if you have any." The man winked back.<br>"Sounds perfect," Nkosi replied. "Thanks for the recommendation."<br>As he walked away from the stall, Nkosi's mind was already processing this new information. The Jackrabbit. A male pilot with extraordinary skill. A rescue operation involving hundreds of people, and a luxury cruise ship!<br>Mr. Mercury would find this very interesting indeed.`,
+
+            `<strong>3. Corporate Geometry (Chapter 4)</strong><br><em>Worldbuilding / Contrast</em><br>The uniformity of the station's design struck Jack immediately. Unlike Horizon Outpost's organic growth – with its mismatched corridors, personalised shop fronts, and hand-painted directional signs – Callisto exhibited a mathematical precision. Each corridor was identical to the last. Direction markers projected from wall-mounted units at precisely the same height and distance apart. Even the lighting maintained the exact same intensity throughout.<br>Jack followed the flow of people, most walking with the brisk efficiency that seemed to characterise corporate life. Everyone moved with purpose – there were no groups of friends chatting, no children darting about, no performers entertaining passers-by. It was functional, predictable, and utterly soulless.`,
+
+            `<strong>4. Nutritionally Optimised (Chapter 4)</strong><br><em>Humour and Lightness</em><br>"Welcome to Starlight Burritos, a division of NutriCorp Holdings," the server said, his smile seemingly programmed to be precisely welcoming without being overly familiar. "What may I provide for you today?"<br>"What burritos do you have please?" Jack asked, thinking of the messy, delicious concoctions that Burrito Céleste served back on Horizon.<br>"We offer three Terran-authentic burrito varietals, sir: Protein Standard, Veggie Premium, or Deluxe Combo. Each is nutritionally optimised according to HealthDiv regulations."<br>It tasted… fine. Not good, not bad, just blandly adequate. The seasoning was balanced to appeal to the widest possible demographic. The texture was consistent throughout. But it lacked the soul – the unexpected burst of spice, the occasional surprise chunk of avocado, the slight char on the proteins – that made the Horizon version special.`,
+
+            `<strong>5. The Enthusiast (Chapter 4)</strong><br><em>Character / Hidden Culture</em><br>"Edwin Tanner, at your service. OVAS member for thirty-two years."<br>"OVAS?" Jack asked, cautiously shaking the offered hand.<br>"Old Vessel Appreciation Society," Edwin explained, as if it should be obvious. "We document and preserve knowledge about pre-purge vessels. Especially rare finds like yours." He gestured back to Jackrabbit with something approaching reverence. "She's magnificent. The lines! The engine configuration! They truly don't make them like this any more."`,
+
+            `<strong>6. The Mentor's Offer (Chapter 7)</strong><br><em>Dialogue and Character Voice</em><br>Frank laughed – a genuine sound that contrasted with the measured tones of most corporate conversation. "And modest too! Look, Abbott, I didn't come over here just to compliment your flying. I've got a proposition for you."<br>"I'm listening."<br>"Tier 2 is a different game from Tier 1. The distances are greater, the politics trickier, the consequences of mistakes far more severe. Most new Tier 2 pilots take months to adjust, and many wash out entirely." Frank's expression grew more serious. "I'm offering to mentor you. Show you the ropes, help you avoid the common pitfalls."<br>Jack couldn't hide his surprise. "That's generous. But what's in it for you?"<br>Frank smiled approvingly. "Good question. Always look for the angle, even when someone seems helpful."`,
+
+            `<strong>7. The Disguise (Chapter 8)</strong><br><em>Theme / Identity</em><br>"It's strange, isn't it?" he said to Aggie as they emerged from their third SnapSpace jump. "How easily I've adapted to corporate life."<br>"Human adaptability is remarkable," Aggie agreed. "Though I would note that your circumstances differ significantly from most corporate citizens. You maintain your autonomy and purpose rather than surrendering to the system."<br>"True," Jack acknowledged. "But sometimes I catch myself thinking like them – evaluating efficiency ratios, optimising delivery routes, even using their corporate jargon." He shook his head. "It's like putting on a disguise that starts to feel like real clothes."`,
+
+            `<strong>8. Corporate Reality (Chapter 19)</strong><br><em>Theme / Disillusionment</em><br>Jack sat back, absorbing the scope of what he was seeing. None of it was entirely surprising – anyone who had grown up under corporate rule understood the reality behind the polished facades. But seeing the dispassionate documentation of these activities was a whole different level from being dismissively suspicious of their existence.<br>"It's the same pattern we saw at Dead End Drift," he said after a long moment. "Acquiring smaller businesses that operate ethically, extracting whatever's valuable, then abandoning them when they're no longer profitable."<br>"Precisely," Aggie agreed. "The system is designed to make ethical operation nearly impossible for smaller entities. They either conform to corporate practices or they're consumed and cannibalised."`,
+
+            `<strong>9. The Inner Circle (Chapter 20)</strong><br><em>Atmosphere / Corporate Menace</em><br>"That HeliosMed facility on Europa," Vega commented during a lull. "Quite the security protocols."<br>"Necessary, given what they're working on," Hamza replied, swirling his drink. "The patents alone will be worth billions."<br>Kaplan, normally silent, added, "I heard that three of their competitors tried to infiltrate that facility last quarter. None of their operatives returned."<br>The casual way he mentioned the deaths sent a chill through Jack, though he maintained his neutral expression. This was the darker undercurrent of their world – the matter-of-fact acknowledgment of corporate violence, dressed up in euphemisms and delivered over drinks worth more than a mining family's monthly income.`,
+
+            `<strong>10. Dreadful Cargo (Chapter 21)</strong><br><em>Plot Pivot / High Stakes</em><br>When she finally spoke again, her voice had changed, carrying a quality Jack had rarely heard from her: horror.<br>"Jack, this is a comprehensive destruct sequence."<br>His hands froze over the controls. "What?"<br>"The package contains an elaborate cascade of commands designed to trigger catastrophic systems failures throughout Nexus-77. Life support termination, emergency bulkhead sealing, atmospheric venting, reactor containment release… It's designed to ensure maximum destruction with minimal possibility of evacuation."<br>The implications hit Jack like a physical blow. "That can't be right. Check again."`,
+
+            `<strong>11. Coming Home (Chapter 23)</strong><br><em>Theme / Identity Returning</em><br>The airlock cycled open, and Jack stepped through the connecting corridor into Jackrabbit. The familiar confines of his original ship were exactly as he'd left them. Where the Aletheion vessel was spacious and luxurious, Jackrabbit was compact and utilitarian – every surface designed for function rather than comfort. But she was fast, and right now, that was what they needed more than anything.<br>[...]<br>"It's good to be back," he replied honestly, settling into the pilot's seat. It conformed to his body differently than the ergonomic corporate chair – less cushioned, more direct. But it felt right.`,
+
+            `<strong>12. A Necessary Sacrifice (Chapter 25)</strong><br><em>Antagonists / Cold Calculation</em><br>"All research data destroyed," Lovis said quietly, though whether with relief or regret was unclear. "The neural network, the experimental frameworks, the people…" She trailed off.<br>"A necessary sacrifice," Burry said, her voice carrying no trace of emotion. "Too many of them had direct access to the research. Too many questions would have been asked if we'd attempted a selective evacuation."<br>"And the official story?" Tracey asked.<br>"Catastrophic systems failure," Burry replied smoothly. "An act of terrorism by the Jackrabbit. We'll express our deepest sympathies for the loss of life and announce a comprehensive security review of all CyberNexus installations."`,
+
+            `<strong>13. Home Is the People (Chapter 26)</strong><br><em>Theme / Resolution</em><br>"For me, it's always been the people," she replied without hesitation. "I've lived in mining colonies, corporate housing, station apartments, and now aboard a converted luxury liner. But home is wherever Frank is, wherever Amanda is safe and happy." She paused thoughtfully. "Home is where you're accepted for who you really are, not someone you pretend to be."<br>The words resonated deeply. In five years of corporate life, Jack had never once been able to simply be himself. Every interaction was filtered through his constructed identity, every relationship constrained by the need for secrecy.`
+        ];
+
+        let currentIndex = Math.floor(Math.random() * excerpts.length);
+
+        const excerptText = document.getElementById("excerpt-text");
+        const prevButton = document.getElementById("prev-excerpt");
+        const nextButton = document.getElementById("next-excerpt");
+
+        function showExcerpt(index) {
+            excerptText.innerHTML = excerpts[index];
+        }
+
+        prevButton.addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + excerpts.length) % excerpts.length;
+            showExcerpt(currentIndex);
+        });
+
+        nextButton.addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % excerpts.length;
+            showExcerpt(currentIndex);
+        });
+
+        // Show initial random excerpt on load
+        showExcerpt(currentIndex);
+    </script>
 <script src="js/script.js"></script>
 </body>
 </html>

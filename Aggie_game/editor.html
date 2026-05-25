@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Jackrabbit: Level Editor</title>
+    <script type="module" crossorigin src="./assets/editor-BP2kDnc-.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/campaign-CLDyByyu.js">
+    <link rel="modulepreload" crossorigin href="./assets/geometry-CJPsVxNy.js">
+    <link rel="modulepreload" crossorigin href="./assets/render-CDg9Fuk_.js">
+    <link rel="modulepreload" crossorigin href="./assets/library-DeDQ4gZn.js">
+    <link rel="stylesheet" crossorigin href="./assets/campaign-DKxtNRSF.css">
+  </head>
+  <body class="editor-body">
+    <div id="app">
+      <header class="hud">
+        <div class="hud-left">
+          <span class="hud-label">EDITOR</span>
+          <span id="hud-system">LEVEL DESIGN</span>
+          <a class="hud-nav" href="./spectrum.html">Spectrum Lock &rarr;</a>
+          <a class="hud-nav" href="./campaign.html">Campaign &rarr;</a>
+        </div>
+        <div class="hud-right">
+          <span class="editor-tool-label">TOOL:</span>
+          <select id="tool-select">
+            <option value="node">Place node</option>
+            <option value="edge">Draw edge</option>
+            <option value="ingress">Set ingress</option>
+            <option value="target">Set target</option>
+            <option value="editedge">Select / edit edge</option>
+            <option value="bot">Edge bot</option>
+            <option value="gridbot">Grid bot</option>
+            <option value="trap">Trap</option>
+            <option value="delete">Delete</option>
+          </select>
+        </div>
+      </header>
+      <canvas id="editor-canvas"></canvas>
+      <aside class="editor-side" id="editor-side">
+        <div class="row">
+          <label>Grid cols <input id="cols" type="number" value="20" min="5" max="60" /></label>
+          <label>Grid rows <input id="rows" type="number" value="14" min="5" max="40" /></label>
+          <button id="apply-grid">Apply</button>
+        </div>
+        <div class="row">
+          <label>Exposure (ms) <input id="exposure" type="number" value="3500" min="500" step="100" /></label>
+          <label>Speed (grid/s) <input id="speed" type="number" value="5.5" min="0.5" max="20" step="0.5" /></label>
+        </div>
+        <div class="row">
+          <label>Degrade (ms) <input id="degrade-ms" type="number" value="2800" min="200" step="100" /></label>
+          <button id="toggle-degrading">Toggle degrading</button>
+        </div>
+        <div class="row">
+          <span class="hint" id="edge-info">No edge selected</span>
+        </div>
+        <div class="row">
+          <label>Name <input id="level-name" type="text" value="untitled" /></label>
+        </div>
+        <div class="row">
+          <button id="undo-btn" disabled>Undo (Ctrl+Z)</button>
+          <button id="delete-selected" disabled>Delete selected</button>
+        </div>
+        <div class="row">
+          <button id="export-json">Export JSON</button>
+          <button id="import-json">Import JSON</button>
+          <button id="play-test">Play test</button>
+        </div>
+        <textarea id="json-area" spellcheck="false"></textarea>
+        <p class="hint" id="editor-hint">Click empty grid for node. Drag from node to node for an edge.</p>
+        <div class="row">
+          <span class="editor-section-label">EDGE BOT</span>
+        </div>
+        <div id="bot-panel" hidden>
+          <p class="hint" id="bot-status">No bot selected.</p>
+          <div class="row" id="bot-submode-row">
+            <button data-submode="select" id="bot-mode-select">Select / place</button>
+            <button data-submode="waypoint" id="bot-mode-waypoint">Add waypoints</button>
+            <button data-submode="exclude" id="bot-mode-exclude">Exclude edges</button>
+          </div>
+          <div class="row">
+            <label>Speed (grid/s) <input id="bot-speed" type="number" value="3" min="0.5" max="20" step="0.5" /></label>
+            <label>Node dwell (ms) <input id="bot-dwell" type="number" value="600" min="0" step="100" /></label>
+          </div>
+          <p class="hint">Waypoints (cycled in order; empty = free roam)</p>
+          <ul class="library-list" id="bot-waypoints"></ul>
+          <p class="hint">Excluded edges (this bot never crosses)</p>
+          <ul class="library-list" id="bot-excluded"></ul>
+          <div class="row">
+            <button id="bot-delete">Delete bot</button>
+          </div>
+        </div>
+        <div class="row">
+          <span class="editor-section-label">GRID BOT</span>
+        </div>
+        <div id="gridbot-panel" hidden>
+          <p class="hint" id="gridbot-status">No grid bot selected.</p>
+          <div class="row" id="gridbot-submode-row">
+            <button data-gbsubmode="select" id="gridbot-mode-select">Select</button>
+            <button data-gbsubmode="draw" id="gridbot-mode-draw">Draw path</button>
+            <button id="gridbot-new">New grid bot</button>
+          </div>
+          <div class="row">
+            <label>Speed (grid/s) <input id="gridbot-speed" type="number" value="4" min="0.5" max="20" step="0.5" /></label>
+            <label>End dwell (ms) <input id="gridbot-enddwell" type="number" value="400" min="0" step="100" /></label>
+          </div>
+          <p class="hint">Path points (the bot tracks them back and forth)</p>
+          <ul class="library-list" id="gridbot-points"></ul>
+          <div class="row">
+            <button id="gridbot-delete">Delete bot</button>
+          </div>
+        </div>
+        <div class="row">
+          <span class="editor-section-label">TRAP</span>
+        </div>
+        <div id="trap-panel" hidden>
+          <p class="hint" id="trap-status">Drag from a trigger node to a target node to create a trap.</p>
+          <ul class="library-list" id="trap-list"></ul>
+        </div>
+        <div class="row">
+          <span class="editor-section-label">LIBRARY</span>
+        </div>
+        <div class="row">
+          <button id="save-library">Save to library</button>
+          <button id="new-level">New level</button>
+        </div>
+        <p class="hint" id="library-status">Library: 0 levels</p>
+        <ul class="library-list" id="library-list"></ul>
+        <div class="row">
+          <span class="editor-section-label">DEV</span>
+        </div>
+        <div class="row">
+          <button id="clear-memory">Clear play memory</button>
+          <button id="clear-fragments">Clear fragments</button>
+        </div>
+        <p class="hint">Clear play memory wipes discovered degrading edges / traps for every level. Clear fragments resets the player's collected fragment inventory for every campaign.</p>
+      </aside>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+/* Base stylesheet for narrative scene documents.
+ *
+ * The sequence runner injects this into every scene's sandboxed iframe, so a
+ * scene HTML file only needs to carry content — colour, type and layout come
+ * from here. A scene file may add its own <style> block to override anything
+ * below; it cascades after this.
+ *
+ * The variables mirror src/style.css — keep them roughly in step. */
+
+:root {
+  --bg: #0c0f12;
+  --panel: #11161a;
+  --text: #cdd3d9;
+  --text-bright: #e7ebef;
+  --text-dim: #6b7480;
+  --accent: #d39a3a;
+  --teal: #4ec5b3;
+  --rule: #232b33;
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--bg); }
+
+body {
+  margin: 0 auto;
+  max-width: 64ch;
+  padding: 44px 28px 64px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Headings — amber, in step with the game's accent. */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--accent);
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 1.7em 0 0.55em;
+}
+h1 { font-size: 1.85rem; letter-spacing: 0.04em; }
+h2 { font-size: 1.4rem;  letter-spacing: 0.03em; }
+h3 { font-size: 1.12rem; }
+h4, h5, h6 {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+/* The opening heading sits flush with the top padding. */
+body > :first-child { margin-top: 0; }
+
+p { margin: 0 0 1em; }
+
+ul, ol { margin: 0 0 1em; padding-left: 1.5em; }
+li { margin: 0.3em 0; }
+li::marker { color: var(--text-dim); }
+ul ul, ul ol, ol ul, ol ol { margin-bottom: 0; }
+
+strong, b { font-weight: 600; color: var(--text-bright); }
+em, i { font-style: italic; }
+small { font-size: 0.85em; color: var(--text-dim); }
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--accent);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 2em 0;
+}
+
+blockquote {
+  margin: 1.2em 0;
+  padding: 0.3em 0 0.3em 1.1em;
+  border-left: 2px solid var(--accent);
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+code, pre {
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  font-size: 0.92em;
+}
+code {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  padding: 0.08em 0.36em;
+}
+pre {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  padding: 12px 14px;
+  overflow-x: auto;
+}
+pre code { background: none; border: 0; padding: 0; }
+
+img { max-width: 100%; height: auto; }
+
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border: 1px solid var(--rule); padding: 6px 10px; text-align: left; }
+th { color: var(--text-bright); }
+
+/* Rendered by the runner in place of the body when a scene file fails to load. */
+.scene-error { color: #e0703a; }

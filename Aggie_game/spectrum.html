@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Jackrabbit: Spectrum Lock Editor</title>
+    <script type="module" crossorigin src="./assets/spectrum-Ds3urshJ.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/campaign-CLDyByyu.js">
+    <link rel="modulepreload" crossorigin href="./assets/spectrum-render-CWs9y74E.js">
+    <link rel="modulepreload" crossorigin href="./assets/geometry-CJPsVxNy.js">
+    <link rel="modulepreload" crossorigin href="./assets/spectrum-library-sdLVHDpi.js">
+    <link rel="stylesheet" crossorigin href="./assets/campaign-DKxtNRSF.css">
+  </head>
+  <body class="editor-body">
+    <div id="app">
+      <header class="hud">
+        <div class="hud-left">
+          <span class="hud-label">EDITOR</span>
+          <span id="hud-system">SPECTRUM LOCK</span>
+          <a class="hud-nav" href="./editor.html">&larr; Level editor</a>
+          <a class="hud-nav" href="./campaign.html">Campaign &rarr;</a>
+        </div>
+        <div class="hud-right">
+          <span id="sl-solve-status" class="spectrum-status">—</span>
+        </div>
+      </header>
+      <canvas id="spectrum-scope"></canvas>
+      <aside class="editor-side" id="editor-side">
+        <div class="row">
+          <label>Name <input id="sl-name" type="text" value="untitled-spectrum" /></label>
+        </div>
+        <div class="row">
+          <label>Tolerance % <input id="sl-tolerance" type="number" value="8" min="0.5" max="100" step="0.5" /></label>
+        </div>
+        <p class="hint" id="sl-window">Display window: —</p>
+
+        <div class="row">
+          <span class="editor-section-label">COMPONENTS</span>
+        </div>
+        <p class="hint">Each component is one sine wave: its solution (target) and the slider range the player gets.</p>
+        <div id="sl-components"></div>
+        <div class="row">
+          <button id="sl-add-component">Add component</button>
+        </div>
+        <p class="hint" id="sl-validation">—</p>
+
+        <div class="row">
+          <span class="editor-section-label">SOLVE TEST</span>
+        </div>
+        <p class="hint" id="sl-test-status">Drag the test sliders to try solving, or snap to the solution.</p>
+        <div id="sl-test"></div>
+        <div class="row">
+          <button id="sl-test-snap">Snap to solution</button>
+          <button id="sl-test-reset">Reset test</button>
+        </div>
+
+        <div class="row">
+          <span class="editor-section-label">FRAGMENT (reward)</span>
+        </div>
+        <div class="row">
+          <label>ID <input id="sl-frag-id" type="text" value="" /></label>
+        </div>
+        <div class="row">
+          <label>Series index <input id="sl-frag-series" type="number" value="1" min="1" step="1" /></label>
+        </div>
+        <div class="row">
+          <label>HTML file <input id="sl-frag-src" type="text" value="" /></label>
+          <button id="sl-frag-browse" type="button">Choose…</button>
+          <input id="sl-frag-file" type="file" accept=".html,.htm" hidden />
+        </div>
+        <p class="hint" id="sl-frag-status">No fragment file chosen.</p>
+        <p class="hint">Series index is the 1-based position in the endgame chain (unique per campaign). The HTML file must live in <code>public/scenes/</code>, e.g. <code>fragment-1-gigasource.html</code>.</p>
+
+        <div class="row">
+          <button id="sl-export">Export JSON</button>
+          <button id="sl-import">Import JSON</button>
+          <button id="sl-playtest">Play test</button>
+        </div>
+        <textarea id="sl-json" spellcheck="false"></textarea>
+
+        <div class="row">
+          <span class="editor-section-label">LIBRARY</span>
+        </div>
+        <div class="row">
+          <button id="sl-save">Save to library</button>
+          <button id="sl-new">New</button>
+        </div>
+        <p class="hint" id="sl-library-status">Library: 0 levels</p>
+        <ul class="library-list" id="sl-library-list"></ul>
+      </aside>
+    </div>
+  </body>
+</html>

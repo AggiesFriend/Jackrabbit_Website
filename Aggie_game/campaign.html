@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Jackrabbit: Campaign</title>
+    <script type="module" crossorigin src="./assets/campaign-oBzYkeqr.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/campaign-CLDyByyu.js">
+    <link rel="modulepreload" crossorigin href="./assets/library-DeDQ4gZn.js">
+    <link rel="modulepreload" crossorigin href="./assets/spectrum-library-sdLVHDpi.js">
+    <link rel="modulepreload" crossorigin href="./assets/campaign-store-VpycrU2c.js">
+    <link rel="stylesheet" crossorigin href="./assets/campaign-DKxtNRSF.css">
+  </head>
+  <body class="campaign-body">
+    <div id="app">
+      <header class="hud">
+        <div class="hud-left">
+          <span class="hud-label">CAMPAIGN</span>
+          <span id="hud-system">SEQUENCE</span>
+          <a class="hud-nav" href="./editor.html">&larr; Editor</a>
+          <a class="hud-nav" href="./spectrum.html">Spectrum Lock</a>
+          <a class="hud-nav" href="./index.html">Game &rarr;</a>
+        </div>
+        <div class="hud-right">
+          <label class="campaign-name-label">
+            NAME
+            <input id="campaign-name" type="text" value="Untitled Campaign" />
+          </label>
+        </div>
+      </header>
+      <main class="campaign-main">
+        <section class="campaign-panel">
+          <h2>Library</h2>
+          <p class="hint">Levels saved from the editor. Add them to the sequence.</p>
+          <ul class="campaign-list" id="palette-list"></ul>
+          <h2>Spectrum Lock</h2>
+          <p class="hint">Frequency-decryption puzzles saved from the Spectrum Lock editor.</p>
+          <ul class="campaign-list" id="spectrum-palette-list"></ul>
+        </section>
+        <section class="campaign-panel">
+          <h2>Sequence</h2>
+          <p class="hint">The runtime plays these entries in order.</p>
+          <ul class="campaign-list" id="entry-list"></ul>
+          <div class="row">
+            <button id="add-scene">+ Narrative scene</button>
+          </div>
+        </section>
+      </main>
+      <footer class="campaign-actions">
+        <button id="load-campaign">Load from file…</button>
+        <input id="load-input" type="file" accept=".json" style="display:none" />
+        <button id="save-campaign">Save campaign</button>
+        <button id="download-campaign">Download bundle</button>
+        <button id="play-campaign">Play campaign</button>
+        <span class="hint" id="campaign-hint"></span>
+      </footer>
+    </div>
+    <div id="leave-modal" class="leave-modal hidden">
+      <div class="leave-modal-inner">
+        <h2>Unsaved changes</h2>
+        <p>This campaign has changes that haven&rsquo;t been saved. What would you like to do?</p>
+        <div class="leave-modal-buttons">
+          <button id="leave-save">Save &amp; leave</button>
+          <button id="leave-discard">Leave without saving</button>
+          <button id="leave-stay">Stay</button>
+        </div>
+      </div>
+    </div>
+    <div id="orphan-modal" class="leave-modal hidden">
+      <div class="leave-modal-inner">
+        <h2>Levels missing from library</h2>
+        <p id="orphan-modal-body"></p>
+        <div class="leave-modal-buttons">
+          <button id="orphan-remove">Remove from campaign</button>
+          <button id="orphan-keep">Keep in campaign</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

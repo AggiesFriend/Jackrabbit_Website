@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <title>Jackrabbit: Aggie's Search</title>
-    <script type="module" crossorigin src="./assets/main-B0tSCDpj.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/campaign-DKPg6YgG.js">
+    <script type="module" crossorigin src="./assets/main-CzhEJc0L.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/campaign-Bo1Wd2By.js">
     <link rel="modulepreload" crossorigin href="./assets/geometry-CJPsVxNy.js">
-    <link rel="modulepreload" crossorigin href="./assets/render-BOQF57XE.js">
+    <link rel="modulepreload" crossorigin href="./assets/render-B9CWCgBi.js">
     <link rel="modulepreload" crossorigin href="./assets/spectrum-render-CWs9y74E.js">
     <link rel="modulepreload" crossorigin href="./assets/campaign-store-VpycrU2c.js">
-    <link rel="stylesheet" crossorigin href="./assets/campaign-lgsBK1jx.css">
+    <link rel="stylesheet" crossorigin href="./assets/campaign-CBmz-PIp.css">
   </head>
   <body>
     <div id="app">
@@ -20,6 +20,7 @@
           <span id="hud-system">CONSORTIUM // SECTOR 01</span>
         </div>
         <div class="hud-right">
+          <span id="hud-time" class="hud-time"></span>
           <span id="hud-status">INGRESS</span>
         </div>
       </header>
@@ -37,10 +38,14 @@
           <a href="./campaign.html">Campaign</a>
         </span>
         <span class="hint">Move: pointer / arrows · Reach connected nodes before your trace fades</span>
-        <span class="sound-controls">
-          <span class="sound-controls-label">Sound</span>
-          <button id="sound-mute" type="button" title="Toggle mute (M)">Mute</button>
-          <input id="sound-volume" type="range" min="0" max="100" value="60" aria-label="Volume" title="Volume" />
+        <span class="footer-right">
+          <button id="pause-btn" class="footer-btn" type="button" title="Pause / how to play (Esc or P)">Pause</button>
+          <a class="footer-home" href="https://www.jackrabbit-series.com" target="_blank" rel="noopener" title="Open jackrabbit-series.com">jackrabbit-series.com</a>
+          <span class="sound-controls">
+            <span class="sound-controls-label">Sound</span>
+            <button id="sound-mute" type="button" title="Toggle mute (M)">Mute</button>
+            <input id="sound-volume" type="range" min="0" max="100" value="60" aria-label="Volume" title="Volume" />
+          </span>
         </span>
       </footer>
     </div>

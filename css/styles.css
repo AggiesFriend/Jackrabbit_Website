@@ -1366,6 +1366,16 @@ footer {
 .purchase-ctas .btn {
   flex: 0 0 auto;
 }
+/* btn-secondary defaults to white-on-transparent for dark CTA sections;
+   on the light book page it needs visible (accent-coloured) styling. */
+.purchase-ctas .btn-secondary {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+.purchase-ctas .btn-secondary:hover {
+  background-color: var(--accent-color);
+  color: white;
+}
 
 /* Homepage Start Here CTA and comparable-authors line */
 .series-overview .comp-authors {

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Jackrabbit Contract</title>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    // Apply saved accessibility prefs before first paint to avoid a flash of
+    // the default theme. The module bootstrap re-validates these values.
+    try {
+      var d = document.documentElement;
+      var f = localStorage.getItem("jackrabbit.font");
+      if (f) d.dataset.font = f;
+      var ac = localStorage.getItem("jackrabbit.activeColors");
+      if (ac) {
+        var c = JSON.parse(ac);
+        d.dataset.theme = "custom";
+        for (var k in c) if (Object.prototype.hasOwnProperty.call(c, k)) d.style.setProperty(k, c[k]);
+      } else {
+        var t = localStorage.getItem("jackrabbit.theme");
+        if (t) d.dataset.theme = t;
+      }
+    } catch (e) { /* storage disabled: defaults apply */ }
+  </script>
+</head>
+<body>
+  <div id="app">
+    <header id="status-bar" role="status" aria-live="off">
+      <span id="status-alias-wrap" hidden>
+        <span id="status-alias">—</span>
+        <span class="status-sep">|</span>
+      </span>
+      <span id="status-score">Score: 0</span>
+      <span class="status-sep">|</span>
+      <span id="status-time">Daytime</span>
+      <span class="status-sep">|</span>
+      <span id="status-location">—</span>
+      <span id="a11y-controls">
+        <label for="theme-select" class="visually-hidden">Colour scheme</label>
+        <select id="theme-select" title="Colour scheme"></select>
+        <label for="font-select" class="visually-hidden">Reading font</label>
+        <select id="font-select" title="Reading font"></select>
+        <button id="customise-toggle" type="button" title="Customise colours"
+                aria-expanded="false" aria-controls="customise-panel">Customise…</button>
+      </span>
+    </header>
+
+    <section id="customise-panel" aria-label="Customise colours" hidden></section>
+
+    <main id="output" role="log" aria-live="polite" aria-relevant="additions"></main>
+
+    <form id="input-form" autocomplete="off">
+      <label for="input" class="visually-hidden">Command</label>
+      <span class="prompt" aria-hidden="true">&gt;</span>
+      <input id="input" name="command" type="text" autofocus spellcheck="false" />
+    </form>
+  </div>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

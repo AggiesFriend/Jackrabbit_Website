@@ -102,6 +102,37 @@ export function bindUi() {
     function focusInput() { input.focus(); }
     return { render, updateHeader, bindSubmit, focusInput };
 }
+// Pin the #app column to the *visually* visible viewport. On iOS Safari the
+// on-screen keyboard overlays the page rather than resizing the layout viewport
+// (it ignores `interactive-widget=resizes-content`, which only Android honours),
+// so `100dvh` doesn't shrink and the input gets hidden behind the keyboard. The
+// VisualViewport API reports the real visible rectangle; we mirror its height
+// onto #app (and nudge for offsetTop, which iOS sets while the URL bar / keyboard
+// animate). A no-op where VisualViewport is unavailable — `100dvh` carries those.
+export function bindVisualViewport() {
+    const vv = window.visualViewport;
+    if (!vv)
+        return;
+    const app = document.getElementById("app");
+    if (!app)
+        return;
+    let frame = 0;
+    const sync = () => {
+        frame = 0;
+        app.style.height = `${vv.height}px`;
+        // While the URL bar / keyboard slide, the visual viewport can be offset from
+        // the top of the layout viewport; translate to keep the column glued to it.
+        app.style.transform = `translateY(${vv.offsetTop}px)`;
+    };
+    const schedule = () => {
+        if (frame)
+            return;
+        frame = requestAnimationFrame(sync);
+    };
+    vv.addEventListener("resize", schedule);
+    vv.addEventListener("scroll", schedule);
+    sync();
+}
 // Populate + wire the accessibility controls: a colour-scheme dropdown (built-in
 // themes + saved presets + a "Custom…" entry), a reading-font dropdown, and a
 // collapsible panel of per-colour pickers with preset save/delete. Pure UI: all

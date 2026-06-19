@@ -188,13 +188,25 @@ html, body {
   line-height: var(--line-height);
   letter-spacing: var(--letter-spacing);
   word-spacing: var(--word-spacing);
+  /* iOS Safari rubber-bands the whole page even when an inner element scrolls;
+     locking body overflow keeps the chrome (header/input) from bouncing. The
+     #output region does the scrolling. */
+  overflow: hidden;
+  /* Kill the grey flash iOS paints over tapped buttons/links. */
+  -webkit-tap-highlight-color: transparent;
 }
 
 #app {
   position: relative;
   display: flex;
   flex-direction: column;
+  /* 100vh on mobile is the full viewport *behind* the URL bar and ignores the
+     on-screen keyboard, so the column overflows and the whole page scrolls
+     (header or input drifts off-screen). 100dvh tracks the *visible* viewport —
+     it shrinks for the URL bar and the keyboard — keeping header + input pinned.
+     100vh is the fallback for browsers without dynamic viewport units. */
   height: 100vh;
+  height: 100dvh;
   max-width: 960px;
   margin: 0 auto;
   border-left: 1px solid var(--border);
@@ -203,9 +215,13 @@ html, body {
 
 #status-bar {
   display: flex;
-  gap: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
   align-items: center;
-  padding: 0.6rem 1rem;
+  /* Pad for the notch / status bar on iPhones (viewport-fit=cover). */
+  padding: max(0.6rem, env(safe-area-inset-top)) 1rem 0.6rem;
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
   background: var(--bar-bg);
   color: var(--bar-fg);
   border-bottom: 1px solid var(--border);
@@ -379,7 +395,10 @@ html, body {
 
 #output {
   flex: 1 1 auto;
+  min-height: 0; /* let the scroll region shrink inside the flex column */
   overflow-y: auto;
+  overscroll-behavior: contain; /* don't chain scroll to the page/URL bar */
+  -webkit-overflow-scrolling: touch;
   padding: 1rem;
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -410,7 +429,10 @@ html, body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.6rem 1rem;
+  /* Pad for the home indicator on the bottom edge (viewport-fit=cover). */
+  padding: 0.6rem 1rem max(0.6rem, env(safe-area-inset-bottom));
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
   border-top: 1px solid var(--border);
   background: var(--bar-bg);
   flex: 0 0 auto;
@@ -420,12 +442,18 @@ html, body {
 
 #input {
   flex: 1;
+  min-width: 0;
   background: transparent;
   border: none;
   outline: none;
+  /* iOS adds a rounded inset chrome to text inputs; strip it. */
+  -webkit-appearance: none;
+  appearance: none;
   color: var(--fg);
   font-family: var(--font);
-  font-size: 1em;
+  /* iOS Safari auto-zooms when a focused input's text is < 16px. The body font
+     can be 15px, so pin the input to >=16px to suppress the focus zoom. */
+  font-size: max(1em, 16px);
   caret-color: var(--accent);
 }
 

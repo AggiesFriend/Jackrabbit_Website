@@ -3,13 +3,14 @@
 // The engine MVP test world (src/world/test-world.ts) is retained as a smoke-
 // test fixture for the engine itself but is not booted into the live game.
 import { GameEngine } from "./engine/engine.js";
-import { bindUi, setupAccessibilityControls } from "./ui/dom.js";
+import { bindUi, setupAccessibilityControls, bindVisualViewport } from "./ui/dom.js";
 import { applyStoredPrefs } from "./ui/theme.js";
 import { jackrabbitWorld } from "./world/jackrabbit/index.js";
 function boot() {
     // Presentation prefs first — independent of the engine / game state.
     applyStoredPrefs();
     setupAccessibilityControls();
+    bindVisualViewport();
     const ui = bindUi();
     const engine = new GameEngine(jackrabbitWorld, {
         render: ui.render,

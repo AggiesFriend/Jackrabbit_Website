@@ -16,6 +16,7 @@ import { requestSceneTransition } from "../../engine/authoring.js";
 import { buildAreaFromYaml } from "./area.js";
 import { withLiftDirs, liftDefFromYaml, liftDescription } from "./lifts.js";
 import { syncSophie } from "./records.js";
+import { FLAG_SHIPYARD_INTRUDING } from "./flags.js";
 // --- The mapper YAML (topology) -----------------------------------------
 const SHIPYARD_A_YAML = `
 area: shipyard_A
@@ -395,6 +396,13 @@ a.rooms["horizon_shipyard_reception"].exits.north = {
             "and you're not one.\" Friendly, final, and entirely immovable. Not while she's at that desk."
         : null,
 };
+// --- The armoury gun trail: crowbar in the Tool Store, the damaged cabinet in
+// the Untheatrical's armoury (the items themselves live in armoury.ts). --------
+a.rooms["horizon_tool_store"].items = ["crowbar"];
+u.rooms["horizon_untheatrical_armory"].items = ["damaged_cabinet"];
+// Crossing the entrance from reception (only possible at night, past the gate) is
+// what arms the security patrol — see shipyard_security.ts. Marks a real intrusion.
+a.rooms["horizon_shipyard_entrance"].onEnter = (s) => { s.flags[FLAG_SHIPYARD_INTRUDING] = true; };
 // --- Cross-area links (the three joins the user asked for) ---------------
 a.rooms["horizon_outside_medium_bay_3"].exits.west = { to: "horizon_outside_medium_bay_4", description: "Outside Medium Bay 4" };
 b.rooms["horizon_outside_medium_bay_4"].exits.east = { to: "horizon_outside_medium_bay_3", description: "Outside Medium Bay 3" };

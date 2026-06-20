@@ -5,12 +5,14 @@
 import { GameEngine } from "./engine/engine.js";
 import { bindUi, setupAccessibilityControls, bindVisualViewport } from "./ui/dom.js";
 import { applyStoredPrefs } from "./ui/theme.js";
+import { mountSlotMachine } from "./ui/slot-machine.js";
 import { jackrabbitWorld } from "./world/jackrabbit/index.js";
 function boot() {
     // Presentation prefs first — independent of the engine / game state.
     applyStoredPrefs();
     setupAccessibilityControls();
     bindVisualViewport();
+    mountSlotMachine(); // the animated reel-spin popup (listens for the casino's spin event)
     const ui = bindUi();
     const engine = new GameEngine(jackrabbitWorld, {
         render: ui.render,

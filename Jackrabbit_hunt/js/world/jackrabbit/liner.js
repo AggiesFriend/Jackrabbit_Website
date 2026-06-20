@@ -1,7 +1,7 @@
 // The Liner (Shameless Efficiency) and Shuttle 2's narrative transition.
 // Spec: jackrabbit-pre-horizon-design.md §7, §8.
 import { aliasedTopics, requestPushModal, requestSceneTransition } from "../../engine/authoring.js";
-import { FLAG_LINER_ANNOUNCED, FLAG_LINER_ANNOUNCED_AT, FLAG_LINER_BOARDED_AT, FLAG_LINER_REPEAT_HORIZON, FLAG_LINER_TALKED_AT, FLAG_LINER_TALKED_TO_PASSENGER, HOOK_ASKED_HORIZON_1, HOOK_ASKED_HORIZON_2, HOOK_TALKED_PASSENGER, } from "./flags.js";
+import { FLAG_LINER_ANNOUNCED, FLAG_LINER_ANNOUNCED_AT, FLAG_LINER_BOARDED_AT, FLAG_LINER_REPEAT_HORIZON, FLAG_LINER_TALKED_AT, FLAG_LINER_TALKED_TO_PASSENGER, FLAG_LINER_AD_SEEN, HOOK_ASKED_HORIZON_1, HOOK_ASKED_HORIZON_2, HOOK_TALKED_PASSENGER, } from "./flags.js";
 import { score } from "./scoring.js";
 // Disembarkation beats are timed from the conversation with the passenger
 // (the actual trigger), not from boarding — so they can't all land at once
@@ -16,6 +16,44 @@ const refreshmentTerminal = {
     aliases: ["terminal", "food terminal", "drinks", "refreshments", "refreshment"],
     description: "Standard liner catering. Hot drinks, cold drinks, sealed food packets. " +
         "Prices are modest. Selection is limited. Nothing about it is bad enough to complain about.",
+    takeable: false,
+};
+// --- AetherLink advert panel (ambient PR; non-gating) -------------------
+// The liner is a Consortium-run main ship, so its public screens carry megacorp
+// brand PR — AetherLink's glossy "we look after our own" reel. The player can't
+// yet know AetherLink is the hidden paymaster (Strand 2 reveals that), so this
+// reads as warm corporate wallpaper now and curdles later, set against the
+// vanished predecessor and Burke's pivot. The reel cycles through its spots on
+// repeated EXAMINEs. (The Horizon-bound shuttle is Horizon-independent and
+// deliberately carries none of this.)
+const AETHERLINK_SPOTS = [
+    "The panel glows up into a soft-focus AetherLink spot: a family silhouetted against a planetrise, a " +
+        "freighter threading the gap between two worlds, all of it scored to something warm and wordless.\n\n" +
+        "\"AetherLink. The distance between you and everyone you love was always going to be the hardest " +
+        "part of leaving. So we made it our problem.\"\n\n" +
+        "The logo settles, unhurried, and holds. (The reel will roll on if you keep watching.)",
+    "A new spot fades up — clean corridors, staff in AetherLink teal, a supervisor clapping a junior on " +
+        "the shoulder somewhere bright and safe.\n\n" +
+        "\"At AetherLink, no one is just a number on a manifest. From the boardroom to the furthest field " +
+        "posting, every single one of our people is exactly that — one of ours. We look after our own. " +
+        "Wherever the work takes you, however far out, AetherLink brings you home.\"\n\n" +
+        "It is, you have to admit, very nicely done.",
+    "This one is quieter. A lone figure in a hardsuit on some dark, unnamed rock, a very long way from any " +
+        "light — and then the warm amber of an AetherLink beacon resolving out of the black toward them.\n\n" +
+        "\"To the ones who do the difficult work, far from anywhere: you are never alone out there. Whatever " +
+        "it takes, for as long as it takes, AetherLink is with you — every jump of the way.\"\n\n" +
+        "The tagline lingers a moment before the reel loops back to the beginning: *No one left behind.*",
+];
+const linerAdScreen = {
+    id: "liner_ad_screen",
+    name: "advertising panel",
+    aliases: ["advert", "advertisement", "advertising", "advertising panel", "ad", "ads", "ad screen",
+        "panel", "screen", "poster", "aetherlink", "commercial", "reel"],
+    description: (s) => {
+        const i = (Number(s.flags[FLAG_LINER_AD_SEEN]) || 0) % AETHERLINK_SPOTS.length;
+        s.flags[FLAG_LINER_AD_SEEN] = i + 1; // advance the reel for the next look
+        return AETHERLINK_SPOTS[i];
+    },
     takeable: false,
 };
 const linerViewport = {
@@ -89,7 +127,8 @@ const lounge = {
     name: "Shameless Efficiency — Passenger Lounge",
     description: "The passenger lounge is functional and just comfortable enough to make you forget, briefly, " +
         "that you're in zero-g on a commercial liner somewhere between one unremarkable point in space " +
-        "and another. Padded seating with discrete restraint clips. A refreshment terminal on one wall. " +
+        "and another. Padded seating with discrete restraint clips. A refreshment terminal on one wall, " +
+        "and beside it a soft-lit advertising panel cycling, endlessly and warmly, through corporate spots. " +
         "Through the viewport, ordinary starfield — the *Shameless Efficiency* is coasting between jumps, " +
         "as she will be for most of the trip.\n\n" +
         "Most seats are empty. One passenger is awake: a woman of middle age, settled into her seat with " +
@@ -103,7 +142,7 @@ const lounge = {
         room: { gated: () => "Your cabin is three doors down. There's nothing there that isn't here." },
         bed: { gated: () => "Your cabin is three doors down. There's nothing there that isn't here." },
     },
-    items: ["refreshment_terminal", "liner_viewport"],
+    items: ["refreshment_terminal", "liner_viewport", "liner_ad_screen"],
     npcs: ["liner_passenger"],
     onEnter: (s) => {
         if (typeof s.flags[FLAG_LINER_BOARDED_AT] !== "number") {
@@ -186,5 +225,6 @@ export const linerRooms = {
 export const linerItems = {
     refreshment_terminal: refreshmentTerminal,
     liner_viewport: linerViewport,
+    liner_ad_screen: linerAdScreen,
 };
 export const linerNpcs = { liner_passenger: passenger };

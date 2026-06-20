@@ -464,3 +464,166 @@ html, body {
   overflow: hidden; clip: rect(0,0,0,0);
   white-space: nowrap; border: 0;
 }
+
+/* ---- The slot machine ---------------------------------------------------- */
+/* An animated reel-spin popup for the EZ1 casino. Driven entirely by
+   src/ui/slot-machine.ts; pure cosmetic theatre over the text outcome. All
+   colours read through the theme variables, so it recolours with the scheme. */
+
+.slot-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.72);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  outline: none;
+}
+.slot-overlay[hidden] { display: none; }
+
+.slot-cabinet {
+  --slot-cell: clamp(62px, 21vw, 92px);
+  width: min(92vw, 460px);
+  padding: 1.1rem 1.1rem 1.3rem;
+  text-align: center;
+  background:
+    radial-gradient(120% 80% at 50% -10%, color-mix(in srgb, var(--accent) 22%, var(--bar-bg)), var(--bar-bg) 60%);
+  border: 3px solid var(--accent);
+  border-radius: 18px;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.55), inset 0 0 0 1px var(--border);
+  color: var(--bar-fg);
+}
+
+.slot-marquee {
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em; /* balance the trailing letter-spacing */
+  color: var(--accent);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent);
+  margin-bottom: 0.9rem;
+}
+
+.slot-reels {
+  display: flex;
+  gap: 0.55rem;
+  justify-content: center;
+  padding: 0.6rem;
+  background: var(--bg);
+  border-radius: 12px;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.45);
+}
+
+.slot-reel {
+  width: var(--slot-cell);
+  height: var(--slot-cell);
+  overflow: hidden;
+  border-radius: 8px;
+  background:
+    linear-gradient(var(--bg), color-mix(in srgb, var(--bg) 80%, #000 20%));
+  /* Frame via inset shadow (not border) so the window stays exactly one cell
+     tall — the reel-stop maths in slot-machine.ts depends on it. */
+  box-shadow: inset 0 0 0 2px var(--border), inset 0 0 18px rgba(0, 0, 0, 0.6);
+}
+
+.slot-strip {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+
+.slot-cell {
+  height: var(--slot-cell);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--slot-cell) * 0.56);
+  line-height: 1;
+  user-select: none;
+}
+.slot-cell-text {
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: calc(var(--slot-cell) * 0.34);
+  letter-spacing: 0.04em;
+  color: var(--fg);
+}
+.slot-cell-seven { color: var(--death); }
+
+.slot-reel-spinning { filter: blur(0.6px); }
+
+/* The win line across the reel window. */
+.slot-payline {
+  height: 2px;
+  margin: -1px auto 0;
+  width: calc(3 * var(--slot-cell) + 1.1rem + 1.2rem);
+  max-width: 100%;
+  background: color-mix(in srgb, var(--death) 70%, transparent);
+  opacity: 0.55;
+}
+
+.slot-readout { margin-top: 1rem; min-height: 3.2rem; }
+.slot-result {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  min-height: 1.2em;
+}
+.slot-pay {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0.15rem 0;
+  color: var(--fg);
+}
+.slot-balance { color: var(--dim); font-size: 0.9em; }
+
+.slot-hint {
+  margin-top: 0.9rem;
+  font-size: 0.8em;
+  font-style: italic;
+  color: var(--dim);
+  min-height: 1.1em;
+}
+
+/* A win glows; the jackpot strobes. Motion gated for reduced-motion readers. */
+.slot-cabinet.win { border-color: var(--accent); }
+.slot-cabinet.win .slot-pay { color: var(--accent); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .slot-cabinet.win {
+    animation: slot-win-glow 0.7s ease-in-out 3 alternate;
+  }
+  .slot-cabinet.jackpot {
+    animation: slot-jackpot 0.28s steps(2, jump-none) 8 alternate;
+  }
+  .slot-cabinet.jackpot .slot-marquee {
+    animation: slot-marquee-flash 0.32s ease-in-out infinite alternate;
+  }
+  .slot-hint { animation: slot-hint-pulse 1.3s ease-in-out infinite; }
+}
+
+@keyframes slot-win-glow {
+  from { box-shadow: 0 18px 60px rgba(0, 0, 0, 0.55), inset 0 0 0 1px var(--border); }
+  to {
+    box-shadow:
+      0 18px 60px rgba(0, 0, 0, 0.55),
+      inset 0 0 0 1px var(--border),
+      0 0 26px color-mix(in srgb, var(--accent) 75%, transparent);
+  }
+}
+@keyframes slot-jackpot {
+  from { border-color: var(--accent); }
+  to { border-color: var(--death); }
+}
+@keyframes slot-marquee-flash {
+  from { opacity: 1; text-shadow: 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent); }
+  to { opacity: 0.65; text-shadow: 0 0 22px var(--accent); }
+}
+@keyframes slot-hint-pulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}

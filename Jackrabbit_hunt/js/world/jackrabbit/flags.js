@@ -29,6 +29,10 @@ export const FLAG_LINER_REPEAT_HORIZON = "liner_repeat_horizon_asked";
 export const FLAG_LINER_ANNOUNCED = "liner_announced";
 /** state.ticks at which the departure announcement fired. */
 export const FLAG_LINER_ANNOUNCED_AT = "liner_announced_at";
+/** How many AetherLink advert spots the PC has watched on the lounge panel — the
+ *  reel cycles through them (the "we look after our own" PR, planted here so the
+ *  later predecessor / Burke reveal curdles it). Pure ambience, non-gating. */
+export const FLAG_LINER_AD_SEEN = "liner_ad_seen";
 // --- Strand 2: AetherLink analysis (Burke's software) -------------------
 /** state.ticks at which the PC seeded Burke's blockchain-analysis software at a
  *  public terminal. Absent until seeded; the elapsed-time baseline for the run
@@ -140,6 +144,22 @@ export const FLAG_RAJAH_HOME_MET = "rajah_home_met";
 /** Set once the PC commits to abandoning the corporations and Rajah hands over
  *  the resistance datacard (the irreversible defect endpoint). */
 export const FLAG_RAJAH_COMMITTED = "rajah_committed";
+// --- Shipyard yard-proper: the armoury gun + the night patrol -----------
+/** Set once the PC prises open the Untheatrical's damaged armoury cabinet (with
+ *  the crowbar from the Tool Store) and the sidearm is revealed inside. */
+export const FLAG_ARMOURY_CABINET_OPEN = "armoury_cabinet_open";
+/** How many times the PC has been caught snooping in the shipyard yard-proper
+ *  (night patrol or day crew). Three strikes => barred from the Outpost. */
+export const FLAG_SHIPYARD_STRIKES = "shipyard_strikes";
+/** Transient detection level while loitering in the OPEN yard at night. Rises
+ *  each tick in the open (telegraphed); reset by a bolthole or leaving the yard;
+ *  a capture clears it. Not persisted intent — purely the live patrol pressure. */
+export const FLAG_SHIPYARD_PATROL_HEAT = "shipyard_patrol_heat";
+/** Set once the PC actually sneaks past Sophie's gate into the yard proper (the
+ *  shipyard entrance's onEnter). The night patrol / day-crew capture only arms
+ *  while this is set, so it tracks a real intrusion — not a teleport. Cleared on
+ *  leaving the yard. */
+export const FLAG_SHIPYARD_INTRUDING = "shipyard_intruding";
 // --- Burke (Strand 2 keystone; Beats 1 & 2 built) -----------------------
 /** Set true once the PC has met Burke (gates his repeat greeting). */
 export const FLAG_BURKE_MET = "burke_met";
@@ -226,6 +246,11 @@ export const HOOK_RAJAH_DATACARD = "received_rajah_datacard"; // took the resist
 // --- Food Hall: the curry death (B10) ---
 export const HOOK_ATE_CURRY = "ate_curry"; // took the dare and ate the five-alarm curry
 export const HOOK_SURVIVED_CURRY = "survived_curry"; // doused it with an unmelted ice cream in time
+// --- Shipyard gun trail + the night patrol ---
+export const HOOK_TOOK_CROWBAR = "took_crowbar"; // grabbed the Tool Store crowbar
+export const HOOK_PRISED_CABINET = "prised_armoury_cabinet"; // levered open the Untheatrical gun locker
+export const HOOK_TOOK_SIDEARM = "took_sidearm"; // pocketed the sidearm
+export const HOOK_EVADED_PATROL = "evaded_shipyard_patrol"; // gave a closing night patrol the slip (once)
 /** Point value for each scoring hook. The sum is MAX_SCORE. */
 export const SCORE_POINTS = {
     [HOOK_FORM_COMPLETE]: 1,
@@ -283,6 +308,12 @@ export const SCORE_POINTS = {
     // through it (provisional values — tune in Phase D).
     [HOOK_ATE_CURRY]: 8, // ate the notorious five-alarm Bengali curry
     [HOOK_SURVIVED_CURRY]: 2, // survived it on an unmelted ice cream
+    // Shipyard gun trail + patrol (the gun trail's points are FORFEIT if you then
+    // shoot Chas — see armoury.ts; the curry points are the only survivors).
+    [HOOK_TOOK_CROWBAR]: 1,
+    [HOOK_PRISED_CABINET]: 1,
+    [HOOK_TOOK_SIDEARM]: 1,
+    [HOOK_EVADED_PATROL]: 4, // slipped a patrol that was within 2 rooms (once)
 };
 /** Theoretical maximum — sum of all hook values. */
 export const MAX_SCORE = Object.values(SCORE_POINTS).reduce((a, b) => a + b, 0);

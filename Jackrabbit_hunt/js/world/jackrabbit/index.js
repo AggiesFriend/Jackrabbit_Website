@@ -23,6 +23,8 @@ import { ozzy, chas, nightBarTick, barBuyRoute } from "./bar_npcs.js";
 import { sleepCmd } from "./sleep.js";
 import { teng, rajah, rajahDatacard, loadInsertCmd } from "./lcd_npcs.js";
 import { gamblingCommands, casinoLoadRoute } from "./gambling.js";
+import { armouryItems, shootCommands, convictEnding } from "./armoury.js";
+import { shipyardSecurityTick, barredEnding } from "./shipyard_security.js";
 import { routeCommand } from "./router.js";
 import { residentialRooms, residentialLift } from "./residential.js";
 import { serviceRooms } from "./service.js";
@@ -198,6 +200,11 @@ const MODULES = [
     { npcs: { burke }, items: burkeItems, tick: burkeWorkshopDayTick },
     { npcs: { teng, rajah }, items: { rajah_datacard: rajahDatacard } },
     { commands: gamblingCommands },
+    // The shipyard yard-proper: the armoury gun trail (items + the SHOOT verb) and
+    // the night patrol / 3-strike security ticker. The tick sits AFTER dayNightTick
+    // (above) so it reads the current phase — a tick that flips to dawn collars a
+    // loiterer at once.
+    { items: armouryItems, commands: shootCommands, tick: shipyardSecurityTick },
     // Cross-cutting verbs — LAST so they win key clashes (food's raw `buy`, etc.).
     {
         commands: {
@@ -231,6 +238,12 @@ export const jackrabbitWorld = {
             closingText: "You walk away with nothing but your own name and whatever you make of it next — which, you're " +
                 "beginning to think, might be the only honest pay this job was ever going to offer.",
         },
+        // Convict — the dark, optional end of the shipyard gun trail: shoot Chas
+        // Drayton at the Long Shot and the station's law buries you (armoury.ts).
+        convict: convictEnding,
+        // Deported — three strikes snooping in the shipyard yard and the Outpost
+        // bars you for good (shipyard_security.ts).
+        barred: barredEnding,
     },
     initialState: {
         dayLength: 100,

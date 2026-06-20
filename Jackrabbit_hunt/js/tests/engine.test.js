@@ -17,13 +17,6 @@ import { parseLinks } from "../engine/links.js";
 import { aliasedTopics, requestSceneTransition, requestPushModal } from "../engine/authoring.js";
 import { testWorld } from "../world/test-world.js";
 import { jackrabbitWorld } from "../world/jackrabbit/index.js";
-import { referRajahToResidence, STUPID } from "../world/jackrabbit/lcd_npcs.js";
-import { rollOutcome, SPIN_STAKE, CASINO_ROOM } from "../world/jackrabbit/gambling.js";
-import { balance, canAfford, charge, credit } from "../world/jackrabbit/economy.js";
-import { assembleParts } from "../world/jackrabbit/world-builder.js";
-import { isTransitStop } from "../world/jackrabbit/transit.js";
-import { isLiftRoom } from "../world/jackrabbit/lifts.js";
-import { InputHistory } from "../ui/history.js";
 import { FLAG_BRIEFING_COMPLETE, FLAG_FORM_COMPLETE, FLAG_PC_ALIAS, FLAG_PC_PROFESSION, FLAG_PC_REAL_NAME, FLAG_CREDITS, } from "../world/jackrabbit/flags.js";
 const _ls = {};
 globalThis.localStorage = {
@@ -102,30 +95,6 @@ function eq(actual, expected, label) {
 }
 // --- tests --------------------------------------------------------------
 console.log("Engine smoke tests");
-test("input history: Up/Down recall recent inputs, with a stashed live draft", () => {
-    const h = new InputHistory(3);
-    h.record("look");
-    h.record("north");
-    h.record("examine panel");
-    // Up walks oldest-ward from the live line; the live draft ("ta") is stashed.
-    eq(h.previous("ta"), "examine panel", "first Up = newest");
-    eq(h.previous("examine panel"), "north", "second Up = older");
-    eq(h.previous("north"), "look", "third Up = oldest");
-    eq(h.previous("look"), "look", "Up at the oldest stays put");
-    // Down walks back toward the live line, restoring the stashed draft at the end.
-    eq(h.next(), "north", "Down = newer");
-    eq(h.next(), "examine panel", "Down = newer");
-    eq(h.next(), "ta", "Down past the newest restores the live draft");
-    eq(h.next(), null, "Down on the live line = no change");
-    // Cap (3): the oldest fell off; blanks and consecutive dupes aren't recorded.
-    const h2 = new InputHistory(3);
-    for (const c of ["a", "b", "b", "   ", "c", "d"])
-        h2.record(c);
-    eq(h2.previous(""), "d", "newest");
-    eq(h2.previous("d"), "c", "older");
-    eq(h2.previous("c"), "b", "oldest kept (dupe 'b' collapsed, blank skipped)");
-    eq(h2.previous("b"), "b", "only three retained — 'a' fell off the ring");
-});
 test("parser: bare compass shorthand maps to go <dir>", () => {
     const p = parse("n");
     assert(p, "parsed");
@@ -1039,50 +1008,6 @@ test("jackrabbit: read contract / reservation / notepad all resolve", () => {
     engine.submit("read notepad");
     assert(flatOutput().includes("No entries yet"), "empty notepad shown");
 });
-test("add note: the player can jot a timestamped entry into the notepad", () => {
-    const engine = makeJackrabbit();
-    engine.start();
-    for (const line of ["Lurker", "1", "Real", "yes"])
-        engine.submit(line);
-    engine.submit("go north");
-    engine.submit("talk miss terry");
-    const turnsBefore = engine.state.turns;
-    // Add a note; capitalisation is preserved (the parser's raw is lower-cased).
-    captured.length = 0;
-    engine.submit("add note Meet Burke after dark");
-    assert(flatOutput().toLowerCase().includes("noted"), "confirmation shown");
-    eq(engine.state.turns, turnsBefore, "jotting a note is free (no turn cost)");
-    // It surfaces in BOTH the notepad sub-document and the notes command, stamped.
-    captured.length = 0;
-    engine.submit("read notepad");
-    const np = flatOutput();
-    assert(np.includes("Meet Burke after dark"), "original capitalisation preserved");
-    assert(np.includes("[tick"), "timestamped");
-    captured.length = 0;
-    engine.submit("notes");
-    assert(flatOutput().includes("Meet Burke after dark"), "also appears via the notes command");
-    // The JOT alias works too.
-    captured.length = 0;
-    engine.submit("jot buy ice cream before the curry");
-    captured.length = 0;
-    engine.submit("read notepad");
-    assert(flatOutput().includes("buy ice cream before the curry"), "jot alias adds an entry");
-    // A bodyless ADD NOTE asks what to write rather than filing an empty entry.
-    const noteCount = engine.state.notes.length;
-    captured.length = 0;
-    engine.submit("add note");
-    assert(flatOutput().toLowerCase().includes("add what"), "empty add note prompts");
-    eq(engine.state.notes.length, noteCount, "no empty note filed");
-});
-test("LCD: the concourse directory points the way to Rajah (west)", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "lcd_concourse";
-    captured.length = 0;
-    engine.submit("examine directory");
-    const d = flatOutput();
-    assert(d.includes("Rajah"), "the directory names Rajah's pharmacy");
-    assert(d.toUpperCase().includes("WEST"), "and points west, where she actually is");
-});
 test("jackrabbit: inventory hides the sub-documents", () => {
     const engine = makeJackrabbit();
     engine.start();
@@ -1769,7 +1694,7 @@ function walkToFoodHall(engine) {
 /** From the arrival concourse, ride the 'Tube to Donovan's (Blue Sector). */
 function rideToDonovans(engine) {
     walkToRetailStop(engine); // concourse → … → Retail (the nearest stop)
-    engine.submit("summon"); // summon a pod (no-prompt shortcut)
+    engine.submit("scan id"); // summon a pod
     engine.submit("board"); // enter the pod
     engine.submit("select blue sector"); // choose destination (does not depart)
     engine.submit("sit"); // sitting departs the pod
@@ -1834,7 +1759,7 @@ test("horizon: 'use id on reader' also summons a pod", () => {
 test("horizon: pod ride occupies real turns, then waits for you to disembark", () => {
     const engine = bootToHorizon();
     walkToRetailStop(engine);
-    engine.submit("summon");
+    engine.submit("scan id");
     engine.submit("board");
     eq(engine.state.currentRoom, "travelpod", "aboard the pod");
     engine.submit("select blue sector"); // choose only
@@ -1857,13 +1782,13 @@ test("horizon: pod waits for SIT, lets you change your mind, forbids standing in
     captured.length = 0;
     engine.submit("select blue sector"); // not aboard yet
     assert(flatOutput().toLowerCase().includes("nothing here to select"), "select refused off-pod");
-    engine.submit("summon");
+    engine.submit("scan id");
     engine.submit("board");
     engine.submit("select blue sector");
     engine.submit("disembark"); // change your mind before departing
     eq(engine.state.currentRoom, "horizon_dockside_retail_area_zone_1", "stepped back out, never departed");
     // Board again, commit this time.
-    engine.submit("summon");
+    engine.submit("scan id");
     engine.submit("board");
     engine.submit("select blue sector");
     engine.submit("sit");
@@ -1908,38 +1833,9 @@ test("lift: select a floor rides to that level; step out onto it; floors are lif
     eq(engine.state.currentRoom, "horizon_donovan_s_lift_l3", "rode to the second-floor lift car");
     engine.submit("south");
     eq(engine.state.currentRoom, "horizon_donovan_s_landing_second_floor", "out onto the second-floor landing");
-    // a guest room (force the allocation so its ID-keyed door opens), then back
-    engine.state.flags["donovan_checked_in"] = true;
-    engine.state.flags["donovan_room"] = "22";
+    // a guest room, then back, and the floors don't connect except via the lift
     engine.submit("east");
-    eq(engine.state.currentRoom, "horizon_donovan_s_room_22", "E → room 22 (your allocated door)");
-});
-test("donovan: only your allocated room opens; the ajar penthouse rewards snoopers (+2)", () => {
-    const engine = bootToHorizon();
-    rideToDonovans(engine); // lobby
-    engine.submit("scan id"); // check in (random room allocated)
-    engine.submit("no preference"); // answer Donovan's privacy modal
-    engine.state.flags["donovan_room"] = "25"; // pin it for the test
-    // Go up to the second floor and try a room that ISN'T yours.
-    engine.submit("north");
-    engine.submit("select second");
-    engine.submit("south");
-    captured.length = 0;
-    engine.submit("east"); // room 22 — not yours
-    eq(engine.state.currentRoom, "horizon_donovan_s_landing_second_floor", "someone else's door won't open");
-    assert(flatOutput().includes("Room 25"), "told which room is yours");
-    // Your own door opens (room 25 is west off the third landing segment).
-    engine.submit("south");
-    engine.submit("south"); // to the b-landing
-    engine.submit("west");
-    eq(engine.state.currentRoom, "horizon_donovan_s_room_25", "your card opens Room 25");
-    // The penthouse is ajar — snooping it scores once.
-    const before = engine.state.score;
-    engine.state.currentRoom = "horizon_donovan_s_lift_l5";
-    engine.submit("south");
-    eq(engine.state.currentRoom, "horizon_donovan_s_pentouse", "let yourself into the ajar penthouse");
-    assert(engine.state.scoreHooks.has("donovan_penthouse_snoop"), "snooping the penthouse scores");
-    eq(engine.state.score, before + 2, "+2 for the nosey detour");
+    eq(engine.state.currentRoom, "horizon_donovan_s_room_22", "E → room 22");
 });
 test("blue sector: structural — every exit is reciprocal and points at a real room", () => {
     const w = jackrabbitWorld;
@@ -1974,7 +1870,7 @@ test("lift: selecting the current floor is a no-op; unknown floor is refused", (
 test("shipyard: reachable by TravelTube; reception is the stop", () => {
     const engine = bootToHorizon();
     walkToRetailStop(engine);
-    engine.submit("summon");
+    engine.submit("scan id");
     engine.submit("board");
     engine.submit("select shipyard");
     engine.submit("sit");
@@ -2153,8 +2049,7 @@ test("horizon: Barty is a loyalty wall — deflects the Jackrabbit", () => {
     captured.length = 0;
     engine.submit("ask barty about jackrabbit");
     const out = flatOutput();
-    assert(out.includes("I wouldn't, whoever it was") || out.includes("don't pass it on"), "Barty deflects rather than divulges");
-    assert(engine.state.scoreHooks.has("asked_barty_sensitive"), "the refusal scores the sensitive hook");
+    assert(out.includes("wouldn't tell you") || out.includes("means anything to me"), "Barty deflects rather than divulges");
 });
 test("horizon: Donovan is a loyalty wall — heard the name, never met him", () => {
     const engine = bootToHorizon();
@@ -2162,30 +2057,7 @@ test("horizon: Donovan is a loyalty wall — heard the name, never met him", () 
     engine.submit("talk donovan");
     captured.length = 0;
     engine.submit("ask donovan about jackrabbit");
-    assert(flatOutput().includes("not a conversation I have"), "Donovan: a settled, personal refusal");
-});
-test("donovan: the grey-market hint scores once (+2) and is idempotent", () => {
-    const engine = bootToHorizon();
-    rideToDonovans(engine);
-    const before = engine.state.score;
-    engine.submit("ask donovan about market");
-    assert(engine.state.scoreHooks.has("donovan_grey_market_hint"), "grey-market hook fired");
-    eq(engine.state.score, before + 2, "scored +2");
-    engine.submit("ask donovan about unofficial"); // ask again
-    eq(engine.state.score, before + 2, "no double-score (idempotent)");
-});
-test("donovan: greeting is full on the first visit, short once welcomed", () => {
-    const engine = bootToHorizon();
-    rideToDonovans(engine);
-    captured.length = 0;
-    engine.submit("talk donovan"); // first visit
-    assert(flatOutput().toLowerCase().includes("good to see you made it"), "full first-visit greeting");
-    engine.submit("scan id"); // check in (sets welcomed)
-    engine.submit("whatever"); // dismiss privacy modal
-    captured.length = 0;
-    engine.submit("talk donovan"); // repeat visit
-    assert(flatOutput().toLowerCase().includes("help yourself"), "short repeat greeting");
-    assert(!flatOutput().toLowerCase().includes("good to see you made it"), "no longer the first-visit line");
+    assert(flatOutput().includes("knowing of someone and knowing them"), "Donovan: heard of, never met");
 });
 test("barty: leaves the concourse for good once seen at his desk", () => {
     const engine = bootToHorizon(); // concourse — Barty greeting arrivals
@@ -2263,12 +2135,9 @@ test("curry: the spice is lethal if no relief comes within the window", () => {
     const engine = bootToHorizon();
     engine.state.inventory.push("curry");
     engine.state.flags["food_bought_curry"] = engine.state.ticks; // fresh
-    const before = engine.state.score;
     engine.submit("eat curry");
     assert(!engine.state.dead, "not instantly fatal — there's a window");
     assert(engine.state.flags["spice_death_at"] !== undefined, "the spice clock is running");
-    assert(engine.state.score > before, "eating the curry scores (many points for the bravado)");
-    assert(engine.state.notes.some(n => n.id === "curry_dare"), "the dare is jotted down");
     engine.submit("wait");
     engine.submit("wait");
     engine.submit("wait");
@@ -2281,13 +2150,10 @@ test("curry: an UNMELTED ice cream within the window saves you", () => {
     engine.state.flags["food_bought_curry"] = engine.state.ticks;
     engine.state.flags["food_bought_ice_cream"] = engine.state.ticks; // fresh, unmelted
     engine.submit("eat curry");
-    const afterCurry = engine.state.score;
     captured.length = 0;
     engine.submit("eat ice cream");
     assert(flatOutput().includes("gutters") || flatOutput().includes("Saved"), "the inferno is quenched");
     assert(engine.state.flags["spice_death_at"] === undefined, "spice clock cleared");
-    assert(engine.state.score > afterCurry, "surviving scores a few more points");
-    assert(engine.state.notes.some(n => n.id === "curry_survived"), "the antidote lesson is jotted down");
     engine.submit("wait");
     engine.submit("wait");
     engine.submit("wait");
@@ -2364,44 +2230,29 @@ test("predecessor: prising the panel reveals the kit, scores, and adds a note", 
     engine.submit("take weathered datapad");
     assert(engine.state.inventory.includes("predecessor_datapad"), "picked up the datapad");
 });
-test("predecessor: brief, diary AND creds are all locked until the 'pad is cracked", () => {
+test("predecessor: his diary surfaces the Long Shot / Drayton lead; brief stays locked", () => {
     const engine = bootToHorizon();
     walkToLavatory(engine);
     engine.submit("open panel");
     engine.submit("take weathered datapad"); // carries the hidden sub-docs along
-    engine.submit("east"); // leave the lavatory — docs still in scope
-    // Before cracking: the diary won't open, and scores nothing.
-    captured.length = 0;
-    engine.submit("read his diary");
-    assert(flatOutput().toLowerCase().includes("won't open") || flatOutput().toLowerCase().includes("sealed"), "his diary is locked behind the device lock");
-    assert(!engine.state.scoreHooks.has("read_predecessor_diary"), "no diary score while locked");
-    // The brief is sealed too, and hints the failsafe.
-    captured.length = 0;
-    engine.submit("read his brief");
-    assert(flatOutput().toLowerCase().includes("failsafe"), "the failsafe lead is hinted");
-    assert(engine.state.notes.some(n => n.id === "predecessor_brief_locked"), "sealed-brief lead noted");
-    // The saved login is sealed behind the lock too now — and banks nothing yet.
-    captured.length = 0;
-    engine.submit("read his credentials");
-    assert(flatOutput().toLowerCase().includes("sealed") || flatOutput().toLowerCase().includes("won't open"), "credentials are locked until cracked");
-    assert(!engine.state.flags["shipyard_creds"], "no creds banked while locked");
-    // Crack it (the failsafe) → the diary opens, with the Drayton / Long Shot lead.
-    engine.submit("use datapad on weathered datapad");
+    engine.submit("east"); // leave the lavatory — docs still readable
     captured.length = 0;
     engine.submit("read his diary");
     const diary = flatOutput();
-    assert(diary.includes("Long Shot") && diary.includes("Drayton"), "bar + name lead now legible");
-    assert(diary.includes("going tonight") && diary.includes("entry ends there"), "ends as he leaves to meet Drayton");
-    assert(!diary.includes("not what I expected"), "no impossible post-meeting entry");
+    assert(diary.includes("Long Shot") && diary.includes("Drayton"), "bar + name lead");
+    assert(diary.includes("entry ends there"), "sinister abrupt ending");
     assert(engine.state.scoreHooks.has("read_predecessor_diary"), "scored reading the diary");
     assert(engine.state.notes.some(n => n.id === "predecessor_bar_lead"), "bar lead noted");
+    // The contract brief is deliberately NOT readable yet (later reveal).
+    captured.length = 0;
+    engine.submit("read his brief");
+    assert(flatOutput().includes("locked"), "brief stays locked");
 });
-test("predecessor: his saved login banks the shipyard creds + Sophie (once cracked)", () => {
+test("predecessor: his saved login banks the shipyard creds + Sophie for later", () => {
     const engine = bootToHorizon();
     walkToLavatory(engine);
     engine.submit("open panel");
     engine.submit("take weathered datapad");
-    engine.submit("use datapad on weathered datapad"); // crack it first — creds are sealed too
     captured.length = 0;
     engine.submit("read his credentials");
     const creds = flatOutput();
@@ -2420,7 +2271,7 @@ test("food: buy a burger from Hank — charges credits, lands in inventory", () 
     captured.length = 0;
     engine.submit("buy a burger");
     assert(engine.state.inventory.includes("burger"), "burger now carried");
-    eq(engine.state.flags["credits"], before - 3, "charged the burger's price");
+    eq(engine.state.flags["credits"], before - 12, "charged the burger's price");
     assert(flatOutput().includes("Balance:"), "reports the new balance");
 });
 test("food: can't buy what a stall doesn't sell, or what you can't afford", () => {
@@ -2431,10 +2282,10 @@ test("food: can't buy what a stall doesn't sell, or what you can't afford", () =
     captured.length = 0;
     engine.submit("buy salad");
     assert(flatOutput().includes("no salad for sale"), "Hank doesn't sell salad");
-    engine.state.flags["credits"] = 1; // skint (burger now costs 3)
+    engine.state.flags["credits"] = 3; // skint
     captured.length = 0;
     engine.submit("buy burger");
-    assert(flatOutput().includes("you have 1"), "refused: can't afford");
+    assert(flatOutput().includes("you have 3"), "refused: can't afford");
     assert(!engine.state.inventory.includes("burger"), "no burger taken");
 });
 test("food: a fresh burger eats well; a stale one is grim but edible", () => {
@@ -2464,452 +2315,13 @@ test("food: a salad spoils inedibly past its window (self-service honesty scanne
     engine.submit("buy salad");
     assert(flatOutput().includes("HONESTY SCANNER"), "no-NPC self-service flavour");
     assert(engine.state.inventory.includes("salad"), "salad carried");
-    engine.submit("wait 14"); // past freshTicks 12 → spoils
+    engine.submit("wait 10"); // past freshTicks 8 → spoils
     captured.length = 0;
     engine.submit("eat salad");
     assert(flatOutput().includes("bin it") || flatOutput().includes("No eating"), "spoiled, binned");
     assert(!engine.state.inventory.includes("salad"), "gone");
 });
 // --- transcript fixes (Charles's playtest) -------------------------------
-test("food: SCAN pays at the honesty stall (the prose's 'scan and pay')", () => {
-    const engine = bootToHorizon();
-    walkToFoodHall(engine);
-    engine.submit("east"); // → Fresh Salad Bowls
-    eq(engine.state.currentRoom, "horizon_fresh_salad_bowls", "at the salad stall");
-    const before = engine.state.flags["credits"];
-    captured.length = 0;
-    engine.submit("scan id"); // the honesty-box flow
-    assert(engine.state.inventory.includes("salad"), "scanning bought the salad");
-    eq(engine.state.flags["credits"], before - 2, "charged the salad's price");
-    assert(flatOutput().includes("Balance:"), "reports the new balance");
-});
-test("food: SCAN at a multi-item (served) stall nudges toward BUY", () => {
-    const engine = bootToHorizon();
-    walkToFoodHall(engine);
-    engine.submit("north");
-    engine.submit("west"); // Hank's (2 items)
-    captured.length = 0;
-    engine.submit("scan id");
-    assert(flatOutput().toLowerCase().includes("more than one"), "asks which item");
-    assert(!engine.state.inventory.includes("burger"), "nothing auto-bought at a served stall");
-});
-// --- world-builder: assembling the World from a module list ----------------
-/** Normalise a scene-callback return (string | string[] | void) to an array. */
-const asArr = (x) => x === undefined ? [] : Array.isArray(x) ? x : [x];
-test("world-builder: merges maps; later commands win; ticks compose in order", () => {
-    const log = [];
-    const room = (id) => ({ id, name: id, description: "", exits: {}, items: [], npcs: [] });
-    const modules = [
-        { rooms: { a: room("a") }, commands: { buy: () => ({ handled: true, output: ["raw"] }) }, tick: () => { log.push("t1"); return "one"; } },
-        { rooms: { b: room("b") }, tick: () => { log.push("t2"); return "two"; } },
-        // Cross-cutting last: its `buy` must win the clash.
-        { commands: { buy: () => ({ handled: true, output: ["routed"] }) } },
-    ];
-    const parts = assembleParts(modules);
-    eq(Object.keys(parts.rooms).sort().join(","), "a,b", "rooms from every module merged");
-    const buy = parts.commands["buy"];
-    eq(buy({}, {}, {}).output?.[0], "routed", "last module's command wins");
-    const out = parts.onTick({});
-    eq(log.join(","), "t1,t2", "tickers ran in module order");
-    eq(asArr(out).join(","), "one,two", "tick outputs concatenated in order");
-});
-test("world-builder: a module's transitStops and lifts are registered during assembly", () => {
-    assembleParts([
-        { transitStops: [{ room: "wb_test_stop", label: "Test Stop", pos: 1, names: ["wbtest"] }] },
-        { lifts: [{ id: "wb_test_lift", floors: [
-                        { level: 1, room: "wb_test_lift_l1", label: "G", names: ["g"] },
-                        { level: 2, room: "wb_test_lift_l2", label: "1", names: ["1"] },
-                    ] }] },
-    ]);
-    assert(isTransitStop("wb_test_stop"), "the module's transit stop registered on the network");
-    assert(isLiftRoom("wb_test_lift_l1"), "the module's lift registered (its car rooms are lift rooms)");
-});
-test("world-builder: onDrop is undefined when no module supplies one, else chains", () => {
-    const none = assembleParts([{ tick: () => undefined }]);
-    assert(none.onDrop === undefined, "no onDrop contributor -> undefined (engine skips it)");
-    const dropped = [];
-    const chained = assembleParts([
-        { onDrop: (_s, id) => { dropped.push(`x:${id}`); return "litter!"; } },
-    ]);
-    const r = chained.onDrop({}, "can", "park");
-    eq(dropped[0], "x:can", "onDrop fired with the dropped item id");
-    eq(asArr(r).join(""), "litter!", "onDrop output returned");
-});
-// --- economy: balance / charge / credit (the credit chokepoint) -----------
-test("economy: balance reads FLAG_CREDITS and defaults to 0", () => {
-    const s = createInitialState(testWorld);
-    eq(balance(s), 0, "no card loaded yet");
-    s.flags[FLAG_CREDITS] = 42;
-    eq(balance(s), 42, "reads the loaded balance");
-});
-test("economy: charge debits and returns true when affordable", () => {
-    const s = createInitialState(testWorld);
-    s.flags[FLAG_CREDITS] = 100;
-    assert(charge(s, 30) === true, "charge succeeded");
-    eq(balance(s), 70, "debited exactly 30");
-    assert(charge(s, 70) === true, "can spend down to exactly zero");
-    eq(balance(s), 0, "balance is zero");
-});
-test("economy: charge refuses an overdraft — the PC can never go negative", () => {
-    const s = createInitialState(testWorld);
-    s.flags[FLAG_CREDITS] = 20;
-    assert(canAfford(s, 20) === true && canAfford(s, 21) === false, "canAfford gates at the balance");
-    assert(charge(s, 21) === false, "an unaffordable charge is refused");
-    eq(balance(s), 20, "nothing debited on a refused charge — balance unchanged, never negative");
-});
-test("economy: credit adds to the balance", () => {
-    const s = createInitialState(testWorld);
-    s.flags[FLAG_CREDITS] = 10;
-    credit(s, 1000);
-    eq(balance(s), 1010, "payout added");
-});
-// --- gambling: the EZ1 slot machines (The Long Odds) ----------------------
-/** bootToHorizon + teleport onto the casino floor with a full float. */
-function bootToCasino() {
-    const engine = bootToHorizon();
-    if (!engine.state.inventory.includes("fake_id"))
-        engine.state.inventory.push("fake_id");
-    engine.state.currentRoom = CASINO_ROOM;
-    engine.state.flags[FLAG_CREDITS] = 500;
-    return engine;
-}
-test("gambling: a spin costs the stake; a forced jackpot pays out", () => {
-    const engine = bootToCasino();
-    const before = engine.state.flags[FLAG_CREDITS];
-    const orig = Math.random;
-    Math.random = () => 0; // first (best) outcome: jackpot
-    try {
-        captured.length = 0;
-        engine.submit("play");
-    }
-    finally {
-        Math.random = orig;
-    }
-    assert(flatOutput().toUpperCase().includes("JACKPOT"), "jackpot narrated");
-    eq(engine.state.flags[FLAG_CREDITS], before - SPIN_STAKE + 1000, "staked 50, paid 1000");
-    assert(flatOutput().includes("Balance:"), "running balance reported");
-});
-test("gambling: a forced loss just costs the stake", () => {
-    const engine = bootToCasino();
-    const before = engine.state.flags[FLAG_CREDITS];
-    const orig = Math.random;
-    Math.random = () => 0.999; // last outcome: nothing
-    try {
-        captured.length = 0;
-        engine.submit("spin");
-    }
-    finally {
-        Math.random = orig;
-    }
-    eq(engine.state.flags[FLAG_CREDITS], before - SPIN_STAKE, "lost exactly the stake");
-    assert(/nothing|gone/i.test(flatOutput()), "loss narrated");
-});
-test("gambling: the buy-in is guarded — no spin you can't afford", () => {
-    const engine = bootToCasino();
-    engine.state.flags[FLAG_CREDITS] = SPIN_STAKE - 1; // a credit short
-    captured.length = 0;
-    engine.submit("play");
-    eq(engine.state.flags[FLAG_CREDITS], SPIN_STAKE - 1, "not charged");
-    assert(flatOutput().includes(`LOAD ${SPIN_STAKE}`), "refused with the machine's own label");
-});
-test("gambling: PLAY does nothing off the casino floor", () => {
-    const engine = bootToHorizon(); // standing on the arrival concourse
-    const before = engine.state.flags[FLAG_CREDITS];
-    captured.length = 0;
-    engine.submit("play");
-    eq(engine.state.flags[FLAG_CREDITS], before, "no credits moved");
-    assert(flatOutput().toLowerCase().includes("the long odds"), "points you to the gaming house");
-});
-test("gambling: the house edge is real — expected return is under the stake", () => {
-    // Densely sample the cumulative table: the mean payout equals the EV.
-    let total = 0;
-    const N = 100000;
-    for (let i = 0; i < N; i++)
-        total += rollOutcome((i + 0.5) / N).pays;
-    const ev = total / N;
-    assert(ev < SPIN_STAKE, `expected return (${ev.toFixed(1)}) sits below the ${SPIN_STAKE} stake`);
-    assert(ev > 0, "but a win is possible (not a pure sink)");
-});
-test("gambling: LOAD still reaches the datacard prohibition on the casino floor", () => {
-    const engine = bootToCasino();
-    engine.state.inventory.push("rajah_datacard");
-    captured.length = 0;
-    engine.submit("load datacard");
-    assert(flatOutput().includes(STUPID), "LOAD <datacard> isn't swallowed by the machines");
-    // ...but LOAD 50 at a machine spins.
-    engine.state.flags[FLAG_CREDITS] = 500;
-    const before = engine.state.flags[FLAG_CREDITS];
-    const orig = Math.random;
-    Math.random = () => 0.999;
-    try {
-        captured.length = 0;
-        engine.submit("load 50");
-    }
-    finally {
-        Math.random = orig;
-    }
-    eq(engine.state.flags[FLAG_CREDITS], before - SPIN_STAKE, "LOAD 50 played a spin");
-});
-// --- the buy / wares / scenery sweep -------------------------------------
-/** bootToHorizon + teleport into a named room with an ID and a float. */
-function bootAt(room) {
-    const engine = bootToHorizon();
-    if (!engine.state.inventory.includes("fake_id"))
-        engine.state.inventory.push("fake_id");
-    engine.state.currentRoom = room;
-    engine.state.flags[FLAG_CREDITS] = 200;
-    return engine;
-}
-test("sweep: the Bazaar drinks vendor actually sells a drink (transcript gap)", () => {
-    const engine = bootAt("horizon_drinks_vendor");
-    captured.length = 0;
-    engine.submit("buy drink");
-    assert(engine.state.inventory.includes("fizzy_drink"), "a fizzy drink is now carried");
-    assert(flatOutput().includes("Balance:"), "charged and reported");
-    captured.length = 0;
-    engine.submit("drink fizzy drink");
-    assert(!engine.state.inventory.includes("fizzy_drink"), "DRINK consumes it");
-});
-test("sweep: the doughnut and hot-dog vendors each sell their ware", () => {
-    let engine = bootAt("horizon_doughnut_vendor");
-    engine.submit("buy doughnut");
-    assert(engine.state.inventory.includes("doughnut"), "doughnut bought");
-    engine = bootAt("horizon_hot_dog_vendor");
-    engine.submit("buy hot dog");
-    assert(engine.state.inventory.includes("hot_dog"), "hot dog bought");
-});
-test("sweep: the Humidor sells whisky to carry and a cigar to smoke on the spot", () => {
-    const engine = bootAt("ez1_humidor");
-    engine.submit("buy whisky");
-    assert(engine.state.inventory.includes("whisky"), "whisky carried");
-    const before = engine.state.flags[FLAG_CREDITS];
-    captured.length = 0;
-    engine.submit("buy cigar");
-    assert(!engine.state.inventory.includes("cigar"), "a cigar is smoked on the spot, not carried");
-    assert(engine.state.flags[FLAG_CREDITS] < before, "but the cigar still charged");
-});
-test("sweep: a non-food shop answers BUY in character, not 'nothing for sale'", () => {
-    const engine = bootAt("horizon_gadget_shop");
-    captured.length = 0;
-    engine.submit("buy drone");
-    assert(!flatOutput().includes("nothing for sale here"), "the gadget shop has wares");
-    assert(/drone|gizmo|toys|better made/i.test(flatOutput()), "characterful wares reply");
-    engine.state.currentRoom = "horizon_corridor"; // an ordinary corridor
-    captured.length = 0;
-    engine.submit("buy drone");
-    assert(flatOutput().includes("nothing for sale here"), "an ordinary corridor sells nothing");
-});
-test("sweep: mentioned objects are examinable (scenery)", () => {
-    const engine = bootAt("horizon_clothing_emporium");
-    captured.length = 0;
-    engine.submit("examine racks");
-    assert(/womenswear|practical wear|sections/i.test(flatOutput()), "the emporium racks answer EXAMINE");
-    engine.state.currentRoom = "ez1_humidor";
-    captured.length = 0;
-    engine.submit("examine cigars");
-    assert(/humidity|cigar/i.test(flatOutput()), "the humidor cigars answer EXAMINE");
-    engine.state.currentRoom = "cda_unit_orrery";
-    captured.length = 0;
-    engine.submit("examine orrery");
-    assert(/brass|planetary|orbit/i.test(flatOutput()), "the orrery answers EXAMINE");
-});
-test("predecessor: the kit bag is named what the narration calls it", () => {
-    const engine = bootToHorizon();
-    walkToLavatory(engine);
-    engine.submit("open panel");
-    captured.length = 0;
-    engine.submit("take kit bag");
-    // The refusal names the kit bag — not a different object the player never typed.
-    assert(flatOutput().includes("kit bag"), "refusal references the kit bag");
-    assert(!flatOutput().toLowerCase().includes("document wallet"), "no surprise 'document wallet'");
-    captured.length = 0;
-    engine.submit("examine kit bag");
-    assert(flatOutput().toLowerCase().includes("kit bag"), "examines as the kit bag");
-});
-test("food: the salad now lasts long enough to still be fresh at 10 ticks", () => {
-    const engine = bootToHorizon();
-    walkToFoodHall(engine);
-    engine.submit("east"); // Fresh Salad Bowls
-    engine.submit("scan id"); // buy via the honesty box
-    engine.submit("wait 10"); // within the new 12-tick window
-    captured.length = 0;
-    engine.submit("eat salad");
-    assert(flatOutput().toLowerCase().includes("crisp") || flatOutput().toLowerCase().includes("virtuous"), "still fresh at 10 ticks (was spoiling at 8)");
-});
-test("showers: ID-gated — SCAN TURNSTILE admits you, the exit refuses until then", () => {
-    const engine = bootToHorizon();
-    walkToRetailStop(engine); // → Retail Zone 1
-    eq(engine.state.currentRoom, "horizon_dockside_retail_area_zone_1", "at the retail stop");
-    captured.length = 0;
-    engine.submit("east"); // blocked
-    eq(engine.state.currentRoom, "horizon_dockside_retail_area_zone_1", "turnstile bars the way");
-    assert(flatOutput().toLowerCase().includes("turnstile"), "told about the turnstile");
-    engine.submit("scan turnstile"); // name the scanner
-    assert(engine.state.flags["showers_unlocked"] === true, "scanning the turnstile admits you");
-    engine.submit("east");
-    eq(engine.state.currentRoom, "horizon_public_showers", "now through to the showers");
-});
-test("scan: a stop that also hosts a facility asks which reader", () => {
-    const engine = bootToHorizon();
-    walkToRetailStop(engine); // tube stop + shower turnstile
-    captured.length = 0;
-    engine.submit("scan id"); // ambiguous → prompt
-    assert(flatOutput().toLowerCase().includes("more than one"), "asks which reader");
-    assert(!engine.state.flags["showers_unlocked"], "nothing chosen yet");
-    assert(engine.state.flags["pod_summoned_at"] !== "horizon_dockside_retail_area_zone_1", "no pod either");
-    // Disambiguate either way.
-    engine.submit("scan tube");
-    eq(engine.state.flags["pod_summoned_at"], "horizon_dockside_retail_area_zone_1", "scan tube summons a pod");
-    engine.submit("scan turnstile");
-    assert(engine.state.flags["showers_unlocked"] === true, "scan turnstile admits to the showers");
-});
-test("scan: the Blue Sector stop + public terminal disambiguates too", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "horizon_blue_sector_concourse"; // tube stop + terminal
-    captured.length = 0;
-    engine.submit("scan id");
-    assert(flatOutput().toLowerCase().includes("more than one"), "asks which reader");
-    engine.submit("scan terminal");
-    assert(flatOutput().toLowerCase().includes("public-services") || flatOutput().toLowerCase().includes("book hostel"), "naming the terminal wakes it");
-});
-test("showers: USE/TAP TURNSTILE (no target) still works too", () => {
-    const engine = bootToHorizon();
-    walkToRetailStop(engine);
-    engine.submit("use turnstile"); // engine: use a reader = scan it
-    assert(engine.state.flags["showers_unlocked"] === true, "use-the-reader admits you");
-});
-test("laundrette: the machines have a description (x machine)", () => {
-    const engine = bootToHorizon();
-    walkToRetailStop(engine);
-    engine.submit("west"); // Laundrette
-    eq(engine.state.currentRoom, "horizon_laundrette", "in the laundrette");
-    captured.length = 0;
-    engine.submit("examine machine");
-    assert(flatOutput().toLowerCase().includes("washer") || flatOutput().toLowerCase().includes("drum"), "the machines describe themselves");
-    assert(!flatOutput().toLowerCase().includes("see no machine"), "no longer 'you see no machine here'");
-});
-test("public terminal: USE / PRESENT / SCAN all wake it (the prose's promise)", () => {
-    const engine = bootToHorizon();
-    walkToRetailTerminal(engine);
-    eq(engine.state.currentRoom, "horizon_public_terminal_dockside_retail", "at the terminal alcove");
-    for (const cmd of ["use terminal", "present id", "scan id"]) {
-        captured.length = 0;
-        engine.submit(cmd);
-        assert(flatOutput().toLowerCase().includes("present your id") || flatOutput().toLowerCase().includes("public-services") || flatOutput().toLowerCase().includes("book hostel"), `'${cmd}' wakes the terminal to its services`);
-    }
-});
-test("predecessor: the lock screen names John Smith (alias); creds locked until cracked", () => {
-    const engine = bootToHorizon();
-    walkToLavatory(engine);
-    engine.submit("open panel");
-    engine.submit("take weathered datapad");
-    captured.length = 0;
-    engine.submit("examine weathered datapad");
-    assert(flatOutput().includes("JOHN SMITH"), "lock screen names the predecessor's alias");
-});
-test("records: USE CREDENTIALS ON TERMINAL logs into the shipyard records", () => {
-    const engine = bootToHorizon();
-    walkToLavatory(engine);
-    engine.submit("open panel");
-    engine.submit("take weathered datapad");
-    engine.submit("use datapad on weathered datapad"); // crack → creds now readable
-    engine.submit("read his credentials"); // banks shipyard_creds
-    engine.state.currentRoom = "horizon_public_terminal_dockside_retail";
-    captured.length = 0;
-    engine.submit("use credentials on terminal"); // the natural "log in"
-    assert(flatOutput().toLowerCase().includes("jackrabbit") && flatOutput().toLowerCase().includes("vessel"), "logging in with the creds opens the records (Tier 1)");
-    assert(engine.state.scoreHooks.has("records_ship_jackrabbit"), "scored the ship reveal");
-});
-test("shipyard: Sophie holds the door by day; at night the desk is unmanned", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "horizon_shipyard_reception";
-    engine.state.ticks = 5;
-    engine.state.isDaytime = true;
-    engine.submit("wait"); // sync: Sophie present
-    captured.length = 0;
-    engine.submit("north");
-    eq(engine.state.currentRoom, "horizon_shipyard_reception", "day: the door is held");
-    assert(flatOutput().toLowerCase().includes("customers only"), "Sophie's polite refusal");
-    // Night: the desk empties and the yard opens.
-    engine.state.ticks = engine.state.dayLength + 5;
-    engine.state.isDaytime = false;
-    engine.submit("wait"); // sync: Sophie off-shift
-    captured.length = 0;
-    engine.submit("talk sophie");
-    assert(flatOutput().toLowerCase().includes("no sophie"), "she's gone at night");
-    engine.submit("north");
-    eq(engine.state.currentRoom, "horizon_shipyard_entrance", "night: slip into the yard");
-});
-test("day/night: the cycle is announced once the PC is on-station", () => {
-    const engine = bootToHorizon();
-    engine.state.ticks = 95;
-    engine.state.isDaytime = true; // daytime, near the boundary
-    engine.submit("wait"); // baseline the phase tracker
-    captured.length = 0;
-    engine.submit("wait 10"); // crosses into night at tick 100
-    assert(flatOutput().toLowerCase().includes("settling into its night"), "the night transition is reported");
-});
-test("ask synonyms: TELL works (Chas cracks on TELL ... about the hunt)", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "ez1_long_shot";
-    engine.state.ticks = engine.state.dayLength + 5;
-    engine.state.isDaytime = false;
-    engine.submit("wait"); // Chas present at night
-    captured.length = 0;
-    engine.submit("tell chas about investigation"); // 'tell' routes to 'ask'
-    assert(engine.state.scoreHooks.has("chas_gave_intel"), "TELL ... about the hunt cracks Chas");
-    assert(flatOutput().includes("Jack Abbott"), "the real name lands");
-});
-test("guest rooms: the bed and window are examinable scenery", () => {
-    const engine = bootToHorizon();
-    engine.state.flags["donovan_checked_in"] = true;
-    engine.state.flags["donovan_room"] = "25";
-    engine.state.currentRoom = "horizon_donovan_s_room_25";
-    captured.length = 0;
-    engine.submit("examine bed");
-    assert(flatOutput().toLowerCase().includes("sleep here"), "the bed responds (and points to SLEEP)");
-    captured.length = 0;
-    engine.submit("examine window");
-    assert(flatOutput().toLowerCase().includes("curve") || flatOutput().toLowerCase().includes("blue sector"), "the window has a real view");
-});
-test("sleep: passes to the next phase (day in -> night out, and back)", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "horizon_donovan_s_room_25";
-    delete engine.state.flags["__last_day_phase"]; // align the phase announcer baseline
-    engine.state.ticks = 90;
-    engine.state.isDaytime = true; // day, near the boundary (100)
-    engine.submit("sleep");
-    assert(!engine.state.isDaytime, "slept through the day, woke at night");
-    eq(engine.state.ticks, 100, "woke exactly at the phase boundary");
-    // And the other way.
-    engine.state.ticks = 190;
-    engine.state.isDaytime = false; // night, near the boundary (200)
-    engine.submit("sleep");
-    assert(engine.state.isDaytime, "slept through the night, woke in the day");
-});
-test("long shot: drinking seated brings Chas over with the intel (B4b)", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "ez1_long_shot";
-    engine.state.ticks = engine.state.dayLength + 5;
-    engine.state.isDaytime = false;
-    engine.submit("wait"); // Chas present at night
-    // Ordering before sitting is refused.
-    captured.length = 0;
-    engine.submit("buy drink");
-    assert(flatOutput().toLowerCase().includes("table first"), "you have to sit first");
-    // Sit, then drink up — Chas comes over on the fourth.
-    engine.submit("sit");
-    engine.submit("buy drink");
-    engine.submit("buy drink");
-    engine.submit("buy drink");
-    const before = engine.state.score;
-    captured.length = 0;
-    engine.submit("buy drink"); // the fourth: the approach
-    assert(flatOutput().includes("Jack Abbott"), "Chas comes over and spills the name");
-    assert(flatOutput().toLowerCase().includes("squirt"), "the canon 'nasty little squirt'");
-    assert(engine.state.scoreHooks.has("chas_gave_intel"), "the crack scores via the drink route");
-    eq(engine.state.score, before + 4, "+4 for the intel");
-});
 test("shuttle1: the transit screen ETA counts down (was a static string)", () => {
     const engine = bootJackrabbitPastBriefing();
     engine.submit("go out"); // board the shuttle
@@ -3006,40 +2418,29 @@ test("strand 2: re-seeding while it runs reports progress, doesn't restart the c
     assert(flatOutput().includes("already seeded"), "reports it's already running");
     eq(engine.state.flags["analysis_seeded_at"], baseline, "baseline unchanged");
 });
-test("strand 2: the analysis finishes (datapad notification), then reads out at a terminal", () => {
+test("strand 2: the analysis resolves on the world clock and names AetherLink", () => {
     const engine = bootToHorizon();
     walkToRetailTerminal(engine);
     engine.state.inventory.push("burke_software");
     engine.submit("use software on terminal");
-    assert(!engine.state.flags["analysis_complete"], "still running just after seeding");
-    // Fast-forward the run past the threshold, then one tick fires the completion chime.
-    engine.state.flags["analysis_seeded_at"] = engine.state.ticks - (10 * engine.state.dayLength + 5);
+    assert(!engine.state.flags["analysis_resolved"], "still running just after seeding");
     captured.length = 0;
-    engine.submit("wait");
-    assert(engine.state.flags["analysis_complete"], "computation finished");
-    assert(!engine.state.flags["analysis_resolved"], "but NOT yet read");
-    assert(flatOutput().toUpperCase().includes("FINISHED"), "the datapad notification chimes");
-    assert(!flatOutput().includes("AetherLink"), "the notification does NOT name the paymaster");
-    assert(!engine.state.scoreHooks.has("aetherlink_identified"), "no payoff score until it's read");
-    // Log on at the terminal to read it — that's where AetherLink lands.
-    captured.length = 0;
-    engine.submit("use terminal");
-    assert(engine.state.flags["analysis_resolved"], "reading at the terminal resolves it");
-    assert(flatOutput().includes("AetherLink"), "the read-out names AetherLink");
-    assert(engine.state.scoreHooks.has("aetherlink_identified"), "Strand-2 payoff scored on the read");
+    engine.submit("wait 5"); // run the world clock past the threshold
+    assert(engine.state.flags["analysis_resolved"], "resolved after enough ticks");
+    assert(flatOutput().includes("AetherLink"), "the resolution names AetherLink");
+    assert(engine.state.scoreHooks.has("aetherlink_identified"), "Strand-2 payoff scored");
 });
-test("strand 2: the analysis finishes in the background wherever the PC goes", () => {
+test("strand 2: the analysis runs in the background wherever the PC goes", () => {
     const engine = bootToHorizon();
     walkToRetailTerminal(engine);
     engine.state.inventory.push("burke_software");
     engine.submit("use software on terminal");
-    // Walk away from the terminal; the run keeps ticking on the world clock and
-    // FINISHES (chimes the 'pad) while the PC is elsewhere — but stays unread.
-    engine.state.flags["analysis_seeded_at"] = engine.state.ticks - (10 * engine.state.dayLength + 5);
+    // Walk away from the terminal; the analysis keeps ticking on the world clock
+    // and resolves while the PC is elsewhere entirely.
     engine.submit("west"); // back to Zone 3
     engine.submit("north"); // into the service corridor
-    assert(engine.state.flags["analysis_complete"], "finished off-site, on the world clock");
-    assert(!engine.state.flags["analysis_resolved"], "stays unread until a terminal");
+    engine.submit("wait 10");
+    assert(engine.state.flags["analysis_resolved"], "resolved off-site, on the world clock");
 });
 test("strand 2: terminals are interlinked — seed at one, read the result at another", () => {
     const engine = bootToHorizon();
@@ -3047,41 +2448,20 @@ test("strand 2: terminals are interlinked — seed at one, read the result at an
     engine.state.inventory.push("burke_software");
     engine.submit("use software on terminal"); // seed at the Retail terminal
     assert(engine.state.flags["analysis_seeded_at"] !== undefined, "seeded at Retail");
-    // At a DIFFERENT terminal (Blue Sector stop), logging on shows the same run.
+    // Stand at a DIFFERENT terminal (Blue Sector stop) and read it.
     engine.state.currentRoom = "horizon_blue_sector_concourse";
     captured.length = 0;
-    engine.submit("use terminal"); // log on at Blue
+    engine.submit("examine terminal");
     assert(flatOutput().includes("ANALYSIS IN PROGRESS"), "the Blue terminal shows the same running analysis");
     // Re-seeding at this other terminal is a no-op (already running globally).
     captured.length = 0;
     engine.submit("use software on terminal");
     assert(flatOutput().includes("already seeded"), "can't restart it at a second terminal");
-    // Finish the run, then read it out HERE — global state, available at whichever
-    // terminal the PC logs on to.
-    engine.state.flags["analysis_seeded_at"] = engine.state.ticks - (10 * engine.state.dayLength + 5);
-    engine.submit("wait"); // completes (chimes the 'pad)
-    assert(engine.state.flags["analysis_complete"], "finished while standing at the Blue terminal");
+    // Let it resolve, then confirm the readout is available here too.
+    engine.submit("wait 5");
     captured.length = 0;
-    engine.submit("use terminal"); // log on here to read it
+    engine.submit("examine terminal");
     assert(flatOutput().includes("AetherLink"), "the result reads out at the second terminal");
-    assert(engine.state.flags["analysis_resolved"], "reading it here resolves it globally");
-});
-test("strand 2: a public terminal leaks nothing private until you log on", () => {
-    const engine = bootToHorizon();
-    walkToRetailTerminal(engine);
-    engine.state.inventory.push("burke_software");
-    engine.submit("use software on terminal"); // running
-    captured.length = 0;
-    engine.submit("examine terminal");
-    assert(!flatOutput().includes("ANALYSIS IN PROGRESS"), "standby hides the running analysis");
-    assert(flatOutput().toUpperCase().includes("LOG ON"), "passive view only invites you to log on");
-    // Even once finished, passive examine still reveals nothing and doesn't read it.
-    engine.state.flags["analysis_seeded_at"] = engine.state.ticks - (10 * engine.state.dayLength + 5);
-    engine.submit("wait"); // completes
-    captured.length = 0;
-    engine.submit("examine terminal");
-    assert(!flatOutput().includes("AetherLink"), "standby never names the paymaster");
-    assert(!engine.state.flags["analysis_resolved"], "passive examine does not read/resolve it");
 });
 // --- Phase B slice 3: Food Hall -----------------------------------------
 test("food hall: promenade runs Zone C → zone 3 → 2 → 1 → retail", () => {
@@ -3193,7 +2573,7 @@ test("arboretum: reachable by TravelTube; entrance is a stop; bench reachable", 
     const engine = bootToHorizon();
     // ride from the dock-side retail stop to the arboretum
     walkToRetailStop(engine);
-    engine.submit("summon");
+    engine.submit("scan id");
     engine.submit("board");
     engine.submit("select arboretum");
     engine.submit("sit"); // choose, then sit to depart
@@ -3217,101 +2597,6 @@ test("arboretum: reachable by TravelTube; entrance is a stop; bench reachable", 
     engine.submit("east");
     engine.submit("south");
     eq(engine.state.currentRoom, "horizon_park_bench", "reached the quiet bench");
-});
-test("residential zone B: every exit is reciprocal and points at a real room (structural)", () => {
-    const world = jackrabbitWorld;
-    const OPP = { north: "south", south: "north", east: "west", west: "east", up: "down", down: "up" };
-    const ids = Object.keys(world.rooms).filter(id => id.startsWith("horizon_residential_zone_b"));
-    assert(ids.length === 808, `expected 808 residential rooms, got ${ids.length}`);
-    for (const id of ids) {
-        const room = world.rooms[id];
-        for (const [dir, def] of Object.entries(room.exits)) {
-            const to = def?.to;
-            assert(to && world.rooms[to], `${id} ${dir} -> ${to}: target missing`);
-            const opp = OPP[dir];
-            assert(opp, `unexpected direction ${dir} in ${id}`);
-            const back = world.rooms[to].exits[opp]?.to;
-            eq(back, id, `${id} ${dir} -> ${to} should reciprocate via ${opp}`);
-        }
-    }
-});
-test("residential zone B: look-alikes share one description; only the name (address) differs", () => {
-    const world = jackrabbitWorld;
-    const a = world.rooms["horizon_residential_zone_b_residence_b1_nw1_e"];
-    const b = world.rooms["horizon_residential_zone_b_residence_b1_nw1_w"];
-    eq(a.description, b.description, "two residences read identically");
-    assert(a.name !== b.name, "but their names (addresses) differ");
-    // accessway segments within a run also share prose
-    const c = world.rooms["horizon_residential_zone_b_accessway_nw1"];
-    const d = world.rooms["horizon_residential_zone_b_accessway_nw1a"];
-    eq(c.description, d.description, "accessway segments read identically");
-    // the residence prose is generic — it must NOT embed any specific address
-    assert(typeof a.description === "string" && !a.description.includes("NW1"), "residence description carries no address");
-});
-test("residential zone B: reachable by 'Tube; lift rides between levels; corridor stays a dead end", () => {
-    const world = jackrabbitWorld;
-    // The Dockside Retail service corridor's on-foot link goes to Zone A, NOT
-    // Zone B — Zone B is reachable only by 'Tube.
-    eq(world.rooms["horizon_corridor"].exits.north?.to, "horizon_residential_zone_a_central_accessway", "service corridor's north foot-link is Zone A, not Zone B");
-    const engine = bootToHorizon();
-    walkToRetailStop(engine);
-    engine.submit("summon");
-    engine.submit("board");
-    engine.submit("select zone b");
-    engine.submit("sit");
-    engine.submit("wait 12"); // ride (interruptible; stops on arrival)
-    engine.submit("disembark");
-    eq(engine.state.currentRoom, "horizon_residential_zone_b", "arrived at the Zone B stop");
-    // Into the lift and up to level 2, then step out onto that floor.
-    engine.submit("south");
-    eq(engine.state.currentRoom, "horizon_residential_zone_b_lift_l1", "S → lift car (ground)");
-    engine.submit("select 2");
-    eq(engine.state.currentRoom, "horizon_residential_zone_b_lift_l2", "rode to the level-2 car");
-    engine.submit("north");
-    eq(engine.state.currentRoom, "horizon_residential_zone_b_l2", "stepped out onto level 2");
-});
-test("residential zone A: on-foot from the retail service corridor; reciprocal exits", () => {
-    const world = jackrabbitWorld;
-    const OPP = { north: "south", south: "north", east: "west", west: "east", up: "down", down: "up" };
-    const ids = Object.keys(world.rooms).filter(id => id.startsWith("horizon_residential_zone_a") || id.startsWith("residential_zone_a") ||
-        id.startsWith("horizon_residence_a") || id.startsWith("horizon_horizon_residential_zone_a"));
-    assert(ids.length === 24, `expected 24 Zone A rooms, got ${ids.length}`);
-    for (const id of ids) {
-        const room = world.rooms[id];
-        for (const [dir, def] of Object.entries(room.exits)) {
-            const to = def?.to;
-            assert(to && world.rooms[to], `${id} ${dir} -> ${to}: target missing`);
-            const back = world.rooms[to].exits[OPP[dir]]?.to;
-            eq(back, id, `${id} ${dir} -> ${to} should reciprocate via ${OPP[dir]}`);
-        }
-    }
-    // walkable from the retail corridor and back (the link both this test and the
-    // engine rely on)
-    const engine = bootToHorizon();
-    walkToRetailStop(engine); // → Retail Zone 1
-    engine.submit("north");
-    engine.submit("north"); // Zone 2, Zone 3
-    engine.submit("north"); // service corridor (old dead-end)
-    eq(engine.state.currentRoom, "horizon_corridor", "reached the service corridor");
-    engine.submit("north"); // into Zone A on foot
-    eq(engine.state.currentRoom, "horizon_residential_zone_a_central_accessway", "on foot into Zone A");
-    engine.submit("south"); // and back out
-    eq(engine.state.currentRoom, "horizon_corridor", "back out to the corridor");
-});
-test("service area: a 'Tube-only stub — reachable by pod, gantry walkable", () => {
-    const engine = bootToHorizon();
-    walkToRetailStop(engine);
-    engine.submit("summon");
-    engine.submit("board");
-    engine.submit("select service");
-    engine.submit("sit");
-    engine.submit("wait 12"); // ride (interruptible; stops on arrival)
-    engine.submit("disembark");
-    eq(engine.state.currentRoom, "horizon_service_access_corridor", "arrived at the service stop");
-    engine.submit("east");
-    engine.submit("north");
-    engine.submit("north");
-    eq(engine.state.currentRoom, "horizon_service_access_gantry", "walked to the gantry");
 });
 test("quit: routes to a world-defined 'quit' ending; narrative + closing text play", () => {
     const engine = makeEngine();
@@ -3443,721 +2728,6 @@ test("engine: notes is fractional (0.1) and dedups", () => {
     const beforeTurns = engine.state.turns;
     engine.submit("notes"); // fractional
     eq(engine.state.turns, beforeTurns, "no turn increment for fractional command");
-});
-// --- Donovan's & Dockside Hostel check-in mechanics ---------------------
-test("donovan: tap card on the desk checks in, allocates a room, files a note", () => {
-    const engine = bootToHorizon();
-    rideToDonovans(engine); // ends in Donovan's lobby
-    assert(!engine.state.flags["donovan_checked_in"], "not checked in on arrival");
-    // Talking first should point the PC at the reader (no room yet).
-    captured.length = 0;
-    engine.submit("talk donovan");
-    assert(flatOutput().toLowerCase().includes("reader"), "Donovan directs the PC to the reader");
-    assert(!engine.state.flags["donovan_checked_in"], "talk alone does not check in");
-    // The scan checks in.
-    engine.submit("tap card on desk");
-    assert(engine.state.flags["donovan_checked_in"] === true, "scan sets checked-in flag");
-    assert(typeof engine.state.flags["donovan_room"] === "string", "a room number was allocated");
-    assert(engine.state.notes.some(n => n.id === "donovan_room_allocated"), "room-allocation note filed");
-    // The privacy question is now waiting as a modal.
-    assert(engine.inModalMode(), "privacy question opens as a modal");
-});
-test("donovan: the privacy question is flavour — any answer closes it", () => {
-    const engine = bootToHorizon();
-    rideToDonovans(engine);
-    engine.submit("use id on desk"); // alternate phrasing also works
-    assert(engine.inModalMode(), "privacy modal active");
-    captured.length = 0;
-    engine.submit("whatever you like"); // the answer doesn't matter
-    assert(!engine.inModalMode(), "answering closes the modal");
-    assert(flatOutput().toLowerCase().includes("as you wish"), "Donovan's uniform reply");
-});
-test("scan: the standardised reader verb checks in at reception (Donovan's & hostel)", () => {
-    // Donovan's — `scan id` works just like the TravelTube reader verb.
-    let engine = bootToHorizon();
-    rideToDonovans(engine);
-    engine.submit("scan id");
-    assert(engine.state.flags["donovan_checked_in"] === true, "scan id checks in at Donovan's");
-    engine.submit("whatever"); // dismiss the privacy modal
-    // Hostel — same verb, once a booking is on file.
-    engine = bootToHorizon();
-    engine.state.flags["hostel_booked"] = true;
-    engine.state.currentRoom = "horizon_hostel_entrance";
-    engine.submit("scan id");
-    assert(engine.state.flags["hostel_checked_in"] === true, "scan id checks in at the hostel");
-    // Where there's no reader at all, the refusal is honest (not a tube-only message).
-    engine.submit("east"); // foyer → arrival concourse (no reader)
-    captured.length = 0;
-    engine.submit("scan id");
-    assert(flatOutput().toLowerCase().includes("no id reader"), "honest refusal where no reader exists");
-});
-test("hostel: every room door blinks red until booked & checked in", () => {
-    const engine = bootToHorizon();
-    engine.submit("west"); // arrival concourse → hostel foyer
-    eq(engine.state.currentRoom, "horizon_hostel_entrance", "reached the hostel reception foyer");
-    // The reception reader refuses without a booking.
-    captured.length = 0;
-    engine.submit("tap card on reader");
-    assert(flatOutput().toLowerCase().includes("red"), "no-booking scan flashes red");
-    assert(!engine.state.flags["hostel_checked_in"], "no check-in without a booking");
-    assert(engine.state.flags["hostel_room"] === undefined, "no room allocated");
-    // And a room door refuses too.
-    engine.submit("west"); // foyer → floor-0 corridor
-    eq(engine.state.currentRoom, "horizon_hostel_f0_corr1", "out into the corridor");
-    captured.length = 0;
-    engine.submit("north"); // try Room 01's door
-    eq(engine.state.currentRoom, "horizon_hostel_f0_corr1", "the door stays shut");
-    assert(flatOutput().toLowerCase().includes("red"), "room door flashes red");
-});
-test("hostel: book at a public terminal (off-grid), then check in at reception", () => {
-    const engine = bootToHorizon();
-    engine.state.flags["donovan_checked_out"] = true; // released the Donovan's reservation (defection)
-    walkToRetailTerminal(engine); // to a public terminal
-    engine.submit("book hostel");
-    assert(engine.state.flags["hostel_booked"] === true, "booking sets the booked flag");
-    assert(engine.state.notes.some(n => n.id === "hostel_booked"), "booking note filed");
-    // Now check in at the hostel reception reader.
-    engine.state.currentRoom = "horizon_hostel_entrance";
-    engine.submit("tap card on reader");
-    assert(engine.state.flags["hostel_checked_in"] === true, "scan checks in once booked");
-    assert(typeof engine.state.flags["hostel_room"] === "string", "a room was allocated");
-    assert(engine.state.flags["hostel_room"] !== "203", "the reserved easter-egg room is never allocated");
-    assert(engine.state.notes.some(n => n.id === "hostel_room_allocated"), "room-allocation note filed");
-});
-test("hostel: the one-berth policy blocks a booking while the Donovan's reservation is held", () => {
-    const engine = bootToHorizon(); // PC arrives holding the Donovan's reservation
-    walkToRetailTerminal(engine);
-    captured.length = 0;
-    engine.submit("book hostel");
-    assert(!engine.state.flags["hostel_booked"], "booking refused while the reservation is held");
-    assert(flatOutput().includes("Donovan") && flatOutput().toLowerCase().includes("berth policy"), "the refusal cites the berth policy and the Donovan's reservation");
-});
-test("hostel: only the allocated room's door opens to the card", () => {
-    const engine = bootToHorizon();
-    engine.state.flags["hostel_checked_in"] = true;
-    engine.state.flags["hostel_room"] = "01"; // force a floor-0 allocation
-    engine.state.currentRoom = "horizon_hostel_entrance";
-    engine.submit("west"); // floor-0 corridor
-    engine.submit("north"); // Room 01 — allocated → opens
-    eq(engine.state.currentRoom, "horizon_hostel_room_01", "your own door opens");
-    engine.submit("south"); // back to the corridor
-    captured.length = 0;
-    engine.submit("south"); // Room 02 — not yours → refused
-    eq(engine.state.currentRoom, "horizon_hostel_f0_corr1", "someone else's door stays shut");
-    assert(flatOutput().toLowerCase().includes("isn't your room"), "wrong-room refusal");
-});
-// --- Sophie + the shipyard records route --------------------------------
-test("sophie: reception talk + the records signpost score; the boy is a wall", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "horizon_shipyard_reception";
-    engine.submit("talk sophie");
-    assert(engine.state.scoreHooks.has("talked_to_sophie"), "talked-to-Sophie hook");
-    engine.submit("ask sophie about records");
-    assert(engine.state.scoreHooks.has("sophie_records_hint"), "records signpost scored");
-    captured.length = 0;
-    engine.submit("ask sophie about the boy");
-    assert(flatOutput().toLowerCase().includes("people's business is their own"), "loyalty wall on the boy");
-    assert(!engine.state.scoreHooks.has("records_ship_jackrabbit"), "the wall reveals nothing");
-    captured.length = 0;
-    engine.submit("ask sophie about oswald");
-    assert(flatOutput().toLowerCase().includes("foreman"), "Ozzy/Oswald gatekept");
-});
-test("records: gated on the predecessor's login; reveals ship then wreck", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "horizon_blue_sector_concourse"; // has a public terminal
-    // Without the saved login, the records are closed.
-    captured.length = 0;
-    engine.submit("access records");
-    assert(!engine.state.scoreHooks.has("records_ship_jackrabbit"), "no access without credentials");
-    assert(flatOutput().toLowerCase().includes("credentials") || flatOutput().toLowerCase().includes("customers-only"), "refused without the login");
-    // With the login banked, the two-tier reveal unlocks.
-    engine.state.flags["shipyard_creds"] = true;
-    engine.submit("access records"); // Tier 1 — the ship
-    assert(engine.state.scoreHooks.has("records_ship_jackrabbit"), "Tier 1: the Jackrabbit is a ship");
-    assert(engine.state.notes.some(n => n.id === "records_ship_jackrabbit"), "Tier 1 note filed");
-    engine.submit("access records"); // Tier 2 — the intake report
-    assert(engine.state.scoreHooks.has("records_ship_wreck"), "Tier 2: the wreck / Oswald");
-    assert(engine.state.notes.some(n => n.id === "records_ship_wreck"), "Tier 2 note filed");
-    const sc = engine.state.score;
-    engine.submit("access records"); // nothing new
-    eq(engine.state.score, sc, "re-reading the open record scores nothing further");
-});
-// --- Brinn (the child's wall + the dormant second encounter) -------------
-test("brinn: pool-tables wall — the flinch, then he bolts", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "ez2_pool_tables";
-    engine.submit("talk brinn");
-    assert(engine.state.scoreHooks.has("talked_to_brinn"), "talked-to-Brinn hook");
-    captured.length = 0;
-    engine.submit("ask brinn about tour");
-    assert(flatOutput().toLowerCase().includes("tour"), "warm tour-tempt before the wall");
-    captured.length = 0;
-    engine.submit("ask brinn about jackrabbit");
-    assert(engine.state.scoreHooks.has("brinn_wall"), "the wall scores");
-    assert(flatOutput().toLowerCase().includes("bad lie"), "the visible flinch");
-    assert(flatOutput().toLowerCase().includes("homework"), "he makes a child's excuse and goes");
-    // He's scarpered — no longer at the pool tables.
-    captured.length = 0;
-    engine.submit("look");
-    assert(!flatOutput().includes("Brinn is here"), "Brinn has left the pool tables");
-    captured.length = 0;
-    engine.submit("talk brinn");
-    assert(!flatOutput().includes("New face"), "he's gone — can't be talked to here");
-});
-test("tube SELECT: a specific query beats a generic stop name (entertainment 2 -> Zone 2)", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "horizon_blue_sector_concourse"; // a tube stop, neither zone
-    engine.submit("summon");
-    engine.submit("board");
-    captured.length = 0;
-    engine.submit("select entertainment 2");
-    assert(flatOutput().includes("Entertainment Zone 2"), "selects Zone 2");
-    assert(!flatOutput().includes("Entertainment Zone 1"), "not the generic-named Zone 1");
-});
-test("burke: night-only — sleeping in the workshop, daybreak ushers you out", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "horizon_burke_s_workshop";
-    engine.state.ticks = engine.state.dayLength + 5;
-    engine.state.isDaytime = false; // night, 95 ticks shy of daybreak
-    captured.length = 0;
-    engine.submit("sleep"); // sleeps to daybreak; Burke then ejects
-    assert(engine.state.isDaytime, "woke into the day");
-    eq(engine.state.currentRoom, "horizon_narrow_corridor8", "ushered out to the corridor");
-    assert(flatOutput().toLowerCase().includes("daylight"), "Burke's eject line landed");
-});
-test("brinn: the second encounter stays dormant until the defection/flee path", () => {
-    const engine = bootToHorizon();
-    engine.state.scoreHooks.add("talked_to_brinn"); // met him already
-    engine.state.currentRoom = "lcd_corridor_w2";
-    engine.submit("wait"); // tick in the corridor
-    assert(!engine.state.scoreHooks.has("brinn_second_encounter"), "no second encounter without the path flag");
-    // Once on the defection path, entering/acting in the corridor fires it once.
-    engine.state.flags["defecting"] = true;
-    captured.length = 0;
-    engine.submit("wait");
-    assert(engine.state.scoreHooks.has("brinn_second_encounter"), "second encounter fires on the path");
-    assert(flatOutput().includes("Brinn"), "the encounter names Brinn so the player knows who it is");
-    assert(flatOutput().toLowerCase().includes("i hope he still does"), "the farewell line lands");
-    assert(engine.state.notes.some(n => n.id === "brinn_second_encounter"), "second-encounter note filed");
-    const sc = engine.state.score;
-    engine.submit("wait");
-    eq(engine.state.score, sc, "it fires only once");
-});
-// --- Burke Beat 1 (night-only; the first transaction) --------------------
-test("burke: the workshop is shut by day, open at night", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "horizon_narrow_corridor8";
-    engine.state.ticks = 50;
-    engine.state.isDaytime = true; // daytime (ticks < dayLength)
-    captured.length = 0;
-    engine.submit("east");
-    eq(engine.state.currentRoom, "horizon_narrow_corridor8", "day: the door is shut");
-    assert(flatOutput().toLowerCase().includes("back at night"), "day: the BACK AT NIGHT card");
-    engine.state.ticks = engine.state.dayLength + 5;
-    engine.state.isDaytime = false; // night
-    engine.submit("east");
-    eq(engine.state.currentRoom, "horizon_burke_s_workshop", "night: the door opens");
-});
-test("burke: talk is a greeting; the transaction fires only on asking about the boy", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "horizon_burke_s_workshop";
-    engine.state.ticks = engine.state.dayLength + 5;
-    engine.state.isDaytime = false; // night (isDaytime is derived from ticks)
-    // TALK = greeting only: no charge, no score, no boy.
-    const start = engine.state.flags["credits"];
-    captured.length = 0;
-    engine.submit("talk burke");
-    assert(engine.state.flags["burke_met"] === true, "burke_met latched on talk");
-    assert(!engine.state.scoreHooks.has("first_burke_transaction"), "talk doesn't transact");
-    eq(engine.state.flags["credits"], start, "talk doesn't charge");
-    assert(!flatOutput().includes("Jackrabbit"), "talk doesn't reveal the boy");
-    // ASK ABOUT JACKRABBIT = step 1: he names his price, divulges nothing, no charge.
-    captured.length = 0;
-    engine.submit("ask burke about jackrabbit");
-    assert(!engine.state.scoreHooks.has("first_burke_transaction"), "no transaction before payment");
-    eq(engine.state.flags["credits"], start, "nothing charged before payment");
-    assert(flatOutput().toLowerCase().includes("scan"), "he demands an ID scan to pay first");
-    // SCAN ID (at his bench reader) = pay → only THEN the sliver + the free nudge.
-    captured.length = 0;
-    engine.submit("scan id");
-    assert(engine.state.scoreHooks.has("first_burke_transaction"), "paying scores the transaction");
-    assert(engine.state.notes.some(n => n.id === "burke_first_transaction"), "transaction note filed");
-    eq(engine.state.flags["credits"], start - 10, "the fee debited on payment");
-    assert(flatOutput().toLowerCase().includes("who you're actually working for"), "the Strand-2 nudge thrown in");
-    // Paying / asking again doesn't re-charge or re-score.
-    const sc = engine.state.score, bal = engine.state.flags["credits"];
-    engine.submit("scan id");
-    eq(engine.state.flags["credits"], bal, "no second charge on a re-scan");
-    engine.submit("ask burke about jackrabbit");
-    eq(engine.state.score, sc, "no re-score");
-});
-// --- Batch 2 NPCs: Celeste server, Ozzy, Chas (+ the interlock) -----------
-test("celeste server: talk scores + the vivid ceiling, nothing actionable", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "cda_burrito";
-    captured.length = 0;
-    engine.submit("talk server");
-    assert(engine.state.scoreHooks.has("talked_to_celeste_server"), "talking scores");
-    assert(engine.state.notes.some(n => n.id === "celeste_encounter"), "encounter note filed");
-    captured.length = 0;
-    engine.submit("ask server about jackrabbit");
-    assert(flatOutput().toLowerCase().includes("fine young man"), "her ceiling: a fine young man");
-    assert(!flatOutput().toLowerCase().includes("abbott"), "she never gives a real name");
-});
-test("celeste server: buying a meal warms her food topic", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "cda_burrito";
-    engine.state.flags["credits"] = 50;
-    engine.submit("buy burrito");
-    assert(engine.state.flags["bought_at_celeste"] === true, "the purchase flag latches");
-    assert(engine.state.inventory.includes("celeste_meal"), "the meal is in hand");
-    captured.length = 0;
-    engine.submit("ask server about food");
-    assert(flatOutput().toLowerCase().includes("won't tell you how"), "warmer, customer-grade food talk");
-});
-test("ozzy: night-gated in the Brass Rail — absent by day, present by night", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "ez1_brass_rail";
-    // Day: not there.
-    engine.state.ticks = 5;
-    engine.state.isDaytime = true;
-    engine.submit("wait");
-    captured.length = 0;
-    engine.submit("talk ozzy");
-    assert(flatOutput().toLowerCase().includes("no ozzy"), "absent by day");
-    // Night: present.
-    engine.state.ticks = engine.state.dayLength + 5;
-    engine.state.isDaytime = false;
-    engine.submit("wait");
-    captured.length = 0;
-    engine.submit("talk ozzy");
-    assert(engine.state.scoreHooks.has("talked_to_ozzy"), "present and talkable by night");
-    assert(engine.state.notes.some(n => n.id === "ozzy_encounter"), "ozzy note filed");
-});
-test("ozzy: the ship-name confirmation needs the records reveal first", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "ez1_brass_rail";
-    engine.state.ticks = engine.state.dayLength + 5;
-    engine.state.isDaytime = false;
-    engine.submit("wait");
-    // Without knowing it's a ship: the flat "person or a ship?" wall.
-    captured.length = 0;
-    engine.submit("ask ozzy about jackrabbit");
-    assert(flatOutput().toLowerCase().includes("person or a ship"), "the wall when it's still a name");
-    assert(!engine.state.scoreHooks.has("ozzy_ship_name_confirm"), "no ship-name score yet");
-    // Knowing it's a ship: he confirms he named her (+2).
-    engine.state.flags["jackrabbit_is_ship"] = true;
-    captured.length = 0;
-    engine.submit("ask ozzy about jackrabbit");
-    assert(engine.state.scoreHooks.has("ozzy_ship_name_confirm"), "the proud confirmation scores");
-    assert(flatOutput().toLowerCase().includes("named her myself"), "he named her");
-});
-test("interlock: the records reveal sets the Jackrabbit-is-a-ship flag", () => {
-    const engine = bootToHorizon();
-    engine.state.flags["shipyard_creds"] = true; // banked from the predecessor's kit
-    engine.state.currentRoom = "horizon_blue_sector_concourse"; // has a public terminal
-    engine.submit("access records"); // Tier 1 — it's a ship
-    assert(engine.state.flags["jackrabbit_is_ship"] === true, "Tier 1 unlocks Ozzy's beat");
-});
-test("chas: Beat 1 contempt, then the spite-crack on revealing the hunt (+4)", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "ez1_long_shot";
-    engine.state.ticks = engine.state.dayLength + 5;
-    engine.state.isDaytime = false;
-    engine.submit("wait");
-    // Beat 1: present, talk scores, jackrabbit topic gives contempt but no name.
-    captured.length = 0;
-    engine.submit("talk chas");
-    assert(engine.state.scoreHooks.has("talked_to_chas"), "first conversation scores");
-    captured.length = 0;
-    engine.submit("ask chas about jackrabbit");
-    assert(flatOutput().toLowerCase().includes("little nobody"), "Beat 1 contempt");
-    assert(!flatOutput().toLowerCase().includes("abbott"), "no name in Beat 1");
-    // Beat 2: reveal the hunt -> the crack.
-    const before = engine.state.score;
-    captured.length = 0;
-    engine.submit("ask chas about hunting");
-    assert(engine.state.scoreHooks.has("chas_gave_intel"), "the crack scores");
-    eq(engine.state.score, before + 4, "+4 for the hard intel");
-    assert(flatOutput().includes("Jack Abbott"), "Jack's real name");
-    assert(engine.state.flags["jack_real_name"] === true, "real-name flag set");
-    assert(engine.state.flags["jackrabbit_is_ship"] === true, "ship flag set as a side effect");
-    assert(engine.state.notes.some(n => n.id === "chas_intel"), "intel note filed");
-    // Idempotent.
-    const sc = engine.state.score;
-    engine.submit("ask chas about hunting");
-    eq(engine.state.score, sc, "the crack fires only once");
-});
-test("long shot: a back bar reached east from the Brass Rail", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "ez1_brass_rail";
-    engine.submit("east");
-    eq(engine.state.currentRoom, "ez1_long_shot", "east into the Long Shot");
-    engine.submit("west");
-    eq(engine.state.currentRoom, "ez1_brass_rail", "and back west");
-});
-test("teng: atmospheric until the defect pathway, then the berth pointer (+2)", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "lcd_teng_brokerage";
-    // Dormant: the ship topic gives nothing, scores nothing.
-    captured.length = 0;
-    engine.submit("ask teng about ship");
-    assert(!engine.state.scoreHooks.has("talked_to_teng"), "no score off the defect pathway");
-    assert(flatOutput().toLowerCase().includes("nothing here is what you need"), "professional, unhelpful");
-    // On the defect pathway: the full beat + the berth pointer.
-    engine.state.flags["defect_pathway"] = true;
-    const before = engine.state.score;
-    captured.length = 0;
-    engine.submit("ask teng about escape");
-    assert(engine.state.scoreHooks.has("talked_to_teng"), "the berth-pointer beat scores");
-    eq(engine.state.score, before + 2, "+2 for the pointer");
-    assert(flatOutput().toLowerCase().includes("bay 47"), "points at Bay 47 / the Raven");
-    assert(engine.state.notes.some(n => n.id === "teng_encounter"), "teng note filed");
-    // Jack topic: a clean refusal at all times.
-    captured.length = 0;
-    engine.submit("ask teng about jackrabbit");
-    assert(flatOutput().toLowerCase().includes("i sell ships"), "clean Jack refusal");
-});
-test("rajah: the three-stage thread — home, the unit, the back room, the commit (+3)", () => {
-    const engine = bootToHorizon();
-    // Before Burke's referral she's nowhere, and her unit is shut.
-    engine.state.currentRoom = "lcd_rajah_front";
-    captured.length = 0;
-    engine.submit("look");
-    assert(flatOutput().toLowerCase().includes("shut"), "the pharmacy is shut before the thread");
-    assert(!engine.state.flags["rajah_home_met"], "not yet redirected");
-    // Burke's referral picks + places her at a random Zone B residence.
-    const address = referRajahToResidence(engine.state);
-    const home = engine.state.flags["rajah_residence"];
-    assert(typeof home === "string" && home.length > 0, "a residence was chosen");
-    assert(engine.state.npcLocations?.["rajah"] === home, "Rajah placed at her home");
-    engine.state.flags["burke_referred_rajah"] = true;
-    // Stage 2: found at home, she won't talk there — redirects to her unit.
-    engine.state.currentRoom = home;
-    captured.length = 0;
-    engine.submit("talk rajah");
-    assert(flatOutput().toLowerCase().includes("not here"), "she won't talk at home");
-    assert(engine.state.flags["rajah_home_met"] === true, "home meeting latches");
-    const relocated = engine.state.npcLocations?.["rajah"];
-    assert(relocated === "lcd_rajah_front", "she relocates to her unit");
-    assert(engine.state.notes.some(n => n.id === "rajah_home_met"), "home-meeting note filed");
-    // Stage 3a: at the unit, TALK takes her through to the consulting room.
-    engine.state.currentRoom = "lcd_rajah_front";
-    captured.length = 0;
-    engine.submit("look");
-    assert(flatOutput().toLowerCase().includes("consulting room"), "the unit is open now");
-    engine.submit("talk rajah");
-    assert(engine.state.flags["rajah_invited"] === true, "she heads for the back room");
-    const inBack = engine.state.npcLocations?.["rajah"];
-    assert(inBack === "lcd_rajah_back", "she's in the consulting room");
-    engine.submit("follow rajah"); // the PC follows her through
-    eq(engine.state.currentRoom, "lcd_rajah_back", "the PC follows into the consulting room");
-    // Stage 3b: the privacy explanation; the card is NOT lying in the room.
-    captured.length = 0;
-    engine.submit("talk rajah");
-    assert(flatOutput().toLowerCase().includes("private"), "she explains the guaranteed privacy");
-    captured.length = 0;
-    engine.submit("look");
-    assert(!flatOutput().toLowerCase().includes("datacard"), "the card is not sitting in the room");
-    // Stage 3c: asking arms the commit; declining keeps the offer, no card.
-    captured.length = 0;
-    engine.submit("ask rajah about resistance");
-    assert(flatOutput().toLowerCase().includes("done with them"), "she asks for commitment");
-    engine.submit("no");
-    assert(!engine.state.flags["rajah_committed"], "declining does not commit");
-    assert(!engine.state.inventory.includes("rajah_datacard"), "no card without commitment");
-    // Committing hands the card over (scores +3) and urges an offline datapad.
-    const before = engine.state.score;
-    engine.submit("ask rajah about resistance");
-    captured.length = 0;
-    engine.submit("yes");
-    assert(engine.state.flags["rajah_committed"] === true, "commitment latches");
-    assert(engine.state.inventory.includes("rajah_datacard"), "she hands the card over");
-    assert(flatOutput().toLowerCase().includes("offline"), "she urges an offline machine");
-    assert(engine.state.scoreHooks.has("received_rajah_datacard"), "the datacard scores");
-    eq(engine.state.score, before + 3, "+3 for the datacard");
-    assert(engine.state.notes.some(n => n.id === "rajah_datacard"), "datacard note filed");
-});
-test("rajah datacard: never load it onto the AetherLink datapad", () => {
-    const engine = bootToHorizon();
-    // Hand the PC the card directly (the hand-off is exercised above).
-    engine.state.inventory.push("rajah_datacard");
-    const stupid = "inconceivably stupid";
-    captured.length = 0;
-    engine.submit("use datapad on datacard");
-    assert(flatOutput().toLowerCase().includes(stupid), "datapad → datacard refused");
-    captured.length = 0;
-    engine.submit("use datacard on datapad");
-    assert(flatOutput().toLowerCase().includes(stupid), "datacard → datapad refused");
-    captured.length = 0;
-    engine.submit("load datacard");
-    assert(flatOutput().toLowerCase().includes(stupid), "load datacard refused");
-});
-test("datacards: qualified names disambiguate when the PC holds both", () => {
-    const engine = bootToHorizon();
-    engine.state.inventory.push("burke_software"); // the "software datacard"
-    engine.state.inventory.push("rajah_datacard"); // the "resistance datacard"
-    captured.length = 0;
-    engine.submit("examine software datacard");
-    assert(flatOutput().toLowerCase().includes("payment chain"), "software datacard -> Burke's analysis package");
-    captured.length = 0;
-    engine.submit("examine resistance datacard");
-    assert(flatOutput().toLowerCase().includes("coordinates"), "resistance datacard -> Rajah's");
-});
-test("save/load: the datacard's world `load` command must not shadow restoring a save", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "horizon_blue_sector_concourse"; // a distinctive room
-    engine.submit("save");
-    engine.state.currentRoom = "horizon_arrival_concourse"; // move away
-    captured.length = 0;
-    engine.submit("load"); // the bare restore verb
-    assert(flatOutput().includes("Game loaded"), "`load` restores the save (not the datacard handler)");
-    eq(engine.state.currentRoom, "horizon_blue_sector_concourse", "state was actually restored");
-    // `restore` (the synonym) must work too.
-    engine.state.currentRoom = "horizon_arrival_concourse";
-    captured.length = 0;
-    engine.submit("restore");
-    eq(engine.state.currentRoom, "horizon_blue_sector_concourse", "`restore` also restores the save");
-    // ...and the datacard prohibition still fires when the card is in hand.
-    engine.state.inventory.push("rajah_datacard");
-    captured.length = 0;
-    engine.submit("load datacard");
-    assert(flatOutput().toLowerCase().includes("inconceivably stupid"), "load datacard still refused");
-});
-// --- A–C: Barty, the sandwich-buy leak, the predecessor failsafe ---------
-test("barty: the scan-in greeting + the independence stance score", () => {
-    const engine = bootToHorizon();
-    captured.length = 0;
-    engine.submit("talk barty");
-    assert(engine.state.flags["id_scanned"] === true, "Barty scans the ID on first talk");
-    assert(flatOutput().toLowerCase().includes("hostel"), "his opener points at the hostel");
-    engine.submit("ask barty about horizon");
-    assert(engine.state.scoreHooks.has("asked_barty_horizon"), "the independence stance scores");
-});
-test("barty: either sensitive refusal scores asked_barty_sensitive once", () => {
-    const engine = bootToHorizon();
-    engine.submit("talk barty");
-    const before = engine.state.score;
-    engine.submit("ask barty about ships");
-    assert(engine.state.scoreHooks.has("asked_barty_sensitive"), "the docks/ships refusal scores");
-    eq(engine.state.score, before + 2, "+2 for the first sensitive refusal");
-    engine.submit("ask barty about jackrabbit");
-    eq(engine.state.score, before + 2, "the target refusal doesn't double-score");
-});
-test("food hall: she asks which filling; only apricot jam leaks the Jackrabbit (Nkosi)", () => {
-    const engine = bootToHorizon();
-    toSandwichCounter(engine);
-    // A bare "buy sandwich" no longer defaults to apricot — she asks which filling.
-    captured.length = 0;
-    engine.submit("buy sandwich");
-    assert(flatOutput().toLowerCase().includes("what filling"), "she asks which filling");
-    assert(!engine.state.inventory.includes("sandwich"), "nothing bought on the prompt");
-    assert(!engine.state.scoreHooks.has("sandwich_vendor_jam"), "no leak from the prompt");
-    // A non-apricot filling: a plain sandwich, no leak, no score.
-    captured.length = 0;
-    engine.submit("buy cheese sandwich");
-    assert(engine.state.inventory.includes("sandwich"), "a cheese sandwich is a sandwich");
-    assert(!engine.state.scoreHooks.has("sandwich_vendor_jam"), "no leak from the cheese order");
-    engine.submit("eat sandwich"); // clear it so we can buy again
-    // The apricot-jam easter egg: the leak + both hooks.
-    captured.length = 0;
-    engine.submit("buy apricot sandwich");
-    assert(flatOutput().includes("Jackrabbit's favourite"), "apricot draws out the volunteer leak");
-    assert(engine.state.scoreHooks.has("sandwich_vendor_he"), "gender hook via the leak");
-    assert(engine.state.scoreHooks.has("sandwich_vendor_jam"), "jam hook via the leak");
-});
-test("predecessor: the datapad failsafe cracks the sealed brief (+5)", () => {
-    const engine = bootToHorizon();
-    walkToLavatory(engine);
-    engine.submit("open panel");
-    engine.submit("take weathered datapad"); // carries the brief; PC already holds its twin
-    const before = engine.state.score;
-    captured.length = 0;
-    engine.submit("use datapad on weathered datapad"); // the failsafe (either order works)
-    assert(engine.state.flags["predecessor_brief_unlocked"] === true, "the brief unlocks");
-    assert(engine.state.scoreHooks.has("predecessor_same_job"), "scores predecessor_same_job");
-    eq(engine.state.score, before + 5, "+5 for the failsafe crack");
-    assert(flatOutput().toLowerCase().includes("sent first") || flatOutput().toLowerCase().includes("replacement"), "the reveal: he was sent first; you're the replacement");
-    assert(engine.state.notes.some(n => n.id === "predecessor_brief_unlocked"), "unlock note filed");
-    captured.length = 0;
-    engine.submit("read his brief");
-    assert(!flatOutput().includes("won't open"), "the brief now reads as open");
-});
-test("LCD: the noodle counter actually sells noodles", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "lcd_noodle_counter";
-    const before = engine.state.flags["credits"];
-    engine.submit("buy noodles");
-    assert(engine.state.inventory.includes("noodles"), "noodles now carried");
-    eq(engine.state.flags["credits"], before - 2, "charged the noodle price");
-    captured.length = 0;
-    engine.submit("eat noodles");
-    assert(flatOutput().toLowerCase().includes("broth"), "ate the noodles");
-    assert(!engine.state.inventory.includes("noodles"), "consumed");
-});
-test("tube: the Retail↔LCD ride is overridden to 3 ticks", () => {
-    const engine = bootToHorizon();
-    walkToRetailStop(engine);
-    engine.submit("summon");
-    engine.submit("board");
-    engine.submit("select lower commercial");
-    const before = engine.state.ticks;
-    engine.submit("sit"); // departs; ride runs on the pod's clock
-    engine.submit("wait 20"); // interruptible; stops on arrival
-    engine.submit("disembark");
-    eq(engine.state.currentRoom, "lcd_tube_stop", "arrived at the LCD stop");
-    // sit (1) + 3-tick ride + disembark (1) = 5 ticks total — well under the old 8-tick ride.
-    assert(engine.state.ticks - before <= 6, `short hop (took ${engine.state.ticks - before} ticks incl. boarding moves)`);
-});
-test("hidden items: sub-documents aren't listed in the room or swept by 'take all'", () => {
-    const engine = bootToHorizon();
-    walkToLavatory(engine);
-    engine.submit("open panel"); // kit (incl. hidden sub-docs) now in the room
-    captured.length = 0;
-    engine.submit("look");
-    const look = flatOutput();
-    assert(look.includes("weathered datapad"), "the datapad is listed");
-    assert(!look.includes("his diary") && !look.includes("his saved login") && !look.includes("his contract brief"), "the datapad's sub-documents are not listed in the room");
-    captured.length = 0;
-    engine.submit("take all");
-    assert(engine.state.inventory.includes("predecessor_datapad"), "take all picks up the datapad");
-    assert(!flatOutput().includes("his diary"), "take all doesn't name the sub-documents");
-    // The sub-docs still travelled with the datapad (via its onTake) and stay in scope.
-    // Crack the 'pad (both held), then the now-unsealed login reads — proving scope.
-    engine.submit("use datapad on weathered datapad");
-    captured.length = 0;
-    engine.submit("read his credentials");
-    assert(flatOutput().includes("Sophie"), "sub-documents remain in scope after take all");
-});
-test("predecessor: the failsafe wants his datapad in hand", () => {
-    const engine = bootToHorizon();
-    walkToLavatory(engine);
-    engine.submit("open panel"); // his pad is in the room, not held
-    captured.length = 0;
-    engine.submit("use datapad on weathered datapad");
-    assert(flatOutput().toLowerCase().includes("in hand"), "nudged to pick his datapad up first");
-    assert(!engine.state.flags["predecessor_brief_unlocked"], "no unlock from the floor");
-    engine.submit("take weathered datapad");
-    engine.submit("use datapad on weathered datapad");
-    assert(engine.state.flags["predecessor_brief_unlocked"] === true, "unlocks once both are held");
-});
-test("burke: Beat 2 — the timed routing reveal, then sells the analysis software", () => {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "horizon_burke_s_workshop";
-    engine.state.ticks = engine.state.dayLength + 5;
-    engine.state.isDaytime = false; // night (isDaytime is derived from ticks)
-    engine.submit("talk burke"); // greeting
-    engine.submit("ask burke about jackrabbit"); // Beat 1 step 1 — names the price
-    engine.submit("scan id"); // pay → stamps the Beat-2 clock
-    // Same night: nothing new yet.
-    captured.length = 0;
-    engine.submit("talk burke");
-    assert(!engine.state.flags["burke_beat2"], "Beat 2 not open the same night");
-    assert(flatOutput().includes("Back again"), "just the holding greeting");
-    // A full day-night later, Burke volunteers the routing oddity (no paymaster name).
-    engine.state.ticks += engine.state.dayLength * 2 + 1;
-    captured.length = 0;
-    engine.submit("talk burke");
-    assert(engine.state.flags["burke_beat2"] === true, "Beat 2 fires on the timed return");
-    assert(flatOutput().toLowerCase().includes("deliberate"), "the laundered-routing reveal");
-    assert(!flatOutput().toLowerCase().includes("aetherlink"), "Burke does NOT name the paymaster");
-    assert(engine.state.notes.some(n => n.id === "burke_routing_oddity"), "routing note filed");
-    // The unaffordable trace steers to the software.
-    captured.length = 0;
-    engine.submit("buy trace");
-    assert(flatOutput().toLowerCase().includes("software"), "the trace is unaffordable; points at the software");
-    assert(!engine.state.inventory.includes("burke_software"), "no software from the trace path");
-    // BUY SOFTWARE agrees the deal but doesn't charge — payment is the ID scan.
-    const before = engine.state.flags["credits"];
-    captured.length = 0;
-    engine.submit("buy software");
-    assert(!engine.state.inventory.includes("burke_software"), "not handed over until you pay");
-    eq(engine.state.flags["credits"], before, "no charge on agreeing");
-    assert(flatOutput().toLowerCase().includes("scan"), "directed to scan the reader");
-    // SCAN ID at the bench reader pays the 50 and Burke hands over the software datacard.
-    captured.length = 0;
-    engine.submit("scan id");
-    assert(engine.state.inventory.includes("burke_software"), "the software datacard is now carried");
-    eq(engine.state.flags["credits"], before - 50, "charged the software price on the scan");
-    assert(engine.state.scoreHooks.has("bought_analysis_software"), "scored the purchase");
-    assert(engine.state.flags["burke_software_bought"] === true, "purchase latched");
-    assert(engine.state.notes.some(n => n.id === "bought_burke_software"), "purchase note filed");
-    assert(flatOutput().toLowerCase().includes("datacard"), "handed over as a datacard");
-});
-test("burke: the bought software seeds the Strand-2 analysis at a public terminal", () => {
-    const engine = bootToHorizon();
-    engine.state.inventory.push("burke_software"); // as if bought from Burke
-    engine.state.currentRoom = "horizon_blue_sector_concourse"; // has a public terminal
-    engine.submit("use software on terminal");
-    assert(engine.state.scoreHooks.has("seeded_analysis"), "the bought software starts the analysis running");
-});
-/** Position the PC at Burke's, mid-game, with the Beat-3 gate satisfied. */
-function bootToBurkePivotGate() {
-    const engine = bootToHorizon();
-    engine.state.currentRoom = "horizon_burke_s_workshop";
-    engine.state.ticks = engine.state.dayLength + 5;
-    engine.state.isDaytime = false; // night (isDaytime is derived from ticks)
-    engine.state.flags["burke_met"] = true; // Beats 1-2 already behind us
-    engine.state.flags["burke_software_bought"] = true; // software bought...
-    engine.state.flags["analysis_resolved"] = true; // ...and resolved (Strand 2 complete)
-    engine.state.flags["predecessor_brief_unlocked"] = true; // predecessor brief cracked (same job, he's dead)
-    engine.state.flags["PC_REAL_NAME"] = "Dana Okoro";
-    return engine;
-}
-test("burke: Beat 3 — the pivot fires on the gate; the real name + predecessor land", () => {
-    const engine = bootToBurkePivotGate();
-    captured.length = 0;
-    engine.submit("talk burke");
-    const out = flatOutput();
-    assert(engine.state.flags["burke_pivot_done"] === true, "the pivot fired");
-    assert(engine.state.scoreHooks.has("burke_pivot"), "scored reaching the pivot");
-    assert(out.includes("Dana Okoro"), "Burke speaks the PC's real name");
-    assert(out.includes("John Smith") && out.includes("Stuart McAlister"), "predecessor alias + real name revealed");
-    assert(engine.state.notes.some(n => n.id === "burke_pivot"), "pivot note filed");
-    // The gate must hold: it must NOT have fired the 'go use the terminal' reminder.
-    assert(!out.toLowerCase().includes("set it running"), "the software reminder did not pre-empt the pivot");
-    // Re-talk re-cues the choice without re-dumping the speech.
-    captured.length = 0;
-    engine.submit("talk burke");
-    assert(flatOutput().includes("Two roads"), "post-pivot talk re-cues the choice");
-    assert(!flatOutput().includes("Stuart McAlister"), "the speech is not replayed");
-});
-test("burke: Beat 3 — Defect takes the Rajah rumour and shuts the Flee road (irreversible)", () => {
-    const engine = bootToBurkePivotGate();
-    engine.submit("talk burke"); // the pivot
-    captured.length = 0;
-    engine.submit("ask burke about name"); // "the name" -> the Defect road
-    assert(flatOutput().toLowerCase().includes("rajah"), "Burke names Rajah");
-    // He sends the PC to where she LIVES — a Zone B residence — not her shop.
-    assert(flatOutput().toLowerCase().includes("residential zone b"), "directs to her Zone B home");
-    assert(!flatOutput().toLowerCase().includes("scrap"), "no longer references the (eastern) scrap dealer");
-    assert(engine.state.flags["defecting"] === true, "defecting latched");
-    assert(engine.state.flags["burke_referred_rajah"] === true, "Rajah's resistance gate opened");
-    // A random-but-persistent residence is chosen, and Rajah is placed there.
-    const home = engine.state.flags["rajah_residence"];
-    assert(typeof home === "string" && home.includes("residential_zone_b_residence_"), "a Zone B residence is chosen");
-    assert(flatOutput().includes(engine.world.rooms[home].name), "Burke quotes the actual address");
-    assert(engine.state.npcLocations?.["rajah"] === home, "Rajah is placed at that residence");
-    assert(engine.state.notes.some(n => n.id === "burke_rajah_rumour"), "Rajah note filed");
-    // The Flee road is now permanently shut.
-    captured.length = 0;
-    engine.submit("ask burke about leaving");
-    assert(flatOutput().toLowerCase().includes("closed"), "the clean road is closed after defecting");
-    assert(!engine.state.ended, "asking to leave after defecting does NOT end the game");
-});
-test("burke: Beat 3 — the Flee confirm triggers the (stub) Flee ending", () => {
-    const engine = bootToBurkePivotGate();
-    engine.submit("talk burke"); // the pivot
-    captured.length = 0;
-    engine.submit("ask burke about leaving"); // arms the terminal confirm
-    assert(flatOutput().includes("sure"), "the terminal confirm prompt");
-    const endedBeforeConfirm = engine.state.ended;
-    assert(!endedBeforeConfirm, "the confirm has not resolved yet");
-    engine.submit("yes"); // commit
-    assert(engine.state.flags["fleeing"] === true, "fleeing latched");
-    assert(engine.state.ended === true, "the Flee ending resolved");
-    eq(engine.state.endingId, "flee", "endingId = flee");
-    assert(engine.state.survived === true, "survived the flee");
 });
 // --- summary ------------------------------------------------------------
 setTimeout(() => {

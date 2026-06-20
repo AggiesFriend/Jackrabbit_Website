@@ -3,3 +3,7 @@
 # Local secrets — never commit these
 .env
 worker/.dev.vars
+
+# Wrangler local state / cache
+worker/.wrangler/
+node_modules/

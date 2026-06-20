@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Access the CyberNexus Analytics public information terminal — your approved source for Consortium knowledge in the universe of The Jackrabbit.">
+    <meta name="author" content="Tony Marks">
+    <meta property="og:title" content="Public Terminal | The Jackrabbit Series">
+    <meta property="og:description" content="Access the CyberNexus Analytics public information terminal.">
+    <meta property="og:image" content="https://www.jackrabbit-series.com/images/Stolen_Freedom_base.jpg">
+    <meta property="og:url" content="https://www.jackrabbit-series.com/terminal.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="The Jackrabbit Series">
+    <title>Public Terminal | The Jackrabbit</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Merriweather:wght@300;400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="49bd03b2-61a5-4ce1-b653-a2d3f4f22441"></script>
+    <style>
+        /* ── Page chrome ──────────────────────────────────────────── */
+        body {
+            background-color: #080c12;
+        }
+
+        .navbar {
+            background: #080c12 !important;
+            border-bottom: 1px solid #1a2840;
+        }
+
+        footer {
+            background-color: #080c12 !important;
+            border-top: 1px solid #1a2840;
+        }
+
+        footer a, footer p, footer h3 {
+            color: #4a7fa8 !important;
+        }
+
+        footer a:hover {
+            color: #00e5a0 !important;
+        }
+
+        /* ── Page header ──────────────────────────────────────────── */
+        .terminal-page-header {
+            background: linear-gradient(rgba(4, 8, 16, 0.92), rgba(4, 8, 16, 0.92)),
+                        url('images/stars-background.jpg') center / cover no-repeat;
+            padding: 3.5rem 0 3rem;
+            text-align: center;
+            border-bottom: 1px solid #1a2840;
+        }
+
+        .corp-label {
+            color: #4a7fa8;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .terminal-page-header h1 {
+            color: #00e5a0;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: clamp(1.4rem, 4vw, 2rem);
+            font-weight: normal;
+            letter-spacing: 0.12em;
+            margin-bottom: 0.75rem;
+            text-shadow: 0 0 24px rgba(0, 229, 160, 0.45);
+        }
+
+        .terminal-page-header .node-info {
+            color: #2a4860;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+        }
+
+        /* ── Main section ─────────────────────────────────────────── */
+        .terminal-section {
+            background: #080c12;
+            padding: 2.5rem 0 3rem;
+            min-height: calc(100vh - 380px);
+        }
+
+        .terminal-wrap {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+        }
+
+        /* ── Terminal box ─────────────────────────────────────────── */
+        .terminal-box {
+            background: #0d1117;
+            border: 1px solid #1a2840;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            box-shadow:
+                0 0 0 1px #0a0e14,
+                0 0 50px rgba(0, 229, 160, 0.06),
+                0 8px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Scanlines */
+        .terminal-box::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 3px,
+                rgba(0, 0, 0, 0.04) 3px,
+                rgba(0, 0, 0, 0.04) 4px
+            );
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        /* ── Title bar ────────────────────────────────────────────── */
+        .terminal-titlebar {
+            background: #0a1020;
+            border-bottom: 1px solid #1a2840;
+            padding: 0.55rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+        }
+
+        .titlebar-dots {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #1a2840;
+        }
+
+        .titlebar-label {
+            color: #2a4860;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            flex: 1;
+            text-align: center;
+        }
+
+        .titlebar-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-label {
+            color: #2a4860;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.1em;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00e5a0;
+            box-shadow: 0 0 6px rgba(0, 229, 160, 0.8);
+            animation: statusPulse 2.4s ease-in-out infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.35; }
+        }
+
+        /* ── Output area ──────────────────────────────────────────── */
+        .terminal-output {
+            padding: 1.25rem 1.5rem;
+            min-height: 360px;
+            max-height: 480px;
+            overflow-y: auto;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.855rem;
+            line-height: 1.75;
+            color: #00e5a0;
+            position: relative;
+            z-index: 2;
+            scrollbar-width: thin;
+            scrollbar-color: #1a2840 #0d1117;
+        }
+
+        .terminal-output::-webkit-scrollbar { width: 5px; }
+        .terminal-output::-webkit-scrollbar-track { background: #0d1117; }
+        .terminal-output::-webkit-scrollbar-thumb { background: #1a2840; border-radius: 3px; }
+
+        /* Message types */
+        .msg-line { margin: 0.1rem 0; }
+        .msg-line.gap { margin-top: 0.7rem; }
+
+        .msg-sys   { color: #3a6080; }
+        .msg-sys.bright { color: #4a7fa8; }
+        .msg-aria  { color: #00e5a0; }
+        .msg-user  { color: #7ab0f0; }
+        .msg-warn  { color: #e05555; }
+
+        .lbl {
+            opacity: 0.7;
+            margin-right: 0.25rem;
+        }
+
+        .progress { color: #00b87a; letter-spacing: 0.04em; }
+
+        /* blinking cursor */
+        .cursor {
+            display: inline-block;
+            width: 7px;
+            height: 0.9em;
+            background: #00e5a0;
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* ── Input area ───────────────────────────────────────────── */
+        .terminal-input-row {
+            border-top: 1px solid #1a2840;
+            background: #0a1020;
+            padding: 0.65rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .prompt-label {
+            color: #4a7fa8;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.855rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .terminal-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #7ab0f0;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.855rem;
+            caret-color: #00e5a0;
+            min-width: 0;
+        }
+
+        .terminal-input::placeholder { color: #1a2840; }
+
+        .terminal-send {
+            background: transparent;
+            border: 1px solid #1a2840;
+            color: #2a4860;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.28rem 0.75rem;
+            cursor: pointer;
+            letter-spacing: 0.12em;
+            border-radius: 3px;
+            transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .terminal-send:hover:not(:disabled) {
+            border-color: #00e5a0;
+            color: #00e5a0;
+            box-shadow: 0 0 10px rgba(0, 229, 160, 0.18);
+        }
+
+        .terminal-send:disabled {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        /* ── Info cards ───────────────────────────────────────────── */
+        .terminal-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 1.25rem;
+        }
+
+        .info-card {
+            background: #0d1117;
+            border: 1px solid #1a2840;
+            border-radius: 4px;
+            padding: 1rem 1.1rem;
+        }
+
+        .info-card h4 {
+            color: #2a4860;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.45rem;
+        }
+
+        .info-card p {
+            color: #1e3650;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        /* ── Mobile ───────────────────────────────────────────────── */
+        @media (max-width: 768px) {
+            .terminal-output {
+                font-size: 0.78rem;
+                max-height: 380px;
+                padding: 1rem;
+            }
+
+            .terminal-input-row {
+                padding: 0.55rem 1rem;
+            }
+
+            .terminal-page-header h1 {
+                font-size: 1.25rem;
+            }
+
+            .node-info {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header>
+        <nav class="navbar" aria-label="Primary navigation">
+            <div class="logo">
+                <a href="index.html">The Jackrabbit</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="books.html">Books</a></li>
+                <li><a href="characters.html">Characters</a></li>
+                <li><a href="encyclopaedia/encyclopaedia.html">Encyclopaedia</a></li>
+                <li><a href="terminal.html" class="active">Terminal</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="burger" role="button" aria-label="Toggle navigation menu" aria-expanded="false" tabindex="0">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <div class="terminal-page-header">
+            <p class="corp-label">CyberNexus Analytics Corporation</p>
+            <h1>PUBLIC INFORMATION TERMINAL</h1>
+            <p class="node-info">NODE ID: CNA-PIT-7734-ALPHA &nbsp;&nbsp;|&nbsp;&nbsp; SECTOR: GENERAL ACCESS &nbsp;&nbsp;|&nbsp;&nbsp; 2222 CE</p>
+        </div>
+
+        <section class="terminal-section">
+            <div class="terminal-wrap">
+                <div class="terminal-box" role="region" aria-label="ARIA terminal interface">
+                    <div class="terminal-titlebar">
+                        <div class="titlebar-dots">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <span class="titlebar-label">ARIA — AUTOMATED RESPONSE AND INFORMATION ASSISTANT</span>
+                        <div class="titlebar-status">
+                            <span class="status-label">ONLINE</span>
+                            <div class="status-dot"></div>
+                        </div>
+                    </div>
+
+                    <div class="terminal-output" id="terminal-output" role="log" aria-live="polite" aria-label="Terminal output"></div>
+
+                    <div class="terminal-input-row">
+                        <span class="prompt-label">CITIZEN&nbsp;&gt;</span>
+                        <input
+                            type="text"
+                            id="terminal-input"
+                            class="terminal-input"
+                            placeholder="Enter query…"
+                            aria-label="Query input"
+                            autocomplete="off"
+                            spellcheck="false"
+                            disabled
+                        >
+                        <button id="terminal-send" class="terminal-send" disabled aria-label="Send query">TRANSMIT</button>
+                    </div>
+                </div>
+
+                <div class="terminal-info-grid">
+                    <div class="info-card">
+                        <h4>System Status</h4>
+                        <p>All systems nominal.<br>CDS Level I active.<br>Knowledge base: current.</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Approved Topics</h4>
+                        <p>Consortium services, SnapSpace travel, SnapMesh comms, corporate directory, general enquiries.</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Compliance Notice</h4>
+                        <p>All terminal sessions are logged and audited by CyberNexus Analytics under CDS protocol.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>The Jackrabbit</h3>
+                    <p>A science fiction series</p>
+                </div>
+                <div class="footer-links" role="navigation" aria-label="Footer navigation">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="books.html">Books</a></li>
+                        <li><a href="characters.html">Characters</a></li>
+                        <li><a href="encyclopaedia/encyclopaedia.html">Encyclopaedia</a></li>
+                        <li><a href="terminal.html">Terminal</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 The Jackrabbit Series. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // ── Configuration ────────────────────────────────────────────────────
+        // After deploying the Cloudflare Worker (see worker/wrangler.toml),
+        // replace the value below with your Worker URL.
+        const WORKER_URL = 'https://jackrabbit-terminal.YOUR_SUBDOMAIN.workers.dev';
+        // ────────────────────────────────────────────────────────────────────
+
+        const outputEl  = document.getElementById('terminal-output');
+        const inputEl   = document.getElementById('terminal-input');
+        const sendBtn   = document.getElementById('terminal-send');
+
+        const history   = []; // conversation history sent to the worker
+        let busy        = false;
+
+        // ── DOM helpers ──────────────────────────────────────────────────────
+
+        function addLine(html, cls = '', gap = false) {
+            const el = document.createElement('div');
+            el.className = ['msg-line', gap ? 'gap' : '', cls].filter(Boolean).join(' ');
+            el.innerHTML = html;
+            outputEl.appendChild(el);
+            scrollDown();
+            return el;
+        }
+
+        function scrollDown() {
+            outputEl.scrollTop = outputEl.scrollHeight;
+        }
+
+        function esc(text) {
+            return text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+
+        // ── Animation helpers ────────────────────────────────────────────────
+
+        function wait(ms) {
+            return new Promise(r => setTimeout(r, ms));
+        }
+
+        async function typeInto(el, text, speed = 10) {
+            for (const ch of text) {
+                el.innerHTML += ch === '\n' ? '<br>' : esc(ch);
+                scrollDown();
+                await wait(speed);
+            }
+        }
+
+        // ── Boot sequence ────────────────────────────────────────────────────
+
+        async function boot() {
+            const lines = [
+                ['CYBERNEXUS ANALYTICS CORPORATION', 'msg-sys bright'],
+                ['PUBLIC INFORMATION TERMINAL  v4.7.2', 'msg-sys bright'],
+                ['NODE: CNA-PIT-7734-ALPHA', 'msg-sys'],
+                ['', ''],
+                ['INITIALISING CORE SYSTEMS…', 'msg-sys bright'],
+            ];
+
+            for (const [text, cls] of lines) {
+                addLine(text, cls);
+                await wait(70);
+            }
+
+            // Progress bar
+            const barEl = addLine('<span class="progress">[</span>', 'msg-sys');
+            const bar   = barEl.querySelector('.progress');
+            const fill  = '████████████████████';
+            for (let i = 0; i < fill.length; i++) {
+                bar.textContent = '[' + fill.slice(0, i + 1);
+                scrollDown();
+                await wait(35);
+            }
+            bar.textContent = '[████████████████████]  100%';
+            await wait(180);
+
+            const lines2 = [
+                ['', ''],
+                ['CONSORTIUM DATA STANDARDS : LEVEL I ACTIVE', 'msg-sys bright'],
+                ['KNOWLEDGE BASE            : LOADED', 'msg-sys bright'],
+                ['SECURITY PROTOCOLS        : ACTIVE', 'msg-sys bright'],
+                ['RELAY CONNECTION          : ONLINE', 'msg-sys bright'],
+                ['', ''],
+                ['────────────────────────────────────────────────────', 'msg-sys'],
+            ];
+
+            for (const [text, cls] of lines2) {
+                addLine(text, cls);
+                await wait(55);
+            }
+
+            await wait(280);
+
+            // Check worker URL is configured
+            if (WORKER_URL.includes('YOUR_SUBDOMAIN')) {
+                await showAria(
+                    'ARIA response system initialised.\n\n' +
+                    'CONFIGURATION NOTICE: Worker URL not set. To activate this terminal, ' +
+                    'deploy the Cloudflare Worker (see worker/wrangler.toml) and update ' +
+                    'the WORKER_URL constant in this page.'
+                );
+            } else {
+                await showAria(
+                    'Welcome, citizen. I am ARIA — CyberNexus Analytics\' Automated Response ' +
+                    'and Information Assistant.\n\nI am authorised to provide information on ' +
+                    'Consortium services, approved technologies, and general enquiries. ' +
+                    'How may I assist you today?'
+                );
+                enable();
+            }
+        }
+
+        // ── Display an ARIA message (typed out) ──────────────────────────────
+
+        async function showAria(text) {
+            const line = addLine('<span class="lbl">ARIA &gt;</span>', 'msg-aria', true);
+            const span = document.createElement('span');
+            line.appendChild(span);
+            await typeInto(span, ' ' + text, 9);
+        }
+
+        // ── Enable / disable input ───────────────────────────────────────────
+
+        function enable() {
+            inputEl.disabled = false;
+            sendBtn.disabled = false;
+            inputEl.focus();
+        }
+
+        function disable() {
+            inputEl.disabled = true;
+            sendBtn.disabled = true;
+        }
+
+        // ── Send a message ───────────────────────────────────────────────────
+
+        async function send() {
+            const text = inputEl.value.trim();
+            if (!text || busy) return;
+
+            busy = true;
+            inputEl.value = '';
+            disable();
+
+            // Show user turn
+            addLine(`<span class="lbl">CITIZEN &gt;</span> ${esc(text)}`, 'msg-user', true);
+            history.push({ role: 'user', content: text });
+
+            // Placeholder line with blinking cursor
+            const ariaLine = addLine('<span class="lbl">ARIA &gt;</span> <span class="cursor" id="aria-cursor"></span>', 'msg-aria', true);
+
+            try {
+                const res = await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ messages: history }),
+                });
+
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+                const reader  = res.body.getReader();
+                const decoder = new TextDecoder();
+                const cursor  = document.getElementById('aria-cursor');
+                const textSpan = document.createElement('span');
+
+                // Insert text span before the cursor
+                ariaLine.insertBefore(textSpan, cursor);
+
+                let full = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    full += decoder.decode(value, { stream: true });
+                    textSpan.innerHTML = esc(full).replace(/\n/g, '<br>');
+                    scrollDown();
+                }
+
+                cursor?.remove();
+                history.push({ role: 'assistant', content: full });
+
+            } catch {
+                const cursor = document.getElementById('aria-cursor');
+                cursor?.remove();
+                ariaLine.innerHTML =
+                    '<span class="lbl">ARIA &gt;</span> ' +
+                    '<span class="msg-warn">RELAY ERROR: Connection to CyberNexus upstream unavailable. Please retry.</span>';
+                history.pop(); // remove the failed user message
+            }
+
+            busy = false;
+            enable();
+        }
+
+        // ── Events ───────────────────────────────────────────────────────────
+
+        sendBtn.addEventListener('click', send);
+        inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
+
+        boot();
+    </script>
+</body>
+</html>

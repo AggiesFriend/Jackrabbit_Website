@@ -1,1 +1,5 @@
 .claude/
+
+# Local secrets — never commit these
+.env
+worker/.dev.vars

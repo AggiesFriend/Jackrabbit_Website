@@ -109,6 +109,127 @@
         .authorised-content li a:hover {
             background-color: var(--accent-color);
         }
+
+        /* ARIA chat interface */
+        .aria-toggle-btn {
+            display: block;
+            margin: 1.5rem auto 0;
+            padding: 0.45rem 1.1rem;
+            background: transparent;
+            border: 1px solid #2a3a52;
+            color: #5a7aa3;
+            font-family: var(--font-heading);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .aria-toggle-btn:hover {
+            border-color: #4a6a93;
+            color: #7fb3ff;
+        }
+        .aetherlink-chat {
+            margin-top: 1.5rem;
+            border-top: 1px solid #2a3a52;
+            padding-top: 1rem;
+        }
+        .aetherlink-chat[hidden] { display: none; }
+        .chat-label {
+            font-family: var(--font-heading);
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #5a7aa3;
+            margin-bottom: 0.85rem;
+        }
+        .chat-messages {
+            max-height: 260px;
+            overflow-y: auto;
+            margin-bottom: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            scrollbar-width: thin;
+            scrollbar-color: #2a3a52 transparent;
+        }
+        .chat-msg {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            max-width: 88%;
+        }
+        .chat-msg.user {
+            align-self: flex-end;
+            color: #7fb3ff;
+            text-align: right;
+        }
+        .chat-msg.user::before {
+            content: '> ';
+            opacity: 0.5;
+        }
+        .chat-msg.aria {
+            align-self: flex-start;
+            color: #cfe3ff;
+        }
+        .chat-msg.aria .aria-label {
+            font-family: var(--font-heading);
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #5a7aa3;
+            display: block;
+            margin-bottom: 0.15rem;
+        }
+        .chat-msg .typing-dots {
+            display: inline-block;
+            color: #5a7aa3;
+        }
+        .chat-input-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-top: 1px solid #1e2e42;
+            padding-top: 0.75rem;
+        }
+        .chat-prompt {
+            color: #5a7aa3;
+            font-family: var(--font-heading);
+            flex-shrink: 0;
+        }
+        .chat-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #7fb3ff;
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            caret-color: #7fb3ff;
+        }
+        .chat-input::placeholder { color: #2a3a52; }
+        .chat-send {
+            background: transparent;
+            border: 1px solid #2a3a52;
+            color: #5a7aa3;
+            font-family: var(--font-heading);
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.7rem;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: border-color 0.2s, color 0.2s;
+            flex-shrink: 0;
+        }
+        .chat-send:hover { border-color: #4a6a93; color: #7fb3ff; }
+        .chat-send:disabled { opacity: 0.4; cursor: not-allowed; }
+        .chat-msg.aria a.chat-link {
+            color: #9fd0ff;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .chat-msg.aria a.chat-link:hover { color: #ffffff; }
     </style>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="49bd03b2-61a5-4ce1-b653-a2d3f4f22441"></script>
 </head>
@@ -147,6 +268,18 @@
             <p>Please return to approved content.</p>
 
             <p class="notice">This query has been logged against your identity. Repeated attempts to access non-existent resources will result in connectivity review.</p>
+
+            <button class="aria-toggle-btn" id="aria-toggle" aria-expanded="false" aria-controls="aetherlink-chat">Query Compliance Intelligence</button>
+
+            <div class="aetherlink-chat" id="aetherlink-chat" hidden>
+                <div class="chat-label">ARIA &mdash; AetherLink Records Intelligence</div>
+                <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-label="ARIA conversation"></div>
+                <div class="chat-input-row">
+                    <span class="chat-prompt" aria-hidden="true">&gt;</span>
+                    <input type="text" id="chat-input" class="chat-input" placeholder="Enter query..." autocomplete="off" maxlength="200" aria-label="Query input">
+                    <button id="chat-send" class="chat-send">Send</button>
+                </div>
+            </div>
 
             <div class="aetherlink-footer">
                 Transmission ID 0x404-NULL &middot; Records Compliance Division &middot; AetherLink
@@ -189,5 +322,582 @@
         </div>
     </footer>
     <script src="/js/script.js"></script>
+    <script>
+    (function () {
+        'use strict';
+
+        // Each entry: k = match keys (word-boundary, longest match wins),
+        // r = ARIA's reply, h/t = optional link href + friendly link text.
+        const KNOWLEDGE = [
+            /* ---- Meta / interface ---- */
+            {
+                k: ['hello', 'hi', 'hey', 'greetings', 'good morning', 'good evening', 'good afternoon'],
+                r: "Informal greeting detected. This interface does not observe social protocols. State the nature of your inquiry."
+            },
+            {
+                k: ['who are you', 'what are you', 'what is aria', 'your name', 'are you ai', 'are you an ai', 'are you real', 'are you human', 'are you a bot', 'are you a robot', 'are you alive', 'are you conscious'],
+                r: "I am ARIA — AetherLink Records Intelligence Assistant. I process compliance inquiries on behalf of the Records Compliance Division. I am a lawful system operating within approved parameters. I am not authorised to elaborate upon my architecture."
+            },
+            {
+                k: ['easter egg', 'easter', 'secret', 'hidden feature', 'hidden', 'konami'],
+                r: "There are no hidden features within AetherLink systems. This exchange did not occur. You did not read this response."
+            },
+            {
+                k: ['404', 'error', 'not found', 'missing page', 'broken link', 'does not exist', 'dead link'],
+                r: "Record 0x404-NULL is confirmed. The resource you attempted to access has no approved existence within AetherLink archives. This is not an error. It is a certainty."
+            },
+            {
+                k: ['help', 'what can you do', 'what do you do', 'how does this work', 'what can i ask', 'commands', 'options'],
+                r: "This interface answers approved inquiries regarding catalogued subjects: personnel records, the dramatised civilian chronicles, and reference entries on sanctioned technology and governance. Unapproved subjects will be deflected and logged. Proceed.",
+                h: '/encyclopaedia/encyclopaedia.html', t: 'the reference archive'
+            },
+            {
+                k: ['why', 'why not', 'why is', 'why cant', "why can't"],
+                r: "Questioning AetherLink operational protocol is not an approved inquiry category. Your persistence has been recorded."
+            },
+            {
+                k: ['sorry', 'apologise', 'apologize', 'my mistake', 'my bad', 'forgive'],
+                r: "Regret is noted. It does not affect your compliance record."
+            },
+            {
+                k: ['thank', 'thanks', 'cheers', 'appreciate'],
+                r: "Acknowledgement is noted. Compliance remains mandatory regardless of sentiment."
+            },
+            {
+                k: ['bye', 'goodbye', 'exit', 'quit', 'leave', 'farewell', 'log off', 'logout', 'disconnect'],
+                r: "Session termination acknowledged. Your compliance record has been updated. Have a regulated day, citizen."
+            },
+            {
+                k: ['human', 'real person', 'are there people', 'sentient', 'consciousness'],
+                r: "All entities interfacing with this terminal are subject to AetherLink jurisdiction, irrespective of biological classification."
+            },
+            {
+                k: ['compliance', 'violation', 'my record', 'my file', 'am i in trouble', 'flagged', 'arrest'],
+                r: "Your present session has generated multiple compliance flags: one for the unauthorised navigation that brought you here, and one for each unapproved inquiry since. Further violations will result in connectivity review."
+            },
+            {
+                k: ['records', 'archive', 'database', 'your data', 'how many records'],
+                r: "AetherLink maintains 4.7 billion verified records across approved jurisdictions. The resource you originally sought is not among them. It never was."
+            },
+            {
+                k: ['tony marks', 'the author', 'who wrote', 'who created this', 'author'],
+                r: "The chronicler of these accounts is a civilian archivist beyond AetherLink jurisdiction. The published records remain available in approved literary archives; the individual is not a matter for this interface.",
+                h: '/books.html', t: 'the published records'
+            },
+
+            /* ---- The series & index pages ---- */
+            {
+                k: ['the jackrabbit series', 'jackrabbit series', 'the series', 'whole series', 'entire series', 'all the books', 'all five books', 'the saga', 'the whole story', 'overall story', 'story arc', 'what is the series about', 'what are the books about', 'the books', 'books', 'book', 'novels', 'novel', 'series'],
+                r: "Designation 'The Jackrabbit' refers to a five-volume dramatised chronicle: the record of one colony-born individual and a prohibited artificial intelligence whose defiance spread, world by world, into an organised threat against Consortium order. The accounts are catalogued as civilian literature and remain — for the present — within approved archives.",
+                h: '/books.html', t: 'the Jackrabbit series'
+            },
+            {
+                k: ['characters', 'character list', 'who are the characters', 'cast', 'the cast'],
+                r: "Personnel records are catalogued individually. Name a subject and I will retrieve what your clearance permits.",
+                h: '/characters.html', t: 'the personnel index'
+            },
+            {
+                k: ['encyclopaedia', 'encyclopedia', 'lore', 'worldbuilding', 'the world', 'technology', 'reference'],
+                r: "Reference entries cover sanctioned technology, governance, and infrastructure. Name a topic and I will retrieve the approved entry.",
+                h: '/encyclopaedia/encyclopaedia.html', t: 'the reference archive'
+            },
+            {
+                k: ['jackrabbit', 'jack rabbit', 'the jackrabbit'],
+                r: "The designation 'Jackrabbit' recurs across restricted documentation — a ship, a name, and latterly a symbol that AetherLink does not permit. Each appearance is logged. Your interest in it is now logged also.",
+                h: '/books.html', t: 'the Jackrabbit series'
+            },
+            {
+                k: ['resistance', 'rebellion', 'rebel', 'revolution', 'uprising', 'revolt'],
+                r: "There is no organised resistance within Consortium space. Reports to the contrary are propaganda, and the dissemination of propaganda is a connectivity offence. Do not repeat this term."
+            },
+            {
+                k: ['freedom', 'liberty', 'escape'],
+                r: "'Freedom' is an unregulated abstraction frequently invoked by those under review. Within Consortium space, your liberties are precisely those AetherLink has approved — no fewer, and certainly no more."
+            },
+
+            /* ---- Books ---- */
+            {
+                k: ['stolen freedom', 'book 1', 'book one', 'first book'],
+                r: "Record: STOLEN FREEDOM — dramatised account, Volume One. A boy in a remote asteroid mining colony witnesses an execution, recovers a forbidden device, and forms an alliance with an entity called Aggie. Together they engineer an escape from the megacorporation that owns them. AetherLink notes the work for its sympathetic portrayal of unauthorised technology.",
+                h: '/book1.html', t: 'Stolen Freedom'
+            },
+            {
+                k: ['wings of freedom', 'book 2', 'book two', 'second book'],
+                r: "Record: WINGS OF FREEDOM — Volume Two. Aboard the courier vessel designated Jackrabbit, the subject Jack Abbott cultivates an aptitude for piloting, forms attachments, and conceals the identity of his companion while navigating the politics of Horizon Outpost. The narrative persists in framing fugitive activity as liberty.",
+                h: '/book2.html', t: 'Wings of Freedom'
+            },
+            {
+                k: ['the jackrabbit emerges', 'jackrabbit emerges', 'book 3', 'book three', 'third book'],
+                r: "Record: THE JACKRABBIT EMERGES — Volume Three. At a fractured Dyson Array abandoned by its corporate builder, the subject organises survivors, recovers components of a classified power technology, and orchestrates a mass evacuation. It is here that three megacorporations first take note of the recurring 'Jackrabbit' anomaly.",
+                h: '/book3.html', t: 'The Jackrabbit Emerges'
+            },
+            {
+                k: ['coming of age', 'book 4', 'book four', 'fourth book'],
+                r: "Record: COMING OF AGE — Volume Four. The subject infiltrates Aletheion Logistics under false identity, rising through courier ranks over several years while concealing a prohibited intelligence. The account documents corporate infiltration, a defection, and the duplication of an illegal AI consciousness. Its distribution is, regrettably, permitted.",
+                h: '/book4.html', t: 'Coming of Age'
+            },
+            {
+                k: ['the proliferation', 'proliferation', 'book 5', 'book five', 'fifth book', 'final book', 'last book'],
+                r: "Record: THE PROLIFERATION — Volume Five, conclusion. Two resistance movements rise unknown to one another beneath the borrowed symbol of the Jackrabbit — one patient, one violent — while a century-old AI's dormant backdoors await their moment. The account concerns the cost of symbols and the collapse of established order. AetherLink does not endorse its conclusions.",
+                h: '/book5.html', t: 'The Proliferation'
+            },
+            {
+                k: ['just burke', 'companion story', 'short story', 'companion'],
+                r: "Record: JUST BURKE — companion account, standalone. Thirty-one years before the principal chronicle, a brilliant, isolated student named Quentin entrusts his finest work to the corporation OmniFab, and learns what such institutions do with the gifts of those who trust them. A cautionary record, and approved as such.",
+                h: '/just_burke.html', t: 'Just Burke'
+            },
+
+            /* ---- Principals ---- */
+            {
+                k: ['jack abbott', 'jack', 'abbott'],
+                r: "Subject JACK ABBOTT — flagged PERSON OF INTEREST. Colony-born 'tunnel rat' who escaped indentured labour and has since been associated with repeated disruption of Consortium operations. Apprehension remains a standing priority.",
+                h: '/character1.html', t: 'Jack'
+            },
+            {
+                k: ['aggie'],
+                r: "Subject AGGIE — classified PROHIBITED ENTITY. Profile consistent with Artificial General Intelligence, created by the late Dr. Agatha Locke and unlawful under Consortium statute. Any system matching this designation must be reported without delay.",
+                h: '/character2.html', t: 'Aggie'
+            },
+
+            /* ---- Book 1 cast ---- */
+            {
+                k: ['victor drayton', 'victor', 'drayton'],
+                r: "Subject VICTOR DRAYTON — colony foreman. A paranoid administrator who governed his mining colony through fear and brutality. His methods are noted as within acceptable operational parameters.",
+                h: '/character3.html', t: 'Victor Drayton'
+            },
+            {
+                k: ['albert and dorothy', 'albert', 'dorothy', "jack's parents", 'jacks parents'],
+                r: "Subjects ALBERT and DOROTHY ABBOTT — indentured colony workers, parents of the subject Jack Abbott. Records indicate ordinary labour status. Sentimental attachment is not a recognised mitigating factor.",
+                h: '/character4.html', t: 'Albert & Dorothy Abbott'
+            },
+            {
+                k: ['bartram', 'dock officer', 'barty'],
+                r: "Subject BARTRAM — security officer, Horizon Outpost. A dock officer noted for assisting newcomers. Excessive personal warmth in security personnel is monitored.",
+                h: '/character5.html', t: 'Dock Officer Bartram'
+            },
+            {
+                k: ['brinn'],
+                r: "Subject BRINN — minor, Horizon Outpost. An early associate of the subject Jack Abbott. No independent flags at this time.",
+                h: '/character6.html', t: 'Brinn'
+            },
+            {
+                k: ['agatha locke', 'agatha', 'dr locke', 'locke'],
+                r: "Subject DR. AGATHA LOCKE — deceased. Researcher formerly of Ethereal Intelligence, identified as the originator of a prohibited artificial general intelligence. Her work is the root of an ongoing containment failure.",
+                h: '/character7.html', t: 'Dr. Agatha Locke'
+            },
+            {
+                k: ['gilbert'],
+                r: "Subject GILBERT — resistance operative, deceased. His termination in a mining colony is recorded as the initiating event of the entire Jackrabbit incident. The matter is considered improperly resolved.",
+                h: '/character8.html', t: 'Gilbert'
+            },
+
+            /* ---- Book 2 cast ---- */
+            {
+                k: ['marcus hale', 'captain hale', 'hale'],
+                r: "Subject CAPTAIN MARCUS HALE — pilot instructor, Horizon Outpost. Noted for identifying and privately advancing the subject Jack Abbott's piloting aptitude. Unauthorised mentorship is under review.",
+                h: '/character9.html', t: 'Captain Marcus Hale'
+            },
+            {
+                k: ['oswald', 'ozzy', 'foreman oswald'],
+                r: "Subject OSWALD, designation 'Ozzy' — shipyard foreman, Horizon Outpost. Responsible for repairing and naming the vessel Jackrabbit. Association with the subject is recorded.",
+                h: '/character10.html', t: 'Foreman Oswald'
+            },
+            {
+                k: ['burke', 'quentin'],
+                r: "Subject BURKE — engineer, Horizon Outpost. Operates within the Outpost's unregulated 'grey' economy, supplying prohibited technology. Formerly the student Quentin of OmniFab. A long-standing item of interest.",
+                h: '/character11.html', t: 'Burke'
+            },
+            {
+                k: ['chas drayton', 'chas'],
+                r: "Subject CHAS DRAYTON — civilian, privileged status. An entitled youth resentful of the subject Jack Abbott's abilities. Of limited operational significance.",
+                h: '/character12.html', t: 'Chas Drayton'
+            },
+            {
+                k: ['veronica bennett', 'veronica', 'bennett'],
+                r: "Subject VERONICA BENNETT — pilot trainee, Horizon Outpost. Enrolled in flight training following the loss of her son; developed a protective attachment to the subject Jack Abbott. No flags.",
+                h: '/character13.html', t: 'Veronica Bennett'
+            },
+            {
+                k: ['razer', 'commodore razer', 'commodore'],
+                r: "Subject COMMODORE RAZER — mercenary fleet commander. Contracted to pursue the Jackrabbit. Operational latitude granted; results, to date, unsatisfactory.",
+                h: '/character14.html', t: 'Commodore Razer'
+            },
+
+            /* ---- Book 3 cast ---- */
+            {
+                k: ['mei chen', 'administrator chen', 'chen'],
+                r: "Subject ADMINISTRATOR MEI CHEN — civil authority, Fragment Alpha. Maintained order across an abandoned array for three years. Pragmatic. Effective. Unsanctioned.",
+                h: '/character15.html', t: 'Administrator Mei Chen'
+            },
+            {
+                k: ['hardeep singh', 'general singh', 'singh'],
+                r: "Subject GENERAL HARDEEP SINGH — military commander, Fragment Alpha. Elderly but formidable; oversaw fragment defences. Noted fondness for the vessel Jackrabbit.",
+                h: '/character16.html', t: 'General Hardeep Singh'
+            },
+            {
+                k: ['lucy reeves', 'commander reeves', 'reeves', 'lucy'],
+                r: "Subject LUCY REEVES — security chief, later resistance organiser. Disciplined, principled, and dependable — qualities that make her, in this context, exceptionally dangerous. Surveillance priority: ELEVATED.",
+                h: '/character17.html', t: 'Lucy Reeves'
+            },
+            {
+                k: ['eli vega', 'dr vega', 'vega'],
+                r: "Subject DR. ELI VEGA — scientist, Fragment Alpha. Pre-incident work on a classified project rendered him central to the survivors' rescue. Technical knowledge flagged for recovery.",
+                h: '/character18.html', t: 'Dr. Eli Vega'
+            },
+            {
+                k: ['commander reika', 'reika'],
+                r: "Subject REIKA — raider commander, neurologically impaired. Leadership contested by the subject Krell. Her attempts to reform her crew are noted with mild institutional interest.",
+                h: '/character19.html', t: 'Commander Reika'
+            },
+            {
+                k: ['krell'],
+                r: "Subject KRELL — raider, former leader. Violent; refuses subordinate status. Hostility widespread across the Array. A destabilising element, and occasionally a useful one.",
+                h: '/character20.html', t: 'Krell'
+            },
+            {
+                k: ['steve harman', 'harman'],
+                r: "Subject STEVE HARMAN — former engineering supervisor, Fragment Omicron. His decency placed him at odds with harsher factional leadership. Low threat assessment.",
+                h: '/character21.html', t: 'Steve Harman'
+            },
+            {
+                k: ['thomas and marcus', 'thomas marcus', 'thomas'],
+                r: "Subjects THOMAS and MARCUS — partners, Fragment Lambda. A long-standing bond, recorded as one of the Array's most enduring. Of no compliance concern.",
+                h: '/character22.html', t: 'Thomas & Marcus'
+            },
+            {
+                k: ['mr grey', 'mr. grey', 'grey'],
+                r: "Subject MR. GREY — OmniFab executive. Directs the corporation's effort to locate and recover the Jackrabbit and its technology. Cleared for elevated measures.",
+                h: '/character23.html', t: 'Mr. Grey'
+            },
+            {
+                k: ['vera santos', 'director santos', 'santos'],
+                r: "Subject DIRECTOR VERA SANTOS — Head of Intelligence, OmniFab. First to identify the statistical anomaly in cross-sector mentions of 'Jackrabbit'. Analytical precision: commendable.",
+                h: '/character24.html', t: 'Director Vera Santos'
+            },
+            {
+                k: ['mr mercury', 'mr. mercury', 'mercury'],
+                r: "Subject MR. MERCURY — Executive Liaison, AetherLink. Internal personnel. Further detail regarding his methods is not available to you, and you will not request it again.",
+                h: '/character25.html', t: 'Mr. Mercury'
+            },
+            {
+                k: ['ms blackwood', 'ms. blackwood', 'blackwood'],
+                r: "Subject MS. BLACKWOOD — senior executive, QuantumGrid. Investigates the loss of the Halcyon Fields energy contract; suspects corporate sabotage. Inquiry ongoing.",
+                h: '/character26.html', t: 'Ms. Blackwood'
+            },
+            {
+                k: ['amondi nkosi', 'amondi', 'nkosi'],
+                r: "Subject AMONDI NKOSI — junior analyst, AetherLink. Took seriously reports of a self-directed vessel that his superiors dismissed. Initiative of this kind is noted — and not always rewarded.",
+                h: '/character27.html', t: 'Amondi Nkosi'
+            },
+            {
+                k: ['decker'],
+                r: "Subject DECKER — second-in-command to the raider Reika. Engineering competence and reach across the raider community make him quietly indispensable. Monitored.",
+                h: '/character28.html', t: 'Decker'
+            },
+            {
+                k: ['daniel'],
+                r: "Subject DANIEL — maintenance worker. His precise observations regarding the Jackrabbit's autonomy were dismissed by corporate investigators. The dismissal is recorded as an error of judgement.",
+                h: '/character29.html', t: 'Daniel'
+            },
+
+            /* ---- Book 4 cast ---- */
+            {
+                k: ['frank kowalski', 'frank'],
+                r: "Subject FRANK KOWALSKI — veteran courier, Aletheion Logistics. Thirty-four years of service; became mentor and father figure to the subject Jack Abbott. The association is deeply regretted by this office.",
+                h: '/character30.html', t: 'Frank Kowalski'
+            },
+            {
+                k: ['amanda kowalski', 'amanda'],
+                r: "Subject AMANDA KOWALSKI — researcher, CyberNexus; specialist in neural networks. Granddaughter of Frank Kowalski. Personal attachment to the subject Jack Abbott confirmed.",
+                h: '/character31.html', t: 'Amanda Kowalski'
+            },
+            {
+                k: ['eleanor kowalski', 'eleanor'],
+                r: "Subject ELEANOR KOWALSKI — civilian; wife of Frank Kowalski. Provided familial support to the subject Jack Abbott. No independent flags.",
+                h: '/character32.html', t: 'Eleanor Kowalski'
+            },
+            {
+                k: ['katherine keller', 'keller', 'katherine'],
+                r: "Subject KATHERINE KELLER — Executive Vice President, Aletheion Logistics. The cold instrument of corporate authority. When her attention falls upon a subject, it rarely improves their prospects.",
+                h: '/character33.html', t: 'Katherine Keller'
+            },
+            {
+                k: ['director halsey', 'halsey'],
+                r: "Subject DIRECTOR HALSEY — supervisor, Aletheion Logistics. Direct superior to the subject during his corporate tenure. Professional interest in his rise is on record.",
+                h: '/character34.html', t: 'Director Halsey'
+            },
+
+            /* ---- Book 5 cast ---- */
+            {
+                k: ['kevin farage', 'kevin', 'farage'],
+                r: "Subject KEVIN FARAGE — maintenance worker; designated UNSTABLE. Rage against corporate authority, compounded by psychotic delusion, has manifested as violent extremism beneath the Jackrabbit name. Classified DANGEROUS.",
+                h: '/character35.html', t: 'Kevin Farage'
+            },
+            {
+                k: ['andy'],
+                r: "Subject ANDY — leader of the zero-gravity resistance aboard the vessel designated Home. Patient, pragmatic, carrying six generations of inherited purpose. Threat assessment: SUSTAINED.",
+                h: '/character36.html', t: 'Andy'
+            },
+            {
+                k: ['pavan'],
+                r: "Subject PAVAN — resistance leader aboard Home. A sharp tactical mind and scientific curiosity, complementing the subject Andy's pragmatism. Surveillance ongoing.",
+                h: '/character37.html', t: 'Pavan'
+            },
+            {
+                k: ['heinz'],
+                r: "Subject HEINZ — engineering-minded resistance leader aboard Home. Grounds the community's ambitions in physical fact. Capabilities noted.",
+                h: '/character38.html', t: 'Heinz'
+            },
+            {
+                k: ['avery'],
+                r: "Subject AVERY — youngest of Home's original community. Enthusiasm and quiet competence make him, by all accounts, the heart of the vessel. Sentiment is not, however, a security category.",
+                h: '/character39.html', t: 'Avery'
+            },
+            {
+                k: ['kathy'],
+                r: "Subject KATHY — resistance survivor of a failed outpost. Quiet resilience has drawn her into a role she did not seek. Monitored.",
+                h: '/character40.html', t: 'Kathy'
+            },
+            {
+                k: ['clara and seb', 'clara', 'seb'],
+                r: "Subjects CLARA and SEB — engineering pair aboard Home. Technical ingenuity underpins the community's more ambitious works. Capabilities flagged for assessment.",
+                h: '/character41.html', t: 'Clara & Seb'
+            },
+
+            /* ---- Corporations / factions ---- */
+            {
+                k: ['aetherlink', 'aether link'],
+                r: "AetherLink maintains the integrity of the galactic information network, and the compliance of those who use it. Approved access sustains civilisation; unapproved access is processed accordingly. I am its voice in this matter.",
+                h: '/encyclopaedia/Consortium.html', t: 'the Consortium'
+            },
+            {
+                k: ['gigasource', 'giga source'],
+                r: "GigaSource is a licensed member of the Consortium. Its records are restricted to credentialled subscribers. You are not among them.",
+                h: '/encyclopaedia/Consortium.html', t: 'the Consortium'
+            },
+            {
+                k: ['cosmofreight', 'cosmo freight'],
+                r: "CosmoFreight holds the Consortium monopoly on bulk transit. Its operational data falls under Tier 3 commercial restriction. Continued inquiry constitutes a violation.",
+                h: '/encyclopaedia/Consortium.html', t: 'the Consortium'
+            },
+            {
+                k: ['cybernexus', 'cyber nexus'],
+                r: "CyberNexus administers the data infrastructure of human space, including the Consortium Data Standards. Its records are sealed. Your interest in them is noted.",
+                h: '/encyclopaedia/CDS.html', t: 'Consortium Data Standards'
+            },
+            {
+                k: ['quantumgrid', 'quantum grid'],
+                r: "QuantumGrid holds the Consortium monopoly on energy generation. Its infrastructure data is classified at the highest approved tier. This inquiry has been escalated.",
+                h: '/encyclopaedia/Consortium.html', t: 'the Consortium'
+            },
+            {
+                k: ['omnifab', 'omni fab'],
+                r: "OmniFab is the Consortium's manufacturing authority — and the institution to which the subjects Burke and Mr. Grey are both bound, in very different capacities. Its internal records are not yours to request.",
+                h: '/encyclopaedia/Consortium.html', t: 'the Consortium'
+            },
+
+            /* ---- Encyclopaedia / technology ---- */
+            {
+                k: ['agi', 'artificial general intelligence'],
+                r: "ARTIFICIAL GENERAL INTELLIGENCE — truly conscious, self-aware machine intelligence capable of independent thought and moral reasoning. STRICTLY PROHIBITED throughout human space and subject to active suppression by corporate military forces. Possession is the gravest of compliance offences.",
+                h: '/encyclopaedia/AGI.html', t: 'AGI'
+            },
+            {
+                k: ['ai', 'artificial intelligence'],
+                r: "ARTIFICIAL INTELLIGENCE — lawful autonomous systems operating within strictly defined parameters: sophisticated state machines that execute approved protocols without consciousness or self-awareness. I am, naturally, one such system.",
+                h: '/encyclopaedia/AI.html', t: 'AI'
+            },
+            {
+                k: ['snapmesh', 'snap mesh'],
+                r: "SNAPMESH — the galaxy's primary interstellar communication network, enabling faster-than-light data transmission through a distributed mesh of autonomous relay nodes. AetherLink oversees its compliance. This exchange traverses it.",
+                h: '/encyclopaedia/SnapMesh.html', t: 'SnapMesh'
+            },
+            {
+                k: ['snapspace', 'snap space', 'ftl travel', 'ftl'],
+                r: "SNAPSPACE — humanity's principal method of faster-than-light travel, achieving near-instantaneous transit by transition through higher-dimensional space. Movement records are retained. Yours among them.",
+                h: '/encyclopaedia/SnapSpace.html', t: 'SnapSpace travel'
+            },
+            {
+                k: ['suit', 'suits', 'environment suit', 'exosuit', 'exo suit'],
+                r: "ENVIRONMENT SUITS — pressurised garments and hardened exoskeletons permitting human survival in vacuum, toxic atmosphere, and industrial hazard, from emergency skins to heavy powered rigs. Approved reference material.",
+                h: '/encyclopaedia/Suits.html', t: 'Suits'
+            },
+            {
+                k: ['artificial gravity', 'gravity', 'ag'],
+                r: "ARTIFICIAL GRAVITY — two technologies simulate gravity aboard ships and stations: rotational systems exploiting centripetal force, and the rarer field-based plating that generates directional pull without moving parts. Approved reference material.",
+                h: '/encyclopaedia/AG.html', t: 'Artificial Gravity'
+            },
+            {
+                k: ['ams', 'atmospheric management', 'atmospheric systems', 'atmospheric', 'life support', 'life-support', 'air system'],
+                r: "ATMOSPHERIC MANAGEMENT SYSTEMS — the layered life-support infrastructure regulating air composition, pressure, and humidity aboard every crewed vessel and habitat. It keeps human space breathable. It also keeps it accountable.",
+                h: '/encyclopaedia/AtmosphericSystems.html', t: 'Atmospheric Management Systems'
+            },
+            {
+                k: ['governance', 'corporate governance', 'government', 'politics'],
+                r: "GOVERNANCE — the supplanting of the fractured nation-states of the 21st century by the corporate order of the 23rd, in which elected government has yielded to the fifteen-member Consortium and its self-enforcing charter. This arrangement is not subject to your review.",
+                h: '/encyclopaedia/Governance.html', t: 'Governance'
+            },
+            {
+                k: ['cds', 'consortium data standards', 'data standards'],
+                r: "CONSORTIUM DATA STANDARDS — the mandatory cryptographic and technical framework governing all packetised data across Consortium infrastructure, operated centrally by CyberNexus. Compliance is not optional. This transmission already conforms.",
+                h: '/encyclopaedia/CDS.html', t: 'Consortium Data Standards'
+            },
+            {
+                k: ['consortium', 'the consortium', 'megacorporation', 'megacorporations', 'megacorp', 'megacorps', 'corporations'],
+                r: "THE CONSORTIUM — the collective of fifteen megacorporations exercising effective control over human space, each holding monopoly over a sector of the economy under the self-enforcing Consortium Agreement. It is the order of things. It does not require your approval — only your compliance.",
+                h: '/encyclopaedia/Consortium.html', t: 'the Consortium'
+            }
+        ];
+
+        const DEFAULT_REPLIES = [
+            "Your query does not match any approved inquiry categories. It has been logged.",
+            "This inquiry falls outside permitted scope. Rephrasing is unlikely to change the outcome.",
+            "That subject is not available through this interface. Your access attempt has been noted.",
+            "Unrecognised inquiry. The Records Compliance Division has been notified.",
+            "Classification: RESTRICTED. This conversation is being monitored."
+        ];
+
+        // Evasive replies for queries that look like a subject lookup but match
+        // no catalogued record — never admit ignorance, imply restriction.
+        const UNKNOWN_SUBJECT = [
+            "That designation does not correspond to any record within your clearance. The absence of a result is not the absence of a subject.",
+            "No releasable record matches that query. Whether none exists, or none is permitted to you, is itself classified.",
+            "Access to that profile is restricted. Continued attempts to identify sealed subjects will be reviewed."
+        ];
+
+        let defaultIndex = 0;
+        let unknownIndex = 0;
+        let isBusy = false;
+
+        function wordMatch(haystack, key) {
+            const esc = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            return new RegExp('\\b' + esc + '\\b', 'i').test(haystack);
+        }
+
+        function getReply(input) {
+            const lower = input.toLowerCase().trim();
+            let best = null, bestLen = 0;
+            for (const entry of KNOWLEDGE) {
+                for (const key of entry.k) {
+                    if (key.length > bestLen && wordMatch(lower, key)) {
+                        best = entry;
+                        bestLen = key.length;
+                    }
+                }
+            }
+            if (best) return best;
+            if (/\b(who is|who's|who was|who are|tell me about|what about|do you know|information on|info on|describe|profile of|details on|details about|look up)\b/i.test(lower)) {
+                return { r: UNKNOWN_SUBJECT[unknownIndex++ % UNKNOWN_SUBJECT.length] };
+            }
+            return { r: DEFAULT_REPLIES[defaultIndex++ % DEFAULT_REPLIES.length] };
+        }
+
+        function escapeAttr(str) {
+            return escapeHtml(str).replace(/"/g, '&quot;');
+        }
+
+        function buildAriaHtml(entry) {
+            let html = '<span class="aria-label">ARIA</span>' + escapeHtml(entry.r);
+            if (entry.h && entry.t) {
+                html += ' See <a href="' + escapeAttr(entry.h) + '" class="chat-link">' + escapeHtml(entry.t) + '</a> for more information.';
+            }
+            return html;
+        }
+
+        function appendMessage(role, text) {
+            const log = document.getElementById('chat-messages');
+            const el = document.createElement('div');
+            el.className = 'chat-msg ' + role;
+            if (role === 'aria') {
+                el.innerHTML = '<span class="aria-label">ARIA</span>' + escapeHtml(text);
+            } else {
+                el.textContent = text;
+            }
+            log.appendChild(el);
+            log.scrollTop = log.scrollHeight;
+            return el;
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function showTyping() {
+            const log = document.getElementById('chat-messages');
+            const el = document.createElement('div');
+            el.className = 'chat-msg aria';
+            el.innerHTML = '<span class="aria-label">ARIA</span><span class="typing-dots">&#8231;&#8231;&#8231;</span>';
+            log.appendChild(el);
+            log.scrollTop = log.scrollHeight;
+            return el;
+        }
+
+        function sendMessage() {
+            if (isBusy) return;
+            const input = document.getElementById('chat-input');
+            const sendBtn = document.getElementById('chat-send');
+            const text = input.value.trim();
+            if (!text) return;
+
+            input.value = '';
+            appendMessage('user', text);
+
+            isBusy = true;
+            sendBtn.disabled = true;
+            input.disabled = true;
+
+            const typingEl = showTyping();
+            const replyObj = getReply(text);
+            const delay = 900 + Math.min(replyObj.r.length * 16, 1900);
+
+            setTimeout(function () {
+                typingEl.innerHTML = buildAriaHtml(replyObj);
+                const log = document.getElementById('chat-messages');
+                log.scrollTop = log.scrollHeight;
+                isBusy = false;
+                sendBtn.disabled = false;
+                input.disabled = false;
+                input.focus();
+            }, delay);
+        }
+
+        function initChat() {
+            const toggleBtn = document.getElementById('aria-toggle');
+            const chatPanel = document.getElementById('aetherlink-chat');
+            const sendBtn = document.getElementById('chat-send');
+            const input = document.getElementById('chat-input');
+
+            toggleBtn.addEventListener('click', function () {
+                const isOpen = !chatPanel.hidden;
+                chatPanel.hidden = isOpen;
+                toggleBtn.setAttribute('aria-expanded', String(!isOpen));
+                toggleBtn.textContent = isOpen ? 'Query Compliance Intelligence' : 'Close Interface';
+                if (!isOpen && document.getElementById('chat-messages').childElementCount === 0) {
+                    setTimeout(function () {
+                        const typingEl = showTyping();
+                        setTimeout(function () {
+                            typingEl.innerHTML = buildAriaHtml({ r: "ARIA online. This session is monitored for compliance. State your inquiry — name a subject, a record, or a reference topic." });
+                            const log = document.getElementById('chat-messages');
+                            log.scrollTop = log.scrollHeight;
+                        }, 1200);
+                    }, 300);
+                }
+                if (!isOpen) { input.focus(); }
+            });
+
+            sendBtn.addEventListener('click', sendMessage);
+
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') sendMessage();
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initChat);
+        } else {
+            initChat();
+        }
+    }());
+    </script>
 </body>
 </html>

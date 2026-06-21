@@ -768,6 +768,7 @@
         let defaultIndex = 0;
         let unknownIndex = 0;
         let isBusy = false;
+        let hasOpened = false;
 
         function wordMatch(haystack, key) {
             const esc = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -822,6 +823,15 @@
             return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
 
+        // Fire a umami custom event if the tracker is present; silently no-op otherwise.
+        function trackEvent(name) {
+            try {
+                if (window.umami && typeof window.umami.track === 'function') {
+                    window.umami.track(name);
+                }
+            } catch (e) { /* analytics must never break the interface */ }
+        }
+
         function showTyping() {
             const log = document.getElementById('chat-messages');
             const el = document.createElement('div');
@@ -841,6 +851,7 @@
 
             input.value = '';
             appendMessage('user', text);
+            trackEvent('aria-query');
 
             isBusy = true;
             sendBtn.disabled = true;
@@ -872,17 +883,23 @@
                 chatPanel.hidden = isOpen;
                 toggleBtn.setAttribute('aria-expanded', String(!isOpen));
                 toggleBtn.textContent = isOpen ? 'Query Compliance Intelligence' : 'Close Interface';
-                if (!isOpen && document.getElementById('chat-messages').childElementCount === 0) {
-                    setTimeout(function () {
-                        const typingEl = showTyping();
+                if (!isOpen) {
+                    if (!hasOpened) {
+                        hasOpened = true;
+                        trackEvent('aria-open'); // once per session: counts engaged visitors
+                    }
+                    if (document.getElementById('chat-messages').childElementCount === 0) {
                         setTimeout(function () {
-                            typingEl.innerHTML = buildAriaHtml({ r: "ARIA online. This session is monitored for compliance. State your inquiry — name a subject, a record, or a reference topic." });
-                            const log = document.getElementById('chat-messages');
-                            log.scrollTop = log.scrollHeight;
-                        }, 1200);
-                    }, 300);
+                            const typingEl = showTyping();
+                            setTimeout(function () {
+                                typingEl.innerHTML = buildAriaHtml({ r: "ARIA online. This session is monitored for compliance. State your inquiry — name a subject, a record, or a reference topic." });
+                                const log = document.getElementById('chat-messages');
+                                log.scrollTop = log.scrollHeight;
+                            }, 1200);
+                        }, 300);
+                    }
+                    input.focus();
                 }
-                if (!isOpen) { input.focus(); }
             });
 
             sendBtn.addEventListener('click', sendMessage);

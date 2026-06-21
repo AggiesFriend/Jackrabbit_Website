@@ -769,6 +769,7 @@
         let unknownIndex = 0;
         let isBusy = false;
         let hasOpened = false;
+        let lastMatch = ''; // label of the most recent getReply() match, for analytics
 
         function wordMatch(haystack, key) {
             const esc = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -786,10 +787,12 @@
                     }
                 }
             }
-            if (best) return best;
+            if (best) { lastMatch = best.t || best.k[0]; return best; }
             if (/\b(who is|who's|who was|who are|tell me about|what about|do you know|information on|info on|describe|profile of|details on|details about|look up)\b/i.test(lower)) {
+                lastMatch = 'unknown-subject';
                 return { r: UNKNOWN_SUBJECT[unknownIndex++ % UNKNOWN_SUBJECT.length] };
             }
+            lastMatch = 'deflection';
             return { r: DEFAULT_REPLIES[defaultIndex++ % DEFAULT_REPLIES.length] };
         }
 
@@ -824,10 +827,12 @@
         }
 
         // Fire a umami custom event if the tracker is present; silently no-op otherwise.
-        function trackEvent(name) {
+        // Optional data object is sent as umami event properties.
+        function trackEvent(name, data) {
             try {
                 if (window.umami && typeof window.umami.track === 'function') {
-                    window.umami.track(name);
+                    if (data) { window.umami.track(name, data); }
+                    else { window.umami.track(name); }
                 }
             } catch (e) { /* analytics must never break the interface */ }
         }
@@ -851,14 +856,15 @@
 
             input.value = '';
             appendMessage('user', text);
-            trackEvent('aria-query');
+
+            const replyObj = getReply(text);
+            trackEvent('aria-query', { query: text.slice(0, 200), match: lastMatch });
 
             isBusy = true;
             sendBtn.disabled = true;
             input.disabled = true;
 
             const typingEl = showTyping();
-            const replyObj = getReply(text);
             const delay = 900 + Math.min(replyObj.r.length * 16, 1900);
 
             setTimeout(function () {

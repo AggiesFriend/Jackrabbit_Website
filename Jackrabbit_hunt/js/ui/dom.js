@@ -102,6 +102,40 @@ export function bindUi() {
     function focusInput() { input.focus(); }
     return { render, updateHeader, bindSubmit, focusInput };
 }
+// Wire the game-save EXPORT / IMPORT file I/O and return the two engine
+// callbacks. EXPORT downloads a portable .jrsave file; IMPORT opens a file
+// picker and hands the chosen file's text to `onImportText` (the engine
+// validates + resumes via loadSnapshot). DOM-only — the engine stays DOM-free,
+// the same split as the theme export/import above. A single hidden file input
+// is reused for every import.
+export function createSaveIo(onImportText) {
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = ".jrsave,application/json,.json";
+    fileInput.className = "visually-hidden";
+    fileInput.addEventListener("change", () => {
+        const file = fileInput.files?.[0];
+        fileInput.value = ""; // let the same file be re-imported later
+        if (!file)
+            return;
+        const reader = new FileReader();
+        reader.onload = () => onImportText(String(reader.result ?? ""));
+        reader.readAsText(file);
+    });
+    document.body.appendChild(fileInput);
+    function requestExport(filename, json) {
+        const blob = new Blob([json], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+    }
+    return { requestExport, requestImport: () => fileInput.click() };
+}
 // Pin the #app column to the *visually* visible viewport. On iOS Safari the
 // on-screen keyboard overlays the page rather than resizing the layout viewport
 // (it ignores `interactive-widget=resizes-content`, which only Android honours),

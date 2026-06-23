@@ -34,6 +34,7 @@ export function assembleParts(modules) {
     const npcs = {};
     const commands = {};
     const tickers = [];
+    const loaders = [];
     const dropHandlers = [];
     const transitStops = [];
     const lifts = [];
@@ -48,6 +49,8 @@ export function assembleParts(modules) {
             Object.assign(commands, m.commands);
         if (m.tick)
             tickers.push(m.tick);
+        if (m.onLoad)
+            loaders.push(m.onLoad);
         if (m.onDrop)
             dropHandlers.push(m.onDrop);
         if (m.transitStops)
@@ -58,10 +61,14 @@ export function assembleParts(modules) {
     registerTransitStops(transitStops);
     lifts.forEach(registerLift);
     const onTick = (s) => collect(tickers.map((fn) => fn(s)));
+    const onLoad = loaders.length === 0
+        ? undefined
+        : (s) => { for (const fn of loaders)
+            fn(s); };
     const onDrop = dropHandlers.length === 0
         ? undefined
         : (s, itemId, roomId) => collect(dropHandlers.map((fn) => fn(s, itemId, roomId)));
-    return { rooms, items, npcs, commands, onTick, onDrop };
+    return { rooms, items, npcs, commands, onTick, onLoad, onDrop };
 }
 /** Concatenate scene-callback returns into one output array (or undefined). */
 function collect(results) {

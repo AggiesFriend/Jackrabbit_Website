@@ -188,6 +188,20 @@ export function shipyardSecurityTick(s) {
     s.tickOutputAmbient = true;
     return telegraph(heat);
 }
+/**
+ * World.onLoad reconciler. The patrol pressure is room-bound (it only mounts and
+ * captures inside the yard). If a save is loaded with the PC outside the yard,
+ * clear any leftover intrusion + heat *silently* — the live tick would otherwise
+ * clear them on the next turn but could spuriously award the evasion score for a
+ * "slip" the PC never made. Loading inside the yard legitimately resumes the
+ * sneak-in, so leave those flags be.
+ */
+export function shipyardReconcileOnLoad(s) {
+    if (YARD_ROOMS.has(s.currentRoom))
+        return;
+    delete s.flags[FLAG_SHIPYARD_INTRUDING];
+    delete s.flags[FLAG_SHIPYARD_PATROL_HEAT];
+}
 // --- The barred / Deported ending ---------------------------------------
 export const barredEnding = {
     id: "barred",

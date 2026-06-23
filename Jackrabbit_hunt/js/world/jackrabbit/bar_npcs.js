@@ -206,6 +206,22 @@ function chasWindowOpen(s) {
     return Boolean(s.flags[FLAG_CHAS_APPROACHED]) && !s.flags[FLAG_CHAS_DEFUSED];
 }
 /**
+ * World.onLoad reconciler. The menace is a live, room-bound encounter: Chas's
+ * men only act in (or at the door of) the Long Shot. So if a save is loaded with
+ * the PC anywhere else, stand the encounter down — clear the approach + the
+ * menace clock. Without this, a snapshot taken with the window "open" (or an
+ * older save whose Chas flags predate this design) would spring the trap on the
+ * first ticking turn after loading, killing the PC somewhere it makes no sense
+ * (the bug a concourse load exposed). Durable progress — the defuse and the
+ * intel/score — is left untouched.
+ */
+export function chasReconcileOnLoad(s) {
+    if (s.currentRoom === LONG_SHOT)
+        return;
+    delete s.flags[FLAG_CHAS_APPROACHED];
+    delete s.flags[FLAG_CHAS_MENACE];
+}
+/**
  * World.onTick fragment for the menace window. While the window is open:
  *  - if the PC has slipped out of the Long Shot (a bolt for the door), the trap
  *    springs (the leave-guard normally catches a deliberate exit first; this is

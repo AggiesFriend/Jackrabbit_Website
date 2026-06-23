@@ -57,6 +57,8 @@ export const VERB_SYNONYMS = {
     add: ["jot"],
     save: [],
     load: ["restore"],
+    export: [],
+    import: [],
     restart: ["reset"],
     quit: ["exit-game"],
     // wait

@@ -1,11 +1,11 @@
 // GameEngine — main loop and command dispatch. Spec §4.
 import { parse } from "./parser.js";
 import { applyTickCost, advanceTime } from "./time.js";
-import { createInitialState } from "./state.js";
+import { createInitialState, deserializeSave } from "./state.js";
 import { describeRoom } from "./output.js";
 import { handleGo, handleDirection, handleFollow, enterRoom } from "./commands/movement.js";
 import { handleLook, handleExamine, handleRead, handleSearch, handleInventory, handleTake, handleDrop, handleGive, handleUse, handleTap, handlePush, handleOpen, handleClose, handleTalk, handleAsk, handleBuy, isExaminableNoun, } from "./commands/interaction.js";
-import { handleScore, handleTime, handleHelp, handleNotes, handleAddNote, handleSave, handleLoad, handleRestart, handleQuit, } from "./commands/meta.js";
+import { handleScore, handleTime, handleHelp, handleNotes, handleAddNote, handleSave, handleLoad, handleExport, handleImport, handleRestart, handleQuit, } from "./commands/meta.js";
 import { handleWait } from "./commands/wait.js";
 const VERB_TABLE = {
     // movement
@@ -25,7 +25,8 @@ const VERB_TABLE = {
     talk: handleTalk, ask: handleAsk, buy: handleBuy,
     // meta
     score: handleScore, time: handleTime, help: handleHelp, notes: handleNotes, add: handleAddNote,
-    save: handleSave, load: handleLoad, restart: handleRestart, quit: handleQuit,
+    save: handleSave, load: handleLoad, export: handleExport, import: handleImport,
+    restart: handleRestart, quit: handleQuit,
     // wait
     wait: handleWait,
 };
@@ -99,6 +100,29 @@ export class GameEngine {
             this.cb.render(describeRoom(this.world, this.state, r, "full"));
         this.refreshHeader();
     }
+    /**
+     * Resume an imported portable save (the raw .jrsave text). Validates and
+     * swaps in the snapshot exactly like an in-app load — clearing the modal
+     * stack, running the world's onLoad reconciliation, and redescribing the
+     * room. Returns false (with a message) if the text isn't a valid save.
+     * Called by the UI after the IMPORT file picker resolves.
+     */
+    loadSnapshot(text) {
+        const restored = deserializeSave(text);
+        if (!restored) {
+            this.cb.render(["That doesn't look like a Jackrabbit save file."], { kind: "system" });
+            return false;
+        }
+        this.state = restored.state;
+        this.modalStack = [];
+        this.world.onLoad?.(this.state);
+        this.cb.render([`Game imported: "${restored.name ?? "save"}" — resuming.`], { kind: "system" });
+        const r = this.world.rooms[this.state.currentRoom];
+        if (r)
+            this.cb.render(describeRoom(this.world, this.state, r, "full"));
+        this.refreshHeader();
+        return true;
+    }
     /** Process a single line of input from the player. */
     submit(line) {
         // A bare Enter / whitespace-only line is a complete no-op in normal play
@@ -110,8 +134,17 @@ export class GameEngine {
         // Echo the command.
         this.cb.render([`> ${line}`], { kind: "echo" });
         if (this.state.dead || this.state.ended) {
-            // Only restart / load accepted post-mortem. (Modal handlers are
-            // explicitly bypassed when the game is over — death wins.)
+            // A post-mortem LOAD opens the slot picker (a modal that opts in via
+            // persistAfterEnd); route its input there. Other modals still lose to
+            // death — they stay bypassed on the stack.
+            const top = this.modalStack[this.modalStack.length - 1];
+            if (top?.persistAfterEnd) {
+                this.runModal(line);
+                this.refreshHeader();
+                return;
+            }
+            // Only restart / load accepted post-mortem. (Other modal handlers are
+            // bypassed when the game is over — death wins.)
             const parsed = parse(line);
             if (parsed && (parsed.verb === "restart" || parsed.verb === "load")) {
                 this.runOne(parsed);
@@ -285,8 +318,11 @@ export class GameEngine {
             delete this.state.flags["__pendingLoad"];
             // A load restores an exact mid-game snapshot, so we do NOT re-fire the
             // room's onEnter (that would re-trigger first-entry side effects). Just
-            // clear any transient modal stack and redescribe.
+            // clear any transient modal stack, let the world reconcile transient,
+            // room-bound state against the loaded room (e.g. stand down an in-flight
+            // encounter, or repair an older save), and redescribe.
             this.modalStack = [];
+            this.world.onLoad?.(this.state);
             const r = this.world.rooms[this.state.currentRoom];
             if (r)
                 this.cb.render(describeRoom(this.world, this.state, r, "full"));
@@ -317,6 +353,17 @@ export class GameEngine {
             const h = flags["__pendingPushModal"];
             delete this.state.flags["__pendingPushModal"];
             this.pushModal(h);
+        }
+        // EXPORT / IMPORT: the handlers can't touch the DOM, so they queue a request
+        // the UI performs (download / file picker). Guarded — headless = no-op.
+        if (flags["__pendingExport"]) {
+            const { filename, json } = flags["__pendingExport"];
+            delete this.state.flags["__pendingExport"];
+            this.cb.requestExport?.(filename, json);
+        }
+        if (flags["__pendingImport"]) {
+            delete this.state.flags["__pendingImport"];
+            this.cb.requestImport?.();
         }
     }
     checkEndStates() {

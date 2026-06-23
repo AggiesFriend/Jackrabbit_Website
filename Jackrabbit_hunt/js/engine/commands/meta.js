@@ -2,7 +2,10 @@
 // Spec §4.4, §4.11, §4.12.
 import { phaseLabel } from "../time.js";
 import { renderNotes, addNote } from "../notes.js";
-import { saveState, loadState } from "../state.js";
+// SAVE / LOAD / EXPORT / IMPORT live in save-slots.ts (the ten-slot picker +
+// portable file I/O). Re-exported here so the engine's verb table and the world
+// `load` router keep importing them from one place.
+export { handleSave, handleLoad, handleExport, handleImport } from "./save-slots.js";
 export function handleScore(_world, state, _cmd) {
     return {
         handled: true,
@@ -64,30 +67,6 @@ function noteTextFromCommand(cmd) {
     const afterVerb = src.replace(/^\S+\s*/, ""); // drop "add" / "jot"
     return afterVerb.replace(/^(note|notes|entry)\b[\s:]*/i, "").trim();
 }
-export function handleSave(_world, state, _cmd) {
-    const ok = saveState(state);
-    return {
-        handled: true,
-        tickCost: 0,
-        free: true,
-        output: [ok ? "Game saved." : "Could not save the game. (Is localStorage available?)"],
-    };
-}
-/**
- * `load` is special: it can't actually replace the engine's running state from
- * here (the engine owns the reference). The engine watches for endingId/dead
- * flags after each command; for load we set a sentinel flag and let the engine
- * handle the swap.
- */
-export function handleLoad(_world, state, _cmd) {
-    const loaded = loadState();
-    if (!loaded) {
-        return { handled: true, tickCost: 0, free: true, output: ["No saved game found."] };
-    }
-    // The engine will detect this and perform the swap.
-    state.flags["__pendingLoad"] = loaded;
-    return { handled: true, tickCost: 0, free: true, output: ["Game loaded."] };
-}
 export function handleRestart(_world, state, _cmd) {
     state.flags["__pendingRestart"] = true;
     return { handled: true, tickCost: 0, free: true, output: ["Restarting..."] };
@@ -117,8 +96,9 @@ function defaultHelp() {
         "Movement: n/s/e/w, up, down, in, out, go <direction>.",
         "Time:     wait, wait <N>, wait until morning, wait until night.",
         "Meta:     score, time, notes, add note <text>, help, save, load, restart, quit.",
+        "Saves:    save / load open a 10-slot picker; export / import carry a game",
+        "          to another browser as a portable file.",
         "",
         "Time advances each turn. Free verbs (score/time/help) don't cost a turn.",
-        "Saves use one slot in your browser's local storage.",
     ].join("\n");
 }

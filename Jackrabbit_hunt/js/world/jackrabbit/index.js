@@ -19,13 +19,13 @@ import { brinn, brinnTick } from "./brinn.js";
 import { burke, burkeBuyRoute, burkeItems, burkeWorkshopDayTick } from "./burke.js";
 import { dayNightTick } from "./daynight.js";
 import { celesteServer } from "./celeste.js";
-import { ozzy, chas, nightBarTick, barBuyRoute } from "./bar_npcs.js";
+import { ozzy, chas, nightBarTick, chasReconcileOnLoad, barBuyRoute } from "./bar_npcs.js";
 import { hale, haleTick } from "./hale.js";
 import { sleepCmd } from "./sleep.js";
 import { teng, rajah, rajahDatacard, loadInsertCmd } from "./lcd_npcs.js";
 import { gamblingCommands, casinoLoadRoute } from "./gambling.js";
 import { armouryItems, shootCommands, convictEnding } from "./armoury.js";
-import { shipyardSecurityTick, barredEnding } from "./shipyard_security.js";
+import { shipyardSecurityTick, shipyardReconcileOnLoad, barredEnding } from "./shipyard_security.js";
 import { contractDeadlineTick, endgameCommands, endgameEndings } from "./endgame.js";
 import { routeCommand } from "./router.js";
 import { residentialRooms, residentialLift } from "./residential.js";
@@ -195,7 +195,7 @@ const MODULES = [
     // NPCs & threads (tick order here matches the old onTick list: brinn,
     // bar_npcs, records, daynight, burke).
     { npcs: { brinn }, tick: brinnTick },
-    { npcs: { ozzy, chas }, tick: nightBarTick },
+    { npcs: { ozzy, chas }, tick: nightBarTick, onLoad: chasReconcileOnLoad },
     { npcs: { hale }, tick: haleTick },
     { npcs: { sophie }, commands: recordsCommands, tick: sophieDaytimeTick },
     { npcs: { celeste_server: celesteServer } },
@@ -207,7 +207,7 @@ const MODULES = [
     // the night patrol / 3-strike security ticker. The tick sits AFTER dayNightTick
     // (above) so it reads the current phase — a tick that flips to dawn collars a
     // loiterer at once.
-    { items: armouryItems, commands: shootCommands, tick: shipyardSecurityTick },
+    { items: armouryItems, commands: shootCommands, tick: shipyardSecurityTick, onLoad: shipyardReconcileOnLoad },
     // The endgame: the contract clock + SUBMIT / DEPART (home) / STOW AWAY.
     { commands: endgameCommands, tick: contractDeadlineTick },
     // Cross-cutting verbs — LAST so they win key clashes (food's raw `buy`, etc.).
@@ -274,9 +274,10 @@ export const jackrabbitWorld = {
         "Movement: n/s/e/w, up, down, in, out, go <direction>, follow <person>.\n" +
         "Also:     sit, stand, hold (grip a handhold).\n" +
         "Time:     wait, wait <N>, wait until morning, wait until night.\n" +
-        "Meta:     score, time, notes, add note <text>, help, save, load, restart, quit.\n\n" +
-        "Free verbs (score / help / time) don't cost a turn.\n" +
-        "Saves use one slot in your browser's local storage.",
+        "Meta:     score, time, notes, add note <text>, help, save, load, restart, quit.\n" +
+        "Saves:    save / load open a 10-slot picker; export / import carry a\n" +
+        "          game to another browser as a portable file.\n\n" +
+        "Free verbs (score / help / time) don't cost a turn.",
     // rooms / items / npcs / commands / onTick / onDrop are merged from MODULES
     // above (see world-builder.ts): scene tickers fold into one onTick (each a
     // no-op outside its scene; a big WAIT reports them all) and the Shame Alarm's

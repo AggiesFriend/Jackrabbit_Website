@@ -112,6 +112,11 @@ const datapad = {
         "contract brief, a room reservation, and a blank notepad.\n\n" +
         "You can read contract, read reservation, or read notepad — and ADD NOTE <text> to jot something down yourself.",
     takeable: true,
+    // The leash: AetherLink's device carries a hidden SnapSpace transponder (plot
+    // design §4). It never leaves the PC's hands in normal play — the only
+    // exception is the scripted Flee, where Burke takes it. So: non-droppable. (The
+    // PC stays blind to the transponder; it surfaces only in the death coda.)
+    droppable: false,
     // The failsafe: hold your 'pad against the predecessor's identical, dormant one
     // to wake it and crack his sealed brief (works in this order too).
     onUseWith: {
@@ -134,6 +139,11 @@ const contract = {
         "Known links: Horizon Outpost.",
         "Objective: Deliver actionable intelligence regarding",
         "           target's identity and/or location.",
+        "Delivery: File findings to the client through this device",
+        "          (command: SUBMIT) at any time before the term",
+        "          elapses. Escrow releases on delivery.",
+        "Engagement term: Bounded. The escrow window closes on",
+        "                 expiry; nothing is owed thereafter.",
         "Remuneration: [withheld pending engagement] — held in escrow.",
         "Handler contact: Miss Terry (secure channel, registered to",
         "                 this device).",

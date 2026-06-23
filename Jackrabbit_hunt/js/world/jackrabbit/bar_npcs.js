@@ -17,7 +17,7 @@
 import { aliasedTopics } from "../../engine/authoring.js";
 import { addNote } from "../../engine/notes.js";
 import { placeNpcInRoom } from "../../engine/npcs.js";
-import { FLAG_JACKRABBIT_IS_SHIP, FLAG_JACK_REAL_NAME, FLAG_LONGSHOT_SEATED, FLAG_LONGSHOT_DRINKS, FLAG_CHAS_APPROACHED, HOOK_TALKED_OZZY, HOOK_OZZY_SHIP_NAME, HOOK_TALKED_CHAS, HOOK_CHAS_INTEL, } from "./flags.js";
+import { FLAG_JACKRABBIT_IS_SHIP, FLAG_JACK_REAL_NAME, FLAG_LONGSHOT_SEATED, FLAG_LONGSHOT_DRINKS, FLAG_CHAS_APPROACHED, FLAG_CHAS_MENACE, FLAG_CHAS_DEFUSED, FLAG_BURKE_PIVOT_DONE, HOOK_TALKED_OZZY, HOOK_OZZY_SHIP_NAME, HOOK_TALKED_CHAS, HOOK_CHAS_INTEL, } from "./flags.js";
 import { score } from "./scoring.js";
 import { balance, charge, canAfford } from "./economy.js";
 const BRASS_RAIL = "ez1_brass_rail";
@@ -30,11 +30,13 @@ export function syncBarNpcs(s) {
     placeNpcInRoom(s, "ozzy", s.isDaytime ? OFFSTAGE : BRASS_RAIL);
     placeNpcInRoom(s, "chas", s.isDaytime ? OFFSTAGE : LONG_SHOT);
 }
-/** World.onTick fragment — keeps the night bar NPCs in sync as time passes. */
+/** World.onTick fragment — keeps the night bar NPCs in sync as time passes, and
+ *  drives the Chas menace window once his approach has opened it. */
 export function nightBarTick(s) {
     if (s.dead || s.ended)
         return;
     syncBarNpcs(s);
+    return chasMenaceTick(s);
 }
 // --- Ozzy (Foreman Oswald) ----------------------------------------------
 /** The Jackrabbit/ship topic. Branches on whether the PC already knows it's a
@@ -121,29 +123,133 @@ function chasCrackScore(s) {
     });
     return true;
 }
-/** The crack via the VERBAL route — the PC reveals the hunt and Chas, delighted,
- *  spills it out of spite. One-shot; gives Jack's real name + ship name (+4). */
-function chasReveal(s) {
-    if (!chasCrackScore(s)) {
-        return "\"I told you what I know — and enjoyed it. Jack Abbott, the ship's the Jackrabbit, he's gone. " +
-            "There's no encore.\" He raises his glass a lazy inch. \"But do come back if you find anyone else to " +
-            "be disappointed by.\"";
+/** The spiteful-repeat once the intel is already out. */
+const CHAS_SPITE_REPEAT = "\"I told you what I know — and enjoyed it. Jack Abbott, the ship's the Jackrabbit, he's gone. " +
+    "There's no encore.\" He raises his glass a lazy inch. \"But do come back if you find anyone else to " +
+    "be disappointed by.\"";
+/** Pre-approach (no drink build-up): Chas brushes the boy off with contempt and
+ *  gives nothing away. The real intel is the *release* from the menace — it only
+ *  comes once he's weighed you and you've shown him you're after the boy. */
+const CHAS_PRE_AMBLE = "He shrugs. \"Everyone's heard of the Jackrabbit. Some kid who hung around the station and thought he was " +
+    "interesting.\" He takes a drink. \"He wasn't. Little nobody. Gone now, thank God.\" He does not " +
+    "elaborate — there's nothing in it for him.";
+/**
+ * Raising the Jackrabbit (or the hunt) to Chas. The one move that matters:
+ *  - already out  → the spiteful repeat;
+ *  - window open  → the DEFUSE: relief, his men stand down, and the spite spills
+ *                   the intel (+4). Closes the danger;
+ *  - pre-approach → the wary contempt brush-off (no intel; the menace gates it).
+ */
+function chasRaiseJackrabbit(s) {
+    if (s.scoreHooks.has(HOOK_CHAS_INTEL))
+        return CHAS_SPITE_REPEAT;
+    if (s.flags[FLAG_CHAS_APPROACHED]) {
+        // The defuse. Danger over; his men drift back to the bar; the spite does
+        // the rest. (chasCrackScore banks the +4, the flags, and the note.)
+        s.flags[FLAG_CHAS_DEFUSED] = true;
+        delete s.flags[FLAG_CHAS_MENACE];
+        chasCrackScore(s);
+        return [
+            "Something in his face changes — fast, and not quite hidden. The weighing stops. \"*Him,*\" he says, " +
+                "and it comes out somewhere between a laugh and a sneer. \"You're after the *boy.*\" The relief in it " +
+                "is ugly; he flicks two fingers and, over by the door, the two men lose interest and drift back to the " +
+                "bar. \"Should've led with that. I'd have bought *you* the drink.\"",
+            "Then the spite does the rest. \"Jack Abbott. The ship — his ship, the one your people are chasing — " +
+                "she's the Jackrabbit; he named her that himself, thought it was clever. Gone, months back. Don't know " +
+                "where, don't care. Nasty little squirt.\" He sits back, pleased with himself. \"There. Now we've both " +
+                "had a night out of it.\"",
+        ].join("\n\n");
     }
-    return [
-        "Something shifts in his face — very quickly, and not quite hidden. Interest, real interest, and " +
-            "underneath it something brighter and less comfortable. He sets his glass down. \"You're looking for " +
-            "him.\" Not a question. \"Properly looking. Someone hired you.\"",
-        "\"Well.\" He leans back. \"I'm going to enjoy this.\" He doesn't smile so much as let the expression " +
-            "he's been suppressing show. \"His name is Jack Abbott. The ship — *his* ship, the one your people are " +
-            "presumably trying to track — she's called Jackrabbit. He named her that himself, apparently, because " +
-            "he thought it was funny. I don't know where he's gone, but he left. A while ago now.\" He picks up his " +
-            "glass. \"Does that help?\"",
-    ].join("\n\n");
+    return CHAS_PRE_AMBLE;
+}
+// --- The menace window + the demise (the sinister redesign) --------------
+// chas-scene-design.md (reviewed 15 Jun): the bar scene is a timed survival
+// beat. Chas — who disappears investigators for a living — weighs the PC as
+// another one, and the ONLY way out is to convince him you're after the boy he
+// despises. Raise the Jackrabbit (or the hunt) and you live (with the intel for
+// your trouble); stall, or try to leave, and his men walk you out to a death the
+// predecessor already died.
+/** Turns in the Long Shot, post-approach and undefused, before the trap springs.
+ *  n=1 is the approach turn itself (silent); the telegraph beats land at 2/3/4;
+ *  the demise at 5. */
+export const CHAS_MENACE_LIMIT = 5;
+/** The escalating telegraph (keyed by menace count). n=1 is silent — the
+ *  approach copy has just played. */
+const CHAS_MENACE_BEATS = {
+    2: "Chas keeps you talking, easy and unhurried — and one by one the bar's few other regulars find they " +
+        "have business at the far end of the room. Without quite seeing it happen, you are being left alone with " +
+        "him.",
+    3: "The narrow door swings. Two men come in off the Promenade — heavy, deliberate, not here to drink — and " +
+        "settle one to either side of it. Neither looks at you. Both know exactly where you are.",
+    4: "Chas's eyes flick once, over your shoulder, to the door — and back to you. Whatever he has been " +
+        "weighing, he is nearly done weighing it. By the door, one of the men straightens off the wall.",
+};
+/** The mischief death (dead=true; no epilogue, per v0.5). Shared by all three
+ *  routes into it: the clock running out, trying to leave, and standing to go. */
+function chasDemise(s) {
+    s.dead = true;
+    s.deathReason =
+        "They walk you out like old friends, one to either side, Chas talking the whole way — the bar sees a few " +
+            "drinkers leaving together and thinks nothing of it. The \"better place\" is a door you don't choose, a " +
+            "maintenance run the public map doesn't show, a stretch of cold corridor where the music thins away " +
+            "behind you. You realise, far too late, that you were never the one doing the hunting.\n\n" +
+            "Somewhere past a service airlock the lights are very bright, and then they are not.\n\n" +
+            "Disappeared by Chas Drayton's people.";
+}
+/** The §7 intercept — printed before the demise when the PC tries to LEAVE
+ *  (move out, or stand to go) with the window open. */
+const CHAS_LEAVE_INTERCEPT = "You're barely out of your chair when the two by the door are simply *there*, one to each elbow, unhurried " +
+    "and immovable. \"Off so soon?\" Chas is at your shoulder, all warmth. \"We'll see you out. There's a " +
+    "better place just down the way — quieter. You'll like it.\" It is not a suggestion.";
+/** True while the kill is live: Chas has approached and the PC hasn't defused. */
+function chasWindowOpen(s) {
+    return Boolean(s.flags[FLAG_CHAS_APPROACHED]) && !s.flags[FLAG_CHAS_DEFUSED];
+}
+/**
+ * World.onTick fragment for the menace window. While the window is open:
+ *  - if the PC has slipped out of the Long Shot (a bolt for the door), the trap
+ *    springs (the leave-guard normally catches a deliberate exit first; this is
+ *    the backstop for any other way out);
+ *  - otherwise the menace mounts each time-costing turn, telegraphed, until at
+ *    CHAS_MENACE_LIMIT it springs.
+ * Free actions (look/examine/score/inventory) don't tick, so they don't advance
+ * it — exactly as the design wants.
+ */
+export function chasMenaceTick(s) {
+    if (s.dead || s.ended)
+        return;
+    if (!chasWindowOpen(s))
+        return;
+    if (s.currentRoom !== LONG_SHOT) {
+        // Out of the room with the window still open — the men close in.
+        chasDemise(s);
+        return;
+    }
+    const n = (Number(s.flags[FLAG_CHAS_MENACE]) || 0) + 1;
+    s.flags[FLAG_CHAS_MENACE] = n;
+    if (n >= CHAS_MENACE_LIMIT) {
+        chasDemise(s);
+        return "Chas's gaze settles past your shoulder, and the small nod finishes itself. The two men come off " +
+            "the wall by the door without hurry. \"Right, then.\" He rises, all easy warmth. \"Let's get you some air.\"";
+    }
+    return CHAS_MENACE_BEATS[n];
+}
+/**
+ * Exit guard for the Long Shot's west door. Returns the intercept copy (and sets
+ * the demise) when the PC tries to leave with the window open; undefined when the
+ * way is clear. Wired as `gated` on ez1_long_shot's west exit in entertainment_1.
+ */
+export function chasLeaveGuard(s) {
+    if (!chasWindowOpen(s))
+        return null;
+    chasDemise(s);
+    return CHAS_LEAVE_INTERCEPT;
 }
 // --- The Long Shot drinking build-up (B4b) ------------------------------
 // The PC takes a table, drinks, and lets Chas scope them while they scope him.
-// A few drinks in, Chas judges the PC drunk enough to bait without a fight and
-// comes over looking for an argument — and the spite spills the intel.
+// A few drinks in, Chas — having decided what the PC is — comes over, not to
+// gossip but to weigh a job. The approach opens the danger window (above); the
+// intel is no longer handed over here, it is the *release* from the menace.
 const DRINK_PRICE = 2;
 const CHAS_APPROACH_AT = 4;
 /** SIT at a Long Shot table. */
@@ -159,12 +265,17 @@ export function longShotSit(s) {
         tickCost: 1,
     };
 }
-/** STAND up from the table. */
+/** STAND up from the table. While the menace window is open, standing to leave
+ *  springs the trap (the §7 intercept → the demise). */
 export function longShotStand(s) {
     if (!s.flags[FLAG_LONGSHOT_SEATED]) {
         return { handled: true, output: ["You're already on your feet."], tickCost: 0, free: true };
     }
     delete s.flags[FLAG_LONGSHOT_SEATED];
+    if (chasWindowOpen(s)) {
+        chasDemise(s);
+        return { handled: true, output: [CHAS_LEAVE_INTERCEPT], tickCost: 1 };
+    }
     return { handled: true, output: ["You get up from the table."], tickCost: 1 };
 }
 const DRINK_GLANCE = {
@@ -172,19 +283,17 @@ const DRINK_GLANCE = {
     2: "He glances over again — longer this time. You're the most interesting thing to walk in tonight, and he's bored.",
     3: "He keeps looking now, a small smile starting. Whatever he's deciding about you, he's nearly decided it.",
 };
-/** Chas comes over spoiling for a fight — and the spite does the rest. */
+/** Chas comes over — not to gossip, but to weigh the PC as a job. Opens the
+ *  danger window (no intel here). The §4 menace approach. */
 function chasDrinkApproach(s) {
     s.flags[FLAG_CHAS_APPROACHED] = true;
-    chasCrackScore(s);
     return [
-        "A chair scrapes. He's up and crossing to your table before you've decided whether you want him to, " +
-            "drink in hand, that smile fixed in place. \"You've been watching me all night,\" he says, dropping " +
-            "uninvited into the chair opposite. \"Or watching the door. Either way — you're after someone.\"",
-        "He doesn't wait to be answered; he's enjoying himself too much. \"Let me save you the legwork. The " +
-            "Jackrabbit. Nasty little squirt — hung around like he owned the place, and everyone let him.\" The " +
-            "contempt is entirely genuine. \"Jack Abbott, his name is. The ship's the *Jackrabbit* — he named her " +
-            "himself, thought it was clever. He's gone. Months back. Don't know where, don't care.\"",
-        "He sits back, pleased with the effect. \"There. Now we've both had a night out of it.\"",
+        "A chair scrapes. He crosses to your table before you've decided whether you want him to, and folds into " +
+            "the seat opposite without invitation, drink in hand. He looks at you the way a man looks at a delivery. " +
+            "\"You've the smell of it,\" he says, almost kindly. \"The suit, the questions, the careful way you don't " +
+            "ask them. We get your sort through here, now and again.\"",
+        "A slow sip. \"Funny thing — they never seem to leave. Place must agree with them.\" The smile doesn't " +
+            "reach anything. \"So. What is it you came to ask me?\"",
     ].join("\n\n");
 }
 /** BUY DRINK in the Long Shot (seated) or the Brass Rail (casual). Drives the
@@ -213,12 +322,23 @@ export function barBuyDrink(s) {
     const n = (Number(s.flags[FLAG_LONGSHOT_DRINKS]) || 0) + 1;
     s.flags[FLAG_LONGSHOT_DRINKS] = n;
     const bal = `(Balance: ${balance(s)} credits.)`;
-    // Already cracked: he's said his piece and lost interest.
+    // Already cracked (or defused): he's said his piece and lost interest.
     if (s.scoreHooks.has(HOOK_CHAS_INTEL)) {
         return { handled: true, output: [`You buy another. Chas, having had his fun, ignores you now. ${bal}`], tickCost: 1 };
     }
-    // Drunk enough: Chas comes over.
+    // Window already open (approached, undefused): another drink just buys time —
+    // and the clock is ticking (the menace tick handles the danger).
+    if (s.flags[FLAG_CHAS_APPROACHED]) {
+        return { handled: true, output: [`You buy another and turn the glass in your hand, taking your time. Chas watches you do it, in no hurry at all. ${bal}`], tickCost: 1 };
+    }
+    // Drunk enough — but Chas only ENGAGES once the PC is, to his eye, worth the
+    // trouble: late in the game, after the funding trail leads to AetherLink and
+    // Burke's pivot (FLAG_BURKE_PIVOT_DONE). Until then he's a bored young man who
+    // never crosses the room — no approach, no menace, no intel.
     if (n >= CHAS_APPROACH_AT) {
+        if (!s.flags[FLAG_BURKE_PIVOT_DONE]) {
+            return { handled: true, output: [`You buy another; the room's gone soft and warm at the edges. Down the bar the young man stopped paying you any mind a drink or two ago — and the feeling's mutual. ${bal}`], tickCost: 1 };
+        }
         return { handled: true, output: [`You buy another drink; the room has gone soft and warm at the edges. ${bal}`, "", chasDrinkApproach(s)], tickCost: 1 };
     }
     // Building up: the glances escalate.
@@ -260,20 +380,16 @@ export const chas = {
         ];
     },
     topics: aliasedTopics([
-        // The crack — explicit revelation of the hunt.
+        // Raising the hunt — during the window, the defuse (and the intel); the move
+        // that saves the PC. Pre-approach, the wary brush-off.
         [["hunting", "hunt", "hired", "investigating", "investigation", "looking", "searching",
                 "find him", "finding", "searching for jackrabbit", "looking for jackrabbit", "after the jackrabbit",
                 "mission", "assignment", "the job", "contract", "reveal", "tell him"],
-            (s) => chasReveal(s)],
-        // Jackrabbit/Jack as a topic — contempt, no detail, unless already cracked.
+            (s) => chasRaiseJackrabbit(s)],
+        // Raising the Jackrabbit/Jack/the boy — same: the defuse during the window,
+        // contempt before it. (User: the trigger to live is to ask about the Jackrabbit.)
         [["jackrabbit", "rabbit", "jack", "boy", "the boy", "kid"],
-            (s) => s.scoreHooks.has(HOOK_CHAS_INTEL)
-                ? "\"Jack Abbott. The ship's the Jackrabbit. He's gone.\" He's delighted to repeat it. \"Still the " +
-                    "most fun I've had in weeks.\""
-                : "He shrugs. \"Everyone's heard of the Jackrabbit. Some kid who hung around the station and thought " +
-                    "he was interesting.\" He takes a drink. \"He wasn't. Little nobody. Gone now, thank God.\" He " +
-                    "does not elaborate — there's nothing in it for him.",
-        ],
+            (s) => chasRaiseJackrabbit(s)],
         // Why he dislikes Jack — a flicker of something almost honest.
         [["why", "dislike", "hate", "grudge", "problem", "personal"],
             "\"He's nobody. A jumped-up little —\" He stops. Resets. \"He had no right to be as liked as he " +

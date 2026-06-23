@@ -20,11 +20,13 @@ import { burke, burkeBuyRoute, burkeItems, burkeWorkshopDayTick } from "./burke.
 import { dayNightTick } from "./daynight.js";
 import { celesteServer } from "./celeste.js";
 import { ozzy, chas, nightBarTick, barBuyRoute } from "./bar_npcs.js";
+import { hale, haleTick } from "./hale.js";
 import { sleepCmd } from "./sleep.js";
 import { teng, rajah, rajahDatacard, loadInsertCmd } from "./lcd_npcs.js";
 import { gamblingCommands, casinoLoadRoute } from "./gambling.js";
 import { armouryItems, shootCommands, convictEnding } from "./armoury.js";
 import { shipyardSecurityTick, barredEnding } from "./shipyard_security.js";
+import { contractDeadlineTick, endgameCommands, endgameEndings } from "./endgame.js";
 import { routeCommand } from "./router.js";
 import { residentialRooms, residentialLift } from "./residential.js";
 import { serviceRooms } from "./service.js";
@@ -194,6 +196,7 @@ const MODULES = [
     // bar_npcs, records, daynight, burke).
     { npcs: { brinn }, tick: brinnTick },
     { npcs: { ozzy, chas }, tick: nightBarTick },
+    { npcs: { hale }, tick: haleTick },
     { npcs: { sophie }, commands: recordsCommands, tick: sophieDaytimeTick },
     { npcs: { celeste_server: celesteServer } },
     { tick: dayNightTick },
@@ -205,6 +208,8 @@ const MODULES = [
     // (above) so it reads the current phase — a tick that flips to dawn collars a
     // loiterer at once.
     { items: armouryItems, commands: shootCommands, tick: shipyardSecurityTick },
+    // The endgame: the contract clock + SUBMIT / DEPART (home) / STOW AWAY.
+    { commands: endgameCommands, tick: contractDeadlineTick },
     // Cross-cutting verbs — LAST so they win key clashes (food's raw `buy`, etc.).
     {
         commands: {
@@ -221,23 +226,29 @@ export const jackrabbitWorld = {
     startRoom: "halberd_lobby",
     maxScore: MAX_SCORE,
     endings: {
-        // Flee — the disillusioned exit (Burke's pivot, road one). STUB (B8): a
-        // serviceable minimal ending so the Flee road resolves coherently; the full
-        // cut-scene (Burke lifting the transponder on-screen, the transport, the
-        // bespoke closer) is still to be authored. survived = true, unpaid.
+        // Flee — the disillusioned exit (Burke's pivot, road one). Burke strips the
+        // PC of everything AetherLink gave them — the datapad and its hidden
+        // transponder above all — and arranges passage out. survived = true, unpaid,
+        // and (uniquely) safe off-vector, because the leash goes with the kit.
         flee: {
             id: "flee",
             survived: true,
-            text: "Burke holds out one enormous hand. \"The 'pad. You'll not need their notes where you're going — " +
-                "and you'll not want their kit on you.\" You hesitate, then set it in his palm; he pockets it " +
-                "without a word, and something you hadn't known was tight in your chest lets go.\n\n" +
-                "He's as good as it. A freight tender, no manifest, no questions; a berth that smells of machine " +
-                "oil and other people's cargo. By the time the station's lights have shrunk to one more star " +
-                "behind you, the contract, the boy, the people who never gave you their name — all of it is " +
-                "somebody else's business now. You don't look back.",
+            text: "Burke holds out one enormous hand. \"All of it. The 'pad, the card, the kit — anything they put in " +
+                "your hands. You'll not need their notes where you're going, and you'll surely not want their " +
+                "things on you.\" You hesitate, then hand it across, piece by piece — the datapad last of all. He " +
+                "makes the lot vanish into a bench drawer without a word, and something you hadn't known was tight " +
+                "in your chest lets go.\n\n" +
+                "He's as good as his word. A freight tender, no manifest, no questions; a berth that smells of " +
+                "machine oil and other people's cargo, on a vector that bends well clear of Consortium space. By " +
+                "the time the station's lights have shrunk to one more star behind you, the contract, the boy, the " +
+                "people who never gave you their name — all of it is somebody else's business now. You don't look " +
+                "back, and — though you'll never know to be grateful for it — nothing follows you out.",
             closingText: "You walk away with nothing but your own name and whatever you make of it next — which, you're " +
                 "beginning to think, might be the only honest pay this job was ever going to offer.",
         },
+        // The four endgame-departure endings (endgame.ts): Loyal + Timeout->home
+        // (board home, survive) and Defect + Timeout->elsewhere (stow away, die).
+        ...endgameEndings,
         // Convict — the dark, optional end of the shipyard gun trail: shoot Chas
         // Drayton at the Long Shot and the station's law buries you (armoury.ts).
         convict: convictEnding,

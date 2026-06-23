@@ -106,6 +106,25 @@ export const FLAG_BRINN_SECOND_DONE = "brinn_second_encounter_done";
  *  stays dormant until Strand 3 lands. */
 export const FLAG_DEFECTING = "defecting";
 export const FLAG_FLEEING = "fleeing";
+// --- The contract clock + the endgame departures (B7/B8, endgame.ts) ----
+/** state.ticks at the moment the PC first set foot on Horizon — the contract
+ *  clock's zero. Set in the arrival concourse onEnter; the deadline counts from
+ *  here (transit time doesn't burn it). */
+export const FLAG_CONTRACT_START_TICK = "contract_start_tick";
+/** Set true once the contract deadline elapses. The contract is then cancelled:
+ *  SUBMIT no longer pays, but the home route opens (return = survive, Failure). */
+export const FLAG_CONTRACT_EXPIRED = "contract_expired";
+/** Milestone-nudge stage already announced (0..N) — so each "time is getting on"
+ *  reminder fires once. */
+export const FLAG_CONTRACT_NUDGE = "contract_nudge_stage";
+/** Set true once the PC files a report to the client (SUBMIT). Banks the payout
+ *  (escrow pays by reflex — even a blank note) and opens the home route. */
+export const FLAG_REPORT_SUBMITTED = "report_submitted";
+/** Provisional contract length in day/night cycles (a cycle = 2 × dayLength
+ *  ticks → 3000 ticks at the default dayLength 100). Long enough for the full
+ *  Strand-2 trace (5-cycle analysis) + the Burke beats + slack. PROVISIONAL —
+ *  tune in Phase D against the analysis duration (spec §9.2). */
+export const CONTRACT_DEADLINE_CYCLES = 15;
 // --- Batch-2 NPCs interlock (reference/npc-specs-batch-2.md) ------------
 /** Set true once the PC learns the "Jackrabbit" is a SHIP (records Tier 1, or
  *  Chas's reveal). Unlocks Ozzy's ship-name confirmation beat. */
@@ -126,8 +145,17 @@ export const FLAG_INVESTIGATION_BROADCAST = "investigation_broadcast";
 export const FLAG_LONGSHOT_SEATED = "longshot_seated";
 /** Count of drinks the PC has had, seated, in the Long Shot. */
 export const FLAG_LONGSHOT_DRINKS = "longshot_drinks";
-/** Set once Chas, judging the PC drunk enough to bait, comes over for a fight. */
+/** Set once Chas, having weighed the PC as another investigator to disappear,
+ *  drops into the chair opposite — the menacing approach that opens the danger
+ *  window. (No intel yet; the spite-crack is now the *release* from the menace.) */
 export const FLAG_CHAS_APPROACHED = "chas_approached";
+/** The menace counter: turns elapsed in the Long Shot since Chas's approach,
+ *  while the PC hasn't raised the Jackrabbit. Drives the telegraph ladder and,
+ *  at the limit, the demise. */
+export const FLAG_CHAS_MENACE = "chas_menace";
+/** Set once the PC raises the Jackrabbit (or the hunt) during the window: the
+ *  danger is over, Chas's men stand down, and the PC may leave freely. */
+export const FLAG_CHAS_DEFUSED = "chas_defused";
 /** Set once the PC buys a meal at Burrito Céleste — warms the server's beat.
  *  (Persistent, unlike the per-item freshness key, which clears on eating.) */
 export const FLAG_BOUGHT_AT_CELESTE = "bought_at_celeste";
@@ -204,6 +232,11 @@ export const HOOK_PULLED_LEVER = "pulled_airlock_lever";
 export const HOOK_TALKED_PASSENGER = "talked_to_passenger";
 export const HOOK_ASKED_HORIZON_1 = "asked_passenger_horizon_first";
 export const HOOK_ASKED_HORIZON_2 = "asked_passenger_horizon_second";
+// Watching each of the three liner advert spots scores +1 (once per spot). The
+// reel cycles in order, so the array index lines up with the spot shown.
+export const HOOK_LINER_AD = [
+    "watched_liner_ad_1", "watched_liner_ad_2", "watched_liner_ad_3",
+];
 // --- Horizon Outpost (Phase B) ---
 export const HOOK_ARRIVED_HORIZON = "arrived_horizon"; // first step onto the station
 export const HOOK_TALKED_BARTY = "talked_to_barty"; // Strand-1 wall
@@ -243,6 +276,8 @@ export const HOOK_TALKED_CHAS = "talked_to_chas"; // first conversation with Cha
 export const HOOK_CHAS_INTEL = "chas_gave_intel"; // the spite-crack: Jack's name + ship name
 export const HOOK_TALKED_TENG = "talked_to_teng"; // Strand-3 berth pointer (defect pathway only)
 export const HOOK_RAJAH_DATACARD = "received_rajah_datacard"; // took the resistance datacard (defect endpoint)
+export const HOOK_TALKED_HALE = "talked_to_hale"; // Strand-1 wall (Jack's flight instructor; sim deck, daytime)
+export const HOOK_HALE_WALL = "hale_wall"; // raised the boy and met the loyal-instructor wall
 // --- Food Hall: the curry death (B10) ---
 export const HOOK_ATE_CURRY = "ate_curry"; // took the dare and ate the five-alarm curry
 export const HOOK_SURVIVED_CURRY = "survived_curry"; // doused it with an unmelted ice cream in time
@@ -265,6 +300,9 @@ export const SCORE_POINTS = {
     [HOOK_TALKED_PASSENGER]: 1,
     [HOOK_ASKED_HORIZON_1]: 1,
     [HOOK_ASKED_HORIZON_2]: 2,
+    [HOOK_LINER_AD[0]]: 1, // +1 per liner advert spot watched (3 spots = 3 pts)
+    [HOOK_LINER_AD[1]]: 1,
+    [HOOK_LINER_AD[2]]: 1,
     // Horizon (Phase B) — provisional values, calibrated later (Phase D).
     [HOOK_ARRIVED_HORIZON]: 1,
     [HOOK_TALKED_BARTY]: 1,
@@ -304,6 +342,8 @@ export const SCORE_POINTS = {
     [HOOK_CHAS_INTEL]: 4, // the hard-intel prize: Jack's real name + ship name
     [HOOK_TALKED_TENG]: 2,
     [HOOK_RAJAH_DATACARD]: 3,
+    [HOOK_TALKED_HALE]: 1, // met Jack's flight instructor (the loyal sim-deck wall)
+    [HOOK_HALE_WALL]: 2, // drew out his quiet, total refusal to sell a student
     // The curry: MANY points for the bravado of eating it, a FEW more for living
     // through it (provisional values — tune in Phase D).
     [HOOK_ATE_CURRY]: 8, // ate the notorious five-alarm Bengali curry

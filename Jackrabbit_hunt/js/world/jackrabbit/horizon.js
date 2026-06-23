@@ -18,13 +18,15 @@
 import { itemsInRoom } from "../../engine/items.js";
 import { aliasedTopics, requestSceneTransition, requestPushModal } from "../../engine/authoring.js";
 import { addNote } from "../../engine/notes.js";
-import { HOOK_ARRIVED_HORIZON, HOOK_TALKED_BARTY, HOOK_ASKED_BARTY_HORIZON, HOOK_ASKED_BARTY_SENSITIVE, HOOK_REACHED_DONOVANS, HOOK_TALKED_DONOVAN, HOOK_RODE_TUBE, HOOK_TALKED_SANDWICH_VENDOR, HOOK_SANDWICH_HE, HOOK_SANDWICH_JAM, HOOK_SANDWICH_PHOTOS, FLAG_PC_ALIAS, FLAG_ID_SCANNED, FLAG_DONOVAN_CHECKED_IN, FLAG_DONOVAN_ROOM, FLAG_DONOVAN_WELCOMED, HOOK_DONOVAN_GREY_MARKET, HOOK_PENTHOUSE_SNOOP, FLAG_SHOWERS_UNLOCKED, } from "./flags.js";
+import { HOOK_ARRIVED_HORIZON, HOOK_TALKED_BARTY, HOOK_ASKED_BARTY_HORIZON, HOOK_ASKED_BARTY_SENSITIVE, HOOK_REACHED_DONOVANS, HOOK_TALKED_DONOVAN, HOOK_RODE_TUBE, HOOK_TALKED_SANDWICH_VENDOR, HOOK_SANDWICH_HE, HOOK_SANDWICH_JAM, HOOK_SANDWICH_PHOTOS, FLAG_PC_ALIAS, FLAG_ID_SCANNED, FLAG_DONOVAN_CHECKED_IN, FLAG_DONOVAN_ROOM, FLAG_DONOVAN_WELCOMED, HOOK_DONOVAN_GREY_MARKET, HOOK_PENTHOUSE_SNOOP, FLAG_SHOWERS_UNLOCKED, FLAG_CONTRACT_START_TICK, } from "./flags.js";
+import { homeRouteOpen } from "./endgame.js";
 import { score } from "./scoring.js";
 import { buildArea, buildAreaFromYaml } from "./area.js";
 import { placeNpcInRoom } from "../../engine/npcs.js";
 import { withLiftDirs, liftDescription, isLiftRoom, liftSelect } from "./lifts.js";
 import { registerRideOverride, isTransitStop, transitStop, rideTicks, matchDestination, destinationsFrom, } from "./transit.js";
 import { scanToPay, isFoodStallRoom } from "./food.js";
+import { charge, canAfford, balance } from "./economy.js";
 import { longShotSit, longShotStand, LONG_SHOT } from "./bar_npcs.js";
 // --- TravelTube model ---------------------------------------------------
 // The TravelTube is the game's dress for the generic transit network (see
@@ -252,12 +254,38 @@ const disembarkCmd = (_w, s, _cmd) => {
     requestSceneTransition(s, at);
     return { handled: true, output: ["You step out of the pod onto the platform."], tickCost: 1 };
 };
+// WASH / SHOWER / BATHE in the public shower block — the access fee is paid at
+// the turnstile, so once you're in here the wash itself is on the house, and it
+// is glorious. Pure comfort/colour: no plot, no score, just the best shower in
+// settled space.
+const washCmd = (_w, s, _cmd) => {
+    if (s.currentRoom !== "horizon_public_showers") {
+        return { handled: true, output: ["There's nowhere to do that here. The public shower block is off the " +
+                    "dockside retail area, north through the Food Hall."], tickCost: 0, free: true };
+    }
+    return {
+        handled: true,
+        output: [
+            "You pick a vacant cubicle, slide the door to, and puzzle out the colour-coded buttons — and then " +
+                "stop thinking about anything at all. The water comes through hot and hard and apparently endless, " +
+                "exactly as hot and exactly as hard as you want it; the detergent smells of nothing in particular and " +
+                "everything clean; and the warm-air dry, when you finally admit you have to come out, leaves you not " +
+                "merely towel-damp but genuinely, comprehensively dry. You dress again in the soft hum of the " +
+                "extractor feeling like a different and substantially improved person.",
+            "It is, without serious competition, one of the most satisfying showers to be had anywhere in settled " +
+                "space. Whatever else Horizon gets wrong — and the list is lengthening — it gets this gloriously, " +
+                "civically right.",
+        ],
+        tickCost: 3,
+    };
+};
 export const horizonCommands = {
     scan: scanCmd, present: scanCmd, summon: summonCmd,
     board: boardCmd,
     select: selectCmd,
     sit: sitCmd, stand: standCmd,
     disembark: disembarkCmd,
+    wash: washCmd, shower: washCmd, bathe: washCmd, scrub: washCmd,
 };
 // --- Rooms --------------------------------------------------------------
 // --- Dockside (mapped with tools/mapper.html) ---------------------------
@@ -278,7 +306,7 @@ const docksideDefs = [
     {
         id: "horizon_arrival_concourse",
         name: "Horizon Outpost — Arrival Concourse",
-        description: "The arrival concourse: the throat of the whole docking complex, a long shallow valley of foot " +
+        description: (s) => "The arrival concourse: the throat of the whole docking complex, a long shallow valley of foot " +
             "traffic curving away with the cylinder until the far end seems, impossibly, to rise. The air " +
             "smells of metal, hydraulic fluid, and the faint ozone tang of pressure seals — a working " +
             "dockyard, unmistakably. Dozens of people mill and cross and pause, the chatter a continuous " +
@@ -288,11 +316,21 @@ const docksideDefs = [
             "Closest of all, to the west, a quieter frontage stands a little apart from the bustle: a dockside " +
             "hostel, by its modest illuminated sign — the easy first roof for anyone straight off a shuttle, an " +
             "ID reader glowing beside the door in place of any reception desk. A dock officer's desk sits in a " +
-            "recess to the north, and the docking zones proper begin to the east.",
+            "recess to the north, and the docking zones proper begin to the east." +
+            (homeRouteOpen(s)
+                ? "\n\nA departures board glows above the outbound gates: homebound shuttles to the liner " +
+                    "connection, running on the hour. You could DEPART for Consortium space whenever you've a mind to."
+                : ""),
         exits: { west: "horizon_hostel_entrance", north: "horizon_dock_desk", east: "horizon_docking_zone_a" },
         items: ["concourse_signage"],
         npcs: ["barty"],
-        onEnter: (s) => { score(s, HOOK_ARRIVED_HORIZON); },
+        onEnter: (s) => {
+            score(s, HOOK_ARRIVED_HORIZON);
+            // Start the contract clock on first arrival (transit time doesn't count).
+            if (typeof s.flags[FLAG_CONTRACT_START_TICK] !== "number") {
+                s.flags[FLAG_CONTRACT_START_TICK] = s.ticks;
+            }
+        },
     },
     {
         id: "horizon_dock_desk",
@@ -698,18 +736,20 @@ const { rooms: retailRooms } = buildAreaFromYaml(RETAIL_YAML, {
         },
         horizon_public_showers: {
             scenery: {
-                cubicles: "A row of shower cubicles, each with a sliding door and a small green light for vacancy; the occupied ones announce themselves with running water.",
-                cubicle: "A shower cubicle with a sliding door, a vacancy light, and a control panel of colour-coded buttons within.",
+                cubicles: "A row of shower cubicles, each with a sliding door and a small green light for vacancy; the occupied ones announce themselves with running water. Step into a vacant one and WASH.",
+                cubicle: "A shower cubicle with a sliding door, a vacancy light, and a control panel of colour-coded buttons within. You could WASH.",
+                shower: "A row of cubicles, each a private little weatherhouse of hot water and clever buttons. You could WASH.",
+                showers: "A row of cubicles, each a private little weatherhouse of hot water and clever buttons. You could WASH.",
                 panel: "A simple control panel of colour-coded buttons inside each cubicle — water flow, temperature, detergent, and a thoughtful automatic warm-air dry.",
                 buttons: "Colour-coded buttons for flow, heat, detergent, and the dry cycle. Civic design at its most reassuringly literal.",
             },
             description: "A stark, utilitarian shower block — walls of bare metal, slightly tarnished from years of " +
                 "steam, the air carrying a faint background note of disinfectant. A row of cubicles lines one " +
                 "side, each with a sliding door and a small green light to indicate vacancy; occupied ones " +
-                "announce themselves with the sound of running water. Entry is by ID scan — free of charge, " +
-                "like everything civic on Horizon. Inside each cubicle, a simple control panel of colour-coded " +
-                "buttons manages water flow, temperature, detergent, and — a thoughtful touch — an automatic " +
-                "warm-air dry cycle when you're done.\n\nThe retail area is back to the west.",
+                "announce themselves with the sound of running water. You're through the turnstile and the " +
+                "facility is yours — pick a cubicle and WASH. Inside each, a simple control panel of " +
+                "colour-coded buttons manages water flow, temperature, detergent, and — a thoughtful touch — an " +
+                "automatic warm-air dry cycle when you're done.\n\nThe retail area is back to the west.",
         },
         horizon_laundrette: {
             description: "A warm, humming laundrette: a bank of machines tumbling, and a couple of residents waiting " +
@@ -960,9 +1000,9 @@ for (const room of Object.values(blueSectorRooms)) {
 const penthouse = blueSectorRooms["horizon_donovan_s_pentouse"];
 if (penthouse) {
     const baseDesc = penthouse.description;
-    penthouse.description = "The lift doors open straight onto it — the penthouse door propped ajar, left that " +
-        "way, by the look of it, by whoever was last up here to service the place. Nobody's stopping you, so " +
-        "you step in.\n\n" + baseDesc;
+    penthouse.description = "The lift opens not onto the penthouse itself but onto a small private landing: Donovan's own threshold, this, and no guest floor. Across it — the penthouse door stands propped ajar, left that " +
+        "way by the look of it by whoever was last up to service the place. Nobody's stopping you, and the gap " +
+        "is invitation enough; you cross the landing and step through.\n\n" + baseDesc;
     penthouse.scenery = {
         view: "Up and across, not down and out: the vast curved interior of the outpost, whole districts spread overhead in the soft haze, their lights and greenery stretching away until the cylinder closes above you.",
         armchairs: "A pair of deep, well-worn armchairs, angled at the view. Donovan's, presumably — and clearly where he does his thinking.",
@@ -1005,18 +1045,29 @@ const laundretteMachines = {
         "ORDER cards taped to them, as such places always do.",
     takeable: false,
 };
-/** Admit the PC to the shower block (free, but access-controlled — canon). Shared
+/** The visitor access fee for the municipal showers. Residents go free; the PC,
+ *  not on the residents' roll, pays it. */
+export const SHOWER_FEE = 2;
+/** Admit the PC to the shower block. Municipal facilities are free for Horizon
+ *  residents and charged to visitors — the PC is a visitor, so the turnstile
+ *  bills SHOWER_FEE the first time (then their ID's logged as admitted). Shared
  *  by the turnstile's own scan (USE/TAP TURNSTILE) and USE ID ON TURNSTILE. */
 export function unlockShowers(s) {
     if (!s.inventory.includes("fake_id")) {
         return "The turnstile's reader waits for an ID you don't have to hand.";
     }
     if (s.flags[FLAG_SHOWERS_UNLOCKED]) {
-        return "Your ID reads green again; the turnstile's already open. The showers are east.";
+        return "Your ID reads green again; the turnstile's already open to you. The showers are east.";
     }
+    if (!canAfford(s, SHOWER_FEE)) {
+        return `The reader flashes the visitor rate — ${SHOWER_FEE} credits — finds your balance short of even ` +
+            `that, and keeps the barrier firmly shut.`;
+    }
+    charge(s, SHOWER_FEE);
     s.flags[FLAG_SHOWERS_UNLOCKED] = true;
-    return "You present your ID to the turnstile. It blinks green — no charge, civic facility — and the " +
-        "barrier folds aside. The shower block is open to the east.";
+    return `You present your ID to the turnstile. The reader blinks the visitor rate — ${SHOWER_FEE} credits, ` +
+        `since you're not on the residents' roll — debits it, and the barrier folds aside. The shower block is ` +
+        `open to the east. (Balance: ${balance(s)} credits.)`;
 }
 const showerTurnstile = {
     id: "shower_turnstile",
@@ -1025,8 +1076,8 @@ const showerTurnstile = {
     description: (s) => (s.flags[FLAG_SHOWERS_UNLOCKED]
         ? "The shower-block turnstile stands open, your access already logged. "
         : "A waist-high turnstile guards the shower block, an ID reader set into its post. ") +
-        "Entry is by ID scan — free, like everything civic on Horizon, but logged. SCAN your ID at the " +
-        "turnstile (SCAN TURNSTILE) to go through.",
+        `Entry is by ID scan: free for Horizon residents, a small visitor fee (${SHOWER_FEE} credits) for ` +
+        "everyone else. SCAN your ID at the turnstile (SCAN TURNSTILE) to go through.",
     takeable: false,
     onScan: (s) => unlockShowers(s),
 };
@@ -1227,7 +1278,7 @@ const barty = {
             "\"Scan in, pick your stop, off you go — access, not money; Horizon doesn't sell you your " +
                 "own movements. Nearest stop's through the Food Hall, in the Retail Area.\""],
         [["food hall", "food", "retail", "shops"],
-            "\"Straight west, through the gates. Food Hall first — you'll smell it before you see it — " +
+            "\"Straight east, through the docking zones. Food Hall first — you'll smell it before you see it — " +
                 "then the Retail Area beyond. The 'Tube stop's in there.\""],
         // The walls. EITHER refusal fires asked_barty_sensitive (idempotent).
         [["docks", "ships", "departures", "arrivals", "who came", "who left", "movement", "manifest"], (s) => {

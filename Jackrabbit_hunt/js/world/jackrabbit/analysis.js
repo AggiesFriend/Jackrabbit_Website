@@ -54,8 +54,10 @@ export function analysisTicksRemaining(s) {
  *  finished result (never on the datapad, never auto-dumped). */
 const RESOLUTION_TEXT = "Burke's software finishes its long walk back through the ledger — shell to shell, " +
     "intermediary to intermediary — and resolves, at the end of it all, to a single name: " +
-    "AetherLink. The same AetherLink whose logo sits on your own contract. Whoever you've really " +
-    "been working for, it was them the whole way down.";
+    "AetherLink.\n\n" +
+    "The same warm, reassuring name that smiled out of every advert on the way in — we look after our " +
+    "own — is the one that hired you, through a dozen deniable shells, to run a boy to ground. They never " +
+    "signed it; they never had to. Whoever you've really been working for, it was them the whole way down.";
 /** The completion chime — fired on the world clock when the computation finishes.
  *  Says nothing about WHO: the datapad can't show the result, so the PC must go
  *  and log on to a public terminal to read it. */
@@ -97,7 +99,7 @@ function readAnalysisResult(s) {
             id: "aetherlink_identified",
             source: "You",
             text: "Read the analysis at a public terminal: the laundered chain that pays me runs all the way back " +
-                "to AetherLink — the same name on my own contract. They're who really hired me.",
+                "to AetherLink — the same name from the adverts on the way in. They're who really hired me, behind a wall of shells.",
             reliable: true,
         });
     }
@@ -146,6 +148,7 @@ function seedAnalysis(s) {
 export const TERMINAL_LOCATIONS = [
     { id: "public_terminal_retail", room: "horizon_public_terminal_dockside_retail" },
     { id: "public_terminal_blue", room: "horizon_blue_sector_concourse" },
+    { id: "public_terminal_training", room: "training_break_room" },
 ];
 /** Every terminal item id (for the seeding wiring and tests). */
 export const TERMINAL_IDS = TERMINAL_LOCATIONS.map((t) => t.id);

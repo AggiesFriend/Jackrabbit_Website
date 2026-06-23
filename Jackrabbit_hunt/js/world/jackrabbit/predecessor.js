@@ -73,9 +73,8 @@ const predecessorDatapad = {
             ? "The lock's down now — you woke it with its twin. His contract brief and his personal diary are "
                 + "open, alongside a saved login. You can READ HIS BRIEF, READ HIS DIARY, or READ HIS CREDENTIALS."
             : "Its lock screen shows the usual courtesy notice — PROPERTY OF JOHN SMITH; IF FOUND, RETURN TO "
-                + "ISSUER. The device is locked, and everything on it is sealed behind that lock: his contract "
-                + "brief, his personal diary, and a saved login alike. You'd need to crack the 'pad before you "
-                + "could read any of them."),
+                + "ISSUER. Beyond that, the device is locked and whatever it holds is sealed behind the cipher — "
+                + "there's no telling what's on it without cracking the 'pad open first."),
     takeable: true,
     // Carry the (hidden) sub-documents along when the datapad is pocketed, so they
     // stay readable after the PC leaves the lavatory.

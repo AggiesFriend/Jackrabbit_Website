@@ -220,30 +220,38 @@ export class GameEngine {
      */
     fireTickCallbacks(beforeRoom) {
         let fired = false;
+        const s = this.state;
         if (this.world.onTick) {
-            const wOut = this.world.onTick(this.state);
+            s.tickOutputAmbient = false;
+            const wOut = this.world.onTick(s);
             if (wOut !== undefined) {
                 const lines = Array.isArray(wOut) ? wOut : [wOut];
+                // Ambient output (e.g. the shipyard patrol telegraph) still renders but
+                // must not interrupt an in-progress wait — only "real" beats stop it.
                 if (lines.length > 0) {
                     this.cb.render(lines, { kind: "system" });
-                    fired = true;
+                    if (!s.tickOutputAmbient)
+                        fired = true;
                 }
             }
         }
-        if (this.state.currentRoom === beforeRoom) {
-            const r = this.world.rooms[this.state.currentRoom];
+        if (s.currentRoom === beforeRoom) {
+            const r = this.world.rooms[s.currentRoom];
             if (r?.onTick) {
-                const ticksInRoom = this.state.ticks - this.state.roomEnteredAtTick;
-                const tickOutput = r.onTick(this.state, ticksInRoom);
+                s.tickOutputAmbient = false;
+                const ticksInRoom = s.ticks - s.roomEnteredAtTick;
+                const tickOutput = r.onTick(s, ticksInRoom);
                 if (tickOutput !== undefined) {
                     const lines = Array.isArray(tickOutput) ? tickOutput : [tickOutput];
                     if (lines.length > 0) {
                         this.cb.render(lines, { kind: "system" });
-                        fired = true;
+                        if (!s.tickOutputAmbient)
+                            fired = true;
                     }
                 }
             }
         }
+        s.tickOutputAmbient = false;
         return fired;
     }
     /**

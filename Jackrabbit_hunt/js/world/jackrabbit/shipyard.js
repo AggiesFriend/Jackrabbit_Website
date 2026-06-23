@@ -335,6 +335,27 @@ const b = buildAreaFromYaml(SHIPYARD_B_YAML, {
                 "here lends the whole thing a slightly precarious quality. The large bays are back to the east; a " +
                 "lift toward the yard's hub stands to the west.",
         },
+        // Large Bay 2 holds the yard's biggest job: a bulk hauler, repairs done,
+        // being readied to leave — her hold open on the apron. The defect / off-vector
+        // departure (the leash death) lives here: STOW AWAY aboard her (endgame.ts).
+        horizon_large_bay_2: {
+            description: "The largest of the bays, and all but filled by the ship in it: a bulk hauler, scarred and " +
+                "enormous, her plating freshly seamed where the yard has closed her up. The work is plainly done — " +
+                "the scaffolding is half struck, the umbilicals are coming off one by one, and a small deck crew " +
+                "moves over her without urgency, the unhurried last checks of a vessel cleared to leave. A " +
+                "loading ramp stands down to the apron and her main cargo hold gapes open above it, a cavern of " +
+                "strapped-down freight and cold shadow. Bound out-system, by the talk of it, and soon. The apron " +
+                "is back outside.\n\nNobody is watching the ramp. You could lose yourself in that hold and STOW " +
+                "AWAY, if you had a reason to be somewhere this ship is going.",
+            scenery: {
+                hauler: "A bulk hauler, vast and work-worn, repairs finished and umbilicals coming off — a ship in the last hour before it leaves. Her cargo hold stands open above the loading ramp.",
+                ship: "The bulk hauler that fills the bay: scarred, enormous, and all but ready to depart. Her hold is open to the apron.",
+                hold: "The main cargo hold gapes open above the loading ramp — a cavern of strapped-down freight and cold shadow, more than roomy enough to lose a person in. You could STOW AWAY in there.",
+                cargo: "Strapped-down freight, racked and netted for the jumps ahead. Plenty of shadow to fold yourself into.",
+                ramp: "A loading ramp let down to the apron, unwatched. It leads up into the open hold.",
+                crew: "A small deck crew making the unhurried last checks of a ship cleared to leave. None of them is looking at the ramp.",
+            },
+        },
     },
 });
 const c = buildAreaFromYaml(SHIPYARD_C_YAML, {

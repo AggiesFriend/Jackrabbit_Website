@@ -1,7 +1,7 @@
 // The Liner (Shameless Efficiency) and Shuttle 2's narrative transition.
 // Spec: jackrabbit-pre-horizon-design.md §7, §8.
 import { aliasedTopics, requestPushModal, requestSceneTransition } from "../../engine/authoring.js";
-import { FLAG_LINER_ANNOUNCED, FLAG_LINER_ANNOUNCED_AT, FLAG_LINER_BOARDED_AT, FLAG_LINER_REPEAT_HORIZON, FLAG_LINER_TALKED_AT, FLAG_LINER_TALKED_TO_PASSENGER, FLAG_LINER_AD_SEEN, HOOK_ASKED_HORIZON_1, HOOK_ASKED_HORIZON_2, HOOK_TALKED_PASSENGER, } from "./flags.js";
+import { FLAG_LINER_ANNOUNCED, FLAG_LINER_ANNOUNCED_AT, FLAG_LINER_BOARDED_AT, FLAG_LINER_REPEAT_HORIZON, FLAG_LINER_TALKED_AT, FLAG_LINER_TALKED_TO_PASSENGER, FLAG_LINER_AD_SEEN, HOOK_ASKED_HORIZON_1, HOOK_ASKED_HORIZON_2, HOOK_TALKED_PASSENGER, HOOK_LINER_AD, } from "./flags.js";
 import { score } from "./scoring.js";
 // Disembarkation beats are timed from the conversation with the passenger
 // (the actual trigger), not from boarding — so they can't all land at once
@@ -52,6 +52,7 @@ const linerAdScreen = {
     description: (s) => {
         const i = (Number(s.flags[FLAG_LINER_AD_SEEN]) || 0) % AETHERLINK_SPOTS.length;
         s.flags[FLAG_LINER_AD_SEEN] = i + 1; // advance the reel for the next look
+        score(s, HOOK_LINER_AD[i]); // +1 for watching this spot (once each)
         return AETHERLINK_SPOTS[i];
     },
     takeable: false,

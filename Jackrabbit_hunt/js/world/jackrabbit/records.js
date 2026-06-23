@@ -8,7 +8,7 @@
 // has a remote login in their pocket (from the predecessor's kit, FLAG_SHIPYARD_
 // CREDS). At any public terminal the PC can then ACCESS RECORDS and uncover the
 // two-tier reveal:
-//   Tier 1 — the "Jackrabbit" is a SHIP, repaired here and gone weeks ago.
+//   Tier 1 — the "Jackrabbit" is a SHIP, repaired here and gone months ago.
 //   Tier 2 — the intake report: it came in a near-wreck, repairs certified by
 //            Foreman OSWALD (= Ozzy; the deferred onward breadcrumb).
 import { aliasedTopics } from "../../engine/authoring.js";
@@ -90,11 +90,11 @@ export const sophie = {
 // --- The records access (puzzle + reveal) -------------------------------
 const TIER1 = "The records open to you, meticulous as promised. You search the name you've carried since the start — " +
     "Jackrabbit — and get a single hit. But it isn't a person. It's a vessel: a medium courier ship, " +
-    "registered, logged into Horizon Shipyard for repair and logged out again weeks later. The thing " +
+    "registered, logged into Horizon Shipyard for repair and logged out again months later. The thing " +
     "you've been hunting has a name — and the name is painted on a hull.";
 const TIER2 = "You open the intake report. When the Jackrabbit first came in, it was barely a ship at all — the " +
     "assessment reads like a catalogue of everything that can fail on a hull, and most of it had. Whoever " +
-    "brought it in was lucky to arrive at all. Weeks later, the work was signed off complete — repairs " +
+    "brought it in was lucky to arrive at all. Months later, the work was signed off complete — repairs " +
     "certified, Foreman Oswald — and the ship left the yard whole again. Whoever Oswald is, he put it back " +
     "together with care.";
 /** The two-tier records reveal itself, once the PC is at a terminal and has valid
@@ -110,7 +110,7 @@ function recordTiers(s) {
             id: "records_ship_jackrabbit",
             source: "Shipyard records",
             text: "The Jackrabbit is a VESSEL — a medium courier ship, logged into Horizon Shipyard for repair " +
-                "and out again weeks later. The name you've been hunting is painted on a hull.",
+                "and out again months later. The name you've been hunting is painted on a hull.",
             reliable: true,
         });
         return { output: [TIER1, "", "An intake report is attached to the record — ACCESS RECORDS again to open it."], tickCost: 1 };
@@ -120,7 +120,7 @@ function recordTiers(s) {
         addNote(s, {
             id: "records_ship_wreck",
             source: "Shipyard records",
-            text: "The Jackrabbit came in a near-wreck and left whole weeks later. Repairs certified complete by " +
+            text: "The Jackrabbit came in a near-wreck and left whole months later. Repairs certified complete by " +
                 "Foreman Oswald.",
             reliable: true,
         });

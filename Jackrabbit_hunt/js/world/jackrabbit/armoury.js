@@ -162,7 +162,7 @@ export const convictEnding = {
         const base = "They come fast — station security, then more of them, then men in better suits. There is no question " +
             "of who you are: your ID has been read at every door on Horizon since you arrived, and it is read once " +
             "more now, for the record.\n\n" +
-            "The trial is brief. Gordon Drayton does not attend; he does not need to. You have killed the only son " +
+            "The trial is brief. Gordon Drayton does not attend; he does not need to. You have killed a son " +
             "of the man who owns the very air you are breathing, on a station that looks after its own — and the " +
             "sentence is exactly as long as a long life can be made to feel.\n\n" +
             "Whatever else Chas knew — and he knew more than he ever told you — went into the ground with him. The " +

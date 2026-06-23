@@ -36,7 +36,7 @@ import { addNote } from "../../engine/notes.js";
 import { takeItemToInventory } from "../../engine/items.js";
 import { balance, charge, canAfford } from "./economy.js";
 import { referRajahToResidence } from "./lcd_npcs.js";
-import { FLAG_BURKE_MET, FLAG_BURKE_TRANSACTED, FLAG_BURKE_AWAITING_PAYMENT, FLAG_BURKE_TXN_TICK, FLAG_BURKE_BEAT2, FLAG_BURKE_SOFTWARE_PENDING, FLAG_BURKE_SOFTWARE_BOUGHT, FLAG_BURKE_PIVOT_DONE, FLAG_BURKE_REFERRED_RAJAH, FLAG_PC_REAL_NAME, FLAG_ANALYSIS_RESOLVED, FLAG_BRIEF_UNLOCKED, FLAG_DEFECTING, FLAG_FLEEING, HOOK_FIRST_BURKE, HOOK_BOUGHT_ANALYSIS_SOFTWARE, HOOK_BURKE_PIVOT, } from "./flags.js";
+import { FLAG_BURKE_MET, FLAG_BURKE_TRANSACTED, FLAG_BURKE_AWAITING_PAYMENT, FLAG_BURKE_TXN_TICK, FLAG_BURKE_BEAT2, FLAG_BURKE_SOFTWARE_PENDING, FLAG_BURKE_SOFTWARE_BOUGHT, FLAG_BURKE_PIVOT_DONE, FLAG_BURKE_REFERRED_RAJAH, FLAG_PC_REAL_NAME, FLAG_ANALYSIS_RESOLVED, FLAG_BRIEF_UNLOCKED, FLAG_DEFECTING, FLAG_FLEEING, FLAG_DEFECT_PATHWAY, HOOK_FIRST_BURKE, HOOK_BOUGHT_ANALYSIS_SOFTWARE, HOOK_BURKE_PIVOT, } from "./flags.js";
 import { score } from "./scoring.js";
 const WORKSHOP = "horizon_burke_s_workshop";
 /** The corridor outside the workshop (its only exit; entry is day-gated there). */
@@ -336,7 +336,10 @@ function burkePivotSpeech(s) {
             "legs, carrying everything you came in with.\" Flat. \"I'll not tell you which is the wiser. I'm not sure " +
             "I know.\"",
         "\"Think on it. Don't think long — that's the one thing out here nobody's got spare. You know where I " +
-            "am. And you know when.\"",
+            "am.\"",
+        "His eyes stay on you a moment longer. \"When you're sure of it: ask me to get you GONE, and the clean " +
+            "road's yours. Or ask me for the NAME, and you walk the other on your own two legs. One word or the " +
+            "other does it — and don't be long deciding.\"",
     ];
 }
 /** Road one (Flee) — the terminal confirm. Yes → set FLAG_FLEEING and trigger
@@ -398,6 +401,8 @@ function defectRoadTopic(s) {
     }
     s.flags[FLAG_DEFECTING] = true;
     s.flags[FLAG_BURKE_REFERRED_RAJAH] = true;
+    // Wakes Teng's off-the-record berth tip (the shipyard hauler / stow-away road).
+    s.flags[FLAG_DEFECT_PATHWAY] = true;
     const addr = referRajahToResidence(s);
     const level = rajahLevel(addr);
     const name = realName(s);
@@ -426,7 +431,8 @@ function burkePostPivotTalk(s) {
                 "Nothing more for you here.\" He turns back to the bench."];
     }
     return ["\"Still here.\" He doesn't stop working. \"Two roads, same as I laid them. I can get you gone — " +
-            "ask me to. Or there's the name, if you want the other. Your choice, not mine.\""];
+            "ask me to — that's GONE, the clean road. Or ask me for the NAME, and you walk the other yourself. Your " +
+            "choice, not mine.\""];
 }
 /** Burke deflecting a question about himself (Quentin stays buried). */
 const BURKE_SELF = "\"What I am is the man who fixes things and finds things, when he's minded to. The rest of it's mine " +
@@ -504,9 +510,11 @@ export const burke = {
         [["software", "analysis", "blockchain", "kit", "program", "chip"], (s) => softwareTopic(s)],
         [["trace", "dig", "run it down"], (s) => traceTopic(s)],
         // Beat 3 — the two roads (live after the pivot speech; deflect before it).
-        [["leaving", "leave", "out", "get out", "getting out", "get me out", "way out", "clean road",
-                "road one", "first road", "escape", "transport", "gone", "exit"], (s) => fleeRoadTopic(s)],
-        [["rajah", "doctor rajah", "other road", "road two", "second road", "resistance", "contact",
+        [["leaving", "leave", "out", "get out", "getting out", "get me out", "way out", "clean road", "clean",
+                "road one", "road 1", "first road", "first", "one", "flee", "run", "disappear", "vanish",
+                "escape", "transport", "gone", "exit"], (s) => fleeRoadTopic(s)],
+        [["rajah", "doctor rajah", "other road", "the other road", "other", "road two", "road 2", "second road",
+                "second", "two", "defect", "defection", "turn", "turncoat", "join", "resistance", "contact",
                 "those people"], (s) => defectRoadTopic(s)],
         // "name" routes context-aware (his name pre-pivot; the Rajah road after).
         [["name"], (s) => nameTopic(s)],

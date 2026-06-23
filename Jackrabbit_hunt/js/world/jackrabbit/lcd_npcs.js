@@ -76,9 +76,10 @@ function tengShip(s) {
         addNote(s, {
             id: "teng_encounter",
             source: "You",
-            text: "Teng (vessel broker, Lower Commercial District) — confirmed leaving Consortium space by ship " +
-                "is possible but costs hundreds of thousands of credits. Pointed me toward a vessel departing " +
-                "Horizon shortly, off-Consortium, with a spare berth — Bay 47, the Raven. Berth number noted.",
+            text: "Teng (vessel broker, Lower Commercial District) — buying passage off-Consortium costs hundreds " +
+                "of thousands; out of reach. His off-the-record tip instead: a bulk hauler finishing repairs in the " +
+                "SHIPYARD's large bay, bound out-system within a day. Get into the yard after dark, into her open " +
+                "hold, and STOW AWAY. They run light on crew and don't search their own hold.",
             reliable: true,
         });
     }
@@ -88,10 +89,14 @@ function tengShip(s) {
             "price appears: a figure in the hundreds of thousands. \"That's with a discount for immediate " +
             "settlement.\"",
         "He watches the realisation land. \"I thought so. Most people who come to me with that look can't " +
-            "afford it either.\" A pause. \"There is another option. Not a purchase. I know of a vessel leaving " +
-            "Horizon in the next day or two — non-Consortium destination, skipper I've dealt with before. They " +
-            "mentioned a spare berth.\" He slides a note across the desk: a vessel name and a berth number — Bay " +
-            "47, the Raven. \"Ask there, sooner rather than later. And I wouldn't advertise where you're going.\"",
+            "afford it either.\" A pause; he lowers his voice, and the broker's polish goes with it. \"There's " +
+            "another way, but it isn't one I'd put my name to. Up in the shipyard there's a bulk hauler — big repair " +
+            "job, near enough done, and she's cleared to leave within the day. Bound well out-system. Her sort run " +
+            "light on crew, and nobody searches their own hold.\"",
+        "He lets that sit. \"A man who got himself into that yard after dark, and into that hold among the " +
+            "cargo, would be a very long way from Horizon before anyone thought to look. The yard's no friendly " +
+            "place at night, mind. But that's the road, if you've the nerve for it. And I'd not advertise where " +
+            "you're going.\"",
     ].join("\n\n");
 }
 export const teng = {
@@ -187,10 +192,11 @@ function rajahBackRoomTalk(s) {
         return "\"You have what you came for. Read it somewhere safe, on something offline — and not a word of " +
             "where you got it.\"";
     }
-    return "\"This is a consulting room,\" she says, drawing the curtain to behind you. \"By law a medical " +
-        "consultation is absolutely private — no monitoring, no recording, no exception, not even for the " +
-        "Consortium. There are perhaps three places on this whole station where that's true, and you're sitting " +
-        "in one of them. It's the reason I keep the shop.\" She folds her hands. \"Burke sent you, which means " +
+    return "\"This is a consulting room,\" she says, and slides a heavy door across behind the beaded " +
+        "curtain — it seats into its frame with the soft, total finality of proper soundproofing. \"A medical " +
+        "consultation is private, by law and by build: no monitoring, no recording, no exception. There are " +
+        "perhaps three places on this whole station where that's truly so, and you're sitting in one of them. " +
+        "It's the reason I keep the shop.\" She folds her hands. \"Burke sent you, which means " +
         "you've worked something out and didn't care for the shape of it. So ask me plainly what you came to " +
         "ask — about the people who help a man step out of all this. RESISTANCE, if you want the word for it.\"";
 }
@@ -203,17 +209,22 @@ function rajahHandsOverCard(s) {
         source: "You",
         text: "Committed to the defect route. Dr Rajah gave me a resistance datacard: coordinates and a " +
             "transmission frequency. No names exchanged, by design. CRITICAL: never bring it near the AetherLink " +
-            "datapad — I need an OFFLINE, air-gapped datapad to read it, somewhere far from Horizon.",
+            "datapad — I need an OFFLINE, air-gapped datapad to read it, somewhere far from Horizon. To get off " +
+            "the station, Rajah says to see Teng, the broker in this district — he'll know a ship to slip aboard.",
         reliable: true,
     });
     return "She reaches into a drawer and presses a small, unmarked datacard into your hand — into your hand, " +
         "not onto the desk, so the choice is already made. \"Coordinates, and a transmission frequency. Use " +
         "them and the right people find you. I don't know their names; they don't know mine; that is the whole " +
         "of the point.\" Her fingers close briefly over your wrist. \"Now hear the one thing that matters: do " +
-        "NOT bring this near that AetherLink pad in your pocket. Not to read it, not to copy it, not once. Get " +
+        "NOT bring this near that networked pad in your pocket. Not to read it, not to copy it, not once. Get " +
         "yourself an OFFLINE machine — an old datapad that's never touched a network and never will — and read " +
-        "it on that, far from here. Put this and that together and you hang us all.\" She releases your wrist. " +
-        "\"Go. And not a word of where you got it.\"";
+        "it on that, far from here. Put this and that together and you hang us all.\"\n\n" +
+        "She releases your wrist, and something almost like concern crosses her face. \"And you'll want to be " +
+        "off this station — quick, and quiet. You'll not manage it on what's in your pocket, and you can't be " +
+        "seen buying passage. There's a broker down this district: Teng. He knows which ships are leaving, and " +
+        "which of them won't ask a stowaway his name. Go to him for the way out — and tell him nothing of me.\" " +
+        "A last look. \"Go, now. And not a word of where you got any of it.\"";
 }
 /** Road-end commit (the irreversible step). Yes -> hand over the card; no -> the
  *  offer keeps; anything else -> press for a straight answer. */
@@ -301,7 +312,7 @@ export const rajah = {
             "\"I know the name. I can't help you with that.\" Quietly final; no further elaboration."],
         [["coordinates", "frequency", "offline", "datapad"],
             (s) => s.flags[FLAG_RAJAH_COMMITTED]
-                ? "\"You have the card. Read it on something offline — never that AetherLink pad — somewhere far " +
+                ? "\"You have the card. Read it on something offline — never that networked pad — somewhere far " +
                     "from here. Then it's out of my hands, and yours to use.\""
                 : "\"I don't know what you mean.\" Mild, and entirely unforthcoming. You get the sense the answer " +
                     "depends on a question you haven't earned the right to ask.",

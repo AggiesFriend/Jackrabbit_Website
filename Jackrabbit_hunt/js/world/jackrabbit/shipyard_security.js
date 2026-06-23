@@ -18,10 +18,13 @@
 // Untheatrical's armoury deep in the yard — the same two rooms that hold the
 // crowbar and the gun.
 //
-// Getting caught is NON-VIOLENT (Horizon's justice always is — see shame.ts): you
-// are scanned, logged, warned, and walked back to reception. THREE strikes and
-// the station is done being patient — evicted from your lodging and barred from
-// the Outpost for good (the Deported ending).
+// Getting caught is NON-VIOLENT (Horizon's justice always is — see shame.ts) but
+// the penalty depends on WHEN:
+//   NIGHT — being collared in the dark is treated as a break-in: no warning, no
+//     strikes, you're exiled on the spot (the Deported ending).
+//   DAY — lingering past dawn is the lesser sin: you're scanned, logged, warned,
+//     and walked back to reception. THREE daytime strikes and the station is done
+//     being patient — barred from the Outpost for good (also the Deported ending).
 //
 // MODEL NOTE. The yard spans three levels joined ONLY by the lift `select`
 // mechanic, not by room exits — so a room-to-room homing pursuer (pursuit.ts)
@@ -82,28 +85,39 @@ function telegraph(heat) {
 function strikes(s) {
     return Number(s.flags[FLAG_SHIPYARD_STRIKES]) || 0;
 }
-/** Process a capture: bank a strike, then either bar the PC (third strike) or
- *  escort them back out to reception with a logged warning. */
+/** Process a capture.
+ *
+ *  NIGHT: being collared sneaking through the dark is treated as what it is —
+ *  a break-in. No warnings, no strikes: the station exiles you on the spot
+ *  (the Deported ending).
+ *
+ *  DAY: lingering past dawn is a lesser sin (you're merely where the working
+ *  crew don't want you). It banks a strike and gets you escorted back out;
+ *  the third daytime strike finally bars you. */
 function capture(s, mode) {
+    delete s.flags[FLAG_SHIPYARD_PATROL_HEAT];
+    if (mode === "night") {
+        // Caught in the dark = caught breaking in. Straight to the exit lock.
+        s.ended = true;
+        s.endingId = "barred";
+        return []; // barredEnding narrates it
+    }
+    // DAY: a strike, escorted out — unless this is the one that bars you.
     const n = strikes(s) + 1;
     s.flags[FLAG_SHIPYARD_STRIKES] = n;
-    delete s.flags[FLAG_SHIPYARD_PATROL_HEAT];
     if (n >= STRIKES_TO_BAR) {
         s.ended = true;
         s.endingId = "barred";
         return []; // barredEnding narrates it
     }
     requestSceneTransition(s, RECEPTION);
-    const caught = mode === "day"
-        ? "Dawn has crept into the yard, and with it the day shift. A foreman in a scuffed hi-vis tabard takes " +
-            "one look at you, sighs the sigh of a man who has seen it all, and beckons two of his crew over."
-        : "A torch beam catches you square in the face and holds. \"Right. Stand still.\" A firm hand closes on " +
-            "your arm before you've finished deciding whether to bolt.";
+    const caught = "Dawn has crept into the yard, and with it the day shift. A foreman in a scuffed hi-vis tabard takes " +
+        "one look at you, sighs the sigh of a man who has seen it all, and beckons two of his crew over.";
     const warning = n === 1
         ? "They run your ID — you're in the log now — walk you back to reception, and turn you loose with a flat " +
             "warning. (That's one.)"
         : "Your ID gets scanned again; this time it's flagged, not merely logged, and you're marched back to " +
-            "reception. \"Third time,\" the guard mentions, almost pleasantly, \"and you're off Horizon for good. " +
+            "reception. \"Third time,\" the foreman mentions, almost pleasantly, \"and you're off Horizon for good. " +
             "There isn't a fourth.\" (That's two.)";
     return [caught, warning];
 }
@@ -145,26 +159,33 @@ export function shipyardSecurityTick(s) {
         return capture(s, "day");
     }
     // NIGHT in cover (a bay, a lift car, a bolthole): out of the beam's path.
-    // Ducking in just as the patrol closes (within 2) is a scored evasion.
+    // Ducking in just as the patrol closes (within 2) is a scored evasion. These
+    // messages are AMBIENT too, so waiting out the night from cover (WAIT UNTIL
+    // DAYTIME) runs to dawn without the first sweep stopping it.
     if (isCover(here)) {
         const wasHeat = Number(s.flags[FLAG_SHIPYARD_PATROL_HEAT]) || 0;
         if (s.flags[FLAG_SHIPYARD_PATROL_HEAT] !== undefined) {
             delete s.flags[FLAG_SHIPYARD_PATROL_HEAT];
+            s.tickOutputAmbient = true;
             if (wasHeat >= EVASION_HEAT) {
                 score(s, HOOK_EVADED_PATROL); // +4, once
                 return "Heart hammering, you fold into cover just as the beam sweeps the spot where you were " +
                     "standing — and passes on. You've given them the slip, this time.";
             }
-            return "You slip out of sight and wait. The torch beam sweeps across the mouth of the bay, pauses — " +
-                "and moves on.";
+            return "You slip out of sight and wait. The torch beam sweeps across the spot where you'd been " +
+                "standing, pauses — and moves on.";
         }
         return;
     }
-    // NIGHT in the open: the pressure mounts, telegraphed, until it bites.
+    // NIGHT in the open: the pressure mounts, telegraphed, until it bites. The
+    // telegraph is AMBIENT — it shows but doesn't halt a wait, so loitering in the
+    // open (WAIT N / WAIT UNTIL DAYTIME) rides the heat all the way to the capture
+    // rather than stalling a tick at a time.
     const heat = (Number(s.flags[FLAG_SHIPYARD_PATROL_HEAT]) || 0) + 1;
     if (heat >= PATROL_CATCH_AT)
         return capture(s, "night");
     s.flags[FLAG_SHIPYARD_PATROL_HEAT] = heat;
+    s.tickOutputAmbient = true;
     return telegraph(heat);
 }
 // --- The barred / Deported ending ---------------------------------------
@@ -172,7 +193,10 @@ export const barredEnding = {
     id: "barred",
     survived: true,
     forcedRank: "Deported",
-    text: "This time there is no warning, because there is none left to give. The third strike is the last one. " +
+    text: (s) => (strikes(s) >= STRIKES_TO_BAR
+        ? "This time there is no warning, because there is none left to give. The third strike is the last one. "
+        : "There is no warning. Caught creeping through a working yard in the dark, you are not a nuisance to be " +
+            "logged and let go — you are an intruder, and the station treats you as one. ") +
         "Hands take you by both arms — unhurried, almost bored — and walk you out of the yard for the final time.\n\n" +
         "You are processed with the brisk, total efficiency of a station that has done this many times before. " +
         "Your lodging is cleared while you wait; your few effects are bagged; your ID is flagged, permanently, " +

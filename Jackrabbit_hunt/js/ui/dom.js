@@ -63,6 +63,14 @@ export function bindUi() {
     function maxScroll() {
         return Math.max(0, output.scrollHeight - output.clientHeight);
     }
+    // Touch-first devices (phones / tablets) don't get the keypress pager: there's
+    // no physical Space to press, and blurring the input to capture keys dismisses
+    // the on-screen keyboard — which resizes the viewport out from under the page
+    // measurement, leaving a stuck bar over text that actually scrolls fine. On
+    // those we just bring the new text into view and let the thumb do the paging.
+    function isTouchFirst() {
+        return typeof window.matchMedia === "function" && window.matchMedia("(pointer: coarse)").matches;
+    }
     function scheduleCheck() {
         if (checkQueued)
             return;
@@ -81,6 +89,12 @@ export function bindUi() {
         }
         if (output.scrollHeight - turnTop <= output.clientHeight) {
             output.scrollTop = maxScroll(); // the new text fits: behave as before
+            return;
+        }
+        if (isTouchFirst()) {
+            // No bar, no key-capture: just bring the top of the new text into view and
+            // let the reader scroll it natively. Fixes the keyboard-resize stuck bar.
+            output.scrollTop = Math.min(turnTop, maxScroll());
             return;
         }
         // Overflow: hold at the top of the new text and raise the MORE bar. Show it

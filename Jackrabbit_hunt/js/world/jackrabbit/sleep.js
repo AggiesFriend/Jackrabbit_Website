@@ -5,6 +5,7 @@
 // in a moving pod. The wait is interruptible, so anything that happens (an event,
 // a danger) wakes you early.
 import { ticksUntilPhaseChange } from "../../engine/time.js";
+import { requestSceneTransition } from "../../engine/authoring.js";
 /** Rooms with a real bed — a comfortable sleep. (Donovan's guest rooms; hostel rooms.) */
 function isBed(roomId) {
     return /horizon_donovan_s_room_\d+$/.test(roomId) || /horizon_hostel_room_/.test(roomId);
@@ -15,6 +16,16 @@ export const sleepCmd = (_w, s, _cmd) => {
     }
     if (s.currentRoom === "travelpod" && s.flags["pod_moving"]) {
         return { handled: true, output: ["Not while the pod's running — you'd miss your stop."], tickCost: 0, free: true };
+    }
+    // You don't doss down in Burke's workshop; he turns you straight out (the room is
+    // night-only — see burkeWorkshopDayTick in burke.ts for the same eject at dawn).
+    if (s.currentRoom === "horizon_burke_s_workshop") {
+        requestSceneTransition(s, "horizon_narrow_corridor8");
+        return { handled: true, tickCost: 1, output: [
+                "\"None of that in here.\" Burke doesn't look up from the bench, but a hand the size of a shovel " +
+                    "arrives at your shoulder and turns you doorward. \"This is a workshop, not a doss-house. You want a " +
+                    "kip, find a bed that isn't my floor.\" The heavy door rattles shut at your back."
+            ] };
     }
     const target = s.isDaytime ? "night" : "day";
     const n = ticksUntilPhaseChange(s, target);

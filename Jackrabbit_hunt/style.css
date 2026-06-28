@@ -414,6 +414,25 @@ html, body {
 #output .heading { color: var(--accent); font-weight: bold; }
 #output .block { margin-bottom: 0.8rem; }
 
+/* The "more" pager bar: a full-width row between the scroll region and the input,
+   shown only while a long passage is being read page by page. */
+#more-bar {
+  flex: 0 0 auto;
+  width: 100%;
+  border: none;
+  border-top: 1px solid var(--border);
+  background: var(--accent);
+  color: var(--bg);
+  font: inherit;
+  font-weight: bold;
+  letter-spacing: 0.03em;
+  padding: 0.45rem 1rem;
+  text-align: center;
+  cursor: pointer;
+}
+#more-bar[hidden] { display: none; }
+#more-bar:focus-visible { outline: 2px solid var(--fg); outline-offset: -4px; }
+
 #output a {
   color: var(--accent);
   text-decoration: underline;

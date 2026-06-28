@@ -37,7 +37,94 @@ export function bindUi() {
             }
         }
     });
+    // --- The "more" pager ---------------------------------------------------
+    // Long output (an ending, a big description) is read screen-by-screen rather
+    // than jumping to the bottom and scrolling the top off: when a turn's new text
+    // overruns the visible height we hold at the top of it and show a MORE bar;
+    // Space / Enter / click / PageDown reveals the next page, until the bottom is
+    // reached. Short turns scroll to the bottom exactly as before, so the pager is
+    // invisible unless it's needed. The engine stays DOM-free — it only emits text;
+    // all of this lives here. Scrolling is instant (no animation — reduced-motion
+    // safe by construction).
+    const OVERLAP_PX = 28; // a line or so of continuity carried between pages
+    let paging = false; // a page break is currently being held
+    let burstOpen = false; // a synchronous run of render() calls is in progress
+    let turnTop = 0; // y-offset where the current burst's new text begins
+    let pageTop = 0; // current top-of-view while paging
+    let checkQueued = false;
+    const moreBar = document.createElement("button");
+    moreBar.id = "more-bar";
+    moreBar.type = "button";
+    moreBar.hidden = true;
+    moreBar.textContent = "▾ More — press Space";
+    moreBar.setAttribute("aria-label", "More text below — press Space or Enter to continue");
+    moreBar.addEventListener("click", advancePager);
+    form.parentNode?.insertBefore(moreBar, form);
+    function maxScroll() {
+        return Math.max(0, output.scrollHeight - output.clientHeight);
+    }
+    function scheduleCheck() {
+        if (checkQueued)
+            return;
+        checkQueued = true;
+        requestAnimationFrame(runPagerCheck);
+    }
+    // After a synchronous burst of render() calls, decide whether to page.
+    function runPagerCheck() {
+        checkQueued = false;
+        burstOpen = false;
+        if (paging)
+            return; // already holding a page
+        if (output.clientHeight <= 0) { // not laid out yet — just pin to bottom
+            output.scrollTop = output.scrollHeight;
+            return;
+        }
+        if (output.scrollHeight - turnTop <= output.clientHeight) {
+            output.scrollTop = maxScroll(); // the new text fits: behave as before
+            return;
+        }
+        // Overflow: hold at the top of the new text and raise the MORE bar. Show it
+        // first so clientHeight already accounts for the row it occupies.
+        paging = true;
+        moreBar.hidden = false;
+        input.blur();
+        pageTop = Math.min(turnTop, maxScroll());
+        output.scrollTop = pageTop;
+        moreBar.focus();
+    }
+    function advancePager() {
+        if (!paging)
+            return;
+        const max = maxScroll();
+        // Always make meaningful forward progress, even on a tiny viewport, so the
+        // page can never stall while the input is blurred.
+        const step = Math.max(output.clientHeight - OVERLAP_PX, Math.round(output.clientHeight * 0.6), 1);
+        pageTop = Math.min(pageTop + step, max);
+        output.scrollTop = pageTop;
+        if (pageTop >= max - 1)
+            endPaging(); // reached the bottom — release
+    }
+    function endPaging() {
+        paging = false;
+        moreBar.hidden = true;
+        output.scrollTop = maxScroll();
+        input.focus();
+    }
+    // PageDown / ArrowDown also advance while a page is held (Space / Enter are
+    // handled natively by the focused MORE button).
+    document.addEventListener("keydown", (e) => {
+        if (!paging)
+            return;
+        if (e.key === "PageDown" || e.key === "ArrowDown") {
+            e.preventDefault();
+            advancePager();
+        }
+    });
     function render(lines, opts) {
+        if (!burstOpen) {
+            burstOpen = true;
+            turnTop = output.scrollHeight;
+        }
         const kind = opts?.kind ?? "normal";
         const block = document.createElement("div");
         block.classList.add("block");
@@ -72,7 +159,7 @@ export function bindUi() {
             block.appendChild(div);
         }
         output.appendChild(block);
-        output.scrollTop = output.scrollHeight;
+        scheduleCheck();
     }
     function updateHeader(state, locationName, aliasValue) {
         score.textContent = `Score: ${state.score}`;
@@ -89,6 +176,10 @@ export function bindUi() {
     function bindSubmit(onSubmit) {
         form.addEventListener("submit", (e) => {
             e.preventDefault();
+            if (paging) {
+                advancePager();
+                return;
+            } // while a page is held, Enter advances it
             const line = input.value;
             input.value = "";
             history.record(line);

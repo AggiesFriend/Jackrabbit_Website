@@ -28,7 +28,7 @@
 // coda. The datapad is non-droppable (items.ts), so the leash is inescapable —
 // except in the Flee cut-scene, where Burke takes it.
 import { requestPushModal } from "../../engine/authoring.js";
-import { FLAG_CONTRACT_START_TICK, FLAG_CONTRACT_EXPIRED, FLAG_CONTRACT_NUDGE, FLAG_REPORT_SUBMITTED, CONTRACT_DEADLINE_CYCLES, FLAG_DEFECTING, } from "./flags.js";
+import { FLAG_CONTRACT_START_TICK, FLAG_CONTRACT_EXPIRED, FLAG_CONTRACT_NUDGE, FLAG_REPORT_SUBMITTED, CONTRACT_DEADLINE_CYCLES, FLAG_DEFECTING, FLAG_FLEEING, } from "./flags.js";
 const ARRIVAL_CONCOURSE = "horizon_arrival_concourse";
 /** The big hauler readying to leave — the stowaway ride (a real off-vector
  *  departure). Sited in the shipyard's large bay (see shipyard.ts). */
@@ -56,7 +56,7 @@ const NUDGES = [
     { at: 0.75, text: "The datapad chimes — a scheduling reminder you didn't ask for. Three-quarters of your time is spent. " +
             "The deadline, abstract until now, has begun to have a shape." },
     { at: 0.9, text: "A sharper tone from the datapad: the engagement window is nearly closed. Whatever you mean to do, " +
-            "you're running out of station to do it on." },
+            "you're running out of time in which to do it." },
 ];
 const EXPIRY_TEXT = "Your datapad sounds a flat, final tone and surfaces a notice you don't remember subscribing to: " +
     "ENGAGEMENT CLOSED. The contract window has lapsed; the escrow has reverted; there is nothing left at " +
@@ -72,6 +72,10 @@ export function contractDeadlineTick(s) {
     if (s.dead || s.ended)
         return;
     if (typeof s.flags[FLAG_CONTRACT_START_TICK] !== "number")
+        return;
+    // Filing the report halts the datapad's local mission timer (see submitConfirmModal):
+    // no more nudges, and the engagement can't "expire" out from under a report you've queued.
+    if (s.flags[FLAG_REPORT_SUBMITTED])
         return;
     if (s.flags[FLAG_CONTRACT_EXPIRED])
         return;
@@ -100,12 +104,14 @@ function submitConfirmModal() {
             return {
                 pop: true,
                 output: [
-                    "You compile what you have — much, little, or nothing — attach it to the engagement record, and " +
-                        "send. The upload takes a moment; the datapad confirms it with a small, satisfied tone, and the " +
-                        "report slides away down the slow ledger toward a client you will never meet.",
-                    "The contract is discharged. Whatever the intel is worth, the escrow is configured to pay on " +
-                        "delivery, and delivery is done. There's nothing holding you here now — you can make your way " +
-                        "back to the docks and DEPART for home whenever you're ready.",
+                    "You compile what you have — much, little, or nothing — into your report and queue it for " +
+                        "sending, halting the datapad's local mission timer. There's nowhere your report can go yet: " +
+                        "the 'pad's been offline since you boarded the shuttle back at Halberd Recovery Services. It " +
+                        "sits queued behind a single green word — PENDING — waiting for a signal it won't find outside " +
+                        "Consortium space.",
+                    "That's the job done as far as you can do it here; the report will transmit, and the escrow " +
+                        "will pay, the moment you're back in range. Nothing's holding you on Horizon now — make your " +
+                        "way to the docks and DEPART for home.",
                 ],
             };
         },
@@ -120,7 +126,8 @@ export const submitCommand = (_w, s) => {
     }
     if (s.flags[FLAG_REPORT_SUBMITTED]) {
         return { handled: true, tickCost: 0, free: true,
-            output: ["You've already filed your report. It's gone down the slow ledger — no recall, no addendum."] };
+            output: ["You've already filed it — compiled and queued on the 'pad behind that green PENDING, ready " +
+                    "to go up the moment you're back in range. No recall, no addendum."] };
     }
     if (s.flags[FLAG_CONTRACT_EXPIRED]) {
         return { handled: true, tickCost: 0, free: true,
@@ -140,6 +147,16 @@ export const submitCommand = (_w, s) => {
  *  the home route is open: take the slow ride back to Consortium space. Home is
  *  the safe vector — you survive. Loyal if you submitted, else Timeout -> home. */
 export const departCommand = (_w, s) => {
+    // Once you've thrown in with the resistance (Defect) or asked Burke for the
+    // clean road (Flee), the quiet berth home is shut. FILE still works — the report
+    // just never arrives (the pad dies with you, or Burke scrubs it) — but you can't
+    // walk back onto a Consortium run.
+    if (s.flags[FLAG_DEFECTING] || s.flags[FLAG_FLEEING]) {
+        return { handled: true, tickCost: 0, free: true,
+            output: ["You made your choice the moment you took that road. There's no homebound Consortium berth " +
+                    "for a man who's thrown in the other direction now — and if they offered you one, you'd not climb " +
+                    "aboard. Whatever's at the far end of this, it isn't the docks behind you."] };
+    }
     if (s.currentRoom !== ARRIVAL_CONCOURSE) {
         return { handled: true, tickCost: 0, free: true,
             output: ["There's no outbound berth here. Homebound shuttles run from the arrival concourse, down by " +
@@ -178,26 +195,53 @@ export const stowawayCommand = (_w, s) => {
 // --- The endings --------------------------------------------------------
 /** The loyal epilogue (plot §5): a routine portfolio review severs the shell
  *  chain; automation, never deliberation. "No one will ever know you existed." */
-const SEVERANCE_REVEAL = "Months later, and a long way from any of it, a thing happens that you never see and never could.\n\n" +
-    "An over-keen junior in some accountancy arm three shells up runs a routine portfolio review, finds a " +
-    "dormant recovery-services subsidiary returning nothing, and — tidy by temperament — sells it off with a " +
-    "batch of other dead weight. The shell that held your contract is folded into the sale; the chain that " +
-    "ran up, link by deniable link, to AetherLink is quietly severed in a spreadsheet. Your report, your " +
-    "name, the boy you hunted and the people who paid to have him found: all of it falls into the gap " +
-    "between two ledgers and is gone.\n\n" +
+const SEVERANCE_REVEAL = "It happened, in fact, while you were still on Horizon — somewhere between the day you took the contract " +
+    "and the day you sealed your report — and you never saw it, and never could.\n\n" +
+    "An over-keen junior in some accountancy arm three shells up ran a routine portfolio review, found a " +
+    "dormant recovery-services subsidiary returning nothing, and — tidy by temperament — sold it off with a " +
+    "batch of other dead weight. The shell that held your contract went into the sale with it; the chain " +
+    "that ran up, link by deniable link, to AetherLink was quietly severed in a spreadsheet, weeks before " +
+    "your report ever transmitted. By the time it climbed the shells there was nothing left at the top to " +
+    "receive it: your report, your name, the boy you hunted and the people who paid to have him found, all " +
+    "of it dropping into the gap between two ledgers, and gone.\n\n" +
     "No one decided this. No one read your findings and judged them wanting; no one buried them. A process " +
     "ran, the way processes do, and the horror of it is the smallness: no one at AetherLink will ever know " +
-    "you existed at all. The escrow paid, because escrow pays. That much, at least, was automatic too.";
+    "you existed at all. The escrow paid, because escrow pays — a standing instruction far enough down the " +
+    "chain to outlive the rest of it. That much, at least, was automatic too.";
 /** The cold death coda (plot §5), shared by the two off-vector deaths. */
 const COLD_CODA = "It is, in the end, nothing personal — which is the worst of it.\n\n" +
     "Back on Horizon a fixer named you precisely, once, to your face, to make you feel watched. Out here " +
-    "there is no one of the kind. The thing that found you was a monitoring routine that flagged a vector " +
-    "off the expected line and handed the sum to an interceptor that had never heard your name and could " +
-    "not have cared if it had. It did not know you were defecting, or fleeing, or anything at all. It knew " +
-    "a deviation, and it corrected it.\n\n" +
-    "The crew who never knew you were in their hold die in the same white instant, for the same reason: " +
+    "there is no one of the kind. The datapad in your pocket had been calling your position the whole way " +
+    "out, jump by jump, to no one in particular; a monitoring routine flagged the vector off the expected " +
+    "line within a crossing or two of leaving, totted up where you would surface next, and handed the sum " +
+    "to an interceptor that had never heard your name and could not have cared if it had. No one ordered " +
+    "it. It did not know you were defecting, or fleeing, or anything at all. It knew a deviation, and it " +
+    "corrected it.\n\n" +
+    "The crew who never knew you were in their hold die in the same breach, for the same reason: " +
     "nothing they did, and nothing they could have known. The ledger will catch up weeks later, slow as " +
     "everything out here, and record a ship that did not arrive. By then even that much of you is gone.";
+/** The physical voyage the two stow-away deaths share: hide, sleep out the
+ *  station's night, wake when she finally moves, ride the first jumps; then the
+ *  leash trips and, a few jumps on, the correction arrives. The PC stays blind to
+ *  the why (that is the coda's work) — here is only what a stowaway folded into a
+ *  cold hold would feel and hear. */
+const STOWAWAY_VOYAGE = "She won't leave till the shift changes, so there is nothing to do but wait. You work yourself deeper " +
+    "into the freight, out of the standing lights and the reach of any torch, and make yourself small in " +
+    "the cold; and somewhere in the long quiet of the station's night the waiting turns, despite " +
+    "everything, to sleep.\n\n" +
+    "You wake to motion. The bay-clamps let go with a clang you feel in your back teeth; the deck heels and " +
+    "steadies; and there is the slow, enormous shove of a big hull getting under way. Then the first " +
+    "SnapSpace jump: a soft drop and a brief wrongness behind the eyes, gone before you can name it. A " +
+    "hauler this size barely deigns to notice the crossing, and folded in her hold, neither quite do you. A " +
+    "second jump, a while later, no worse than the first. In the dark and the engine-hum you let yourself " +
+    "begin to believe you have done it.\n\n" +
+    "You have not. Off the back of that second jump, far ahead of you and entirely without drama, a figure " +
+    "has come out wrong on a ledger no one is reading, and a correction has been entered against it. It " +
+    "will take a few more jumps to arrive. It is in no hurry, and it does not miss.\n\n" +
+    "It reaches you in the deep dark between the stars. No flare, no alarm: first, only a sound. A wrong " +
+    "sound, a worrying at the hull from somewhere outside, a grind and stammer of stressed metal that goes " +
+    "on for several seconds longer than anything you can tell yourself is only the ship. Then the hold is " +
+    "breached, and the cold and the dark come in, and there is nothing after that at all.";
 export const loyalEnding = {
     id: "loyal",
     survived: true,
@@ -205,9 +249,12 @@ export const loyalEnding = {
         "homebound run — shuttle to the liner, the liner to the long quiet vector back toward Consortium " +
         "space. The station dwindles in the viewport, vast and turning, indifferent to your leaving as it was " +
         "to your arriving.\n\n" +
+        "Somewhere on the long approach the datapad stirs — a soft chime as it catches the first thread of the " +
+        "AetherLink network, and the PENDING report goes up without ceremony. Minutes later, a second chime: " +
+        "the escrow has paid, exactly as configured, the instant delivery could be confirmed.\n\n" +
         "You never caught him. You're fairly sure, by now, that no one was ever going to. But the contract is " +
-        "discharged, the escrow will pay what it pays, and you are going home with your skin and your name and " +
-        "whatever this was worth — which is, you tell yourself, the shape of a job done.",
+        "discharged, the pay is real and already banked, and you are going home with your skin and your name " +
+        "and whatever this was worth — which is, you tell yourself, the shape of a job done.",
     closingText: SEVERANCE_REVEAL,
 };
 export const timeoutHomeEnding = {
@@ -226,25 +273,27 @@ export const timeoutHomeEnding = {
 export const defectEnding = {
     id: "defect",
     survived: false,
-    text: "You fold yourself into the hauler's hold among the strapped-down cargo and the cold, and you wait. " +
-        "In time the bay-clamps release; there's the long shove of departure, the queasy lurch of the first " +
-        "SnapSpace jump, and then the dark and the quiet and the slow ticking-down of someone else's voyage " +
-        "carrying you somewhere it was never going.\n\n" +
-        "You have Rajah's card in your pocket — coordinates you can't read, a frequency you'll raise when " +
-        "you're clear, a door you mean to knock on at the far end of all this. You will never reach it. A few " +
-        "jumps out from Horizon, without alarm or warning or any sound you'll remember, the dark fills with a " +
-        "hard white light that is the last thing it ever does.",
-    closingText: COLD_CODA,
+    forcedRank: "Defector (failed)",
+    text: "You climb the unwatched ramp and fold yourself into the hauler's hold, down among the strapped-down " +
+        "cargo and the cold. In your pocket is Rajah's card: coordinates you can't read, a frequency you mean " +
+        "to raise once you are clear, a door you mean to knock on at the far end of all this. You will never " +
+        "knock on it.\n\n" +
+        STOWAWAY_VOYAGE,
+    // A maximum-score run ends here too — so twist the knife: a perfect score, and
+    // a corpse to spend it. Only fires when the player actually maxed it.
+    closingText: (s) => (s.score >= s.maxScore
+        ? "Congratulations: you achieved the maximum possible score. Only you can decide whether it was " +
+            "worth it... or at least you could, if you hadn't just died.\n\n"
+        : "") + COLD_CODA,
 };
 export const timeoutElsewhereEnding = {
     id: "timeout_elsewhere",
     survived: false,
-    text: "The contract's dead and the thought of crawling home to Consortium space with empty hands is somehow " +
-        "worse than the dark. So you don't. You stow away in the hauler's hold and let it take you on — " +
-        "anywhere that isn't back, anywhere that's yours to choose.\n\n" +
-        "The clamps release; the first jump turns your stomach over; the station falls away behind. For a " +
-        "little while, in the cold and the dark of a stranger's hold, it even feels like freedom. A few jumps " +
-        "out it ends in a single hard flare of light you barely have time to notice, and do not understand.",
+    text: "The contract's dead, and the thought of crawling home to Consortium space with empty hands is somehow " +
+        "worse than the dark. So you don't. You climb the unwatched ramp and fold yourself into the hauler's " +
+        "hold among the strapped-down cargo, and let her take you on: anywhere that isn't back, anywhere " +
+        "that's yours to choose. For the length of a held breath, it even feels like freedom.\n\n" +
+        STOWAWAY_VOYAGE,
     closingText: COLD_CODA,
 };
 /** All four endgame-departure endings, for index.ts to register. */

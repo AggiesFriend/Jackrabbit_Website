@@ -8,7 +8,7 @@
 //   the dead predecessor (John Smith → Stuart McAlister), speaks the PC's REAL
 //   name, then lays two roads. The choice is DIEGETIC (no menu): the PC commits
 //   by what they ask next — `ask burke about leaving` (Flee → confirm modal →
-//   the stub Flee ending, B8) or `ask burke about the name` (Defect → the hedged
+//   the Flee ending) or `ask burke about the name` (Defect → the hedged
 //   Rajah rumour; sets FLAG_DEFECTING + FLAG_BURKE_REFERRED_RAJAH). Defect is
 //   IRREVERSIBLE — taking the name shuts the Flee road. The PC stays blind to
 //   the endings throughout.
@@ -343,7 +343,7 @@ function burkePivotSpeech(s) {
     ];
 }
 /** Road one (Flee) — the terminal confirm. Yes → set FLAG_FLEEING and trigger
- *  the (stub) Flee ending; no/anything else → back out, pivot stays open. */
+ *  the Flee ending; no/anything else → back out, pivot stays open. */
 function fleeConfirmModal() {
     return {
         onInput: (line, s) => {
@@ -352,8 +352,7 @@ function fleeConfirmModal() {
             const no = /^(n|no|nae|not|wait|stop|cancel|stay|think|hold|back|later|never)\b/.test(t);
             if (yes) {
                 s.flags[FLAG_FLEEING] = true;
-                // Hand off to the Flee ending (world.endings["flee"] — a stub for now,
-                // B8). Engine renders it after this modal pops (submit → checkEndStates).
+                // Hand off to the Flee ending (world.endings["flee"] — fleshed out in index.ts). Engine renders it after this modal pops (submit → checkEndStates).
                 s.ended = true;
                 s.endingId = "flee";
                 s.survived = true;

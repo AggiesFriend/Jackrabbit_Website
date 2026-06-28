@@ -51,6 +51,15 @@ const terminal = {
         : "A bland login screen, the kind every multi-tenant building runs. The only " +
             "interactive element is an ID scanner, and you've nothing yet to scan.",
     takeable: false,
+    // SCAN ID at the unmanned reception terminal = the same polite rejection as
+    // USE ID ON TERMINAL, so both verbs work here.
+    onScan: (s) => {
+        if (!s.inventory.includes("fake_id"))
+            return "You've no ID card to scan yet.";
+        score(s, HOOK_ID_ON_TERMINAL);
+        return "You wave the card at the scanner. It thinks about it for a moment, then displays: " +
+            "ACCESS DENIED — UNRECOGNISED TENANT. A small consolation: it didn't laugh.";
+    },
 };
 // --- The starting items, issued by Miss Terry after the briefing -------
 const fakeId = {
@@ -110,6 +119,9 @@ const datapad = {
     aliases: ["pad", "tablet", "computer", "device", "my datapad", "own datapad"],
     description: "A personal datapad, slim and well-used. Three documents loaded: the " +
         "contract brief, a room reservation, and a blank notepad.\n\n" +
+        "Out here it's as good as a private device — no AetherLink, no permitted station network, nothing to " +
+        "connect to. On Horizon Outpost even your own device goes quiet; it'll wake when you're back in " +
+        "Consortium space.\n\n" +
         "You can read contract, read reservation, or read notepad — and ADD NOTE <text> to jot something down yourself.",
     takeable: true,
     // The leash: AetherLink's device carries a hidden SnapSpace transponder (plot

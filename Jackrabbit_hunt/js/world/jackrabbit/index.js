@@ -235,16 +235,19 @@ export const jackrabbitWorld = {
             survived: true,
             text: "Burke holds out one enormous hand. \"All of it. The 'pad, the card, the kit — anything they put in " +
                 "your hands. You'll not need their notes where you're going, and you'll surely not want their " +
-                "things on you.\" You hesitate, then hand it across, piece by piece — the datapad last of all. He " +
-                "makes the lot vanish into a bench drawer without a word, and something you hadn't known was tight " +
+                "things on you.\" You hesitate, then hand it across, piece by piece — the datapad last of all, and " +
+                "with it the only road your report or your pay could ever have travelled. He makes the lot vanish " +
+                "into a bench drawer without a word, and something you hadn't known was tight " +
                 "in your chest lets go.\n\n" +
                 "He's as good as his word. A freight tender, no manifest, no questions; a berth that smells of " +
                 "machine oil and other people's cargo, on a vector that bends well clear of Consortium space. By " +
                 "the time the station's lights have shrunk to one more star behind you, the contract, the boy, the " +
                 "people who never gave you their name — all of it is somebody else's business now. You don't look " +
                 "back, and — though you'll never know to be grateful for it — nothing follows you out.",
-            closingText: "You walk away with nothing but your own name and whatever you make of it next — which, you're " +
-                "beginning to think, might be the only honest pay this job was ever going to offer.",
+            closingText: (s) => "You only scored " + s.score + " out of a possible " + s.maxScore + " points... but as you no " +
+                "doubt realise by now, some things matter rather more than points. You walk away with nothing but " +
+                "your own name and whatever you make of it next — which, you're beginning to think, might be the " +
+                "only honest pay this job was ever going to offer.",
         },
         // The four endgame-departure endings (endgame.ts): Loyal + Timeout->home
         // (board home, survive) and Defect + Timeout->elsewhere (stow away, die).

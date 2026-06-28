@@ -16,7 +16,7 @@
 // NOTE: Burke himself isn't built yet, so nothing places `burke_software` in
 // the world automatically. The item + the whole timer are ready for him to
 // hand over; until then the mechanism is exercised by the tests.
-import { FLAG_ANALYSIS_SEEDED_AT, FLAG_ANALYSIS_COMPLETE, FLAG_ANALYSIS_RESOLVED, ANALYSIS_CYCLES_TO_UNLOCK, HOOK_SEEDED_ANALYSIS, HOOK_AETHERLINK_IDENTIFIED, FLAG_DONOVAN_CHECKED_IN, FLAG_HOSTEL_BOOKED, FLAG_HOSTEL_CHECKED_IN, } from "./flags.js";
+import { FLAG_ANALYSIS_SEEDED_AT, FLAG_ANALYSIS_COMPLETE, FLAG_ANALYSIS_RESOLVED, ANALYSIS_CYCLES_TO_UNLOCK, FLAG_ANALYSIS_NUDGE, FLAG_ANALYSIS_REMIND_AT, HOOK_SEEDED_ANALYSIS, HOOK_AETHERLINK_IDENTIFIED, FLAG_DONOVAN_CHECKED_IN, FLAG_HOSTEL_BOOKED, FLAG_HOSTEL_CHECKED_IN, } from "./flags.js";
 import { score } from "./scoring.js";
 import { addNote } from "../../engine/notes.js";
 /** Where the analysis is in its lifecycle. "complete" = finished computing and
@@ -58,35 +58,64 @@ const RESOLUTION_TEXT = "Burke's software finishes its long walk back through th
     "The same warm, reassuring name that smiled out of every advert on the way in — we look after our " +
     "own — is the one that hired you, through a dozen deniable shells, to run a boy to ground. They never " +
     "signed it; they never had to. Whoever you've really been working for, it was them the whole way down.";
-/** The completion chime — fired on the world clock when the computation finishes.
- *  Says nothing about WHO: the datapad can't show the result, so the PC must go
- *  and log on to a public terminal to read it. */
-const COMPLETE_NOTICE = [
-    "── Your datapad chimes: the analysis you left running has FINISHED. ──",
-    "The 'pad won't show you the result itself — you'll need to log on to a public terminal to read what it found.",
+/** Periodic "I wonder how it's getting on" nudges while the trace runs — the PC's
+ *  OWN thought, never a datapad ping (the pad reaches no network out here). Ambient,
+ *  so they don't halt a wait/sleep. */
+const ANALYSIS_NUDGES = [
+    { at: 0.45, text: "You catch yourself wondering how Burke's software is getting on, back on the terminal where you set it " +
+            "loose. No knowing from here — it'll not report to the pad in your pocket; you'd have to log on at a " +
+            "public terminal and look." },
+    { at: 0.8, text: "That trace you left running has been grinding away a good while now. Worth finding a public terminal " +
+            "before long and seeing whether it's turned anything up." },
 ];
+/** Once the run is — by elapsed time — surely finished: a firmer nudge to go and
+ *  read it. Still the PC reasoning from the clock, not a network signal. */
+const ANALYSIS_DONE_NUDGE = "By your reckoning, Burke's software has had more than time enough to finish by now. Whatever it's dug " +
+    "up is sitting on the network, waiting on you to log on at a public terminal and read it.";
 /**
- * World-clock tick for the analysis. Fires once, on the first tick at or past
- * the threshold, wherever the PC happens to be: it marks the run COMPLETE and
- * chimes the datapad — but does NOT name AetherLink or score. The reveal happens
- * when the PC reads it at a terminal (readAnalysisResult). Wired into World.onTick.
+ * World-clock tick for the analysis (wired into World.onTick). While it RUNS, the
+ * PC gets occasional "wonder how it's doing" nudges; on crossing the threshold the
+ * run is marked COMPLETE *silently* (no datapad ping — the pad reaches nothing out
+ * here) and the PC is nudged to go and read it; a finished-but-unread run keeps
+ * nudging about once a cycle. The reveal + score happen only at a terminal
+ * (readAnalysisResult). All nudges are ambient (they don't stall a wait/sleep).
  */
 export function analysisWorldTick(s) {
     if (s.dead || s.ended)
         return;
-    if (analysisPhase(s) !== "running")
+    const phase = analysisPhase(s);
+    if (phase === "running") {
+        if (analysisTicksElapsed(s) >= analysisTicksToUnlock(s)) {
+            s.flags[FLAG_ANALYSIS_COMPLETE] = true;
+            s.flags[FLAG_ANALYSIS_REMIND_AT] = s.ticks;
+            addNote(s, {
+                id: "analysis_finished",
+                source: "You",
+                text: "Burke's software has surely had time enough to finish by now — but nothing reaches that pad " +
+                    "of mine out here. I'll need to log on at a public terminal to read what it traced the money back to.",
+                reliable: true,
+            });
+            s.tickOutputAmbient = true;
+            return ANALYSIS_DONE_NUDGE;
+        }
+        const stage = Number(s.flags[FLAG_ANALYSIS_NUDGE]) || 0;
+        const next = ANALYSIS_NUDGES[stage];
+        if (next && analysisTicksElapsed(s) / analysisTicksToUnlock(s) >= next.at) {
+            s.flags[FLAG_ANALYSIS_NUDGE] = stage + 1;
+            s.tickOutputAmbient = true;
+            return next.text;
+        }
         return;
-    if (analysisTicksElapsed(s) < analysisTicksToUnlock(s))
-        return;
-    s.flags[FLAG_ANALYSIS_COMPLETE] = true;
-    addNote(s, {
-        id: "analysis_finished",
-        source: "You",
-        text: "The blockchain analysis I set running has finished computing. I need to log on to a public " +
-            "terminal to read who it traced the money back to.",
-        reliable: true,
-    });
-    return COMPLETE_NOTICE;
+    }
+    if (phase === "complete") {
+        const cycle = 2 * s.dayLength;
+        const last = Number(s.flags[FLAG_ANALYSIS_REMIND_AT]) || 0;
+        if (s.ticks - last >= cycle) {
+            s.flags[FLAG_ANALYSIS_REMIND_AT] = s.ticks;
+            s.tickOutputAmbient = true;
+            return ANALYSIS_DONE_NUDGE;
+        }
+    }
 }
 /** Reading the finished result at a terminal: names AetherLink, scores the payoff,
  *  files the journal note, and latches the "learned it" flag (which gates Beat 3).
@@ -127,8 +156,8 @@ function seedAnalysis(s) {
         "You jack Burke's software into the public terminal. It wakes, fingerprints itself against " +
             "the open ledger, and begins quietly walking the payment chain backwards — transaction by " +
             "transaction, shell company by shell company — toward whoever is really paying.",
-        "There's nothing to watch. It will take as long as it takes; leave it running and get on " +
-            "with things.",
+        "There's nothing to watch — and it won't ping the pad in your pocket; it runs on the terminal " +
+            "network, not your kit. Leave it, get on with things, and check back at a public terminal now and then.",
     ];
 }
 // --- Public terminals (canonically interlinked) -------------------------
@@ -204,16 +233,12 @@ function terminalDescription(s) {
 function wakeTerminal(s) {
     // Logging on while a finished job waits IS the read: reveal AetherLink + score.
     if (analysisPhase(s) === "complete") {
-        const reveal = readAnalysisResult(s);
-        const booking = bookingLine(s).replace(/^\n+/, "");
-        const out = [
+        // The read itself — and ONLY the read (no lodgings blurb tacked on here).
+        return [
             "You present your ID. The slow-turning model of the outpost dissolves — and the terminal brings up the " +
                 "job you left running, finished and waiting.",
-            reveal,
+            readAnalysisResult(s),
         ];
-        if (booking)
-            out.push(booking);
-        return out;
     }
     return [
         "You present your ID. The slow-turning model of the outpost dissolves, and the terminal wakes to its " +

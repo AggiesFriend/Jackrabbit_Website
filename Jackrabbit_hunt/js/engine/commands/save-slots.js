@@ -59,6 +59,7 @@ const SAVE_HEADER = "Save to which slot? (1–10, or CANCEL)";
 function saveModal(world, state) {
     let step = "slot";
     let chosen = 0;
+    let existingName = ""; // name held by the slot being overwritten — preserved if the rename is left blank
     const here = currentLocationName(world, state);
     return {
         persistAfterEnd: true,
@@ -69,7 +70,7 @@ function saveModal(world, state) {
             if (step === "name") {
                 if (CANCEL_WORDS.has(t))
                     return { output: ["Save cancelled."], pop: true };
-                const name = line.trim() || here;
+                const name = line.trim() || existingName || here;
                 const ok = saveToSlot(chosen, name, here, s);
                 return {
                     output: [ok ? `Saved to slot ${chosen}: "${name}".` : "Could not save — is browser storage available?"],
@@ -85,6 +86,7 @@ function saveModal(world, state) {
                 chosen = n;
                 const existing = slotSummary(n);
                 if (existing) {
+                    existingName = existing.name;
                     step = "confirm";
                     return {
                         output: [`Slot ${n} holds "${existing.name}" (${existing.locationName}, ${existing.score}pts/${existing.turns}t). Overwrite? (y/n)`],

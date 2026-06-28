@@ -36,6 +36,9 @@ import { longShotSit, longShotStand, LONG_SHOT } from "./bar_npcs.js";
 // network detail stays here: the well-used Retail<->LCD run is paced by the
 // network, not the abstract geometry.
 registerRideOverride("horizon_dockside_retail_area_zone_1", "lcd_tube_stop", 3);
+// The two entertainment zones sit close on the network; nudge the hop between
+// them out to a less-instant ride (playtest feedback).
+registerRideOverride("ez1_tube_stop", "ez2_tube_stop", 5);
 // --- TravelTube world commands ------------------------------------------
 // scan/summon (at a stop) → board → select (in pod) → ride → arrive.
 // disembark leaves the pod before departure.

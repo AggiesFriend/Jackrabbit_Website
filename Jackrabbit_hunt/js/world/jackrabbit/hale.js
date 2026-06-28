@@ -45,14 +45,13 @@ function haleWall(s) {
             reliable: true,
         });
     }
-    return "Something in him stills — the readiness of a man who has just understood the shape of a " +
-        "conversation. He turns from the screen and looks at you properly for the first time. \"The boy.\" Not a " +
-        "question. \"You're another of them, then. Come asking after a student of mine as though he were lost " +
-        "property.\" The contempt is quiet, and total. \"I'll tell you what I've told the others who climbed up " +
-        "here wearing that same expression. I have taught a great many pilots on this deck, and a few of them " +
-        "could truly fly. Where they went afterward, and what they call themselves now, and who is paying you to " +
-        "care — none of that is mine to give, and it is surely not yours to have.\" He turns back to the " +
-        "display. \"We're done here.\"";
+    return "Something in him goes still — the wariness of a man who has just seen where a conversation is " +
+        "heading. He turns from the screen and looks at you properly for the first time. \"The boy.\" Not a " +
+        "question. \"You're another one, then. Come asking after a student of mine as though he were lost " +
+        "property.\" The contempt is quiet, and total. \"I'll tell you what I told the last one up here with " +
+        "that same look. I have taught a great many pilots on this deck, and a few of them could truly fly. " +
+        "Where they went after, what they are doing and whatever they might call themselves now — none of that " +
+        "is mine to give, and none of it is yours to have.\" He turns back to the display. \"We're done here.\"";
 }
 export const hale = {
     id: "hale",

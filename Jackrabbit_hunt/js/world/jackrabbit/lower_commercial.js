@@ -10,8 +10,8 @@
 //     with a sideline in retail".
 //   - Teng Vessel Brokerage (lcd_teng_brokerage): a second-hand ship dealer,
 //     a small tidy office wedged between a scrap dealer (west) and a nutrition-
-//     supplement vendor (east). Bay 47 / the Raven are referenced in prose; the
-//     docking bay itself is deferred (not yet a room).
+//     supplement vendor (east). On the defect pathway he points the PC at the
+//     shipyard hauler to stow away on (the berth pointer; see lcd_npcs.ts).
 //
 // Access (two ways): its own TravelTube stop (lcd_tube_stop, declared in its
 // index.ts MODULES entry, reader_lcd) AND a long, nondescript
@@ -261,14 +261,14 @@ const built = buildAreaFromYaml(LOWER_COMMERCIAL_YAML, {
                 terminals: "A bank of data terminals, listings scrolling: hulls, tonnages, asking prices, the dry poetry of second-hand spaceflight.",
                 screens: "Wall screens cycling through ship schematics and second-hand listings — yachts, light freighters, personal transports, each with a price that assumes you have to ask.",
                 schematics: "Ship schematics turning slowly on the screens, cutaways of vessels that could, the broker would gently note, take you a very long way from here.",
-                note: "A discreet note advertises viewings of stock currently berthed in the district's bays — Bay 47 among them. The number sits oddly in the mind.",
+                note: "A discreet note advertises viewings of stock currently berthed in the district's bays — by appointment only, discretion assured.",
             },
             description: "The Teng Vessel Brokerage — a small, surprisingly tidy office wedged " +
                 "between a scrap dealer and a nutrition-supplement vendor. A polished " +
                 "desk, a bank of data terminals, and wall screens cycling through ship " +
                 "schematics and second-hand listings: hulls, tonnages, asking prices. A " +
                 "discreet note advertises viewings of stock currently berthed in the " +
-                "district's docking bays — Bay 47 among them. The alley is back south.",
+                "district's docking bays — by appointment only. The alley is back south.",
         },
         lcd_scrap_dealer: {
             scenery: {

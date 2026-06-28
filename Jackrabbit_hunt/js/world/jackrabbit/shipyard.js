@@ -341,8 +341,9 @@ const b = buildAreaFromYaml(SHIPYARD_B_YAML, {
         horizon_large_bay_2: {
             description: "The largest of the bays, and all but filled by the ship in it: a bulk hauler, scarred and " +
                 "enormous, her plating freshly seamed where the yard has closed her up. The work is plainly done — " +
-                "the scaffolding is half struck, the umbilicals are coming off one by one, and a small deck crew " +
-                "moves over her without urgency, the unhurried last checks of a vessel cleared to leave. A " +
+                "the scaffolding is half struck, the last umbilicals are uncoupled and coiling back, and the bay " +
+                "stands emptied of workers for the night: her crew long since clocked off, the ship buttoned up " +
+                "and only waiting on the shift change to leave. A " +
                 "loading ramp stands down to the apron and her main cargo hold gapes open above it, a cavern of " +
                 "strapped-down freight and cold shadow. Bound out-system, by the talk of it, and soon. The apron " +
                 "is back outside.\n\nNobody is watching the ramp. You could lose yourself in that hold and STOW " +
@@ -353,7 +354,7 @@ const b = buildAreaFromYaml(SHIPYARD_B_YAML, {
                 hold: "The main cargo hold gapes open above the loading ramp — a cavern of strapped-down freight and cold shadow, more than roomy enough to lose a person in. You could STOW AWAY in there.",
                 cargo: "Strapped-down freight, racked and netted for the jumps ahead. Plenty of shadow to fold yourself into.",
                 ramp: "A loading ramp let down to the apron, unwatched. It leads up into the open hold.",
-                crew: "A small deck crew making the unhurried last checks of a ship cleared to leave. None of them is looking at the ramp.",
+                crew: "No crew about her now: whatever hands finished the work are long since clocked off for the night. The bay is empty but for you, the waiting ship, and somewhere out in the dark, the patrol.",
             },
         },
     },

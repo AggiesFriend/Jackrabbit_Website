@@ -120,6 +120,15 @@ export const teng = {
     topics: aliasedTopics([
         [["ship", "vessel", "buy", "escape", "leaving", "leave", "off-consortium", "berth", "transport", "passage", "run"],
             (s) => tengShip(s)],
+        [["hauler", "shipyard", "yard", "large bay", "bay", "hold", "cargo", "stow", "stowaway", "stow away"],
+            (s) => s.flags[FLAG_DEFECT_PATHWAY]
+                ? "He doesn't say it twice for the room to overhear, but he'll set you straight. \"The bulk hauler. " +
+                    "Up in the shipyard, the big repair berth: the large bay. Cleared to leave within the day, so " +
+                    "it's tonight or it's nothing. Into the yard after dark, up the ramp into her open hold, and lie " +
+                    "still among the cargo. The yard's no friendly place after dark; that part's yours to manage. And " +
+                    "you and I never spoke.\""
+                : "\"Berths and brokerage, not freight yards. If it's cargo space you're after, that isn't a thing " +
+                    "I sell.\""],
         [["jackrabbit", "rabbit", "jack", "boy", "investigation", "target"],
             "\"I sell ships. I don't track the people who sail them.\" Not unfriendly; just a clean boundary."],
         [["teng", "yourself", "you", "business", "brokerage"],
@@ -167,11 +176,11 @@ function rajahResidenceRedirect(s) {
             reliable: true,
         });
     }
-    return "She opens the door only as far as the chain allows and studies you the way she'd read an X-ray — " +
+    return "A small video panel beside the door blinks awake at your knock, and her face studies you from it the way she'd read an X-ray — " +
         "unhurried, weighing what's underneath. Whatever Burke saw in you, she seems to find it too. \"Not " +
         "here.\" Quiet, and final; a glance past you down the accessway. \"My home is my home. If we're to talk " +
         "— and I've not yet said we are — it's at my unit, and nowhere else. The pharmacy, Sector Four, west " +
-        "off the concourse. There's a room in back.\" The door eases shut. \"Come when you're certain. Not " +
+        "off the concourse. There's a room in back.\" The panel goes dark. \"Come when you're certain. Not " +
         "before.\"";
 }
 /** Stage 3a — at the unit shopfront. TALK (or the resistance topic) takes her
@@ -270,7 +279,8 @@ function rajahResistance(s) {
                 "where you got it.\"";
         }
         requestPushModal(s, rajahCommitModal());
-        return "She doesn't reach for anything yet. \"Understand what you're asking. The people on that card " +
+        return "She doesn't reach for anything yet. \"Understand what you're asking. The people we are talking " +
+            "about " +
             "don't take the curious, or the hedging, or the man keeping one foot in his old life in case this " +
             "doesn't suit. They take the ones who are done — done with the corporations, the contracts, the whole " +
             "arrangement, and not going back.\" Her eyes hold yours. \"So I'll ask you once. Are you done with " +

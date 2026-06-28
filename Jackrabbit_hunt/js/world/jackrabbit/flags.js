@@ -46,6 +46,12 @@ export const FLAG_ANALYSIS_COMPLETE = "analysis_complete";
  *  AetherLink is named, the payoff is scored. This is the Strand-2 "learned it"
  *  flag (gates Burke Beat 3); distinct from merely finishing the computation. */
 export const FLAG_ANALYSIS_RESOLVED = "analysis_resolved";
+/** Which "still running" analysis nudge has fired (0..N) — the PC's own periodic
+ *  reminder to go check a terminal (the pad can't be pinged out here). */
+export const FLAG_ANALYSIS_NUDGE = "analysis_nudge_stage";
+/** state.ticks of the last "it's surely done — go read it" reminder, so the
+ *  post-completion nudge recurs about once a cycle until the PC reads the result. */
+export const FLAG_ANALYSIS_REMIND_AT = "analysis_remind_at";
 /** Day/night cycles the seeded analysis must run before it FINISHES COMPUTING
  *  (then the PC reads it at a terminal). A cycle = 2 × dayLength ticks, so the
  *  real threshold is computed against the world clock (analysisTicksToUnlock).

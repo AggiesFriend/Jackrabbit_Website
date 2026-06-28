@@ -202,7 +202,7 @@ const predecessorDiary = {
             "— Finally, a real thread. Everyone who actually knew the boy points the same way: a man named "
                 + "Drayton. Bitter type, by all accounts — couldn't stand the kid. Drinks at the Long Shot, over in "
                 + "the entertainment district. If anyone'll talk out of spite, it's him. After dark only; it's not a "
-                + "daytime sort of place. Stashing the kit here on my way; going tonight.",
+                + "daytime sort of place. Stashing my kit on my way; going tonight.",
             "",
             "[The entry ends there. There are no further entries.]",
         ].join("\n");

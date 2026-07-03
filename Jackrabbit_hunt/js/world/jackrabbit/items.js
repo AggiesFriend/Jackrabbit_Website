@@ -7,7 +7,7 @@ import { summonPod, donovanCheckIn, unlockShowers } from "./horizon.js";
 import { hostelCheckIn } from "./hostel.js";
 import { unlockBrief } from "./predecessor.js";
 import { STUPID } from "./lcd_npcs.js";
-import { FLAG_CREDITS, FLAG_FORM_COMPLETE, FLAG_PC_ALIAS, FLAG_PC_PROFESSION, HOOK_CHECKED_BALANCE, HOOK_ID_ON_TERMINAL, HOOK_READ_CONTRACT, } from "./flags.js";
+import { FLAG_CREDITS, FLAG_FORM_COMPLETE, FLAG_PC_ALIAS, FLAG_PC_PROFESSION, HOOK_ARRIVED_HORIZON, HOOK_CHECKED_BALANCE, HOOK_ID_ON_TERMINAL, HOOK_READ_CONTRACT, } from "./flags.js";
 import { score } from "./scoring.js";
 // --- Helpers ------------------------------------------------------------
 function balance(s) {
@@ -117,11 +117,13 @@ const datapad = {
     id: "datapad",
     name: "datapad",
     aliases: ["pad", "tablet", "computer", "device", "my datapad", "own datapad"],
-    description: "A personal datapad, slim and well-used. Three documents loaded: the " +
+    description: (s) => "A personal datapad, slim and well-used. Three documents loaded: the " +
         "contract brief, a room reservation, and a blank notepad.\n\n" +
-        "Out here it's as good as a private device — no AetherLink, no permitted station network, nothing to " +
-        "connect to. On Horizon Outpost even your own device goes quiet; it'll wake when you're back in " +
-        "Consortium space.\n\n" +
+        (s.scoreHooks.has(HOOK_ARRIVED_HORIZON)
+            ? "Out here it's as good as a private device — no AetherLink, no permitted station network, nothing " +
+                "to connect to. On Horizon Outpost even your own device goes quiet; it'll wake when you're back in " +
+                "Consortium space.\n\n"
+            : "") +
         "You can read contract, read reservation, or read notepad — and ADD NOTE <text> to jot something down yourself.",
     takeable: true,
     // The leash: AetherLink's device carries a hidden SnapSpace transponder (plot

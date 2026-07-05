@@ -23,10 +23,12 @@ import { homeRouteOpen } from "./endgame.js";
 import { score } from "./scoring.js";
 import { buildArea, buildAreaFromYaml } from "./area.js";
 import { placeNpcInRoom } from "../../engine/npcs.js";
-import { withLiftDirs, liftDescription, isLiftRoom, liftSelect } from "./lifts.js";
+import { withLiftDirs, liftDescription, isLiftRoom, liftSelect, liftExitDir } from "./lifts.js";
+import { handleGo } from "../../engine/commands/movement.js";
 import { registerRideOverride, isTransitStop, transitStop, rideTicks, matchDestination, destinationsFrom, } from "./transit.js";
 import { scanToPay, isFoodStallRoom } from "./food.js";
 import { charge, canAfford, balance } from "./economy.js";
+import { TERMINAL_DATA_SCENERY } from "./analysis.js";
 import { longShotSit, longShotStand, LONG_SHOT } from "./bar_npcs.js";
 // --- TravelTube model ---------------------------------------------------
 // The TravelTube is the game's dress for the generic transit network (see
@@ -282,8 +284,37 @@ const washCmd = (_w, s, _cmd) => {
         tickCost: 3,
     };
 };
+/** LOG ON / LOG IN — the public terminal's own idiom (the standby prose invites
+ *  it). Wakes whatever facility reader the room hosts — a public terminal, a
+ *  reception/turnstile reader — via its onScan; never the TravelTube pod. Same
+ *  effect as SCAN <that reader>, so "log on" isn't a dead verb the prose promises. */
+const logOnCmd = (w, s, _cmd) => {
+    const targets = scanTargetsInRoom(w, s);
+    const facility = targets.find((t) => t.keys.some((k) => k.includes("terminal") || k.includes("console") || k.includes("kiosk")))
+        ?? targets.find((t) => t.short !== "tube" && t.short !== "counter");
+    if (!facility) {
+        return { handled: true, output: ["There's nothing here to log on to."], tickCost: 0, free: true };
+    }
+    return facility.run();
+};
+/** GO wrapper: inside a lift car, plain OUT (or GO OUT) means "step out the
+ *  single walking exit" the prose invites ("Step out (south)…"), sparing the
+ *  compass guess. Everywhere else — and for every other direction — it delegates
+ *  unchanged to the engine's movement, so it stays a pure convenience overlay
+ *  (no new exit, so the topology invariants hold). */
+const goCmd = (w, s, cmd) => {
+    const noun = (cmd.noun ?? "").trim().toLowerCase();
+    if (noun === "out" && isLiftRoom(s.currentRoom)) {
+        const dir = liftExitDir(s.currentRoom);
+        if (dir)
+            return handleGo(w, s, { ...cmd, noun: dir });
+    }
+    return handleGo(w, s, cmd);
+};
 export const horizonCommands = {
     scan: scanCmd, present: scanCmd, summon: summonCmd,
+    log: logOnCmd,
+    go: goCmd,
     board: boardCmd,
     select: selectCmd,
     sit: sitCmd, stand: standCmd,
@@ -736,6 +767,7 @@ const { rooms: retailRooms } = buildAreaFromYaml(RETAIL_YAML, {
                 "Present your station ID to the reader to wake the terminal fully and access Horizon Outpost's " +
                 "complete suite of public services. The retail area is back to the west.",
             items: ["public_terminal_retail"],
+            scenery: { ...TERMINAL_DATA_SCENERY },
         },
         horizon_public_showers: {
             scenery: {
@@ -885,6 +917,7 @@ const blueSectorDefs = [
             "\n\nDonovan's lodging house is through the doors to the north.",
         exits: { north: "horizon_donovans_lobby" },
         items: ["reader_blue", "public_terminal_blue"],
+        scenery: { ...TERMINAL_DATA_SCENERY },
     },
     {
         id: "horizon_donovans_lobby",

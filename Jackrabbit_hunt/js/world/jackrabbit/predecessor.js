@@ -28,9 +28,13 @@ function openCubbyhole(s) {
         return "The panel's already off. The compartment behind it is empty now — you took what was in it.";
     }
     s.flags[FLAG_CUBBYHOLE_OPEN] = true;
+    // The narration has the PC ease the datapad out of the bag, so it — and the
+    // sealed sub-documents that travel with it (its onTake carries the same set) —
+    // go straight into hand. No separate TAKE is needed (which also sidesteps the
+    // clash with the PC's OWN "datapad": the weathered one omits the bare alias).
     for (const id of KIT_IDS)
-        placeItemInRoom(s, id, LAVATORY);
-    placeItemInRoom(s, "predecessor_wallet", LAVATORY); // atmosphere; stays in the room
+        takeItemToInventory(s, id);
+    placeItemInRoom(s, "predecessor_wallet", LAVATORY); // the bag itself stays behind, atmosphere only
     score(s, HOOK_FOUND_PREDECESSOR);
     addNote(s, {
         id: "predecessor_kit",

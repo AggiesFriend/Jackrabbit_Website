@@ -168,13 +168,20 @@ export function handleRead(world, state, cmd) {
     if (!cmd.noun)
         return { handled: true, output: ["Read what?"], tickCost: 0, free: true };
     const item = findItemInScope(world, state, cmd.noun);
-    if (!item)
-        return { handled: true, output: [`There is no ${cmd.noun} here to read.`], tickCost: 0, free: true };
-    // Reading is a form of examining — fire the same side-effect hook so world
-    // content can score (or otherwise react to) "read X" and "examine X" alike.
-    if (item.onExamine)
-        item.onExamine(state);
-    return { handled: true, output: [resolveItemDescription(item, state)], tickCost: 1 };
+    if (item) {
+        // Reading is a form of examining — fire the same side-effect hook so world
+        // content can score (or otherwise react to) "read X" and "examine X" alike.
+        if (item.onExamine)
+            item.onExamine(state);
+        return { handled: true, output: [resolveItemDescription(item, state)], tickCost: 1 };
+    }
+    // Fall back to scenery, so readable set-dressing (station notices, ledgers,
+    // registries at a terminal, and the like) answers READ as well as EXAMINE.
+    const sceneryText = findSceneryInScope(world, state, cmd.noun);
+    if (sceneryText !== undefined) {
+        return { handled: true, output: [sceneryText], tickCost: 1 };
+    }
+    return { handled: true, output: [`You see no ${cmd.noun} here to read.`], tickCost: 0, free: true };
 }
 function resolveItemDescription(item, state) {
     return typeof item.description === "function" ? item.description(state) : item.description;

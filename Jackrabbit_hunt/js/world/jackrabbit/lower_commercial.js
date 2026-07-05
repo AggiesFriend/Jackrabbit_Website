@@ -218,6 +218,8 @@ const built = buildAreaFromYaml(LOWER_COMMERCIAL_YAML, {
             scenery: {
                 directory: LCD_DIRECTORY,
                 board: LCD_DIRECTORY,
+                "directory board": LCD_DIRECTORY,
+                "directory sign": LCD_DIRECTORY,
                 sign: LCD_DIRECTORY,
                 map: LCD_DIRECTORY,
             },
@@ -233,7 +235,9 @@ const built = buildAreaFromYaml(LOWER_COMMERCIAL_YAML, {
                 devices: "Sophisticated medical devices behind glass — diagnostic kit, the kind of thing a station doctor would actually want, well beyond a corner chemist's range.",
                 counter: "A counter runs across the back, clean and uncluttered, the working surface of someone who keeps her trade tidy.",
                 curtain: "A beaded curtain screens off a consulting room to the north — the kind of threshold that, by law, monitoring is not permitted to cross.",
-                shutter: "A part-drawn shutter and a hand-written BACK SOON card. Nothing for it but to come back when she's in.",
+                shutter: (s) => s.flags[FLAG_RAJAH_HOME_MET]
+                    ? "The security shutter is rolled up and stowed; the shop's open."
+                    : "A security shutter rolled fully down and locked, a hand-written BACK SOON card fixed to the metal. Nothing for it but to come back when she's in.",
             },
             description: (s) => s.flags[FLAG_RAJAH_HOME_MET]
                 ? "Dr Rajah's Pharmaceutical Supplies: a clean, well-maintained shopfront " +
@@ -243,15 +247,21 @@ const built = buildAreaFromYaml(LOWER_COMMERCIAL_YAML, {
                     "A beaded curtain screens off a consulting room to the north. The passage " +
                     "is back south."
                 : "Dr Rajah's Pharmaceutical Supplies — the one clean front in a dirty row, " +
-                    "and shut: the shutter is part-drawn, the lights low, and a hand-written " +
-                    "card in the window reads BACK SOON. Nothing for it but to come back when " +
-                    "she's in. The passage is back south.",
+                    "and shut fast: the security shutter is rolled fully down and locked, the " +
+                    "lights behind it dark, and a hand-written card fixed to the metal reads " +
+                    "BACK SOON. Nothing for it but to come back when she's in. The passage is back south.",
         },
         lcd_rajah_back: {
             description: "Through the beaded curtain: a small, private consultation room — two " +
                 "seats and a desk with a drawer, and the calm, careful order of someone " +
                 "who describes herself as a medical practitioner with a sideline in " +
                 "retail. The shopfront is back through the curtain, south.",
+            scenery: {
+                desk: "A small, tidy desk between the two seats, its surface clear but for the ordinary tools of a consultation. A single drawer is set beneath it.",
+                drawer: "Rajah is right here. Snooping through her private stuff would be less than wise.",
+                seats: "Two plain, comfortable seats either side of the desk — the furniture of a conversation meant to stay private.",
+                seat: "Two plain, comfortable seats either side of the desk — the furniture of a conversation meant to stay private.",
+            },
         },
         // --- Teng Vessel Brokerage (canon) ---
         lcd_teng_brokerage: {
@@ -305,6 +315,14 @@ const built = buildAreaFromYaml(LOWER_COMMERCIAL_YAML, {
         },
     },
 });
+// Rajah's consulting room is only reachable when she's in. The shopfront is shut
+// (shutter down and locked) until FLAG_RAJAH_HOME_MET, and the back room shuts
+// with it — gate the north exit on the same flag that opens the shop, so a shut
+// shop is genuinely shut rather than a walk-through.
+built.rooms["lcd_rajah_front"].exits.north.gated = (s) => s.flags[FLAG_RAJAH_HOME_MET]
+    ? null
+    : "The consulting room lies beyond the shopfront, and the shopfront's shut fast — the security " +
+        "shutter's rolled down and locked. Come back when Dr Rajah's in.";
 // Cross-area, on-foot link: a long walkway south into the Industrial Sector's
 // painting chamber (the Industrial side's reciprocal north is wired in
 // industrial.ts). The mapper drops cross-area exits.

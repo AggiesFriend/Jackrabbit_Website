@@ -373,6 +373,8 @@ export class GameEngine {
                 this.state.deathReason ?? "You have died.",
                 "",
                 this.endgameSummary(),
+                "",
+                "Type RESTART to try again, or LOAD to restore a previous save.",
             ], { kind: "death" });
             this.cb.onEnd?.(this.state, "death");
             return;
@@ -400,6 +402,7 @@ export class GameEngine {
                 if (closer)
                     this.cb.render(["", closer], { kind: "ending" });
             }
+            this.cb.render(["", "Type RESTART to try again, or LOAD to restore a previous save."], { kind: "ending" });
             this.cb.onEnd?.(this.state, "ending");
         }
     }

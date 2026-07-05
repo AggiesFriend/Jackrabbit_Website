@@ -129,6 +129,12 @@ export const teng = {
                     "you and I never spoke.\""
                 : "\"Berths and brokerage, not freight yards. If it's cargo space you're after, that isn't a thing " +
                     "I sell.\""],
+        // Prices ARE his area — don't fall through to the "not my area" deflection.
+        [["price", "prices", "cost", "costs", "how much", "expensive", "afford", "fee", "fees", "rates", "quote"],
+            "\"Prices depend on the vessel, but you may as well hear the shape of it: a working ship off the " +
+                "Consortium routes runs to the hundreds of thousands — with a discount for immediate settlement.\" " +
+                "The unhurried watchfulness again. \"Tell me what you actually need and I'll price it to the credit. " +
+                "Ask me about a SHIP.\""],
         [["jackrabbit", "rabbit", "jack", "boy", "investigation", "target"],
             "\"I sell ships. I don't track the people who sail them.\" Not unfriendly; just a clean boundary."],
         [["teng", "yourself", "you", "business", "brokerage"],

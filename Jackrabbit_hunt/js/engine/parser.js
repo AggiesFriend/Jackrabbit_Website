@@ -39,7 +39,7 @@ export const VERB_SYNONYMS = {
     inventory: ["i", "inv"],
     take: ["get", "grab", "pick"],
     drop: ["leave", "discard"],
-    give: [],
+    give: ["show"],
     // interaction
     use: [],
     push: ["shove", "pull"],
@@ -49,6 +49,9 @@ export const VERB_SYNONYMS = {
     talk: ["speak"],
     ask: ["tell"],
     buy: ["purchase"],
+    // "LOG ON" / "LOG IN" at a public terminal (world-handled). "log on" parses as
+    // verb "log" + noun "on"; bare "logon"/"login" alias straight to "log".
+    log: ["logon", "login"],
     // meta
     score: [],
     time: [],

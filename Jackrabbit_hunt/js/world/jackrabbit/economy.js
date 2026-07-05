@@ -40,3 +40,9 @@ export function charge(s, n) {
 export function credit(s, n) {
     s.flags[FLAG_CREDITS] = balance(s) + n;
 }
+/** Format a credit amount with the correctly-numbered noun ("1 credit" vs
+ *  "N credits"). Use in any player-facing money line so a 1-credit price never
+ *  reads "1 credits". */
+export function credits(n) {
+    return `${n} credit${n === 1 ? "" : "s"}`;
+}

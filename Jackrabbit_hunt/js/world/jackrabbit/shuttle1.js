@@ -67,6 +67,8 @@ const hatchItem = {
     description: "An unmarked access hatch set into the aft bulkhead. A notice reads: " +
         "MAINTENANCE ACCESS — AUTHORISED PERSONNEL ONLY. It is not locked.",
     takeable: false,
+    onOpen: () => "The hatch isn't latched — there's nothing to unlock or unseal. It simply gives onto the " +
+        "space beyond: to go through it, head AFT.",
 };
 const hatchNotice = {
     id: "shuttle1_notice",

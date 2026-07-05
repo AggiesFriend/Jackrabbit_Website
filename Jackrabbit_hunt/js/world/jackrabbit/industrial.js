@@ -189,14 +189,14 @@ const built = buildAreaFromYaml(INDUSTRIAL_SECTOR_YAML, {
 built.rooms["horizon_narrow_corridor8"].exits.east = {
     to: "horizon_burke_s_workshop",
     gated: (s) => (s.isDaytime
-        ? "The workshop's heavy door is shut fast, a hand-lettered card wedged in the frame: BACK AT NIGHT. " +
-            "Burke, it seems, doesn't do daylight."
+        ? "The door before you would open noisily and allow access if only it wasn't locked. A hand-lettered " +
+            "card is wedged in the frame: BACK AT NIGHT. Burke, it seems, doesn't do daylight."
         : null),
 };
 // Cross-area, on-foot link back south into the Bazaar (the Bazaar side of this
 // link is wired in bazaar.ts). The mapper drops cross-area exits.
 built.rooms["horizon_narrow_corridor"].exits.south =
-    { to: "horizon_industrial_sector_accessway", description: "the Bazaar" };
+    { to: "horizon_industrial_sector_accessway", description: "the Industrial Sector accessway" };
 // Cross-area, on-foot link: a long, nondescript walkway north out of the far
 // (painting-chamber) corner to the Lower Commercial District (Sector 4). The
 // district side's reciprocal south is wired in lower_commercial.ts.

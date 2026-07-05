@@ -51,6 +51,15 @@ export function isLiftRoom(roomId) { return !!liftOfRoom(roomId); }
 function floorOfRoom(lift, roomId) {
     return lift.floors.find(f => f.room === roomId);
 }
+/** The single walking-exit direction of the lift car at `roomId` (the "step out"
+ *  direction set by withLiftDirs), or undefined if it isn't a lift car. Powers the
+ *  plain-OUT synonym the car's prose invites, without polluting the room's exits. */
+export function liftExitDir(roomId) {
+    const lift = liftOfRoom(roomId);
+    if (!lift)
+        return undefined;
+    return floorOfRoom(lift, roomId)?.dir;
+}
 /** Dynamic description for a lift car (give this to each lift room's RoomDef). */
 export function liftDescription(s) {
     const lift = liftOfRoom(s.currentRoom);

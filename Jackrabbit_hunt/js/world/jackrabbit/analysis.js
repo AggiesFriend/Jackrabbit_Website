@@ -182,6 +182,52 @@ export const TERMINAL_LOCATIONS = [
 /** Every terminal item id (for the seeding wiring and tests). */
 export const TERMINAL_IDS = TERMINAL_LOCATIONS.map((t) => t.id);
 const TERMINAL_ALIASES = ["terminal", "public terminal", "kiosk", "console", "public console", "data terminal"];
+// --- The public-services data screens (browsable colour) -----------------
+//
+// The terminal prose advertises "open ledgers, station notices, public
+// registries." These make good on that: READ/EXAMINE any of them brings up a
+// screenful of authentic-looking, entirely useless public data. Pure texture —
+// nothing here feeds the plot (the analysis is the only thing worth running on
+// the ledger, and that's Burke's software). Exposed as room scenery on every
+// public-terminal room (see TERMINAL_LOCATIONS), so it reads the same anywhere.
+const LEDGERS_SCREEN = "You call up the open ledger. The screen fills with the station's public transaction feed, scrolling " +
+    "faster than any eye could follow:\n\n" +
+    "  a3f9…c201   0.004 cr   settled   ▹ 88b1…4e7a\n" +
+    "  71d0…9f3e   12.50 cr   settled   ▹ 0cc4…1b90\n" +
+    "  e5a7…2288    0.75 cr   settled   ▹ 3f21…dd08\n" +
+    "  9b44…6c1f  480.00 cr   settled   ▹ a190…77e2\n" +
+    "  …and several thousand more this minute alone.\n\n" +
+    "Every entry is real, public, and utterly anonymous — hashes at both ends, no names, no purpose you " +
+    "could read off the face of it. A firehose of numbers that means nothing without something clever to " +
+    "walk it backwards. You let it scroll, and learn precisely nothing.";
+const NOTICES_SCREEN = "You open the station notices. The civic bulletin board, in all its municipal glory:\n\n" +
+    "  • SCHEDULED MAINTENANCE: Water reclamation, Sectors 4–6, overnight. Minor pressure variation possible.\n" +
+    "  • LOST PROPERTY: One child's coat (yellow), one set of berth keys, a datapad handed in at Dock Desk.\n" +
+    "  • REMINDER: Littering in public areas carries a civic penalty. Keep Horizon clean — bins are provided.\n" +
+    "  • ARBORETUM: The east footbridge remains closed for pollinator works. Please use the north path.\n" +
+    "  • COMMUNITY: Zone B residents' association meets Firstday. Agenda: lift etiquette, again.\n\n" +
+    "Worthy, dull, and none of it any use to you. You scroll to the bottom out of habit and find only more " +
+    "of the same.";
+const REGISTRIES_SCREEN = "You query the public registries. Dry as dock dust, and about as forthcoming:\n\n" +
+    "  VESSEL REG   HZ-4471-K   \"Marigold\"        light freighter    berth D-12   in service\n" +
+    "  VESSEL REG   HZ-8829-P   \"Second Wind\"     personal transport  transit      cleared\n" +
+    "  TRADE LICENCE  LCD-0344   pharmaceutical supplies              current\n" +
+    "  TRADE LICENCE  BAZ-1190   general retail, class 2               current\n" +
+    "  BERTH ALLOC   Zone C, bays 25–36        rotation posted daily\n\n" +
+    "Registration numbers, tonnages, licence classes — the public bones of a working station, and not one " +
+    "of them the thing you actually want to know. You close it.";
+/** Browsable public-terminal data screens, exposed as room scenery on every
+ *  public-terminal room. Answer READ and EXAMINE alike (engine scenery). */
+export const TERMINAL_DATA_SCENERY = {
+    ledger: LEDGERS_SCREEN, ledgers: LEDGERS_SCREEN,
+    "open ledger": LEDGERS_SCREEN, "open ledgers": LEDGERS_SCREEN,
+    notice: NOTICES_SCREEN, notices: NOTICES_SCREEN,
+    "station notice": NOTICES_SCREEN, "station notices": NOTICES_SCREEN,
+    bulletin: NOTICES_SCREEN, bulletins: NOTICES_SCREEN, "bulletin board": NOTICES_SCREEN,
+    registry: REGISTRIES_SCREEN, registries: REGISTRIES_SCREEN,
+    "public registry": REGISTRIES_SCREEN, "public registries": REGISTRIES_SCREEN,
+    registrations: REGISTRIES_SCREEN,
+};
 /** A line advertising the terminal's lodgings-booking function — shown unless
  *  the PC is settled elsewhere. The booking itself is the `book` verb (hostel.ts). */
 function bookingLine(s) {

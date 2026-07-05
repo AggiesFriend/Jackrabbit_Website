@@ -15,7 +15,7 @@ import { takeItemToInventory, removeItem } from "../../engine/items.js";
 import { addNote } from "../../engine/notes.js";
 import { FLAG_BOUGHT_AT_CELESTE, HOOK_ATE_CURRY, HOOK_SURVIVED_CURRY, HOOK_SANDWICH_HE, HOOK_SANDWICH_JAM, } from "./flags.js";
 import { score } from "./scoring.js";
-import { balance, charge, canAfford } from "./economy.js";
+import { balance, charge, canAfford, credits } from "./economy.js";
 /** Flag key recording the tick a given food was bought (drives freshness). */
 const boughtKey = (id) => `food_bought_${id}`;
 // --- the curry death (canonical: the curry is VERY spicy) ----------------
@@ -256,7 +256,7 @@ function buySandwich(s, noun) {
 const FOOD_STALLS = {
     horizon_hanks_burgers: {
         items: ["burger", "hank_special"],
-        buyLine: (d) => `Hank assembles your ${d.name} with theatrical disregard for the flames, waves your ID past the reader — ${d.price} credits — and slides it over. "BEST ON THE STATION."`,
+        buyLine: (d) => `Hank assembles your ${d.name} with theatrical disregard for the flames, waves your ID past the reader — ${credits(d.price)} — and slides it over. "BEST ON THE STATION."`,
     },
     horizon_sandwich_counter: {
         items: ["sandwich"],
@@ -266,85 +266,85 @@ const FOOD_STALLS = {
     horizon_fresh_salad_bowls: {
         items: ["salad"],
         // No NPC — the "honesty scanner" Charles asked for.
-        buyLine: (d) => `There's no one serving here — just an HONESTY SCANNER beside a hand-lettered card: "Take what you like, scan to pay. We trust you." You scan your ID. ${d.price} credits. One ${d.name}, on your conscience.`,
+        buyLine: (d) => `There's no one serving here — just an HONESTY SCANNER beside a hand-lettered card: "Take what you like, scan to pay. We trust you." You scan your ID. ${credits(d.price)}. One ${d.name}, on your conscience.`,
     },
     horizon_bengali_delights: {
         items: ["curry"],
-        buyLine: (d) => `The cook ladles you a ${d.name}, takes your ID payment with a serene nod (${d.price} credits), and adds, far too late to help, that it's "a little spicy."`,
+        buyLine: (d) => `The cook ladles you a ${d.name}, takes your ID payment with a serene nod (${credits(d.price)}), and adds, far too late to help, that it's "a little spicy."`,
     },
     horizon_ice_cream_hut: {
         items: ["ice_cream"],
-        buyLine: (d) => `You scan your ID at the hut's reader — ${d.price} credits — and ${article(d.name)} ${d.name} is yours. The clock is now ticking.`,
+        buyLine: (d) => `You scan your ID at the hut's reader — ${credits(d.price)} — and ${article(d.name)} ${d.name} is yours. The clock is now ticking.`,
     },
     lcd_noodle_counter: {
         items: ["noodles"],
-        buyLine: (d) => `The cook ladles out a ${d.name} without once looking up, waves your ID past a greasy reader (${d.price} credits), and turns back to the pot.`,
+        buyLine: (d) => `The cook ladles out a ${d.name} without once looking up, waves your ID past a greasy reader (${credits(d.price)}), and turns back to the pot.`,
     },
     cda_burrito: {
         items: ["celeste_meal"],
         // Buying here warms the server's Strand-1 beat (she's chattier with a customer).
         onBuy: (s, d) => {
             s.flags[FLAG_BOUGHT_AT_CELESTE] = true;
-            return [`She wraps your ${d.name} with the brisk economy of long practice, passes your ID over the reader (${d.price} credits), and sets it in front of you. "There you are. Eat it warm."`];
+            return [`She wraps your ${d.name} with the brisk economy of long practice, passes your ID over the reader (${credits(d.price)}), and sets it in front of you. "There you are. Eat it warm."`];
         },
     },
     // --- Bazaar street stalls ---
     horizon_drinks_vendor: {
         items: ["fizzy_drink", "coffee"],
-        buyLine: (d) => `The trader pulls you ${article(d.name)} ${d.name} from the chilled cabinet, waves your ID past a battered reader (${d.price} credits), and is already looking past you to the next customer.`,
+        buyLine: (d) => `The trader pulls you ${article(d.name)} ${d.name} from the chilled cabinet, waves your ID past a battered reader (${credits(d.price)}), and is already looking past you to the next customer.`,
     },
     horizon_doughnut_vendor: {
         items: ["doughnut"],
-        buyLine: (d) => `A warm ${d.name} comes off the rack in a twist of paper; your ID pays the ${d.price} credits before you've quite finished inhaling.`,
+        buyLine: (d) => `A warm ${d.name} comes off the rack in a twist of paper; your ID pays the ${credits(d.price)} before you've quite finished inhaling.`,
     },
     horizon_hot_dog_vendor: {
         items: ["hot_dog"],
-        buyLine: (d) => `"Onions? 'Course you do." The ${d.name} is built, dressed and handed over in one practised motion, your ID swiped for ${d.price} credits on the way past.`,
+        buyLine: (d) => `"Onions? 'Course you do." The ${d.name} is built, dressed and handed over in one practised motion, your ID swiped for ${credits(d.price)} on the way past.`,
     },
     // --- Arcade (EZ2) ---
     ez2_refreshment: {
         items: ["fizzy_drink", "snack"],
-        buyLine: (d) => `The counter kid slides ${article(d.name)} ${d.name} across without breaking off the conversation behind them; your ID pays the ${d.price} credits.`,
+        buyLine: (d) => `The counter kid slides ${article(d.name)} ${d.name} across without breaking off the conversation behind them; your ID pays the ${credits(d.price)}.`,
     },
     // --- Entertainment Zone 1 venues ---
     ez1_stardust_diner: {
         items: ["diner_breakfast", "coffee", "fizzy_drink"],
-        buyLine: (d) => `A waitress with thirty years' practice sets ${article(d.name)} ${d.name} down in front of you, swipes your ID (${d.price} credits), and refills a coffee two booths over without looking.`,
+        buyLine: (d) => `A waitress with thirty years' practice sets ${article(d.name)} ${d.name} down in front of you, swipes your ID (${credits(d.price)}), and refills a coffee two booths over without looking.`,
     },
     ez1_velvet_hour: {
         items: ["cocktail"],
-        buyLine: (d) => `The bartender builds your ${d.name} with unhurried, ruinous precision and sets it on a paper coaster. Your ID settles the ${d.price} credits without comment.`,
+        buyLine: (d) => `The bartender builds your ${d.name} with unhurried, ruinous precision and sets it on a paper coaster. Your ID settles the ${credits(d.price)} without comment.`,
     },
     ez1_humidor: {
         items: ["whisky"],
-        buyLine: (d) => `The attendant pours your ${d.name} from a bottle worth more than your boots and sets it down over a single sphere of ice. Your ID covers the ${d.price} credits.`,
+        buyLine: (d) => `The attendant pours your ${d.name} from a bottle worth more than your boots and sets it down over a single sphere of ice. Your ID covers the ${credits(d.price)}.`,
         customBuy: (s, noun) => humidorBuy(s, noun),
     },
     ez1_eclipse: {
         items: ["bar_drink"],
-        buyLine: (d) => `You shout an order across the long bar; somebody three-deep takes pity, and ${article(d.name)} ${d.name} eventually reaches you. Your ID pays the ${d.price} credits.`,
+        buyLine: (d) => `You shout an order across the long bar; somebody three-deep takes pity, and ${article(d.name)} ${d.name} eventually reaches you. Your ID pays the ${credits(d.price)}.`,
     },
     ez1_eclipse_vip: {
         items: ["cocktail"],
-        buyLine: (d) => `A host materialises, builds your ${d.name} like it matters, and presents it on a small silver tray. ${d.price} credits — plus the unspoken cost of being seen to afford it.`,
+        buyLine: (d) => `A host materialises, builds your ${d.name} like it matters, and presents it on a small silver tray. ${credits(d.price)} — plus the unspoken cost of being seen to afford it.`,
     },
     ez1_midnight_revue: {
         items: ["bar_drink"],
-        buyLine: (d) => `A server slips ${article(d.name)} ${d.name} onto your little shaded table between numbers, takes your ID for ${d.price} credits, and melts back into the dark.`,
+        buyLine: (d) => `A server slips ${article(d.name)} ${d.name} onto your little shaded table between numbers, takes your ID for ${credits(d.price)}, and melts back into the dark.`,
     },
     ez1_last_laugh: {
         items: ["bar_drink"],
-        buyLine: (d) => `Two-drink minimum, the sign warned, so you may as well start: ${article(d.name)} ${d.name}, ${d.price} credits off your ID, and a glare from the comic for the interruption.`,
+        buyLine: (d) => `Two-drink minimum, the sign warned, so you may as well start: ${article(d.name)} ${d.name}, ${credits(d.price)} off your ID, and a glare from the comic for the interruption.`,
     },
     // --- Celestial Dining: Meridian's raw bar (the others decline — see shops.ts) ---
     cda_unit_meridian: {
         items: ["cocktail"],
-        buyLine: (d) => `The bartender slides your ${d.name} across the cold marble without a wasted motion. ${d.price} credits, quietly ruinous, and entirely worth it.`,
+        buyLine: (d) => `The bartender slides your ${d.name} across the cold marble without a wasted motion. ${credits(d.price)}, quietly ruinous, and entirely worth it.`,
     },
     // --- Flight Training break room (self-service) ---
     training_break_room: {
         items: ["fizzy_drink", "coffee"],
-        buyLine: (d) => `The drinks station dispenses ${article(d.name)} ${d.name} with a clunk and a hiss; you scan your ID for the ${d.price} credits, the way the trainees do between sims.`,
+        buyLine: (d) => `The drinks station dispenses ${article(d.name)} ${d.name} with a clunk and a hiss; you scan your ID for the ${credits(d.price)}, the way the trainees do between sims.`,
     },
 };
 // --- commands ------------------------------------------------------------

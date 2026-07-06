@@ -30,6 +30,25 @@ export function syncBarNpcs(s) {
     placeNpcInRoom(s, "ozzy", s.isDaytime ? OFFSTAGE : BRASS_RAIL);
     placeNpcInRoom(s, "chas", s.isDaytime ? OFFSTAGE : LONG_SHOT);
 }
+/**
+ * The Long Shot's room onEnter. Syncs the bar NPCs AND clears any stale drinking
+ * build-up (seated + drink count) so each visit starts from a clean slate. The
+ * engine has no room onExit hook, so "reset on leave" is done as "reset on the
+ * next entry" — equivalent, since both flags are only ever read while the PC is
+ * IN the Long Shot. Without this, drinks/seated persist across a leave-and-return
+ * (e.g. GO WEST while seated never clears them), which can strand the Chas
+ * approach: a returning PC could carry a stale 4-drink count into an instant,
+ * un-telegraphed menace window. Guarded so it never fires mid-scene (you can't
+ * leave the room with the menace window open — the door-guard/STAND kill you
+ * first — so on any live entry the window is closed).
+ */
+export function onEnterLongShot(s) {
+    syncBarNpcs(s);
+    if (!chasWindowOpen(s)) {
+        delete s.flags[FLAG_LONGSHOT_DRINKS];
+        delete s.flags[FLAG_LONGSHOT_SEATED];
+    }
+}
 /** World.onTick fragment — keeps the night bar NPCs in sync as time passes, and
  *  drives the Chas menace window once his approach has opened it. */
 export function nightBarTick(s) {

@@ -271,9 +271,10 @@ const MEDIUM_BAY = "A working bay of considerable size, the ceiling high overhea
     "here than on the dockside — nothing disorienting, but enough to notice in the way you plant your " +
     "feet. Scaffolding and umbilicals stand ready around the berths. The apron is back outside.";
 const LARGE_BAY = "A vast working bay, the ceiling lost in the shadows far above. The reduced gravity — perhaps half " +
-    "of what you'd feel at the circumference — gives everything a slightly deliberate quality; tools and " +
-    "people alike move with a little more care than usual. Scaffolding and umbilicals loom around the " +
-    "berths. The apron is back outside.";
+    "of what you'd feel at the circumference — lends everything a slightly deliberate quality; you plant " +
+    "each step with a shade more care than usual, and a stray offcut left drifting takes its unhurried time " +
+    "settling. Scaffolding and umbilicals loom around the berths, the work stilled and the bay emptied for " +
+    "the night. The apron is back outside.";
 const GANTRY = "A steel gantry running out high along the bay wall, the flank of a docked ship close enough to " +
     "touch. At this height, the reduced gravity makes every step feel slightly provisional — not " +
     "dangerous, exactly, but a reminder that the rules here are not quite the same as elsewhere. Not a " +

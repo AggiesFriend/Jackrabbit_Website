@@ -12,14 +12,23 @@
 // never violent (see the Deportation/mischief notes in the design), but it is
 // devastatingly passive-aggressive.
 import { itemsInRoom } from "../../engine/items.js";
+import { shipyardRooms } from "./shipyard.js";
 const SHAME_ROOM = "shame_room";
 const SHAME_ITEM = "shame_item";
 const SHAME_STAGE = "shame_stage";
-/** Public, monitored areas of the Outpost. Private rooms (Donovan's), the
- *  pre-Horizon scenes, and the in-motion pod are exempt. */
+/** Genuinely public, monitored civic areas of the Outpost. The pre-Horizon
+ *  scenes and the in-motion pod are exempt, and so are the areas you're a guest
+ *  or intruder in rather than a member of the public: Donovan's (a private
+ *  hotel) and the shipyard (a restricted working facility — you sneak in; see
+ *  shipyard_security.ts). Nobody sounds a civic littering alarm where the public
+ *  isn't meant to be in the first place. */
 function isMonitored(roomId) {
     if (roomId === "travelpod")
         return false;
+    if (roomId.startsWith("horizon_donovan"))
+        return false; // private hotel
+    if (roomId in shipyardRooms)
+        return false; // restricted yard
     return roomId.startsWith("horizon_") || roomId.startsWith("tube_stop_");
 }
 function clearShame(s) {

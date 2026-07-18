@@ -11,7 +11,7 @@ import { horizonRooms, horizonItems, horizonNpcs, horizonCommands, donovanLift }
 import { arboretumRooms, arboretumItems, arboretumNpcs } from "./arboretum.js";
 import { analysisItems, analysisWorldTick } from "./analysis.js";
 import { foodItems, foodCommands, spiceTick, buyCmd as foodBuyCmd, foodBuyRoute } from "./food.js";
-import { shopBuyRoute } from "./shops.js";
+import { shopBuyRoute, sellPawnCmd } from "./shops.js";
 import { predecessorItems } from "./predecessor.js";
 import { shipyardRooms, holdCommand, liftCTick, shipyardLifts } from "./shipyard.js";
 import { sophie, recordsCommands, sophieDaytimeTick } from "./records.js";
@@ -216,6 +216,7 @@ const MODULES = [
             check: checkCommand,
             buy: buyCommand,
             hold: holdCommand, grip: holdCommand, cling: holdCommand,
+            sell: sellPawnCmd, pawn: sellPawnCmd, hock: sellPawnCmd, flog: sellPawnCmd,
             load: loadCommand, insert: loadInsertCmd,
             sleep: sleepCmd, rest: sleepCmd, nap: sleepCmd, doze: sleepCmd, snooze: sleepCmd,
         },

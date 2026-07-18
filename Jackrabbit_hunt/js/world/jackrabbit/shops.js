@@ -55,6 +55,41 @@ const SHOPS = {
 export function isShopRoom(roomId) {
     return roomId in SHOPS;
 }
+const PAWNSHOP = "lcd_pawnshop";
+/** SELL / PAWN. The economy is spend-only — nothing the PC carries is actually
+ *  sellable — and only the pawnbroker deals in second-hand goods at all. The one
+ *  case worth writing is the datapad: a clever player tries to hock it to shed
+ *  the leash before running off-vector (see endgame.ts). The broker recognises
+ *  corporate-leased kit and won't touch it — and says just enough about what such
+ *  kit does to plant the leash clue WITHOUT contradicting canon (the 'pad is
+ *  dormant on Horizon — nothing on-station for it to talk to; the tracking is a
+ *  latent thing that wakes in open space, never a live "calling home" here). */
+export const sellPawnCmd = (_w, s, cmd) => {
+    const noun = (cmd.noun ?? "").trim().toLowerCase();
+    const free = { handled: true, tickCost: 0, free: true };
+    if (s.currentRoom !== PAWNSHOP) {
+        return { ...free, output: [
+                "There's no one here in the business of buying second-hand. The pawnbroker's down in the Lower " +
+                    "Commercial District, if you're set on hocking something."
+            ] };
+    }
+    const carriesAetherKit = s.inventory.includes("datapad") || s.inventory.includes("predecessor_datapad");
+    const meansDatapad = /datapad|\bpad\b|tablet|device/.test(noun);
+    if (meansDatapad && carriesAetherKit) {
+        return { ...free, output: [
+                "The pawnbroker takes it, turns it once in her hands, and slides it straight back across the counter. " +
+                    "\"AetherLink. Corporate-issue — leased, not owned, whatever the paperwork let you believe. I don't buy " +
+                    "company kit.\" She taps the dark, dead screen. \"Quiet as a stone out here — nothing on Horizon for it " +
+                    "to reach. But a pad like this always knows where it is, and one fine day it'll be somewhere it can say " +
+                    "so. I trade in things that stay quiet. That will never be quiet.\" She's already looking past you to " +
+                    "the next customer."
+            ] };
+    }
+    return { ...free, output: [
+            "The pawnbroker gives what you're offering a brief, professional glance and shakes her head. \"Not worth " +
+                "the drawer space, love.\" Whatever you were hoping to raise, it isn't here."
+        ] };
+};
 /** BUY in a non-food shop — a characterful, free, in-world reply. */
 export const shopBuyCmd = (_w, s, cmd) => {
     const reply = SHOPS[s.currentRoom];

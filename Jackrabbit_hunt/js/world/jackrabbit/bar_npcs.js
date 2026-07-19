@@ -17,7 +17,7 @@
 import { aliasedTopics } from "../../engine/authoring.js";
 import { addNote } from "../../engine/notes.js";
 import { placeNpcInRoom } from "../../engine/npcs.js";
-import { FLAG_JACKRABBIT_IS_SHIP, FLAG_JACK_REAL_NAME, FLAG_LONGSHOT_SEATED, FLAG_LONGSHOT_DRINKS, FLAG_CHAS_APPROACHED, FLAG_CHAS_MENACE, FLAG_CHAS_DEFUSED, FLAG_BURKE_PIVOT_DONE, HOOK_TALKED_OZZY, HOOK_OZZY_SHIP_NAME, HOOK_TALKED_CHAS, HOOK_CHAS_INTEL, } from "./flags.js";
+import { FLAG_JACKRABBIT_IS_SHIP, FLAG_JACK_REAL_NAME, FLAG_LONGSHOT_SEATED, FLAG_LONGSHOT_DRINKS, FLAG_CHAS_APPROACHED, FLAG_CHAS_MENACE, FLAG_CHAS_DEFUSED, FLAG_BURKE_PIVOT_DONE, HOOK_TALKED_OZZY, HOOK_OZZY_SHIP_NAME, HOOK_TALKED_CHAS, HOOK_CHAS_INTEL, HOOK_CHAS_TRAP_DEFUSED, } from "./flags.js";
 import { score } from "./scoring.js";
 import { balance, charge, canAfford } from "./economy.js";
 const BRASS_RAIL = "ez1_brass_rail";
@@ -167,6 +167,7 @@ function chasRaiseJackrabbit(s) {
         // the rest. (chasCrackScore banks the +4, the flags, and the note.)
         s.flags[FLAG_CHAS_DEFUSED] = true;
         delete s.flags[FLAG_CHAS_MENACE];
+        score(s, HOOK_CHAS_TRAP_DEFUSED); // SCORE-07: the defusal itself (only this branch, never the death)
         chasCrackScore(s);
         return [
             "Something in his face changes — fast, and not quite hidden. The weighing stops. \"*Him,*\" he says, " +

@@ -9,6 +9,8 @@
 // either a food stall, a bar, Burke's bench, a shop here, or genuinely sells
 // nothing. (Drinks/snacks/whisky/cigars live in food.ts; this is everything you
 // can't eat.)
+import { score } from "./scoring.js";
+import { HOOK_PAWNBROKER_DATAPAD_LORE } from "./flags.js";
 const SHOPS = {
     // --- Bazaar ---
     horizon_clothing_vendor: () => "The trader spreads a hand over the racks — practical station wear, a few louder pieces angled at " +
@@ -76,6 +78,7 @@ export const sellPawnCmd = (_w, s, cmd) => {
     const carriesAetherKit = s.inventory.includes("datapad") || s.inventory.includes("predecessor_datapad");
     const meansDatapad = /datapad|\bpad\b|tablet|device/.test(noun);
     if (meansDatapad && carriesAetherKit) {
+        score(s, HOOK_PAWNBROKER_DATAPAD_LORE); // SCORE-08: load-bearing leash lore (repeats print, score once)
         return { ...free, output: [
                 "The pawnbroker takes it, turns it once in her hands, and slides it straight back across the counter. " +
                     "\"AetherLink. Corporate-issue — leased, not owned, whatever the paperwork let you believe. I don't buy " +

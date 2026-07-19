@@ -16,7 +16,8 @@ import { requestSceneTransition } from "../../engine/authoring.js";
 import { buildAreaFromYaml } from "./area.js";
 import { withLiftDirs, liftDefFromYaml, liftDescription } from "./lifts.js";
 import { syncSophie } from "./records.js";
-import { FLAG_SHIPYARD_INTRUDING } from "./flags.js";
+import { score } from "./scoring.js";
+import { FLAG_SHIPYARD_INTRUDING, HOOK_HUB_REACHED, HOOK_UNTHEATRICAL_BOARDED } from "./flags.js";
 // --- The mapper YAML (topology) -----------------------------------------
 const SHIPYARD_A_YAML = `
 area: shipyard_A
@@ -364,6 +365,9 @@ const c = buildAreaFromYaml(SHIPYARD_C_YAML, {
     defaultDescription: shipyardDefault,
     rooms: {
         horizon_hub_shipyard: {
+            // The best-hidden area in the game (Accessway -> Lift C -> here). Score the
+            // find on first arrival (SCORE-02); score() is idempotent so re-entry is inert.
+            onEnter: (s) => { score(s, HOOK_HUB_REACHED); },
             description: "The shipyard hub: a broad junction where the yard's structure knits together, gantries and " +
                 "conduits converging from every direction. The gravity here is slight enough that careless " +
                 "movement sends you drifting — handrails are positioned with the quiet insistence of long " +
@@ -380,6 +384,9 @@ const u = buildAreaFromYaml(UNTHEATRICAL_YAML, {
                 "while the yard works on the aft sections. The ship proper is north; the shipyard hub is back south.",
         },
         horizon_untheatrical_entrance_corridor: {
+            // Actually aboard the ship (not merely at the airlock) — score boarding on
+            // first entry (SCORE-03). Idempotent, independent of the Hub/sidearm awards.
+            onEnter: (s) => { score(s, HOOK_UNTHEATRICAL_BOARDED); },
             description: "Just inside the Untheatrical, the near-zero gravity of the hub follows you in — footing is " +
                 "notional at best, and the grab rails positioned along the walls are less optional than they " +
                 "look. The ship is silent save for the distant sounds of yard work reverberating through the " +

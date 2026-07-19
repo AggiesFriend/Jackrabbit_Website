@@ -292,6 +292,16 @@ export const HOOK_TOOK_CROWBAR = "took_crowbar"; // grabbed the Tool Store crowb
 export const HOOK_PRISED_CABINET = "prised_armoury_cabinet"; // levered open the Untheatrical gun locker
 export const HOOK_TOOK_SIDEARM = "took_sidearm"; // pocketed the sidearm
 export const HOOK_EVADED_PATROL = "evaded_shipyard_patrol"; // gave a closing night patrol the slip (once)
+// --- Playtest scoring additions (plot-critical / discovery moments) ---
+// Each scores at most once (the scoreHooks Set is the guard, and serialises into
+// the save slot — so no double-award across save/load). See the scoring spec.
+export const HOOK_TENG_HAULER_BRIEFED = "teng_hauler_briefed"; // Teng's gated bulk-hauler / stowaway directions
+export const HOOK_HUB_REACHED = "hub_reached"; // first reached the (well-hidden) Shipyard Hub
+export const HOOK_UNTHEATRICAL_BOARDED = "untheatrical_boarded"; // first stepped inside the Untheatrical
+export const HOOK_RAJAH_DOOR_FOUND = "rajah_door_found"; // navigated to Dr Rajah's Zone B residence door
+export const HOOK_CHAS_TRAP_DEFUSED = "chas_trap_defused"; // defused the Long Shot heavies (the right question)
+export const HOOK_PAWNBROKER_DATAPAD_LORE = "pawnbroker_datapad_lore"; // drew out the pawnbroker's leash-lore refusal
+export const HOOK_ROSTER_COMPLETE = "roster_complete"; // met all nine of the core Horizon roster NPCs
 /** Point value for each scoring hook. The sum is MAX_SCORE. */
 export const SCORE_POINTS = {
     [HOOK_FORM_COMPLETE]: 1,
@@ -342,7 +352,7 @@ export const SCORE_POINTS = {
     [HOOK_BURKE_PIVOT]: 5, // Burke Beat 3 — reaching the pivot (Strands 2 + predecessor complete); provisional
     // Batch-2 NPCs — provisional values (Phase D calibration).
     [HOOK_TALKED_CELESTE_SERVER]: 1,
-    [HOOK_TALKED_OZZY]: 1,
+    [HOOK_TALKED_OZZY]: 2, // met Foreman Oswald (raised 1->2, playtest SCORE-05: hardest roster tick)
     [HOOK_OZZY_SHIP_NAME]: 2,
     [HOOK_TALKED_CHAS]: 1,
     [HOOK_CHAS_INTEL]: 4, // the hard-intel prize: Jack's real name + ship name
@@ -358,8 +368,16 @@ export const SCORE_POINTS = {
     // shoot Chas — see armoury.ts; the curry points are the only survivors).
     [HOOK_TOOK_CROWBAR]: 1,
     [HOOK_PRISED_CABINET]: 1,
-    [HOOK_TOOK_SIDEARM]: 1,
+    [HOOK_TOOK_SIDEARM]: 3, // hidden-item acquisition (raised 1->3, playtest SCORE-04)
     [HOOK_EVADED_PATROL]: 4, // slipped a patrol that was within 2 rooms (once)
+    // Playtest scoring additions (plot-critical / discovery moments the run missed).
+    [HOOK_TENG_HAULER_BRIEFED]: 5, // SCORE-01: Teng's Rajah-gated stowaway directions
+    [HOOK_HUB_REACHED]: 3, // SCORE-02: reaching the best-hidden area, the Shipyard Hub
+    [HOOK_UNTHEATRICAL_BOARDED]: 2, // SCORE-03: boarding the Untheatrical
+    [HOOK_RAJAH_DOOR_FOUND]: 3, // SCORE-06: decoding the junction plate to Rajah's door
+    [HOOK_CHAS_TRAP_DEFUSED]: 3, // SCORE-07: defusing the Long Shot death-trap
+    [HOOK_PAWNBROKER_DATAPAD_LORE]: 2, // SCORE-08: the pawnbroker's leash-lore refusal
+    [HOOK_ROSTER_COMPLETE]: 3, // SCORE-05b: met all nine core roster NPCs
 };
 /** Theoretical maximum — sum of all hook values. */
 export const MAX_SCORE = Object.values(SCORE_POINTS).reduce((a, b) => a + b, 0);

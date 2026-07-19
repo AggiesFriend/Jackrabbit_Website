@@ -26,7 +26,7 @@ import { placeNpcInRoom } from "../../engine/npcs.js";
 import { takeItemToInventory } from "../../engine/items.js";
 import { handleLoad } from "../../engine/commands/meta.js";
 import { residentialRooms } from "./residential.js";
-import { FLAG_DEFECT_PATHWAY, FLAG_BURKE_REFERRED_RAJAH, FLAG_RAJAH_INVITED, FLAG_RAJAH_RESIDENCE, FLAG_RAJAH_HOME_MET, FLAG_RAJAH_COMMITTED, HOOK_TALKED_TENG, HOOK_RAJAH_DATACARD, } from "./flags.js";
+import { FLAG_DEFECT_PATHWAY, FLAG_BURKE_REFERRED_RAJAH, FLAG_RAJAH_INVITED, FLAG_RAJAH_RESIDENCE, FLAG_RAJAH_HOME_MET, FLAG_RAJAH_COMMITTED, HOOK_TALKED_TENG, HOOK_RAJAH_DATACARD, HOOK_TENG_HAULER_BRIEFED, HOOK_RAJAH_DOOR_FOUND, } from "./flags.js";
 import { score } from "./scoring.js";
 const RAJAH_FRONT = "lcd_rajah_front";
 const RAJAH_BACK = "lcd_rajah_back";
@@ -72,6 +72,9 @@ function tengShip(s) {
             "incurious. \"Tell me what you're after and I'll search the stock. I deal in working vessels — yachts, " +
             "light freighters, personal transports.\" Nothing here is what you need, and he offers nothing more.";
     }
+    // The bulk-hauler pitch below IS the gated briefing (SCORE-01) — score it here so
+    // asking about "ship"/"escape" lands it just as "ask teng about stowaway" does.
+    score(s, HOOK_TENG_HAULER_BRIEFED);
     if (score(s, HOOK_TALKED_TENG)) {
         addNote(s, {
             id: "teng_encounter",
@@ -99,6 +102,20 @@ function tengShip(s) {
             "you're going.\"",
     ].join("\n\n");
 }
+/** The concise stowaway directions (the `ask teng about stowaway` route). On the
+ *  defect path this delivers the gated briefing, so it scores SCORE-01 too. */
+function tengHaulerDirections(s) {
+    if (!s.flags[FLAG_DEFECT_PATHWAY]) {
+        return "\"Berths and brokerage, not freight yards. If it's cargo space you're after, that isn't a thing " +
+            "I sell.\"";
+    }
+    score(s, HOOK_TENG_HAULER_BRIEFED);
+    return "He doesn't say it twice for the room to overhear, but he'll set you straight. \"The bulk hauler. " +
+        "Up in the shipyard, the big repair berth: the large bay. Cleared to leave within the day, so " +
+        "it's tonight or it's nothing. Into the yard after dark, up the ramp into her open hold, and lie " +
+        "still among the cargo. The yard's no friendly place after dark; that part's yours to manage. And " +
+        "you and I never spoke.\"";
+}
 export const teng = {
     id: "teng",
     name: "Teng",
@@ -121,14 +138,7 @@ export const teng = {
         [["ship", "vessel", "buy", "escape", "leaving", "leave", "off-consortium", "berth", "transport", "passage", "run"],
             (s) => tengShip(s)],
         [["hauler", "shipyard", "yard", "large bay", "bay", "hold", "cargo", "stow", "stowaway", "stow away"],
-            (s) => s.flags[FLAG_DEFECT_PATHWAY]
-                ? "He doesn't say it twice for the room to overhear, but he'll set you straight. \"The bulk hauler. " +
-                    "Up in the shipyard, the big repair berth: the large bay. Cleared to leave within the day, so " +
-                    "it's tonight or it's nothing. Into the yard after dark, up the ramp into her open hold, and lie " +
-                    "still among the cargo. The yard's no friendly place after dark; that part's yours to manage. And " +
-                    "you and I never spoke.\""
-                : "\"Berths and brokerage, not freight yards. If it's cargo space you're after, that isn't a thing " +
-                    "I sell.\""],
+            (s) => tengHaulerDirections(s)],
         // Prices ARE his area — don't fall through to the "not my area" deflection.
         [["price", "prices", "cost", "costs", "how much", "expensive", "afford", "fee", "fees", "rates", "quote"],
             "\"Prices depend on the vessel, but you may as well hear the shape of it: a working ship off the " +
@@ -166,6 +176,18 @@ export function referRajahToResidence(s) {
 function atRajahResidence(s) {
     const home = s.flags[FLAG_RAJAH_RESIDENCE];
     return typeof home === "string" && home.length > 0 && s.currentRoom === home;
+}
+/** SCORE-06 — reaching Rajah's Zone B residence door is a genuine navigation
+ *  puzzle (the junction-plate decode). Score the find on ARRIVAL, before/without
+ *  the video-panel exchange. The residence room is chosen at random, so it can't
+ *  carry a static onEnter — a per-tick location check does the job instead. Folded
+ *  into World.onTick via the LCD module; idempotent, and inert until Burke has
+ *  assigned the residence (atRajahResidence is false with no stored address). */
+export function rajahResidenceTick(s) {
+    if (s.dead || s.ended)
+        return;
+    if (atRajahResidence(s))
+        score(s, HOOK_RAJAH_DOOR_FOUND);
 }
 /** Stage 2 — found at home. She vets the PC at the door, won't talk there, and
  *  redirects to her LCD unit, relocating to the shopfront. Fires once. */

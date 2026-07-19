@@ -22,7 +22,7 @@ import { celesteServer } from "./celeste.js";
 import { ozzy, chas, nightBarTick, chasReconcileOnLoad, barBuyRoute } from "./bar_npcs.js";
 import { hale, haleTick } from "./hale.js";
 import { sleepCmd } from "./sleep.js";
-import { teng, rajah, rajahDatacard, loadInsertCmd } from "./lcd_npcs.js";
+import { teng, rajah, rajahDatacard, loadInsertCmd, rajahResidenceTick } from "./lcd_npcs.js";
 import { gamblingCommands, casinoLoadRoute } from "./gambling.js";
 import { armouryItems, shootCommands, convictEnding } from "./armoury.js";
 import { shipyardSecurityTick, shipyardReconcileOnLoad, barredEnding } from "./shipyard_security.js";
@@ -39,7 +39,7 @@ import { entertainment2Rooms } from "./entertainment_2.js";
 import { celestialDiningRooms } from "./celestial_dining.js";
 import { hostelRooms, hostelItems, hostelCommands, hostelLift } from "./hostel.js";
 import { shameOnDrop, shameTick } from "./shame.js";
-import { HOOK_CHECKED_BALANCE, MAX_SCORE } from "./flags.js";
+import { HOOK_CHECKED_BALANCE, MAX_SCORE, HOOK_ROSTER_COMPLETE, HOOK_TALKED_BARTY, HOOK_TALKED_DONOVAN, HOOK_TALKED_SANDWICH_VENDOR, HOOK_TALKED_SOPHIE, HOOK_TALKED_BRINN, HOOK_TALKED_CELESTE_SERVER, HOOK_TALKED_OZZY, HOOK_TALKED_CHAS, HOOK_TALKED_HALE, } from "./flags.js";
 import { score } from "./scoring.js";
 import { balance } from "./economy.js";
 import { assembleParts } from "./world-builder.js";
@@ -81,6 +81,24 @@ const checkCommand = (_world, state, cmd) => {
         free: true,
     };
 };
+/**
+ * The nine core Horizon roster NPCs (always reachable, defect-path-independent).
+ * Meeting all nine banks the roster-completion bonus (SCORE-05b).
+ */
+const ROSTER_HOOKS = [
+    HOOK_TALKED_BARTY, HOOK_TALKED_DONOVAN, HOOK_TALKED_SANDWICH_VENDOR,
+    HOOK_TALKED_SOPHIE, HOOK_TALKED_BRINN, HOOK_TALKED_CELESTE_SERVER,
+    HOOK_TALKED_OZZY, HOOK_TALKED_CHAS, HOOK_TALKED_HALE,
+];
+/** SCORE-05b — award the roster-completion bonus once every core NPC has been met.
+ *  A per-tick check (fires the turn the ninth first-meet lands, and self-heals an
+ *  older save that reaches nine); score() keeps it one-shot. */
+function rosterCompleteTick(s) {
+    if (s.dead || s.ended)
+        return;
+    if (ROSTER_HOOKS.every((h) => s.scoreHooks.has(h)))
+        score(s, HOOK_ROSTER_COMPLETE);
+}
 /**
  * The world, as a flat list of content modules — each entry groups one concern's
  * rooms / items / NPCs / verbs / world-tick / on-drop / TravelTube stop / lift in
@@ -201,8 +219,10 @@ const MODULES = [
     { npcs: { celeste_server: celesteServer } },
     { tick: dayNightTick },
     { npcs: { burke }, items: burkeItems, tick: burkeWorkshopDayTick },
-    { npcs: { teng, rajah }, items: { rajah_datacard: rajahDatacard } },
+    { npcs: { teng, rajah }, items: { rajah_datacard: rajahDatacard }, tick: rajahResidenceTick },
     { commands: gamblingCommands },
+    // SCORE-05b: the roster-completion bonus (checked each tick, banked once).
+    { tick: rosterCompleteTick },
     // The shipyard yard-proper: the armoury gun trail (items + the SHOOT verb) and
     // the night patrol / 3-strike security ticker. The tick sits AFTER dayNightTick
     // (above) so it reads the current phase — a tick that flips to dawn collars a

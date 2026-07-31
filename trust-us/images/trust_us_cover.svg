@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900" role="img" aria-label="Trust Us — a novel by Tony Marks (placeholder cover)">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1d2024"/>
+      <stop offset="0.55" stop-color="#24272c"/>
+      <stop offset="1" stop-color="#2c3037"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="1.08" r="0.75">
+      <stop offset="0" stop-color="#d9b954" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#d9b954" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="drizzle" width="11" height="90" patternUnits="userSpaceOnUse" patternTransform="rotate(7)">
+      <line x1="5" y1="0" x2="5" y2="90" stroke="#aeb4bc" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M 44 0 L 0 0 0 44" fill="none" stroke="#4a505a" stroke-opacity="0.5" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- background -->
+  <rect width="600" height="900" fill="url(#bg)"/>
+  <rect width="600" height="900" fill="url(#drizzle)"/>
+  <rect width="600" height="900" fill="url(#glow)"/>
+
+  <!-- frame -->
+  <rect x="22" y="22" width="556" height="856" fill="none" stroke="#3a3f47" stroke-width="2"/>
+  <rect x="30" y="30" width="540" height="840" fill="none" stroke="#3a3f47" stroke-opacity="0.5" stroke-width="1"/>
+
+  <!-- title -->
+  <text x="300" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="92" font-weight="bold" letter-spacing="10" fill="#f3f1ea">TRUST</text>
+  <text x="300" y="256" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="92" font-weight="bold" letter-spacing="10" fill="#d9b954">US</text>
+  <line x1="180" y1="292" x2="420" y2="292" stroke="#b8922e" stroke-width="2"/>
+  <text x="300" y="330" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-style="italic" fill="#aeb4bc">a novel</text>
+
+  <!-- the board: a grid with twelve stones -->
+  <g>
+    <rect x="80" y="392" width="440" height="308" fill="url(#grid)" stroke="#4a505a" stroke-opacity="0.5" stroke-width="1"/>
+    <!-- eleven stones on the grid -->
+    <g fill="#b8922e">
+      <rect x="97"  y="409" width="22" height="22" opacity="0.75"/>
+      <rect x="229" y="409" width="22" height="22" opacity="0.6"/>
+      <rect x="449" y="409" width="22" height="22" opacity="0.8"/>
+      <rect x="141" y="453" width="22" height="22" opacity="0.65"/>
+      <rect x="361" y="497" width="22" height="22" opacity="0.85"/>
+      <rect x="185" y="541" width="22" height="22" opacity="0.7"/>
+      <rect x="493" y="541" width="22" height="22" opacity="0.6"/>
+      <rect x="97"  y="585" width="22" height="22" opacity="0.8"/>
+      <rect x="317" y="585" width="22" height="22" opacity="0.65"/>
+      <rect x="405" y="629" width="22" height="22" opacity="0.75"/>
+      <rect x="229" y="673" width="22" height="22" opacity="0.7"/>
+    </g>
+    <!-- and one that is not where it should be -->
+    <rect x="537" y="360" width="22" height="22" fill="#d9b954"/>
+  </g>
+
+  <!-- author -->
+  <text x="300" y="790" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" letter-spacing="8" fill="#f3f1ea">TONY MARKS</text>
+  <text x="300" y="836" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="15" letter-spacing="3" fill="#6f7680">AUTHOR OF THE JACKRABBIT SERIES</text>
+</svg>

@@ -48,6 +48,28 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Trust Us - Standalone Novel Sub-site -->
+  <url>
+    <loc>https://www.jackrabbit-series.com/trust-us/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.jackrabbit-series.com/trust-us/world.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.jackrabbit-series.com/trust-us/characters.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.jackrabbit-series.com/trust-us/excerpt.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- Book 1 Prologue -->
   <url>
     <loc>https://www.jackrabbit-series.com/Book_1_Prologue.html</loc>

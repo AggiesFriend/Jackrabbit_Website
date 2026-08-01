@@ -1,0 +1,24 @@
+/* ============================================================
+   CONTACT PAGE — neutral "common ground" theme
+   ============================================================
+   Contact is now linked from both The Jackrabbit Series and the
+   Trust Us sub-site, so it shouldn't read as exclusively either
+   one. Scoped to body.contact-page only — no other page is
+   touched. Keeps the main site's layout, type, and nav/footer
+   structure; just swaps the sci-fi starfield hero and vivid blue
+   accent for something calmer that sits between the two.
+   ============================================================ */
+
+body.contact-page {
+    --accent-color: #c9a227;
+    --secondary-color: #6b5b3e;
+}
+
+body.contact-page .page-header {
+    background-image: linear-gradient(160deg, #262931 0%, #33363d 55%, #3d372a 100%);
+}
+
+body.contact-page .btn-primary:hover,
+body.contact-page .contact-form .btn:hover {
+    background-color: #a9832f;
+}

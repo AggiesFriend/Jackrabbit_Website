@@ -602,6 +602,25 @@ section { padding: 4rem 0; }
         linear-gradient(135deg, var(--gold), var(--gold-bright));
 }
 
+.character-photo {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background-color: var(--slate);
+}
+
+.character-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.character-card:hover .character-photo img {
+    transform: scale(1.04);
+}
+
 .character-info { padding: 1.5rem; }
 
 .character-info h3 { margin-bottom: 0.2rem; }

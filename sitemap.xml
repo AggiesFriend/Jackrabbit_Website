@@ -48,6 +48,13 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Games -->
+  <url>
+    <loc>https://www.jackrabbit-series.com/games.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Trust Us - Standalone Novel Sub-site -->
   <url>
     <loc>https://www.jackrabbit-series.com/trust-us/</loc>

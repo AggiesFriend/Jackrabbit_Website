@@ -281,6 +281,91 @@ section {
 }
 
 /* ============================================
+   NEW RELEASE BANNER (Homepage) - Trust Us colours
+   ============================================ */
+.new-release {
+    background: radial-gradient(ellipse at 20% 120%, rgba(217, 185, 84, 0.18), rgba(217, 185, 84, 0) 60%),
+                linear-gradient(#1d2024, #2c3037);
+    color: #f3f1ea;
+    padding: 3.5rem 0;
+}
+
+.new-release-inner {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.new-release-cover {
+    flex-shrink: 0;
+}
+
+.new-release-cover img {
+    display: block;
+    width: 160px;
+    height: auto;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+.new-release-kicker {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #d9b954;
+    margin-bottom: 0.4rem;
+}
+
+.new-release h2 {
+    color: #f3f1ea;
+    text-align: left;
+    margin-bottom: 0.8rem;
+}
+
+.new-release h2 em {
+    font-style: normal;
+    color: #d9b954;
+}
+
+.new-release p {
+    max-width: 640px;
+}
+
+.new-release-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1rem;
+    margin-top: 1rem;
+}
+
+.btn-gold {
+    background-color: #b8922e;
+    color: #1d2024;
+}
+
+.btn-gold:hover {
+    background-color: #d9b954;
+    color: #1d2024;
+}
+
+@media screen and (max-width: 768px) {
+    .new-release-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .new-release h2 { text-align: center; }
+
+    .new-release h2 { text-align: center; }
+
+    .new-release p { margin-left: auto; margin-right: auto; }
+
+    .new-release-buttons { justify-content: center; }
+}
+
+/* ============================================
    FEATURED BOOKS SECTION (Homepage)
    ============================================ */
 .featured-books {

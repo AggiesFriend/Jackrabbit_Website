@@ -136,6 +136,7 @@ section { padding: 4rem 0; }
     font-size: 1.7rem;
     font-weight: 700;
     color: var(--light-text);
+    white-space: nowrap;
 }
 
 .logo a em {
@@ -164,6 +165,8 @@ section { padding: 4rem 0; }
 .nav-links .active {
     color: var(--gold-bright);
 }
+
+.nav-links .nav-buy { color: var(--gold-bright); }
 
 .nav-links .nav-return {
     border: 1px solid var(--drizzle);
@@ -741,6 +744,13 @@ section { padding: 4rem 0; }
     margin-top: 2rem;
 }
 
+.excerpt-buy {
+    flex-basis: 100%;
+    text-align: center;
+    font-size: 1.15rem;
+    margin: 0 0 0.5rem;
+}
+
 /* ----- CTA band ----- */
 .cta {
     background-color: var(--ink);
@@ -835,7 +845,9 @@ footer {
 
 /* ----- Responsive ----- */
 @media screen and (max-width: 1080px) and (min-width: 769px) {
-    .nav-links li { margin-left: 0.9rem; }
+    .logo a { font-size: 1.45rem; }
+
+    .nav-links li { margin-left: 0.5rem; }
 
     .nav-links a {
         font-size: 0.75rem;

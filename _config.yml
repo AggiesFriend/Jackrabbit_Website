@@ -1,0 +1,45 @@
+# GitHub Pages / Jekyll configuration for www.jackrabbit-series.com
+
+url: "https://www.jackrabbit-series.com"
+
+plugins:
+  - jekyll-sitemap
+
+# Pages to leave out of the generated sitemap.xml
+defaults:
+  # Blocked in robots.txt
+  - scope:
+      path: "misc"
+    values:
+      sitemap: false
+  - scope:
+      path: "Gilbert_s Quest.html"
+    values:
+      sitemap: false
+  # Internal to the Aggie game, or developer tools
+  - scope:
+      path: "Aggie_game/scenes"
+    values:
+      sitemap: false
+  - scope:
+      path: "Aggie_game/editor.html"
+    values:
+      sitemap: false
+  - scope:
+      path: "Aggie_game/spectrum.html"
+    values:
+      sitemap: false
+  # Not pages for visitors
+  - scope:
+      path: "404.html"
+    values:
+      sitemap: false
+  - scope:
+      path: "googlecee4a38f115d2f04.html"
+    values:
+      sitemap: false
+
+# Repo notes that should not be published
+exclude:
+  - CLAUDE.md
+  - github-pages-deployment.md

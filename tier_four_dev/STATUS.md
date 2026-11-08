@@ -8,6 +8,7 @@ Last updated: 8 November 2026 (session 2)
 ## Done in session 2
 
 - Agreed the contract data format with the author (below), version 1.
+- Added two decisions to the HLD's "Decided on 8 November 2026" list: main-sequence contracts have 1 or 2 discoverable truths, while side contracts may have none; and an understanding may be a misreading.
 - `tier_four_dev/lib/contract.mjs` validates it. `checks/data.mjs` runs it on every contract in `tier_four/data/contracts/` (none yet), plus a self-test against the samples in `tier_four_dev/fixtures/contracts/`.
 - Fixtures, all placeholder text with no canon:
   - `valid/example-contract.json`: a main-sequence contract shown in both modes, with one truth in both modes and one in reader mode only, and a misreading;
@@ -91,8 +92,7 @@ If a phone browser fails with `ERR_TOO_MANY_RETRIES` and nothing reaches the PC,
 ## Next
 
 1. Author review of `tier-four-contract-format`, then merge it into `tier-four`.
-2. Add two decisions from session 2 to the HLD's "Decided" list: main-sequence contracts have 1 or 2 truths, while side contracts may have none; and understandings can be misreadings.
-3. Outline of the tier 1 contract: needs the author first (content pipeline, step 1). Alternatively, the prototype's engine can start on the placeholder sample contract while the outline is written.
+2. Outline of the tier 1 contract: needs the author first (content pipeline, step 1). Alternatively, the prototype's engine can start on the placeholder sample contract while the outline is written.
 
 ## Open questions
 

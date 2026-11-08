@@ -44,7 +44,7 @@ Real devices for gate checks:
 
 | Device | Stands in for | Notes |
 |---|---|---|
-| Samsung Galaxy S25 Ultra | Large Android, Chrome and Samsung Internet | A flagship, so it won't show slow-phone problems. Speed (Q8) needs CPU-throttled emulation as well. |
+| Samsung Galaxy S25 Ultra | Large Android, Chrome and Samsung Internet (both work over the local network) | A flagship, so it won't show slow-phone problems. Speed (Q8) needs CPU-throttled emulation as well. |
 | Company iPhone 16e, iOS 27.0 | Standard iPhone, Safari on iOS | 390 px wide, so it covers the 390 × 844 class. The 375 and 320 px classes rely on emulation. |
 
 ## How to try it on a phone
@@ -54,14 +54,12 @@ Real devices for gate checks:
 3. If the phone can't connect, allow Node.js through Windows Firewall. The home Wi-Fi is set to Public, so the rule needs Public ticked.
 4. Press Ctrl+C to stop the server.
 
-Chrome on the S25 can't reach the local server (`ERR_TOO_MANY_RETRIES`; nothing arrives at the PC; no Chrome policies set). Samsung Internet on the same phone works, so use that for local tests. The cause is unknown.
+If a phone browser fails with `ERR_TOO_MANY_RETRIES` and nothing reaches the PC, the browser probably lacks Android's "Nearby devices" permission, which it needs to reach the local network. Grant it in Settings → Apps → the browser → Permissions. This was the cause for Chrome on the S25.
 
 ## Next
 
-1. Author: review the branch, then merge `tier-four-foundations` into `tier-four`.
-2. Phase 1, prototype. Suggested first session: agree the data format for a contract (truths, hints, understandings, spoiler tags) and extend data validation to match. Writing the tier 1 contract's outline needs the author first (content pipeline, step 1).
+1. Phase 1, prototype. Suggested first session: agree the data format for a contract (truths, hints, understandings, spoiler tags) and extend data validation to match. Writing the tier 1 contract's outline needs the author first (content pipeline, step 1).
 
 ## Open questions
 
-- Why Chrome on the S25 can't reach the local server (still fails after a reboot). It matters only once Chrome-specific behaviour needs testing; a hosted preview would get round it.
 - From the HLD, still open: when Jack gives the accidental directive in the book; what happens after 3 failed unlock attempts; who writes the unlock questions; whether a keyword can also turn on reader mode.

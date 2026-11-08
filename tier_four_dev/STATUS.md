@@ -15,10 +15,11 @@ Last updated: 8 November 2026 (session 1)
 ## Done in session 1
 
 - Fixed the High-Level Design's Milestones section: it said four phases, the process has five (0 to 4). The diagram now shows each phase with its gate criteria, taken from the process document.
+- Updated the Development Process document: phone testing now uses `npm run serve`, and Playwright is installed locally in `tier_four_dev/` rather than assumed from cloud sessions.
 - `tier_four/index.html`: placeholder entry page. It has the site's fonts and colours, `dvh` units and safe-area insets, 48 px buttons, the umami snippet before `</head>` and `noindex`. Its only text is the game's name, the book it goes with and "in development".
 - `tier_four_dev/`, excluded from the site in `_config.yml`:
   - `npm run check` runs every automated check.
-  - `npm run serve` serves the site on port 8000 of the local network for phone testing. Node replaces the `python3` command in the process doc, because Python isn't installed on this computer.
+  - `npm run serve` serves the site on port 8000 of the local network for phone testing. It uses Node because Python isn't installed on this computer.
   - Playwright 1.64.1, pinned, from npm (Microsoft), with its Chromium build.
 - `_config.yml`: `tier_four/` is left out of the sitemap until release.
 - CLAUDE.md lists `tier_four/index.html` as an entry page and says `tier_four/` is hand-written, unlike the other game folders.
@@ -61,5 +62,4 @@ Real devices for gate checks:
 ## Open questions
 
 - Which model is the company iPhone? It decides whether it covers the 375 px small-iPhone class.
-- The process document still says `python3 -m http.server` for phone testing, and says Playwright comes pre-installed. Should it be updated to `npm run serve` and the local install?
 - From the HLD, still open: when Jack gives the accidental directive in the book; what happens after 3 failed unlock attempts; who writes the unlock questions; whether a keyword can also turn on reader mode.

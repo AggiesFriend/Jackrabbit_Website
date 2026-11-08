@@ -3,7 +3,7 @@
 Last updated: 8 November 2026 (session 2)
 
 **Phase:** 1, Prototype. In progress. Phase 0's gate passed on 8 November 2026.
-**Branches:** `tier-four` (from `main`); `tier-four-foundations` (merged into `tier-four`); `tier-four-contract-format` (from `tier-four`, awaiting review). Local only, nothing pushed.
+**Branches:** `tier-four` (from `main`); `tier-four-foundations` (merged into `tier-four`); `tier-four-contract-format` (merged into `tier-four` on 8 November 2026). Local only, nothing pushed.
 
 ## Done in session 2
 
@@ -91,7 +91,7 @@ If a phone browser fails with `ERR_TOO_MANY_RETRIES` and nothing reaches the PC,
 
 ## Next
 
-1. Author review of `tier-four-contract-format`, then merge it into `tier-four`.
+1. Done: `tier-four-contract-format` reviewed and merged into `tier-four`.
 2. Outline of the tier 1 contract: needs the author first (content pipeline, step 1). Alternatively, the prototype's engine can start on the placeholder sample contract while the outline is written.
 
 ## Open questions

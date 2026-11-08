@@ -2,7 +2,7 @@
 
 Last updated: 8 November 2026 (session 1)
 
-**Phase:** 0, Foundations. Built and checked; the gate waits only on the iPhone test.
+**Phase:** 0, Foundations. Complete: gate passed 8 November 2026. Next is Phase 1, the prototype.
 **Branches:** `tier-four` (from `main`) and `tier-four-foundations` (from `tier-four`). Local only, nothing pushed.
 
 ## Phase 0 gate
@@ -10,7 +10,7 @@ Last updated: 8 November 2026 (session 1)
 | Criterion | State |
 |---|---|
 | Automated checks pass on the placeholder | Passed, 8 November 2026 |
-| The author opens the placeholder on their own phone over the local network | S25 Ultra: passed in Samsung Internet, 8 November 2026. Company iPhone: **to do (author)** |
+| The author opens the placeholder on their own phone over the local network | Passed, 8 November 2026: S25 Ultra in Samsung Internet, iPhone 16e in Safari |
 
 ## Done in session 1
 
@@ -45,7 +45,7 @@ Real devices for gate checks:
 | Device | Stands in for | Notes |
 |---|---|---|
 | Samsung Galaxy S25 Ultra | Large Android, Chrome and Samsung Internet | A flagship, so it won't show slow-phone problems. Speed (Q8) needs CPU-throttled emulation as well. |
-| Company iPhone (model to confirm) | Small iPhone, Safari on iOS | |
+| Company iPhone 16e, iOS 27.0 | Standard iPhone, Safari on iOS | 390 px wide, so it covers the 390 × 844 class. The 375 and 320 px classes rely on emulation. |
 
 ## How to try it on a phone
 
@@ -58,11 +58,10 @@ Chrome on the S25 can't reach the local server (`ERR_TOO_MANY_RETRIES`; nothing 
 
 ## Next
 
-1. Author: open the placeholder on the company iPhone, and record the result in the gate table above.
+1. Author: review the branch, then merge `tier-four-foundations` into `tier-four`.
 2. Phase 1, prototype. Suggested first session: agree the data format for a contract (truths, hints, understandings, spoiler tags) and extend data validation to match. Writing the tier 1 contract's outline needs the author first (content pipeline, step 1).
 
 ## Open questions
 
-- Which model is the company iPhone? It decides whether it covers the 375 px small-iPhone class.
-- Why Chrome on the S25 can't reach the local server. It matters only once Chrome-specific behaviour needs testing; a hosted preview would get round it.
+- Why Chrome on the S25 can't reach the local server (still fails after a reboot). It matters only once Chrome-specific behaviour needs testing; a hosted preview would get round it.
 - From the HLD, still open: when Jack gives the accidental directive in the book; what happens after 3 failed unlock attempts; who writes the unlock questions; whether a keyword can also turn on reader mode.

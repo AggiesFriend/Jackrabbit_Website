@@ -14,7 +14,7 @@ The prototype's first playable slice, on the placeholder contract. All story tex
   - Reader mode is turned on with a visible "Spoilers" switch on the start screen.
     - Turning it on always shows a spoiler warning for *Coming of Age*, which the player must confirm or back out of. Turning it off is instant.
     - The choice is remembered on the device, through `tier_four/js/storage.mjs`. If storage is blocked, the game simply starts spoiler-free.
-    - The dialog wording is a draft, marked DRAFT WORDING in `js/game.mjs`, and awaits the author's approval.
+    - The author approved the dialog wording as drafted on 8 November 2026.
 - **Design change, decided by the author on 8 November 2026: no plot check.** Reader mode sits behind the spoiler warning instead of a plot quiz with hashed answers.
   - **HLD:** recorded in the "Decided" list. The "Unlocking reader mode" section is now "Turning on reader mode", and the unlock-check bullet, the unlock risk row and three open questions are removed.
   - **Process document:**
@@ -166,7 +166,6 @@ If a phone browser fails with `ERR_TOO_MANY_RETRIES` and nothing reaches the PC,
 - Closed in session 3 by the no-plot-check decision: what happens after 3 failed unlock attempts, who writes the unlock questions, and whether a keyword can also turn on reader mode.
 - From session 2: the HLD has correct understandings change how the player reaches the canon ending, not unlock anything. The author asked whether a true understanding leads to an unlock. If a separate unlock is wanted, it is a design change to agree, and it would add a field to the format. The slice doesn't decide this: a correct understanding only shows as "Right" in the debrief. Now that "unlock" no longer means the plot check, this question is only about whether reading Aggie correctly should open extra content.
 - From session 3:
-  - **Spoiler warning wording:** the draft dialog text awaits the author's approval or rewrite.
   - **Action labels:** these come from the ID for now. Real contracts will probably need a label field, or a fixed list of actions with their text, which would be a format change.
   - **Journal text:** real journal text must not say whether a reading is right, as the fixture's placeholder text does.
   - **Debrief wording:** the debrief shows each truth's text, and placeholder phrases such as "You read this correctly." The wording and tone of the debrief need the author's approval.

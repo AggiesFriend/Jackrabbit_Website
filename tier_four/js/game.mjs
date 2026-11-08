@@ -85,7 +85,7 @@ function drawMode() {
 }
 
 // Turning spoilers on always shows the warning; turning them off never does.
-// DRAFT WORDING, awaiting the author's approval.
+// Wording approved by the author on 8 November 2026.
 async function toggleSpoilers() {
     if (mode === 'reader') {
         mode = 'spoiler-free';

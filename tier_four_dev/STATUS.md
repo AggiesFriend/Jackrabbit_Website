@@ -3,7 +3,7 @@
 Last updated: 8 November 2026 (session 3)
 
 **Phase:** 1, Prototype. In progress. Phase 0's gate passed on 8 November 2026.
-**Branches:** `tier-four` (from `main`); `tier-four-foundations` (merged into `tier-four`); `tier-four-contract-format` (merged into `tier-four` on 8 November 2026); `tier-four-engine-slice` (reviewed by the author, merged into `tier-four` on 8 November 2026 and deleted). Local only, nothing pushed.
+**Branches:** `tier-four` (from `main`); `tier-four-foundations` (merged into `tier-four`); `tier-four-contract-format` (merged into `tier-four` on 8 November 2026 and deleted); `tier-four-engine-slice` (reviewed by the author, merged into `tier-four` on 8 November 2026 and deleted). Local only, nothing pushed.
 
 ## Done in session 3
 

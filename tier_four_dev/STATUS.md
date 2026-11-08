@@ -1,9 +1,39 @@
 # Tier Four — status
 
-Last updated: 8 November 2026 (session 1)
+Last updated: 8 November 2026 (session 2)
 
-**Phase:** 0, Foundations. Complete: gate passed 8 November 2026. Next is Phase 1, the prototype.
-**Branches:** `tier-four` (from `main`) and `tier-four-foundations` (from `tier-four`). Local only, nothing pushed.
+**Phase:** 1, Prototype. In progress. Phase 0's gate passed on 8 November 2026.
+**Branches:** `tier-four` (from `main`); `tier-four-foundations` (merged into `tier-four`); `tier-four-contract-format` (from `tier-four`, awaiting review). Local only, nothing pushed.
+
+## Done in session 2
+
+- Agreed the contract data format with the author (below), version 1.
+- `tier_four_dev/lib/contract.mjs` validates it. `checks/data.mjs` runs it on every contract in `tier_four/data/contracts/` (none yet), plus a self-test against the samples in `tier_four_dev/fixtures/contracts/`.
+- Fixtures, all placeholder text with no canon:
+  - `valid/example-contract.json`: a main-sequence contract shown in both modes, with one truth in both modes and one in reader mode only, and a misreading;
+  - `valid/example-side-contract.json`: a side contract with no truths;
+  - `invalid/`: 23 broken cases, one mistake each. `invalid/expected.json` gives the reason each case is broken and the problem it must be reported with.
+
+## Contract format (version 1)
+
+One contract per JSON file in `tier_four/data/contracts/`.
+
+| Field | Contract | Truth | Hint | Understanding |
+|---|---|---|---|---|
+| `id` | kebab-case, unique across files | kebab-case | kebab-case | kebab-case |
+| `mode` | `spoiler-free`, `reader` or `both` | same | same | same |
+| other | `format` (1), `tier` (1 to 4), `sequence` (`main` or `side`), `title`, `truths`, `hints`, `understandings` | `text` | `truth`, `kind` (`deflect`, `hesitate`, `over-comply`, `question`), `text` | `truth`, `action`, `correct` (true or false), `journal` |
+
+Item IDs are unique within their contract. All fields are required, and an unknown field is an error, which catches typos.
+
+Rules:
+
+- **References:** every hint and understanding points to a truth that exists in the same contract.
+- **Truths:** in each mode it appears in, a main-sequence contract has 1 or 2 truths. A side contract may have none. Each truth shown in a mode has, in that mode, at least one hint and at least one correct understanding.
+- **Understandings:** an understanding with `"correct": false` is a misreading the player can log. Understandings are never marked right or wrong during play. Correctness only changes how the player reaches the canon ending, and what the debrief shows.
+- **Spoiler tags:** an item can't be shown in a mode its contract isn't in. A hint or understanding can't be shown in a mode where its truth is hidden. This is a static check on each file. The spoiler graph check, which follows what play can actually reach, is still to come.
+- **`action`:** for now this is only checked for being a well-formed ID. It is checked against a list once the engine defines its actions.
+- **Hint pacing:** pauses, typing speed and the "(a pause)" text for reduced motion belong to the dialogue format, which isn't agreed yet.
 
 ## Phase 0 gate
 
@@ -28,13 +58,15 @@ Last updated: 8 November 2026 (session 1)
 
 | Check | From phase | State |
 |---|---|---|
-| Data validation: every JSON file in `tier_four/` parses | 0 | Running. Field and reference checks are added once data formats exist. |
+| Data validation: every JSON file in `tier_four/` parses; contracts match the contract format (fields, references, spoiler tags); self-test against valid and broken samples | 0 | Running. Contract checks added in session 2. Dialogue and other formats are added once agreed. |
 | Site rules: umami on every standalone page and on no internal file (CLAUDE.md); in `tier_four/`, the snippet right before `</head>` and no broken local links | 0 | Running. Links elsewhere on the site aren't checked, so old pages can't block game work. |
 | Layout sweep (Q9): no sideways scrolling, nothing off-screen, tap targets at least 44 px, body text at least 16 px, at all 7 sizes; screenshots saved | 1 (brought forward) | Running |
 | Spoiler graph, engine unit tests, scripted play-through | 1 | Not started |
 | Unlock bank, accessibility scan, performance budget, spelling | 2 | Not started |
 
-Last run, 8 November 2026: all 3 checks passed. Each was also tested against a deliberately broken page (bad JSON, missing snippet, broken link, small tap target, an over-wide block) and failed as it should.
+Last run, 8 November 2026 (session 2): all 3 checks passed. Data validation: 2 valid samples accepted, 23 broken cases each rejected with the expected problem. The check also failed as it should when given a broken contract in `tier_four/data/contracts/`, a broken file among the valid samples, and a broken case missing from `expected.json`.
+
+In session 1, each check was also tested against a deliberately broken page (bad JSON, missing snippet, broken link, small tap target, an over-wide block) and failed as it should.
 
 ## Devices
 
@@ -58,8 +90,11 @@ If a phone browser fails with `ERR_TOO_MANY_RETRIES` and nothing reaches the PC,
 
 ## Next
 
-1. Phase 1, prototype. Suggested first session: agree the data format for a contract (truths, hints, understandings, spoiler tags) and extend data validation to match. Writing the tier 1 contract's outline needs the author first (content pipeline, step 1).
+1. Author review of `tier-four-contract-format`, then merge it into `tier-four`.
+2. Add two decisions from session 2 to the HLD's "Decided" list: main-sequence contracts have 1 or 2 truths, while side contracts may have none; and understandings can be misreadings.
+3. Outline of the tier 1 contract: needs the author first (content pipeline, step 1). Alternatively, the prototype's engine can start on the placeholder sample contract while the outline is written.
 
 ## Open questions
 
 - From the HLD, still open: when Jack gives the accidental directive in the book; what happens after 3 failed unlock attempts; who writes the unlock questions; whether a keyword can also turn on reader mode.
+- From session 2: the HLD has correct understandings change how the player reaches the canon ending, not unlock anything. The author asked whether a true understanding leads to an unlock. If a separate unlock is wanted, it is a design change to agree, and it would add a field to the format.

@@ -1,0 +1,69 @@
+{
+  "format": 1,
+  "id": "example-contract",
+  "tier": 1,
+  "sequence": "main",
+  "mode": "both",
+  "title": "Placeholder contract",
+  "truths": [
+    {
+      "id": "truth-a",
+      "mode": "both",
+      "txt": "Placeholder truth A, shown in both modes."
+    },
+    {
+      "id": "truth-b",
+      "mode": "reader",
+      "text": "Placeholder truth B, shown in reader mode only."
+    }
+  ],
+  "hints": [
+    {
+      "id": "hint-a1",
+      "mode": "both",
+      "truth": "truth-a",
+      "kind": "question",
+      "text": "Placeholder question about truth A?"
+    },
+    {
+      "id": "hint-a2",
+      "mode": "both",
+      "truth": "truth-a",
+      "kind": "deflect",
+      "text": "Placeholder change of subject."
+    },
+    {
+      "id": "hint-b1",
+      "mode": "reader",
+      "truth": "truth-b",
+      "kind": "hesitate",
+      "text": "Placeholder short reply."
+    }
+  ],
+  "understandings": [
+    {
+      "id": "und-a",
+      "mode": "both",
+      "truth": "truth-a",
+      "action": "inspect-cargo",
+      "correct": true,
+      "journal": "Placeholder journal entry: a correct reading of truth A."
+    },
+    {
+      "id": "und-a-misread",
+      "mode": "both",
+      "truth": "truth-a",
+      "action": "decline-leg",
+      "correct": false,
+      "journal": "Placeholder journal entry: a misreading of truth A."
+    },
+    {
+      "id": "und-b",
+      "mode": "reader",
+      "truth": "truth-b",
+      "action": "decline-leg",
+      "correct": true,
+      "journal": "Placeholder journal entry: a correct reading of truth B."
+    }
+  ]
+}

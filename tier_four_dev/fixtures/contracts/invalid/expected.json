@@ -1,0 +1,94 @@
+{
+  "not-an-object": {
+    "why": "The contract is a list, not an object",
+    "expect": "contract: must be an object"
+  },
+  "wrong-format": {
+    "why": "Format version 2 does not exist",
+    "expect": "\"format\" must be 1"
+  },
+  "bad-tier": {
+    "why": "Tier 5 is out of range",
+    "expect": "\"tier\" must be a whole number from 1 to 4"
+  },
+  "bad-sequence": {
+    "why": "Sequence must be main or side",
+    "expect": "\"sequence\" must be one of"
+  },
+  "missing-field": {
+    "why": "A hint has no kind",
+    "expect": "hints[0] (hint-a1): missing field \"kind\""
+  },
+  "unknown-field": {
+    "why": "A typo: \"txt\" for \"text\"",
+    "expect": "unknown field \"txt\""
+  },
+  "bad-hint-kind": {
+    "why": "Not one of the four hint kinds",
+    "expect": "\"kind\" must be one of"
+  },
+  "bad-mode": {
+    "why": "Spoiler tag misspelt",
+    "expect": "\"mode\" must be one of"
+  },
+  "missing-mode": {
+    "why": "An item with no spoiler tag",
+    "expect": "missing field \"mode\""
+  },
+  "empty-text": {
+    "why": "Empty hint text",
+    "expect": "\"text\" must be non-empty text"
+  },
+  "bad-id": {
+    "why": "ID with capitals and a space",
+    "expect": "\"id\" must be a lower-case kebab-case ID"
+  },
+  "correct-not-boolean": {
+    "why": "correct must be true or false",
+    "expect": "\"correct\" must be true or false"
+  },
+  "duplicate-item-id": {
+    "why": "A hint reuses a truth ID",
+    "expect": "ID \"truth-a\" is already used by truths[0]"
+  },
+  "missing-truth": {
+    "why": "A hint points to a truth that does not exist",
+    "expect": "truth \"truth-z\" does not exist"
+  },
+  "points-to-hint": {
+    "why": "An understanding points to a hint, not a truth",
+    "expect": "truth \"hint-a1\" does not exist"
+  },
+  "too-many-truths": {
+    "why": "A main contract with 3 truths in reader mode",
+    "expect": "needs 1 or 2 truths in reader mode, found 3"
+  },
+  "no-truths-in-mode": {
+    "why": "A main contract with no truth in spoiler-free mode",
+    "expect": "needs 1 or 2 truths in spoiler-free mode, found 0"
+  },
+  "truth-without-hint": {
+    "why": "Truth B has no hint",
+    "expect": "truths[1] (truth-b): no hint points to it in reader mode"
+  },
+  "only-misreadings": {
+    "why": "Truth B can only be misread",
+    "expect": "truths[1] (truth-b): no correct understanding of it in reader mode"
+  },
+  "hint-only-in-reader": {
+    "why": "Truth A is shown in both modes, but all its hints are reader-only",
+    "expect": "truths[0] (truth-a): no hint points to it in spoiler-free mode"
+  },
+  "item-wider-than-contract": {
+    "why": "A reader-only contract with an item tagged both",
+    "expect": "would show it outside its contract, which is \"reader\""
+  },
+  "spoiler-leak": {
+    "why": "A hint tagged both points to a reader-only truth",
+    "expect": "hints[2] (hint-b1): mode \"both\" would show it where its truth \"truth-b\" (mode \"reader\") is hidden"
+  },
+  "duplicate-contract-id": {
+    "why": "Two files share one contract ID",
+    "expect": "contract ID \"example-contract\" is also used by"
+  }
+}

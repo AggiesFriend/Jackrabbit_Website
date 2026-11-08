@@ -2,7 +2,7 @@
 
 Last updated: 8 November 2026 (session 1)
 
-**Phase:** 0, Foundations. Built and checked; waiting for the gate.
+**Phase:** 0, Foundations. Built and checked; the gate waits only on the iPhone test.
 **Branches:** `tier-four` (from `main`) and `tier-four-foundations` (from `tier-four`). Local only, nothing pushed.
 
 ## Phase 0 gate
@@ -10,7 +10,7 @@ Last updated: 8 November 2026 (session 1)
 | Criterion | State |
 |---|---|
 | Automated checks pass on the placeholder | Passed, 8 November 2026 |
-| The author opens the placeholder on their own phone over the local network | **To do (author)** |
+| The author opens the placeholder on their own phone over the local network | S25 Ultra: passed in Samsung Internet, 8 November 2026. Company iPhone: **to do (author)** |
 
 ## Done in session 1
 
@@ -51,15 +51,18 @@ Real devices for gate checks:
 
 1. In `tier_four_dev/`, run `npm install` once, then `npx playwright install chromium` (needed only for `npm run check`).
 2. Run `npm run serve`. It prints the address to open on the phone, such as `http://192.168.x.x:8000/tier_four/`.
-3. If the phone can't connect, allow Node.js through Windows Firewall on private networks.
+3. If the phone can't connect, allow Node.js through Windows Firewall. The home Wi-Fi is set to Public, so the rule needs Public ticked.
 4. Press Ctrl+C to stop the server.
+
+Chrome on the S25 can't reach the local server (`ERR_TOO_MANY_RETRIES`; nothing arrives at the PC; no Chrome policies set). Samsung Internet on the same phone works, so use that for local tests. The cause is unknown.
 
 ## Next
 
-1. Author: open the placeholder on the S25 Ultra and the iPhone, and record the result in the gate table above.
+1. Author: open the placeholder on the company iPhone, and record the result in the gate table above.
 2. Phase 1, prototype. Suggested first session: agree the data format for a contract (truths, hints, understandings, spoiler tags) and extend data validation to match. Writing the tier 1 contract's outline needs the author first (content pipeline, step 1).
 
 ## Open questions
 
 - Which model is the company iPhone? It decides whether it covers the 375 px small-iPhone class.
+- Why Chrome on the S25 can't reach the local server. It matters only once Chrome-specific behaviour needs testing; a hosted preview would get round it.
 - From the HLD, still open: when Jack gives the accidental directive in the book; what happens after 3 failed unlock attempts; who writes the unlock questions; whether a keyword can also turn on reader mode.

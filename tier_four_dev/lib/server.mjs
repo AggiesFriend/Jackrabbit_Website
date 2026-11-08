@@ -43,6 +43,9 @@ async function resolveFile(urlPath) {
         if (stat.isDirectory()) {
             const index = path.join(target, 'index.html');
             await fs.access(index);
+            // Like GitHub Pages, send "/folder" to "/folder/", so the page's
+            // relative links resolve inside the folder.
+            if (!rel.endsWith('/')) return { redirect: `${urlPath.split('?')[0]}/` };
             return index;
         }
         return target;
@@ -57,6 +60,12 @@ export function startServer({ port = 0, host = '127.0.0.1' } = {}) {
         if (!file) {
             res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
             res.end('Not found');
+            return;
+        }
+        if (file.redirect) {
+            const query = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+            res.writeHead(301, { Location: file.redirect + query });
+            res.end();
             return;
         }
         const body = await fs.readFile(file);

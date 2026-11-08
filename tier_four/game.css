@@ -1,0 +1,339 @@
+/* Tier Four prototype. Colours and fonts follow css/styles.css; Aggie's
+   panel is the one warm thing on screen. Designed at 360 px first. */
+:root {
+    --primary-color: #2c3e50;
+    --accent-color: #3498db;
+    --light-text: #f9f9f9;
+    --muted-text: #c5d3e0;
+    --panel: #1f2d3a;
+    --edge: #3d5469;
+    --aggie-panel: #3a2f27;
+    --aggie-edge: #b08a5e;
+    --aggie-text: #f7ecdc;
+    --right: #8fd19e;
+    --misread: #f2b880;
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Merriweather', serif;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:
+        max(1rem, env(safe-area-inset-top))
+        max(1rem, env(safe-area-inset-right))
+        max(1rem, env(safe-area-inset-bottom))
+        max(1rem, env(safe-area-inset-left));
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+main {
+    width: 100%;
+    max-width: 34rem;
+    padding: 1.5rem 1.25rem;
+    background-color: var(--panel);
+    border: 1px solid var(--edge);
+    border-radius: 8px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.label {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted-text);
+}
+
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    line-height: 1.2;
+}
+
+h1 {
+    margin: 0 0 1rem;
+    font-size: clamp(2rem, 9vw, 2.75rem);
+    font-weight: 700;
+}
+
+h2 {
+    margin: 0 0 1rem;
+    font-size: 1.5rem;
+}
+
+h3 {
+    margin: 1.5rem 0 0.75rem;
+    font-size: 1.125rem;
+}
+
+h1:focus, h2:focus {
+    outline: none;
+}
+
+p {
+    margin: 0 0 1rem;
+}
+
+.status {
+    color: var(--muted-text);
+}
+
+.error {
+    color: var(--misread);
+}
+
+/* Buttons and links: at least 48 px tall, 12 px apart. */
+button,
+nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 48px;
+    padding: 0.5rem 1.25rem;
+    border: 1px solid var(--accent-color);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--light-text);
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    /* The :active style below gives touch feedback instead. */
+    -webkit-tap-highlight-color: transparent;
+}
+
+button.primary {
+    background-color: var(--accent-color);
+    color: #fff;
+}
+
+button:hover:not(:disabled),
+button:active:not(:disabled),
+nav a:hover,
+nav a:active {
+    background-color: var(--accent-color);
+    color: #fff;
+}
+
+button:focus-visible,
+nav a:focus-visible {
+    outline: 3px solid var(--light-text);
+    outline-offset: 2px;
+}
+
+button:disabled {
+    border-color: var(--edge);
+    background: transparent;
+    color: var(--muted-text);
+    cursor: default;
+}
+
+.actions,
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.actions button {
+    flex: 1 1 10rem;
+}
+
+.actions.end {
+    margin-top: 1.5rem;
+}
+
+nav {
+    margin-top: 1.5rem;
+}
+
+/* Reader mode switch */
+.mode {
+    margin: 1.5rem 0;
+}
+
+.switch {
+    border-color: var(--edge);
+    padding-left: 0.75rem;
+}
+
+.switch-track {
+    position: relative;
+    width: 2.75rem;
+    height: 1.5rem;
+    border-radius: 0.75rem;
+    background-color: var(--edge);
+    transition: background-color 0.15s;
+}
+
+.switch-thumb {
+    position: absolute;
+    top: 0.1875rem;
+    left: 0.1875rem;
+    width: 1.125rem;
+    height: 1.125rem;
+    border-radius: 50%;
+    background-color: var(--light-text);
+    transition: transform 0.15s;
+}
+
+.switch[aria-checked="true"] .switch-track {
+    background-color: var(--accent-color);
+}
+
+.switch[aria-checked="true"] .switch-thumb {
+    transform: translateX(1.25rem);
+}
+
+.mode .status {
+    margin: 0.5rem 0 0;
+}
+
+/* Aggie's panel */
+.aggie {
+    padding: 1rem;
+    background-color: var(--aggie-panel);
+    border: 1px solid var(--aggie-edge);
+    border-radius: 8px;
+    color: var(--aggie-text);
+}
+
+.aggie h3 {
+    margin-top: 0;
+}
+
+.hints,
+.journal {
+    margin: 0 0 1rem;
+    padding: 0;
+    list-style: none;
+}
+
+.hints li {
+    margin-bottom: 0.75rem;
+}
+
+.aggie-quiet {
+    font-style: italic;
+}
+
+.aggie button {
+    width: 100%;
+    border-color: var(--aggie-edge);
+    color: var(--aggie-text);
+}
+
+.aggie button:hover:not(:disabled),
+.aggie button:active:not(:disabled) {
+    background-color: var(--aggie-edge);
+    color: #1d1712;
+}
+
+.journal li {
+    padding: 0.5rem 0 0.5rem 0.75rem;
+    border-left: 3px solid var(--edge);
+    margin-bottom: 0.5rem;
+}
+
+/* Debrief */
+.truth {
+    margin-bottom: 1.25rem;
+    padding: 1rem;
+    border: 1px solid var(--edge);
+    border-radius: 8px;
+}
+
+.truth h3 {
+    margin-top: 0;
+}
+
+.truth ul {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+}
+
+.truth li {
+    margin-bottom: 0.25rem;
+}
+
+.tag {
+    font-family: var(--font-heading);
+    font-weight: 600;
+}
+
+.tag.right {
+    color: var(--right);
+}
+
+.tag.misread,
+.tag.missed {
+    color: var(--misread);
+}
+
+/* Confirmation dialog */
+/* On a short screen the text scrolls, and the buttons stay in view at the
+   bottom. */
+dialog {
+    width: min(30rem, calc(100vw - 2rem));
+    max-height: calc(100vh - 2rem);
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
+    padding: 1.5rem 1.25rem 0;
+    background-color: var(--panel);
+    border: 1px solid var(--edge);
+    border-radius: 8px;
+    color: var(--light-text);
+}
+
+dialog::backdrop {
+    background-color: rgba(10, 16, 22, 0.75);
+}
+
+dialog h2 {
+    font-size: 1.25rem;
+}
+
+dialog .actions {
+    position: sticky;
+    bottom: 0;
+    padding: 0.75rem 0 1.5rem;
+    background-color: var(--panel);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .switch-track,
+    .switch-thumb {
+        transition: none;
+    }
+}
+
+@media (min-width: 480px) {
+    main {
+        padding: 2.5rem 2.25rem;
+    }
+}

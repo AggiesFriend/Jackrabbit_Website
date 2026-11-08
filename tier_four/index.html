@@ -13,133 +13,80 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        /* Placeholder only. Colours and fonts follow css/styles.css. */
-        :root {
-            --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --light-text: #f9f9f9;
-            --muted-text: #c5d3e0;
-            --panel: #1f2d3a;
-            --edge: #3d5469;
-            --font-heading: 'Montserrat', sans-serif;
-            --font-body: 'Merriweather', serif;
-        }
-
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-
-        html {
-            -webkit-text-size-adjust: 100%;
-            text-size-adjust: 100%;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding:
-                max(1rem, env(safe-area-inset-top))
-                max(1rem, env(safe-area-inset-right))
-                max(1rem, env(safe-area-inset-bottom))
-                max(1rem, env(safe-area-inset-left));
-            background-color: var(--primary-color);
-            color: var(--light-text);
-            font-family: var(--font-body);
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-
-        main {
-            width: 100%;
-            max-width: 34rem;
-            padding: 1.5rem 1.25rem;
-            background-color: var(--panel);
-            border: 1px solid var(--edge);
-            border-radius: 8px;
-        }
-
-        .label {
-            margin: 0 0 0.5rem;
-            font-family: var(--font-heading);
-            font-size: 0.875rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--muted-text);
-        }
-
-        h1 {
-            margin: 0 0 1rem;
-            font-family: var(--font-heading);
-            font-size: clamp(2rem, 9vw, 2.75rem);
-            font-weight: 700;
-            line-height: 1.15;
-        }
-
-        p {
-            margin: 0 0 1rem;
-        }
-
-        .status {
-            color: var(--muted-text);
-        }
-
-        nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-        }
-
-        nav a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 48px;
-            padding: 0.5rem 1.25rem;
-            border: 1px solid var(--accent-color);
-            border-radius: 6px;
-            color: var(--light-text);
-            font-family: var(--font-heading);
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        nav a:hover,
-        nav a:focus-visible {
-            background-color: var(--accent-color);
-            color: #fff;
-        }
-
-        nav a:focus-visible {
-            outline: 3px solid var(--light-text);
-            outline-offset: 2px;
-        }
-
-        @media (min-width: 480px) {
-            main {
-                padding: 2.5rem 2.25rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="game.css">
+    <script type="module" src="js/game.mjs"></script>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="49bd03b2-61a5-4ce1-b653-a2d3f4f22441"></script>
 </head>
 <body>
     <main>
-        <p class="label">The Jackrabbit Series</p>
-        <h1>Tier Four</h1>
-        <p>A free browser game set alongside Book 4, <em>Coming of Age</em>.</p>
-        <p class="status">In development. Check back soon.</p>
-        <nav aria-label="Further reading">
-            <a href="../games.html">All games</a>
-            <a href="../book4.html">About Book 4</a>
-        </nav>
+        <section id="screen-start" aria-labelledby="start-title">
+            <p class="label">The Jackrabbit Series</p>
+            <h1 id="start-title" tabindex="-1">Tier Four</h1>
+            <p>A free browser game set alongside Book 4, <em>Coming of Age</em>.</p>
+            <p class="status">Prototype. All story text is placeholder.</p>
+
+            <div class="mode">
+                <button type="button" id="reader-switch" class="switch" role="switch" aria-checked="false">
+                    <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+                    <span>Spoilers</span>
+                </button>
+                <p id="mode-note" class="status">Spoiler-free. Nothing from Book 4 is given away.</p>
+            </div>
+
+            <div class="actions">
+                <button type="button" id="start" class="primary" disabled>Start contract</button>
+            </div>
+            <p id="load-error" class="error" role="alert" hidden></p>
+
+            <nav aria-label="Further reading">
+                <a href="../games.html">All games</a>
+                <a href="../book4.html">About Book 4</a>
+            </nav>
+        </section>
+
+        <section id="screen-contract" aria-labelledby="contract-title" hidden>
+            <p class="label"><span id="contract-tier"></span> · <span id="contract-mode"></span></p>
+            <h2 id="contract-title" tabindex="-1"></h2>
+
+            <div class="aggie" aria-labelledby="aggie-title">
+                <h3 id="aggie-title">Aggie</h3>
+                <ol id="hints" class="hints" aria-live="polite"></ol>
+                <p id="hints-empty" class="aggie-quiet">No messages yet.</p>
+                <button type="button" id="next-hint">Next</button>
+            </div>
+
+            <h3>Act on it</h3>
+            <div id="action-list" class="actions"></div>
+
+            <h3>Journal</h3>
+            <ol id="journal" class="journal"></ol>
+            <p id="journal-empty" class="status">Nothing logged yet.</p>
+
+            <div class="actions end">
+                <button type="button" id="end-contract" class="primary">End contract</button>
+            </div>
+        </section>
+
+        <section id="screen-debrief" aria-labelledby="debrief-title" hidden>
+            <p class="label"><span id="debrief-mode"></span></p>
+            <h2 id="debrief-title" tabindex="-1">Debrief</h2>
+            <p id="debrief-contract" class="status"></p>
+            <div id="debrief-truths"></div>
+            <div class="actions">
+                <button type="button" id="play-again" class="primary">Back to start</button>
+            </div>
+        </section>
     </main>
+
+    <dialog id="confirm" aria-labelledby="confirm-title" aria-describedby="confirm-text">
+        <form method="dialog">
+            <h2 id="confirm-title"></h2>
+            <div id="confirm-text"></div>
+            <div class="actions">
+                <button type="submit" value="cancel" id="confirm-cancel"></button>
+                <button type="submit" value="ok" id="confirm-ok" class="primary"></button>
+            </div>
+        </form>
+    </dialog>
 </body>
 </html>

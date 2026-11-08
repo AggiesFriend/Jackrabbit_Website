@@ -2,9 +2,10 @@
 // Exits with code 1 if any check finds a problem.
 import checkData from './checks/data.mjs';
 import checkSiteRules from './checks/site-rules.mjs';
+import checkEngine from './checks/engine.mjs';
 import checkLayout from './checks/layout.mjs';
 
-const CHECKS = [checkData, checkSiteRules, checkLayout];
+const CHECKS = [checkData, checkEngine, checkSiteRules, checkLayout];
 
 let failed = 0;
 for (const run of CHECKS) {

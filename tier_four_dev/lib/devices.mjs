@@ -9,6 +9,3 @@ export const DEVICES = [
     { name: 'tablet-768', width: 768, height: 1024, phone: false },
     { name: 'desktop-1280', width: 1280, height: 800, phone: false },
 ];
-
-// Pages the sweep visits, relative to the site root.
-export const PAGES = ['/tier_four/'];

@@ -1,11 +1,14 @@
 // Layout sweep (Q9): at every size in the device matrix, no sideways
 // scrolling, nothing off-screen, tap targets at least 44 x 44 px, body text
-// at least 16 px. Saves a screenshot of each page at each size.
+// at least 16 px. Steps through each game screen (lib/screens.mjs) by touch
+// on phones and by mouse elsewhere, and saves a screenshot of each screen at
+// each size.
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { chromium } from 'playwright';
 import { startServer } from '../lib/server.mjs';
-import { DEVICES, PAGES } from '../lib/devices.mjs';
+import { DEVICES } from '../lib/devices.mjs';
+import { SCREENS } from '../lib/screens.mjs';
 import { SCREENSHOT_DIR } from '../lib/paths.mjs';
 
 const MIN_TARGET = 44;
@@ -43,6 +46,14 @@ function measure({ minTarget, deviceWidth }) {
             out.offscreen.push(`${describe(el)} spans ${Math.round(r.left)} to ${Math.round(r.right)} px`);
         }
     }
+    // An open dialog can't be scrolled with the page, so its buttons must be
+    // on screen as it opens.
+    for (const el of document.querySelectorAll('dialog[open] button')) {
+        const r = el.getBoundingClientRect();
+        if (r.top < 0 || r.bottom > window.innerHeight + 1) {
+            out.offscreen.push(`${describe(el)} in an open dialog spans ${Math.round(r.top)} to ${Math.round(r.bottom)} px, below the ${window.innerHeight} px screen`);
+        }
+    }
     return out;
 }
 
@@ -55,33 +66,57 @@ export default async function checkLayout() {
     let shots = 0;
     try {
         for (const device of DEVICES) {
-            const context = await browser.newContext({
-                viewport: { width: device.width, height: device.height },
-                isMobile: device.phone,
-                hasTouch: device.phone,
-                deviceScaleFactor: device.phone ? 2 : 1,
-            });
-            // Keep test visits out of the analytics.
-            await context.route('https://cloud.umami.is/**', route => route.abort());
-            const page = await context.newPage();
-            for (const pagePath of PAGES) {
-                await page.goto(base + pagePath, { waitUntil: 'load' });
-                await page.evaluate(() => document.fonts.ready);
+            const tap = locator => device.phone ? locator.tap() : locator.click();
+            for (const screen of SCREENS) {
+                const where = `${screen.name} screen at ${device.width} x ${device.height}`;
+                // A fresh context per screen, so neither a failed step nor
+                // anything the game remembers on the device carries over.
+                const context = await browser.newContext({
+                    viewport: { width: device.width, height: device.height },
+                    isMobile: device.phone,
+                    hasTouch: device.phone,
+                    deviceScaleFactor: device.phone ? 2 : 1,
+                });
+                // Keep test visits out of the analytics.
+                await context.route('https://cloud.umami.is/**', route => route.abort());
+                // A step that can't find its button fails fast rather than
+                // waiting the default 30 s.
+                context.setDefaultTimeout(5000);
+                // Loading can wait on the web fonts, so it gets longer.
+                context.setDefaultNavigationTimeout(30000);
+                const page = await context.newPage();
+                // A page that lays out fine can still be missing its
+                // stylesheet or script.
+                const broken = [];
+                page.on('pageerror', err => broken.push(`script error: ${err.message}`));
+                page.on('response', r => {
+                    if (r.status() >= 400 && r.url().startsWith(base)) broken.push(`${r.status()} for ${r.url().slice(base.length)}`);
+                });
+                try {
+                    await page.goto(base + screen.path, { waitUntil: 'load' });
+                    await page.evaluate(() => document.fonts.ready);
+                    await screen.steps(page, tap);
+                } catch (err) {
+                    problems.push(`${where}: couldn't reach the screen: ${err.message.split('\n')[0]}`);
+                    for (const b of broken) problems.push(`${where}: ${b}`);
+                    await context.close();
+                    continue;
+                }
+                for (const b of broken) problems.push(`${where}: ${b}`);
                 const m = await page.evaluate(measure, { minTarget: MIN_TARGET, deviceWidth: device.width });
-                const where = `${pagePath} at ${device.width} x ${device.height}`;
                 if (m.scrollWidth > m.viewport) problems.push(`${where}: sideways scrolling (${m.scrollWidth} px content in ${m.viewport} px)`);
                 if (m.bodyFont < MIN_BODY_TEXT) problems.push(`${where}: body text is ${m.bodyFont} px`);
                 for (const s of m.small) problems.push(`${where}: tap target too small: ${s}`);
                 for (const s of m.offscreen) problems.push(`${where}: off-screen: ${s}`);
 
-                const slug = pagePath.replace(/^\/|\/$/g, '').replace(/[^a-z0-9]+/gi, '-') || 'root';
+                const slug = `${screen.path.replace(/^\/|\/$/g, '').replace(/[^a-z0-9]+/gi, '-') || 'root'}-${screen.name}`;
                 await page.screenshot({
                     path: path.join(SCREENSHOT_DIR, `${slug}-${device.name}.png`),
                     fullPage: true,
                 });
                 shots++;
+                await context.close();
             }
-            await context.close();
         }
     } finally {
         await browser.close();
@@ -90,6 +125,6 @@ export default async function checkLayout() {
     return {
         name: 'Layout sweep',
         problems,
-        summary: `${PAGES.length} page(s) at ${DEVICES.length} sizes; ${shots} screenshot(s) in tier_four_dev/screenshots/`,
+        summary: `${SCREENS.length} screen(s) at ${DEVICES.length} sizes; ${shots} screenshot(s) in tier_four_dev/screenshots/`,
     };
 }

@@ -3,6 +3,14 @@
 A static site served by GitHub Pages. There is no build step for the site itself:
 the HTML in this repo is what visitors get.
 
+## Git workflow
+
+- Do the work on a branch cut from `main`.
+- When the work is done and the user is happy with it, merge the branch into
+  `main` in the local repository with a merge commit
+  (`git merge --no-ff <branch>`). Don't open a pull request.
+- Don't push. The user pushes `main` to GitHub themselves.
+
 ## Analytics: the umami snippet
 
 Every **standalone** HTML page must carry the umami tracking snippet, placed

@@ -1,0 +1,35 @@
+{
+    "nav": {
+        "logo": { "text": "The Jackrabbit", "href": "index.html" },
+        "links": [
+            { "text": "Home", "href": "index.html" },
+            {
+                "text": "Books",
+                "href": "books.html",
+                "menu": [
+                    { "text": "The Jackrabbit Series", "href": "books.html" },
+                    { "text": "Trust Us", "href": "trust-us/index.html" },
+                    { "text": "Short Stories", "href": "short-stories/index.html" }
+                ]
+            },
+            { "text": "Characters", "href": "characters.html" },
+            { "text": "Encyclopaedia", "href": "encyclopaedia/encyclopaedia.html" },
+            { "text": "Games", "href": "games.html" },
+            { "text": "Contact", "href": "contact.html" }
+        ]
+    },
+    "footer": {
+        "title": "The Jackrabbit",
+        "tagline": "A science fiction series",
+        "links": [
+            { "text": "Home", "href": "index.html" },
+            { "text": "Books", "href": "books.html" },
+            { "text": "Characters", "href": "characters.html" },
+            { "text": "Encyclopaedia", "href": "encyclopaedia/encyclopaedia.html" },
+            { "text": "Games", "href": "games.html" },
+            { "text": "Contact", "href": "contact.html" }
+        ],
+        "copyright": "© 2026 Tony Marks. All rights reserved."
+    },
+    "absolutePathPages": ["404.html"]
+}

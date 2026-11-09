@@ -172,6 +172,186 @@ section {
     transition: var(--transition);
 }
 
+/* ----- Sub-menu under Books -----
+   Opens on hover for a mouse, and through the chevron button for
+   touch and keyboard users (js/script.js toggles .open). In the
+   phone menu the sub-links are simply listed under Books. */
+.nav-links .has-submenu {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* As a flex item the link's vertical padding would count towards the
+   row's height and push "Books" below the other links, so drop it */
+.nav-links .has-submenu > a {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0.15rem;
+}
+
+.submenu-toggle {
+    background: none;
+    border: 0;
+    color: var(--light-text);
+    cursor: pointer;
+    padding: 0 0.35rem;
+    line-height: 0;
+    transition: var(--transition);
+}
+
+.submenu-toggle::before {
+    content: "";
+    display: inline-block;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-30%) rotate(45deg);
+    transition: transform 0.2s ease;
+}
+
+.submenu-toggle:hover {
+    color: var(--accent-color);
+}
+
+.submenu-toggle:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    border-radius: 3px;
+}
+
+.has-submenu.open .submenu-toggle::before {
+    transform: translateY(15%) rotate(225deg);
+}
+
+/* Hangs from the bottom edge of the navbar: the bar's 1.5rem padding
+   plus half the difference between the logo's line (1.8rem x 1.6) and
+   the links' line (1rem x 1.6) */
+.submenu {
+    position: absolute;
+    top: calc(100% + 2.14rem);
+    left: -0.6rem;
+    min-width: 15rem;
+    list-style: none;
+    padding: 0.5rem 0;
+    background-color: var(--primary-color);
+    border-top: 3px solid var(--accent-color);
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    z-index: 1001;
+}
+
+/* Invisible bridge over the gap, so the menu stays open while the
+   pointer travels down from "Books" */
+.submenu::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 2.4rem;
+}
+
+/* Smaller logo between the burger breakpoint and desktop */
+@media screen and (max-width: 1100px) and (min-width: 769px) {
+    .submenu {
+        top: calc(100% + 1.9rem);
+    }
+}
+
+.has-submenu.open .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+@media (hover: hover) {
+    .has-submenu:hover .submenu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .has-submenu:hover .submenu-toggle {
+        color: var(--accent-color);
+    }
+}
+
+.nav-links .submenu li {
+    margin: 0;
+}
+
+.nav-links .submenu a {
+    display: block;
+    padding: 0.65rem 1.3rem;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.nav-links .submenu a:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+@media screen and (max-width: 768px) {
+    .nav-links {
+        overflow-y: auto;
+    }
+
+    .nav-links .has-submenu {
+        display: block;
+        text-align: center;
+    }
+
+    .nav-links .has-submenu > a {
+        padding-right: 0.5rem;
+    }
+
+    .submenu-toggle {
+        display: none;
+    }
+
+    .submenu,
+    .has-submenu.open .submenu {
+        position: static;
+        min-width: 0;
+        padding: 0.6rem 0 0;
+        background: none;
+        border: 0;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition: none;
+    }
+
+    .submenu::before {
+        display: none;
+    }
+
+    .nav-links .submenu li {
+        margin: 0.7rem 0 0;
+    }
+
+    .nav-links .submenu a {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.85rem;
+        font-weight: 400;
+        white-space: normal;
+        color: rgba(249, 249, 249, 0.82);
+    }
+
+    .nav-links .submenu a:hover,
+    .nav-links .submenu .active {
+        background: none;
+        color: var(--accent-color);
+    }
+}
+
 /* ============================================
    HERO SECTION (Homepage)
    ============================================ */

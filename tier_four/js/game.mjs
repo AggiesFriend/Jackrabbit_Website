@@ -172,12 +172,50 @@ function newMentions(line) {
     return found;
 }
 
+// Keeps the newest line in view above the Continue bar while it types,
+// unless the player has scrolled up to reread, in which case the game
+// leaves the page alone until they come back down.
+let following = true;
+let lastScrollY = window.scrollY;
+window.addEventListener('scroll', () => {
+    // The game only ever scrolls down, so any move up is the player's.
+    if (window.scrollY < lastScrollY - 2) following = false;
+    else if (spaceBelow() < 80) following = true;
+    lastScrollY = window.scrollY;
+}, { passive: true });
+// Typing can scroll again before the browser reports the player's scroll,
+// so let go as soon as a finger, wheel or key asks to go up.
+let touchY = null;
+window.addEventListener('touchstart', e => { touchY = e.touches[0]?.clientY ?? null; }, { passive: true });
+window.addEventListener('touchmove', e => {
+    if (touchY !== null && (e.touches[0]?.clientY ?? touchY) > touchY + 8) following = false;
+}, { passive: true });
+window.addEventListener('wheel', e => { if (e.deltaY < 0) following = false; }, { passive: true });
+window.addEventListener('keydown', e => {
+    if (['ArrowUp', 'PageUp', 'Home'].includes(e.key)) following = false;
+});
+
+function spaceBelow() {
+    const doc = document.documentElement;
+    return doc.scrollHeight - (window.scrollY + window.innerHeight);
+}
+
+function keepInView(el) {
+    if (!following || !el) return;
+    const bar = $('controls').getBoundingClientRect();
+    const bottom = el.getBoundingClientRect().bottom;
+    const limit = Math.min(bar.top, window.innerHeight) - 12;
+    if (bottom > limit) window.scrollBy(0, bottom - limit);
+}
+
 const lineKey = index => `${play.chapter}/${play.scene}/${index}`;
 const linkedText = (line, index) => withMentions(line.text, play.linkedAt?.[lineKey(index)]);
 
 function show(name) {
     for (const s of SCREENS) $(`screen-${s}`).hidden = s !== name;
     window.scrollTo(0, 0);
+    lastScrollY = 0;
+    following = true;
     const heading = document.querySelector(`#screen-${name} [tabindex="-1"]`);
     heading?.focus();
     playtest.record('screen', { name });
@@ -462,11 +500,13 @@ async function revealNext() {
     const p = li.querySelector('p');
     $('advance').textContent = '…';
     $('advance').disabled = line.who !== 'aggie';
-    li.scrollIntoView({ block: 'end', behavior: reducedMotion() ? 'auto' : 'smooth' });
+    following = following || spaceBelow() < 80;
+    keepInView(li);
     if (line.who === 'aggie') audio.tick('aggie');
     else audio.tick('tap');
     const mine = generation;
     await typeOut(p, line);
+    keepInView(li);
     // The play was replaced while this line was typing: drop it.
     if (mine !== generation) return;
     play = reveal(play, view, play.shown + 1);
@@ -497,6 +537,7 @@ function typeOut(p, line) {
         const type = () => {
             i = Math.min(text.length, i + 1 + (text.length > 160 ? 1 : 0));
             p.textContent = text.slice(0, i);
+            keepInView(p.closest('li'));
             if (i >= text.length) return finish();
             timer = setTimeout(type, /[.,;:!?]/.test(text[i - 1]) ? 110 : 22);
         };
@@ -555,7 +596,9 @@ function drawControls() {
         choicesBox.append(r);
     }
     choicesBox.firstChild?.focus({ preventScroll: true });
-    choicesBox.scrollIntoView({ block: 'end', behavior: reducedMotion() ? 'auto' : 'smooth' });
+    // The choices sit in the sticky bar, so they are always on screen; it is
+    // the last line that the taller bar might now cover.
+    keepInView($('lines').lastElementChild);
 }
 
 async function takeChoice(index, choice) {

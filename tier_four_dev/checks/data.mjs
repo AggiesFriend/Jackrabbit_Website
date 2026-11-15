@@ -107,11 +107,49 @@ export default async function checkData() {
         problems.push(`tier_four/data/campaign.json: ${err.message}`);
     }
 
+    // Links in lines, written [text](url), must be relative paths to pages
+    // that exist; they resolve from tier_four/.
+    let links = 0;
+    for (const file of await listJson(CHAPTER_DIR)) {
+        let chapter;
+        try {
+            chapter = JSON.parse(await fs.readFile(file, 'utf8'));
+        } catch { continue; }
+        for (const scene of chapter.scenes ?? []) {
+            for (const line of scene.lines ?? []) {
+                for (const m of String(line.text ?? '').matchAll(/\[([^\]]+)\]\(([^)\s]+)\)/g)) {
+                    links++;
+                    const target = m[2].split('#')[0];
+                    if (/^[a-z]+:|^\/\//i.test(target)) {
+                        problems.push(`${relative(file)}: scene ${scene.id}: link "${m[2]}" must be a relative path to a page on this site`);
+                        continue;
+                    }
+                    const full = path.resolve(GAME_DIR, target);
+                    if (!full.startsWith(REPO_ROOT) || !await fs.access(full).then(() => true, () => false)) {
+                        problems.push(`${relative(file)}: scene ${scene.id}: link "${m[2]}" points at a page that doesn't exist`);
+                    }
+                }
+            }
+        }
+    }
+
+    // Character pages named in the campaign must exist.
+    try {
+        const campaign = JSON.parse(await fs.readFile(path.join(DATA_DIR, 'campaign.json'), 'utf8'));
+        for (const [key, who] of Object.entries(campaign.characters ?? {})) {
+            links++;
+            const full = path.resolve(GAME_DIR, String(who?.page ?? ''));
+            if (!full.startsWith(REPO_ROOT) || !await fs.access(full).then(() => true, () => false)) {
+                problems.push(`tier_four/data/campaign.json: character "${key}" page "${who?.page}" doesn't exist`);
+            }
+        }
+    } catch { /* reported above */ }
+
     const tested = await selfTest(problems);
     return {
         name: 'Data validation',
         problems,
-        summary: `${files.length} JSON file(s) parsed, ${chapterCount} chapter(s) validated; `
+        summary: `${files.length} JSON file(s) parsed, ${chapterCount} chapter(s) validated, ${links} link(s) checked; `
             + `self-test: ${tested.valid} valid sample(s), ${tested.invalid} broken case(s)`,
     };
 }

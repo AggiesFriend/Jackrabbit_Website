@@ -19,6 +19,8 @@ for (const f of fs.readdirSync(path.join(DATA, 'chapters'))) {
 const MODES = ['spoiler-free', 'reader'];
 const views = Object.fromEntries(MODES.map(m => [m, viewCampaign(campaign, chapters, m)]));
 
+const SITE = 'https://www.jackrabbit-series.com/';
+const md = text => text.replace(/\[([^\]]+)\]\(\.\.\/([^)\s]+)\)/g, (m, label, rel) => `[${label}](${SITE}${rel})`);
 const speaker = who => who === 'n' ? '' : who === 'jack' ? 'Jack' : (campaign.speakers[who]?.name ?? who);
 const tierName = t => t === 0 ? 'Prologue' : `Tier ${t}`;
 const modeTag = (item, chapterMode) => item.mode && item.mode !== 'both' && item.mode !== chapterMode ? ` *[${item.mode} only]*` : '';
@@ -131,7 +133,7 @@ for (const m of MODES) {
                 const who = speaker(l.who);
                 const hint = l.kind && hints.has(l.hint) ? ` *[hint: ${l.kind}, for \`${l.truth}\`]*` : '';
                 const tag = modeTag(l, rawChapter.mode) + cond(l) + hint;
-                p(who ? `**${who}:** ${l.text}${tag}` : `${l.text}${tag}`);
+                p(who ? `**${who}:** ${md(l.text)}${tag}` : `${md(l.text)}${tag}`);
                 p('');
             }
             if (s.choices.length) {

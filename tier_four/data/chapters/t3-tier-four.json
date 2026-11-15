@@ -49,7 +49,7 @@
         { "who": "kaplan", "text": "Kaplan. The new pin. Six years, isn’t it? Markham, it’s six years. Come and sit down before you fall down, you look about twelve." },
         { "who": "markham", "text": "Markham. Welcome to tier 4, where the money is excellent and the questions are few. The first rule is that tier 4 couriers do not ask what a contract is for. The second rule is that there is no second rule, because the first one covers it." },
         { "who": "hamza", "text": "Hamza. He owes me for the last round, she owes me for the last three, and you’ll owe me by the end of the night. Somebody has to keep track of everyone’s money, and I don’t trust anyone else to." },
-        { "who": "n", "text": "There are others at the table: a man called Decker who does not say much, a man called Vega who says too much about a HeliosMed facility on Europa. The drinks arrive. The talk is of patents and black sites and competitors’ people who did not come back, in the tone of weather, and you keep your face where it is, and the pin on your lapel is heavier than the chronometer on your wrist." }
+        { "who": "n", "text": "There are others at the table: a man called Decker who does not say much, a man called Vega who says too much about a HeliosMed facility on Europa. The drinks arrive. The talk is of patents and black sites and competitors’ people who did not come back, in the tone of weather, and you keep your face where it is, and the pin on your lapel is heavier than the chronometer on your wrist.", "nolink": ["decker"] }
       ],
       "choices": [
         { "text": "Stay. Drink one drink. Let them look.", "goto": "ship", "cover": -4 },

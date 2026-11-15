@@ -1613,7 +1613,7 @@ That is the whole of her reply. Four years ago she would have had a page of it. 
 
 ### Scene `load`
 
-The module is the size of a book and comes aboard in a case that two NovaFoundry security officers carry between them, as if it weighed what it means. Consortium root key material. Installed at manufacture, never transmitted, delivered by courier under escort. You have read the encyclopaedia entry. Now you are in it.
+The module is the size of a book and comes aboard in a case that two NovaFoundry security officers carry between them, as if it weighed what it means. Consortium root key material. Installed at manufacture, never transmitted, delivered by courier under escort. You have read the [encyclopaedia entry](https://www.jackrabbit-series.com/encyclopaedia/CDS.html). Now you are in it.
 
 The escort is two NovaFoundry corvettes, blunt and grey, holding station either side of the berth. The escort lead’s voice comes over the channel with no greeting.
 
@@ -3576,7 +3576,7 @@ That is the whole of her reply. Four years ago she would have had a page of it. 
 
 ### Scene `load`
 
-The module is the size of a book and comes aboard in a case that two NovaFoundry security officers carry between them, as if it weighed what it means. Consortium root key material. Installed at manufacture, never transmitted, delivered by courier under escort. You have read the encyclopaedia entry. Now you are in it.
+The module is the size of a book and comes aboard in a case that two NovaFoundry security officers carry between them, as if it weighed what it means. Consortium root key material. Installed at manufacture, never transmitted, delivered by courier under escort. You have read the [encyclopaedia entry](https://www.jackrabbit-series.com/encyclopaedia/CDS.html). Now you are in it.
 
 The escort is two NovaFoundry corvettes, blunt and grey, holding station either side of the berth. The escort lead’s voice comes over the channel with no greeting.
 

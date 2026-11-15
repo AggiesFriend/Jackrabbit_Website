@@ -81,5 +81,21 @@
     "cover": 6,
     "sideText": "Declined. The consignment has been reassigned to another courier. A declined contract is logged against your file.",
     "sideCover": 8
+  },
+  "characters": {
+    "jack": { "page": "../character1.html", "names": ["Jack Abbott", "Jack"] },
+    "aggie": { "page": "../character2.html", "names": ["Aggie"] },
+    "parents": { "page": "../character4.html", "names": ["Albert and Dorothy Abbott", "Albert and Dorothy"] },
+    "locke": { "page": "../character7.html", "names": ["Agatha Locke", "Agatha"] },
+    "ozzy": { "page": "../character10.html", "names": ["Ozzy"] },
+    "razer": { "page": "../character14.html", "names": ["Razer"] },
+    "chen": { "page": "../character15.html", "names": ["Administrator Mei Chen", "Mei Chen", "Administrator Chen", "Chen"] },
+    "singh": { "page": "../character16.html", "names": ["General Singh", "Singh"] },
+    "decker": { "page": "../character28.html", "names": ["Decker"] },
+    "frank": { "page": "../character30.html", "names": ["Frank Kowalski", "Frank"] },
+    "amanda": { "page": "../character31.html", "names": ["Amanda Kowalski", "Amanda"] },
+    "eleanor": { "page": "../character32.html", "names": ["Eleanor Kowalski", "Eleanor"] },
+    "keller": { "page": "../character33.html", "names": ["Katherine Keller", "Keller"] },
+    "halsey": { "page": "../character34.html", "names": ["Director Halsey", "Halsey"] }
   }
 }

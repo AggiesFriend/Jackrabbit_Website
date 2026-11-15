@@ -36,6 +36,9 @@ function measure({ minTarget, deviceWidth }) {
         const r = el.getBoundingClientRect();
         const style = getComputedStyle(el);
         if (r.width === 0 || r.height === 0 || style.visibility === 'hidden') continue;
+        // Links inside a sentence of the story are exempt, as WCAG 2.5.8
+        // exempts inline links: they can't grow without breaking the text.
+        if (el.matches('.line p a')) continue;
         if (r.width < minTarget || r.height < minTarget) {
             out.small.push(`${describe(el)} is ${Math.round(r.width)} x ${Math.round(r.height)} px`);
         }

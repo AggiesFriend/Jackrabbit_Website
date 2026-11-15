@@ -40,6 +40,7 @@ Local only, nothing pushed. Not merged into `main`.
 | Hint journal | Done: the Journal drawer's Aggie tab keeps every hint line reached. |
 | SNAP plotting: hold station, cast strands, choose an anchor; moving debris and tighter deadlines at higher tiers; no timing | Done. Seeded per scene. "Let Aggie plot them" in Settings for accessibility. Late plots raise cover a little. |
 | Cover meter; review scene when it fills; Jack always keeps his post | Done (`review-compliance`, cover resets to 55). |
+| Links to the main site | Done. A line can link a page with `[text](../path.html)`, opening in a new tab (the escort contract links the CDS encyclopaedia entry). Characters with a page are linked on their first mention in a career, from `characters` in the campaign; the choice is saved with the play, so reloads and rewinds draw the same links. A line can opt out with `nolink` (the Apex Lounge Decker, a Tier 4 courier, not the Eclipse captain; Vega there is not Dr Eli Vega, so Vega has no entry). The data check confirms every linked page exists. |
 | Refusing contracts raises suspicion | Done: Decline on the contract card. Side contracts (Cold chain, Relay down) close unflown and stay out of the debrief; main contracts draw their own pushback line and stay on the card. Either way it costs cover, goes in the journal and counts in Standing. Halsey notices a declined Cold chain. |
 | People: Frank, Eleanor, Amanda, Halsey; trust gates optional scenes | Done. `t2-amanda` needs trust with Amanda. Trust shows as words in Standing. |
 | Prologue in the Jackrabbit with Aggie speaking freely; two ship interfaces | Done: amber Jackrabbit theme for the prologue and the last two chapters. |
@@ -182,12 +183,12 @@ the check offered a choice):
 One file per chapter in `tier_four/data/chapters/<id>.json`, listed in
 order in `data/campaign.json` (`chapters`), with review chapters under
 `reviews` (by tier, or `any`), `speakers` (key to name) and `endings`
-(per mode: `title`, `text[]`) and the default `decline` terms (`who`, `text`, `cover`, `sideText`, `sideCover`).
+(per mode: `title`, `text[]`) `characters` (key to `page` and `names`, for first-mention links) and the default `decline` terms (`who`, `text`, `cover`, `sideText`, `sideCover`).
 
 | Field | Chapter | Scene | Line | Choice |
 |---|---|---|---|---|
 | required | `format` (2), `id`, `tier` (0 to 5), `kind` (`contract` or `scene`), `mode`, `ship` (`jackrabbit` or `alc`), `title`, `truths`, `understandings`, `start`, `scenes` | `id`, `lines`, and one of `choices`, `next`, `end`, `rewindTo` | `who`, `text` | `text`, `goto` (scene id or `end`) |
-| optional | `subtitle`, `brief` (required for a contract: `client`, `route`, `cargo`, `fee`, `notes`), `decline` (contracts only: `side`, `who`, `text`, `cover`), `requires`, `unless` | `mode`, `jump` (`name`, `difficulty` 1 to 4, `deadline`, `lateCover`), `enter` (effects), `requires`, `unless` | `mode`, `kind` + `hint` + `truth` (a hint, Aggie or the Jackrabbit Aggie only), `requires`, `unless` | `mode`, `logs` (understanding ids), `confirm`, `requires`, `unless`, effects |
+| optional | `subtitle`, `brief` (required for a contract: `client`, `route`, `cargo`, `fee`, `notes`), `decline` (contracts only: `side`, `who`, `text`, `cover`), `requires`, `unless` | `mode`, `jump` (`name`, `difficulty` 1 to 4, `deadline`, `lateCover`), `enter` (effects), `requires`, `unless` | `mode`, `kind` + `hint` + `truth` (a hint, Aggie or the Jackrabbit Aggie only), `nolink` (character keys), `requires`, `unless` | `mode`, `logs` (understanding ids), `confirm`, `requires`, `unless`, effects |
 
 Declining sets `refused:<id>` on a main contract or `declined:<id>` on a side one.
 Effects: `cover` (±), `trust` (name to ±), `set` and `clear` (flags),

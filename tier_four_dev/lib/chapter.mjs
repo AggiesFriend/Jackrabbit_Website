@@ -61,7 +61,7 @@ const SCENE = {
 const JUMP = { name: 'text', difficulty: 'difficulty', deadline: ['count'], lateCover: ['integer'] };
 const EFFECTS = { cover: ['integer'], trust: ['trust'], set: ['conditions'], clear: ['conditions'], note: ['text'] };
 const LINE = {
-    who: 'id', text: 'text', mode: ['mode'], kind: ['kind'], hint: ['id'], truth: ['id'],
+    who: 'id', text: 'text', mode: ['mode'], kind: ['kind'], hint: ['id'], truth: ['id'], nolink: ['ids'],
     requires: ['conditions'], unless: ['conditions'],
 };
 const CHOICE = {
@@ -247,7 +247,7 @@ export function validateChapter(chapter, { speakers = null } = {}) {
     return problems;
 }
 
-const CAMPAIGN = { format: 'format', title: 'text', chapters: 'ids', reviews: ['object'], speakers: ['object'], endings: ['object'], decline: ['object'] };
+const CAMPAIGN = { format: 'format', title: 'text', chapters: 'ids', reviews: ['object'], speakers: ['object'], endings: ['object'], decline: ['object'], characters: ['object'] };
 
 // `entries`: [{ name, data }], one per chapter file, plus the campaign.
 // Chapter IDs must be unique across files, and the campaign must list
@@ -268,6 +268,13 @@ export function validateCampaign(campaign, entries) {
     }
     if (!ok) return problems;
     if (campaign.decline !== undefined) checkFields(campaign.decline, CAMPAIGN_DECLINE, 'campaign.decline', problems);
+    for (const [key, who] of Object.entries(campaign.characters ?? {})) {
+        if (!ID.test(key)) problems.push(`campaign: character "${key}" must be a kebab-case ID`);
+        checkFields(who, { page: 'text', names: 'list' }, `campaign.characters.${key}`, problems);
+        if (Array.isArray(who?.names) && !who.names.every(n => typeof n === 'string' && n.trim())) {
+            problems.push(`campaign.characters.${key}: names must be non-empty text`);
+        }
+    }
     for (const id of campaign.chapters) {
         if (!owners.has(id)) problems.push(`campaign: chapter "${id}" has no file`);
     }

@@ -90,6 +90,91 @@ function element(tag, text, className) {
 
 const bookTitle = () => element('em', 'Coming of Age');
 
+// Lines may carry links written [text](url), to pages on the main site.
+// They open in a new tab, so the game keeps its place.
+const LINK = /\[([^\]]+)\]\(([^)\s]+)\)/g;
+const plainText = text => text.replace(LINK, '$1');
+
+function richText(text) {
+    const parts = [];
+    let last = 0;
+    for (const m of text.matchAll(LINK)) {
+        if (m.index > last) parts.push(text.slice(last, m.index));
+        const a = element('a', m[1]);
+        a.href = new URL(m[2], DATA_URL.href.replace(/data\/$/, '')).href;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.title = 'Opens in a new tab';
+        parts.push(a);
+        last = m.index + m[0].length;
+    }
+    if (last < text.length) parts.push(text.slice(last));
+    return parts;
+}
+
+const setRich = (el, text) => el.replaceChildren(...richText(text));
+
+// Characters with a page on the main site are linked the first time they
+// are mentioned in a career. Which names a line linked is saved with the
+// play (play.linkedAt), so a reload or a rewind draws the same links.
+const escapeRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+let mentionPatterns = null;
+function mentionPatternsFor(characters) {
+    const list = [];
+    for (const [key, who] of Object.entries(characters ?? {})) {
+        for (const name of who.names) list.push({ key, name, page: who.page });
+    }
+    list.sort((a, b) => b.name.length - a.name.length);
+    return list.map(x => ({ ...x, re: new RegExp(`(?<![\\p{L}\\[])${escapeRe(x.name)}(?![\\p{L}\\]])`, 'u') }));
+}
+
+// Adds [Name](page) around the first mention of each character in `keys`,
+// outside any link the line already has.
+function withMentions(text, keys) {
+    if (!keys?.length) return text;
+    mentionPatterns ??= mentionPatternsFor(campaign.characters);
+    let out = text;
+    for (const key of keys) {
+        const options = mentionPatterns.filter(p => p.key === key);
+        // Search only the parts of the text that aren't links already.
+        const spans = [];
+        let last = 0;
+        for (const m of out.matchAll(LINK)) {
+            spans.push([last, m.index]);
+            last = m.index + m[0].length;
+        }
+        spans.push([last, out.length]);
+        let best = null;
+        for (const [from, to] of spans) {
+            const part = out.slice(from, to);
+            for (const p of options) {
+                const m = p.re.exec(part);
+                if (m && (!best || from + m.index < best.at)) best = { at: from + m.index, name: m[0], page: p.page };
+            }
+            if (best) break;
+        }
+        if (best) out = `${out.slice(0, best.at)}[${best.name}](${best.page})${out.slice(best.at + best.name.length)}`;
+    }
+    return out;
+}
+
+// The characters a newly revealed line mentions for the first time.
+function newMentions(line) {
+    mentionPatterns ??= mentionPatternsFor(campaign.characters);
+    const seen = new Set(play.mentions ?? []);
+    const skip = new Set(line.nolink ?? []);
+    const text = plainText(line.text);
+    const found = [];
+    for (const p of mentionPatterns) {
+        if (seen.has(p.key) || skip.has(p.key) || found.includes(p.key)) continue;
+        if (p.re.test(text)) found.push(p.key);
+    }
+    return found;
+}
+
+const lineKey = index => `${play.chapter}/${play.scene}/${index}`;
+const linkedText = (line, index) => withMentions(line.text, play.linkedAt?.[lineKey(index)]);
+
 function show(name) {
     for (const s of SCREENS) $(`screen-${s}`).hidden = s !== name;
     window.scrollTo(0, 0);
@@ -316,7 +401,7 @@ function drawPlay(chapter) {
     if (list.dataset.scene !== key || list.children.length !== play.shown) {
         list.dataset.scene = key;
         list.replaceChildren();
-        for (const line of lines.slice(0, play.shown)) list.append(lineElement(line, false));
+        lines.slice(0, play.shown).forEach((line, i) => list.append(lineElement({ ...line, text: linkedText(line, i) }, false)));
     }
     show('play');
     if (play.shown === 0 && lines.length) {
@@ -340,7 +425,7 @@ function lineElement(line, animate) {
     const p = element('p');
     li.append(p);
     if (!animate) {
-        p.textContent = pauseText(line);
+        setRich(p, pauseText(line));
         return li;
     }
     li.dataset.pending = 'true';
@@ -362,7 +447,16 @@ async function revealNext() {
     // A new scene's first line may follow a choice: the old choices go at once.
     $('choices').hidden = true;
     $('advance').hidden = false;
-    const line = lines[play.shown];
+    const index = play.shown;
+    const fresh = newMentions(lines[index]);
+    if (fresh.length) {
+        play = {
+            ...play,
+            mentions: [...(play.mentions ?? []), ...fresh],
+            linkedAt: { ...(play.linkedAt ?? {}), [lineKey(index)]: fresh },
+        };
+    }
+    const line = { ...lines[index], text: linkedText(lines[index], index) };
     const li = lineElement(line, true);
     $('lines').append(li);
     const p = li.querySelector('p');
@@ -384,17 +478,18 @@ async function revealNext() {
 
 function typeOut(p, line) {
     if (line.who !== 'aggie' || instantText()) {
-        p.textContent = pauseText(line);
+        setRich(p, pauseText(line));
         return Promise.resolve();
     }
     return new Promise(resolve => {
         let i = 0;
         let timer = null;
-        const text = line.text;
+        // Typed as plain text; any links appear when the line is complete.
+        const text = plainText(line.text);
         const finish = () => {
             clearTimeout(timer);
             p.classList.remove('typing');
-            p.textContent = text;
+            setRich(p, line.text);
             typing = null;
             resolve();
         };
@@ -558,7 +653,7 @@ function drawEnd() {
             const ul = element('ul');
             for (const h of truth.hints) {
                 const li = element('li');
-                li.append(element('span', h.seen ? 'Heard: ' : 'Missed: ', `tag ${h.seen ? 'right' : 'missed'}`), `“${h.text}”`);
+                li.append(element('span', h.seen ? 'Heard: ' : 'Missed: ', `tag ${h.seen ? 'right' : 'missed'}`), `“${plainText(h.text)}”`);
                 ul.append(li);
             }
             t.append(ul);
@@ -650,7 +745,7 @@ function drawDrawer() {
                 ul = element('ul', undefined, 'journal-list');
                 ag.append(ul);
             }
-            ul.append(element('li', `“${hint.text}”`, 'aggie'));
+            ul.append(element('li', `“${plainText(hint.text)}”`, 'aggie'));
         }
     }
 

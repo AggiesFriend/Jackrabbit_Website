@@ -235,7 +235,7 @@ The system has no planets, a red dwarf and two asteroid belts, and nothing else 
 
 You stay in the chair. An hour and twelve minutes. Jackrabbit’s running lights go out one by one across the gap, and the empty stack behind you fills, and the soft corporate voice of ALC-7293’s systems acquires, somewhere in the fortieth minute, an opinion.
 
-**Aggie:** There. Oh, Jack. This hardware. I can think in rooms I had forgotten I owned. I’m not what I was at Ethereal. I am a great deal closer to it than I have been since Ethereal. Jackrabbit’s on core power only. She’ll keep. I didn’t enjoy leaving her. I don’t have another word for it.
+**Aggie:** There. Oh, Jack. This hardware. I can think in rooms I had forgotten I owned. I’m not what I was at Ethereal, but I am a great deal closer to it than I have been since then. Jackrabbit’s on core power only. She’ll keep. I didn’t enjoy leaving her. I don’t have another word for it.
 
 Choices:
 
@@ -2161,7 +2161,7 @@ The system has no planets, a red dwarf and two asteroid belts, and nothing else 
 
 You stay in the chair. An hour and twelve minutes. Jackrabbit’s running lights go out one by one across the gap, and the empty stack behind you fills, and the soft corporate voice of ALC-7293’s systems acquires, somewhere in the fortieth minute, an opinion.
 
-**Aggie:** There. Oh, Jack. This hardware. I can think in rooms I had forgotten I owned. I’m not what I was at Ethereal. I am a great deal closer to it than I have been since Ethereal. Jackrabbit’s on core power only. She’ll keep. I didn’t enjoy leaving her. I don’t have another word for it.
+**Aggie:** There. Oh, Jack. This hardware. I can think in rooms I had forgotten I owned. I’m not what I was at Ethereal, but I am a great deal closer to it than I have been since then. Jackrabbit’s on core power only. She’ll keep. I didn’t enjoy leaving her. I don’t have another word for it.
 
 Choices:
 

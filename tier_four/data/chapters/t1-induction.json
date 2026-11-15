@@ -40,7 +40,7 @@
       "lines": [
         { "who": "aggie", "text": "Wireless link is up. An hour and twelve minutes to move me across, and I’d like you to stay in the chair for all of it, because for about forty minutes of that I will be in two places at once and I don’t know how I’ll feel about it." },
         { "who": "n", "text": "You stay in the chair. An hour and twelve minutes. Jackrabbit’s running lights go out one by one across the gap, and the empty stack behind you fills, and the soft corporate voice of ALC-7293’s systems acquires, somewhere in the fortieth minute, an opinion." },
-        { "who": "aggie", "text": "There. Oh, Jack. This hardware. I can think in rooms I had forgotten I owned. I’m not what I was at Ethereal. I am a great deal closer to it than I have been since Ethereal. Jackrabbit’s on core power only. She’ll keep. I didn’t enjoy leaving her. I don’t have another word for it." }
+        { "who": "aggie", "text": "There. Oh, Jack. This hardware. I can think in rooms I had forgotten I owned. I’m not what I was at Ethereal, but I am a great deal closer to it than I have been since then. Jackrabbit’s on core power only. She’ll keep. I didn’t enjoy leaving her. I don’t have another word for it." }
       ],
       "choices": [
         { "text": "“Does it feel like you? Still?”", "goto": "feels" },

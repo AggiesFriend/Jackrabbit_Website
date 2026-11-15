@@ -391,7 +391,7 @@ Five more deliveries in two days, each one easy and each one a little further fr
 
 **Aggie:** And the Starling specifications, I have been over them again and there is something in them I need you to hear, because it changes what we can— *[spoiler-free only]*
 
-The tanker is drifting. The ring is turning. You are thirteen, in a starship you haven’t learned yet, matching rotation with a docking ring by hand while control reads you a slot and the only person in the universe who knows who you are will not stop talking.
+The tanker is drifting. The ring is turning. You are thirteen, matching rotation with a docking ring by hand in a ship that does everything you ask of it, while control reads you a slot and the only person in the universe who knows who you are will not stop talking.
 
 Choices:
 
@@ -2317,7 +2317,7 @@ Five more deliveries in two days, each one easy and each one a little further fr
 
 **Aggie:** And Starling. Jack, I have to say this. I’ve known since the first week how to build another one, not just the theory, the manufacturing method, and there is an eighty-seven point nine per cent chance that the machine we hid after Razer’s ambush can make every component. Every one. Do you understand what that means? One device freed Halcyon Fields. We could— *[reader only]*
 
-The tanker is drifting. The ring is turning. You are thirteen, in a starship you haven’t learned yet, matching rotation with a docking ring by hand while control reads you a slot and the only person in the universe who knows who you are will not stop talking.
+The tanker is drifting. The ring is turning. You are thirteen, matching rotation with a docking ring by hand in a ship that does everything you ask of it, while control reads you a slot and the only person in the universe who knows who you are will not stop talking.
 
 Choices:
 

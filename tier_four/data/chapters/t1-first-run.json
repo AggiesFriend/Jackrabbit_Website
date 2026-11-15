@@ -108,7 +108,7 @@
         { "who": "aggie", "text": "The inspector reports to an executive office through a vetting programme that has no name, only a budget line. Also: three of the dead routing prefixes in the archive resolve to Vectarion sites. Also, Jack, the tanker on your left is drifting." },
         { "who": "aggie", "text": "And Starling. Jack, I have to say this. I’ve known since the first week how to build another one, not just the theory, the manufacturing method, and there is an eighty-seven point nine per cent chance that the machine we hid after Razer’s ambush can make every component. Every one. Do you understand what that means? One device freed Halcyon Fields. We could—", "mode": "reader" },
         { "who": "aggie", "text": "And the Starling specifications, I have been over them again and there is something in them I need you to hear, because it changes what we can—", "mode": "spoiler-free" },
-        { "who": "n", "text": "The tanker is drifting. The ring is turning. You are thirteen, in a starship you haven’t learned yet, matching rotation with a docking ring by hand while control reads you a slot and the only person in the universe who knows who you are will not stop talking." }
+        { "who": "n", "text": "The tanker is drifting. The ring is turning. You are thirteen, matching rotation with a docking ring by hand in a ship that does everything you ask of it, while control reads you a slot and the only person in the universe who knows who you are will not stop talking." }
       ],
       "choices": [
         { "text": "“Aggie. Not now. Please. Let me be a courier.”", "goto": "not-now", "mode": "spoiler-free" },

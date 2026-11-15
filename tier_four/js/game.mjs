@@ -53,6 +53,18 @@ let view = null;
 let play = null;
 let typing = null;      // { finish } while Aggie is typing
 let revealing = false;
+let generation = 0;     // bumped whenever the play is replaced
+
+// Clears the transcript and abandons any line still being typed, so nothing
+// from one play can appear in, or be recorded against, another.
+function resetTranscript() {
+    generation++;
+    typing?.finish();
+    typing = null;
+    revealing = false;
+    $('lines').replaceChildren();
+    $('lines').dataset.scene = '';
+}
 
 const viewFor = m => (views[m] ??= viewCampaign(campaign, chapters, m));
 
@@ -197,6 +209,7 @@ function drawTitle() {
 }
 
 function toTitle() {
+    resetTranscript();
     play = null;
     drawTitle();
     show('title');
@@ -213,6 +226,7 @@ async function startCareer() {
         if (!sure) return;
     }
     view = viewFor(mode);
+    resetTranscript();
     play = newPlay(view);
     playtest.record('new-career', { mode });
     save();
@@ -222,6 +236,7 @@ async function startCareer() {
 
 function continueCareer() {
     view = viewFor(mode);
+    resetTranscript();
     play = loadSave(mode);
     if (!play) return drawTitle();
     playtest.record('continue', { chapter: play.chapter, scene: play.scene });
@@ -295,7 +310,9 @@ function drawPlay(chapter) {
     const list = $('lines');
     const lines = visibleLines(play, view);
     const key = `${play.chapter}/${play.scene}`;
-    if (list.dataset.scene !== key) {
+    // Rebuild whenever the transcript doesn't match the play: a new scene,
+    // a new career starting in the same scene, a loaded save or a rewind.
+    if (list.dataset.scene !== key || list.children.length !== play.shown) {
         list.dataset.scene = key;
         list.replaceChildren();
         for (const line of lines.slice(0, play.shown)) list.append(lineElement(line, false));
@@ -353,7 +370,10 @@ async function revealNext() {
     li.scrollIntoView({ block: 'end', behavior: reducedMotion() ? 'auto' : 'smooth' });
     if (line.who === 'aggie') audio.tick('aggie');
     else audio.tick('tap');
+    const mine = generation;
     await typeOut(p, line);
+    // The play was replaced while this line was typing: drop it.
+    if (mine !== generation) return;
     play = reveal(play, view, play.shown + 1);
     save();
     revealing = false;
@@ -456,6 +476,7 @@ async function takeChoice(index, choice) {
 
 function doRewind() {
     if (!canRewind(play)) return;
+    resetTranscript();
     play = rewind(play);
     playtest.record('rewind', { chapter: play.chapter, scene: play.scene });
     save();
@@ -708,6 +729,7 @@ function importSave() {
             store.set('mode', mode);
         }
         view = viewFor(mode);
+        resetTranscript();
         play = loaded;
         note.textContent = 'Loaded.';
         playtest.record('import', { mode: m });
@@ -764,6 +786,7 @@ $('skip-to').addEventListener('change', event => {
     const id = event.target.value;
     if (!id) return;
     view = viewFor(mode);
+    resetTranscript();
     play = skipTo(view, id);
     save();
     $('drawer').close();

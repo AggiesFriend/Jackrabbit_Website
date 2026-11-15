@@ -118,6 +118,8 @@ export async function playThrough(page, tap, { pick, limit = 4000, onClosed = 'c
 export async function startCareer(page, tap) {
     await page.locator('#new-career:not([disabled])').waitFor();
     await tap(page.locator('#new-career'));
+    // With a saved career, "Start again?" opens a moment after the tap.
     const ok = page.locator('#confirm[open] #confirm-ok');
+    await ok.waitFor({ timeout: 800 }).catch(() => {});
     if (await ok.isVisible().catch(() => false)) await tap(ok);
 }

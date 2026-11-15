@@ -43,6 +43,35 @@ export default async function checkPlaythrough() {
     let runs = 0;
     let totalSteps = 0;
     try {
+        // Starting again from the title must clear the old transcript, even
+        // when the new career opens in the same scene.
+        {
+            const context = await browser.newContext({ viewport: { width: 360, height: 640 } });
+            await context.route('https://cloud.umami.is/**', route => route.abort());
+            await prepare(context, { mode: 'spoiler-free' });
+            context.setDefaultTimeout(15000);
+            const page = await context.newPage();
+            const click = locator => locator.click();
+            try {
+                await page.goto(`${base}/tier_four/`, { waitUntil: 'load' });
+                await startCareer(page, click);
+                for (let i = 0; i < 12; i++) {
+                    if (await page.locator('#screen-play').isVisible() && await page.locator('#lines .line').count() >= 3) break;
+                    await (await import('../lib/autoplay.mjs')).step(page, click);
+                }
+                await click(page.locator('#play-menu'));
+                await click(page.locator('#to-title'));
+                await startCareer(page, click);
+                await (await import('../lib/autoplay.mjs')).step(page, click);
+                await page.locator('#screen-play').waitFor();
+                const lines = await page.locator('#lines .line').count();
+                const shown = await page.evaluate(() => JSON.parse(localStorage.getItem('tier-four.save.spoiler-free')).shown);
+                if (lines !== shown) problems.push(`restart from the title: the transcript shows ${lines} line(s) but the new career has seen ${shown}`);
+            } catch (err) {
+                problems.push(`restart from the title: ${err.message.split('\n')[0]}`);
+            }
+            await context.close();
+        }
         for (const run of selected) {
             const where = `${run.mode}, seed ${run.seed}, ${run.phone ? 'phone by touch' : 'desktop by mouse'}`;
             const context = await browser.newContext({

@@ -428,6 +428,14 @@ section { padding: 4rem 0; }
     background-image: url("../images/benevolence_deferred.svg");
 }
 
+.hero-snowflake {
+    background-image: url("../images/snowflake.svg");
+}
+
+.hero-the-larder {
+    background-image: url("../images/the_larder.svg");
+}
+
 /* ----- Reading column ----- */
 .story {
     background-color: var(--card);
@@ -523,6 +531,21 @@ section { padding: 4rem 0; }
 .story-body .log .log-sign {
     text-align: right;
     margin: 1.4rem 0 0;
+}
+
+/* Scene breaks within a story: three dots, no rule */
+.scene-break {
+    border: 0;
+    height: auto;
+    text-align: center;
+    font-family: var(--font-mono);
+    letter-spacing: 0.5em;
+    color: var(--muted);
+    margin: 2.6rem 0 2.8rem;
+}
+
+.scene-break::after {
+    content: "\2022 \2022 \2022";
 }
 
 .story-end {

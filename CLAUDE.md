@@ -3,6 +3,14 @@
 A static site served by GitHub Pages. There is no build step for the site itself:
 the HTML in this repo is what visitors get.
 
+## Git workflow
+
+- Do the work on a branch cut from `main`.
+- When the work is done and the user is happy with it, merge the branch into
+  `main` in the local repository with a merge commit
+  (`git merge --no-ff <branch>`). Don't open a pull request.
+- Don't push. The user pushes `main` to GitHub themselves.
+
 ## Analytics: the umami snippet
 
 Every **standalone** HTML page must carry the umami tracking snippet, placed
@@ -13,7 +21,7 @@ immediately before `</head>`:
 ```
 
 "Standalone" means any page a visitor can land on directly. That includes the
-pages at the root, everything under `encyclopaedia/` and `trust-us/`,
+pages at the root, everything under `encyclopaedia/`, `trust-us/` and `short-stories/`,
 `404.html`, and the entry page of each game — `Gilbert_s Quest.html`,
 `stolen_freedom/index.html`, `Jackrabbit_hunt/index.html`,
 `Aggie_game/index.html` and `tier_four/index.html`. New pages get it too.
@@ -29,6 +37,38 @@ A quick check for pages that are missing it:
 ```bash
 git ls-files '*.html' | while read -r f; do grep -q cloud.umami.is "$f" || echo "$f"; done
 ```
+
+## The main nav and footer
+
+The main site's header nav and footer are defined once, in
+`_tools/layout.json`, and written into every page by a script. Never
+hand-edit them in a page. Change the config, then run:
+
+```bash
+node _tools/layout.mjs
+```
+
+`node _tools/layout.mjs --check` lists out-of-date pages without changing
+anything.
+
+The script fills in whatever sits between the marker comments: the nav
+between `<!-- main-nav: ... -->` and `<!-- /main-nav -->`, the footer between
+`<!-- main-footer: ... -->` and `<!-- /main-footer -->`. It works out the
+right paths for each page: `../` from `encyclopaedia/`, and `/` for
+`404.html`. A new page gets both by copying an existing page, or by adding the
+marker lines and running the script. `_tools/` is not published, because
+Jekyll skips folders starting with `_`.
+
+Outside this system:
+
+- `contact.html` keeps its own author footer ("Tony Marks", with Trust Us and
+  Short Stories links), so it has nav markers but no footer markers;
+- `trust-us/` and `short-stories/` have their own navs and footers.
+
+The Books item carries a sub-menu: The Jackrabbit Series (`books.html`),
+Trust Us and Short Stories. It opens on hover for a mouse, and through the
+chevron button (`.submenu-toggle`) for touch and keyboard. The styles are in
+`css/styles.css` and the toggle is in `js/script.js`.
 
 ## Game folders hold build output
 

@@ -20,24 +20,34 @@
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
 <header>
+<!-- main-nav: generated from _tools/layout.json by _tools/layout.mjs -->
 <nav class="navbar" aria-label="Primary navigation">
-<div class="logo">
-<a href="index.html">The Jackrabbit</a>
-</div>
-<ul class="nav-links">
-<li><a href="index.html">Home</a></li>
-<li><a href="books.html">Books</a></li>
-<li><a href="characters.html">Characters</a></li>
-<li><a href="encyclopaedia/encyclopaedia.html">Encyclopaedia</a></li>
-<li><a href="games.html">Games</a></li>
-<li><a href="contact.html">Contact</a></li>
-</ul>
-<div class="burger" role="button" aria-label="Toggle navigation menu" aria-expanded="false" tabindex="0">
-<div class="line1"></div>
-<div class="line2"></div>
-<div class="line3"></div>
-</div>
+    <div class="logo">
+        <a href="index.html">The Jackrabbit</a>
+    </div>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="has-submenu">
+            <a href="books.html">Books</a>
+            <button class="submenu-toggle" type="button" aria-expanded="false" aria-controls="books-submenu"><span class="visually-hidden">Show the Books menu</span></button>
+            <ul class="submenu" id="books-submenu">
+                <li><a href="books.html">The Jackrabbit Series</a></li>
+                <li><a href="trust-us/index.html">Trust Us</a></li>
+                <li><a href="short-stories/index.html">Short Stories</a></li>
+            </ul>
+        </li>
+        <li><a href="characters.html">Characters</a></li>
+        <li><a href="encyclopaedia/encyclopaedia.html">Encyclopaedia</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="burger" role="button" aria-label="Toggle navigation menu" aria-expanded="false" tabindex="0">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+    </div>
 </nav>
+<!-- /main-nav -->
 </header>
 <main id="main-content">
 <section class="page-header">
@@ -111,29 +121,31 @@
 </div>
 </section>
 </main>
+<!-- main-footer: generated from _tools/layout.json by _tools/layout.mjs -->
 <footer>
-<div class="container">
-<div class="footer-content">
-<div class="footer-logo">
-<h3>The Jackrabbit</h3>
-<p>A science fiction series</p>
-</div>
-<div class="footer-links" role="navigation" aria-label="Footer navigation">
-<ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="books.html">Books</a></li>
-<li><a href="characters.html">Characters</a></li>
-<li><a href="encyclopaedia/encyclopaedia.html">Encyclopaedia</a></li>
-<li><a href="games.html">Games</a></li>
-<li><a href="contact.html">Contact</a></li>
-</ul>
-</div>
-</div>
-<div class="copyright">
-<p>© 2025 The Jackrabbit Series. All rights reserved.</p>
-</div>
-</div>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h3>The Jackrabbit</h3>
+                <p>A science fiction series</p>
+            </div>
+            <div class="footer-links" role="navigation" aria-label="Footer navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="books.html">Books</a></li>
+                    <li><a href="characters.html">Characters</a></li>
+                    <li><a href="encyclopaedia/encyclopaedia.html">Encyclopaedia</a></li>
+                    <li><a href="games.html">Games</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 Tony Marks. All rights reserved.</p>
+        </div>
+    </div>
 </footer>
+<!-- /main-footer -->
 <script src="js/script.js"></script>
 </body>
 </html>

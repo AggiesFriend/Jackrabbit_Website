@@ -37,6 +37,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Sub-menus in the main nav (the Books menu). A mouse opens them by
+    // hovering (see css/styles.css); the chevron button opens them for
+    // touch and keyboard users. Escape, a click elsewhere, or tabbing
+    // away closes them again.
+    document.querySelectorAll('.has-submenu').forEach((item) => {
+        const toggle = item.querySelector('.submenu-toggle');
+        if (!toggle) return;
+
+        const setOpen = (open) => {
+            item.classList.toggle('open', open);
+            toggle.setAttribute('aria-expanded', open);
+        };
+
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setOpen(!item.classList.contains('open'));
+        });
+
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && item.classList.contains('open')) {
+                setOpen(false);
+                toggle.focus();
+            }
+        });
+
+        item.addEventListener('focusout', (e) => {
+            if (!item.contains(e.relatedTarget)) setOpen(false);
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!item.contains(e.target)) setOpen(false);
+        });
+    });
+
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {

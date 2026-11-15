@@ -1,7 +1,8 @@
 // Tier Four screens. All game rules are in engine.mjs; this file loads the
 // content, draws the state and passes on taps.
 import {
-    beginChapter, canRewind, chapterSummary, choose, currentChapter, currentScene, debrief, finishJump,
+    beginChapter, canRewind, chapterSummary, choose, currentChapter, currentScene, debrief, declineChapter,
+    declineTerms, finishJump,
     hintsOf, newPlay, nextChapter, pendingJump, proceed, reveal, rewind, skipTo, validPlay, viewCampaign,
     visibleChoices, visibleLines,
 } from './engine.mjs';
@@ -486,17 +487,26 @@ function doRewind() {
 
 function drawClosed() {
     const s = chapterSummary(play, view);
-    $('closed-label').textContent = `${tierName(s.tier)} · ${s.kind === 'contract' ? 'Contract closed' : 'Scene ends'}`;
+    const declined = play.flags.includes(`declined:${s.id}`);
+    $('closed-label').textContent = `${tierName(s.tier)} · ${declined ? 'Contract declined' : s.kind === 'contract' ? 'Contract closed' : 'Scene ends'}`;
     $('closed-title').textContent = s.title;
     const body = $('closed-body');
     body.replaceChildren();
-    if (s.kind === 'contract') {
+    if (declined) {
+        const chapter = currentChapter(play, view);
+        const terms = { ...view.decline, ...chapter.decline };
+        const quote = element('p');
+        quote.append(element('strong', `${speakerName(terms.who ?? 'dispatch')}: `), terms.text ?? view.decline?.sideText ?? '');
+        body.append(quote, element('p', `Cover: ${s.cover} of 100`, 'status'));
+    } else if (s.kind === 'contract') {
         const row = element('div', undefined, 'stat-row');
         const jumps = s.jumps.length ? `${s.jumps.length} jump${s.jumps.length === 1 ? '' : 's'}${s.jumps.some(j => j.late) ? ', late' : ', on time'}` : 'No jumps';
         row.append(statEl('Jumps', jumps), statEl('Aggie', `${s.hintsSeen} of ${s.hintsTotal} things she said`), statEl('Cover', `${s.cover} of 100`));
         body.append(row);
     }
-    if (s.readings.length) {
+    if (declined) {
+        // The quote above already says what the journal note says.
+    } else if (s.readings.length) {
         body.append(element('h3', 'Journal'));
         const ul = element('ul', undefined, 'summary-list');
         for (const t of s.readings) ul.append(element('li', t));
@@ -661,6 +671,7 @@ function drawDrawer() {
         st.append(standingRow('Jumps', play.jumps.length ? `${play.jumps.length} flown, ${late} late` : 'None yet'));
         st.append(standingRow('Contracts closed', String(play.completed.length)));
         if (play.reviews) st.append(standingRow('Reviews', String(play.reviews)));
+        if (play.declines) st.append(standingRow('Contracts declined', String(play.declines)));
     }
 
     // Playtest
@@ -749,6 +760,42 @@ $('continue').addEventListener('click', continueCareer);
 $('how-to-play').addEventListener('click', () => $('help').showModal());
 $('help-close').addEventListener('click', () => $('help').close());
 $('title-settings').addEventListener('click', () => openDrawer('settings'));
+// Declining asks first. A side contract then closes unflown; a main one
+// draws its pushback and goes back to the card.
+async function declineContract() {
+    const terms = declineTerms(play, view);
+    if (!terms) return;
+    const sure = await confirmChoice({
+        title: 'Decline this contract?',
+        text: [[terms.side
+            ? 'This is side work, and someone else can fly it. Declining is logged, and it counts against your cover.'
+            : 'Declining is logged, and it counts against your cover.']],
+        ok: 'Decline',
+        cancel: 'Keep it',
+    });
+    if (!sure) return;
+    audio.tick('bad');
+    playtest.record('decline', { chapter: play.chapter, side: terms.side });
+    play = declineChapter(play, view);
+    save();
+    if (terms.side) return render();
+    drawBrief(currentChapter(play, view));
+    const accept = await confirmChoice({
+        title: speakerName(terms.who) || 'Dispatch',
+        text: [[terms.text]],
+        ok: 'Accept the contract',
+        cancel: 'Back to the card',
+    });
+    if (accept) {
+        play = beginChapter(play);
+        save();
+        render();
+    } else {
+        $('decline').focus();
+    }
+}
+
+$('decline').addEventListener('click', declineContract);
 $('accept').addEventListener('click', () => {
     audio.tick('choice');
     playtest.record('accept', { chapter: play.chapter });

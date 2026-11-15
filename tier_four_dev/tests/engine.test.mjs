@@ -6,7 +6,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { DEV_DIR } from '../lib/paths.mjs';
 import {
-    beginChapter, canRewind, chapterSummary, choose, debrief, finishJump, hintsOf, newPlay, nextChapter,
+    beginChapter, canRewind, chapterSummary, choose, debrief, declineChapter, declineTerms, finishJump, hintsOf,
+    newPlay, nextChapter,
     pendingJump, proceed, readingScore, reveal, rewind, validPlay, viewCampaign, viewChapter, visibleChoices,
     visibleLines,
 } from '../../tier_four/js/engine.mjs';
@@ -278,6 +279,49 @@ export const tests = {
         assert.ok(!validPlay({ ...back, scene: 'gone' }, v));
         assert.ok(!validPlay({ ...back, version: 1 }, v));
         assert.equal(proceed(back, v).scene, 'deliver');
+    },
+
+    'decline: a main contract costs cover, is noted, and stays on the card'() {
+        const campaign = { ...CAMPAIGN, decline: { who: 'dispatch', text: 'It stands.', cover: 6, sideText: 'Reassigned.', sideCover: 8 } };
+        const v = view('spoiler-free', CHAPTERS, campaign);
+        const before = newPlay(v);
+        const terms = declineTerms(before, v);
+        assert.deepEqual(terms, { side: false, who: 'dispatch', text: 'It stands.', cover: 6 });
+        const after = declineChapter(before, v);
+        assert.equal(after.phase, 'brief');
+        assert.equal(after.chapter, 'sample-contract');
+        assert.equal(after.cover, 6);
+        assert.equal(after.declines, 1);
+        assert.ok(after.flags.includes('refused:sample-contract'));
+        assert.match(after.journal.at(-1).text, /Tried to decline the Sample contract/);
+        assert.equal(before.cover, 0, 'the old play is untouched');
+        assert.equal(beginChapter(after).phase, 'scene', 'it can still be accepted');
+    },
+
+    'decline: a side contract closes unflown and stays out of the debrief'() {
+        const chapters = structuredClone(CHAPTERS);
+        chapters['sample-contract'].decline = { side: true, who: 'frank', text: 'Someone else will take it.', cover: 9 };
+        const v = view('spoiler-free', chapters);
+        const after = declineChapter(newPlay(v), v);
+        assert.equal(after.phase, 'closed');
+        assert.equal(after.cover, 9);
+        assert.ok(after.flags.includes('declined:sample-contract'));
+        assert.ok(!after.flags.includes('done:sample-contract'));
+        assert.deepEqual(after.completed, []);
+        assert.equal(debrief(after, v).chapters.length, 0);
+        assert.equal(debrief(after, v).totals.declines, 1);
+        assert.equal(nextChapter(after, v).phase, 'ended', 'the career moves on');
+    },
+
+    'decline: only from a contract card, and a full meter still brings the review'() {
+        const chapters = structuredClone(CHAPTERS);
+        chapters['sample-contract'].decline = { side: true, cover: 100 };
+        const v = view('spoiler-free', chapters);
+        const started = beginChapter(newPlay(v));
+        assert.equal(declineTerms(started, v), null, 'not once the contract has begun');
+        assert.equal(declineChapter(started, v), started);
+        const after = declineChapter(newPlay(v), v);
+        assert.deepEqual(after.queue, ['sample-review']);
     },
 };
 

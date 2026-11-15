@@ -14,6 +14,7 @@
     "fee": "Standard tier 1 rate",
     "notes": "Probationary contract, the first of eight in your first three days. A VeriFact compliance inspection may be conducted at Meridian."
   },
+  "decline": { "who": "haynes", "text": "Probationary couriers don’t decline, Abbott. Not in their first week. Accept the contract, or come to my office and explain why, and I promise you won’t enjoy explaining.", "cover": 8 },
   "truths": [
     { "id": "vetting", "mode": "both", "text": "The ‘VeriFact inspector’ at Meridian is Aletheion’s own vetting. He was never checking the cargo. He was checking the new courier." }
   ],

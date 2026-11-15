@@ -18,7 +18,8 @@
         { "who": "halsey", "text": "Halsey. Regional Operations Director. Sit down, Abbott. I read everything that crosses this desk, and your file crosses it more than most." },
         { "who": "halsey", "text": "Your file has a deviation on it. Farrow’s Reach. You flew a client’s schedule a day early and the client has complained. I am required to warn you that deviations are logged, that they count, and that a courier who makes a habit of them does not stay a courier. Consider yourself warned.", "requires": ["saved-farrow"] },
         { "who": "halsey", "text": "I am also, off this desk, aware that a clinic on Farrow’s Reach did not run dry. I have no further comment on that.", "requires": ["saved-farrow"] },
-        { "who": "halsey", "text": "Your file is clean. Not a deviation on it. The review panel has you up for tier 2 in under a year, which has not happened in my sixteen years with this company, and clean files get left alone. Keep it that way.", "unless": ["saved-farrow"] }
+        { "who": "halsey", "text": "Your file has one declined contract on it. Side work, the HeliosMed cold case, and nobody came to harm that I know of. I am required to tell you that couriers who decline work are noticed, and not by me. The review panel has you up for tier 2 in under a year anyway, which has not happened in my sixteen years with this company. Don’t make a habit of it.", "requires": ["declined:t1-cold-chain"], "unless": ["saved-farrow"] },
+        { "who": "halsey", "text": "Your file is clean. Not a deviation on it. The review panel has you up for tier 2 in under a year, which has not happened in my sixteen years with this company, and clean files get left alone. Keep it that way.", "unless": ["saved-farrow", "declined:t1-cold-chain"] }
       ],
       "choices": [
         { "text": "“Understood, Director. Thank you.”", "goto": "panel", "trust": { "halsey": 1 } },

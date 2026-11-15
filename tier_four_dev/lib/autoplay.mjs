@@ -49,6 +49,22 @@ export async function step(page, tap, { pick = () => 0, onClosed = 'continue' } 
         return 'proceed';
     }
     if (await visible(page, '#screen-brief')) {
+        // Now and then, decline first. A main contract pushes back and is
+        // then accepted from the dialog; a side contract closes unflown.
+        // (The default policy always returns 0, so it never declines.)
+        if (pick(4) > 0.75) {
+            await tap(page.locator('#decline'));
+            await tap(page.locator('#confirm[open] #confirm-ok', { hasText: 'Decline' }));
+            // Wait for the outcome before doing anything else: a side
+            // contract's closing card, or a main contract's pushback.
+            const pushback = page.locator('#confirm[open] #confirm-ok', { hasText: 'Accept the contract' });
+            await pushback.or(page.locator('#screen-closed:not([hidden])')).first().waitFor();
+            if (await pushback.isVisible()) {
+                await tap(pushback);
+                await page.locator('#screen-brief[hidden]').waitFor({ state: 'attached' });
+            }
+            return 'decline';
+        }
         await tap(page.locator('#accept'));
         return 'accept';
     }
@@ -70,15 +86,23 @@ export async function step(page, tap, { pick = () => 0, onClosed = 'continue' } 
             await tap(advance);
             return 'line';
         }
+        // The buttons stay in the page while their list is hidden between
+        // scenes, so only count them once the list is showing.
+        const list = page.locator('#choices');
         const choices = page.locator('#choices > button:not(.rewind-link)');
-        const n = await choices.count();
+        const n = await list.isVisible() ? await choices.count() : 0;
         if (!n) {
             await page.waitForTimeout(50);
             return 'line';
         }
         const i = n === 1 ? 0 : Math.min(n - 1, Math.floor(pick(n) * n));
         const label = await choices.nth(i).innerText();
-        await tap(choices.nth(i));
+        // If the scene moves on between looking and tapping, look again.
+        try {
+            await tap(choices.nth(i), { timeout: 3000 });
+        } catch {
+            return 'line';
+        }
         // A choice may ask for confirmation; the dialog opens a moment later.
         const ok = page.locator('#confirm[open] #confirm-ok');
         await ok.waitFor({ timeout: 400 }).catch(() => {});

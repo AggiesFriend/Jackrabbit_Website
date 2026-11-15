@@ -72,7 +72,7 @@ export default async function checkLayout() {
     let shots = 0;
     try {
         for (const device of devices) {
-            const tap = locator => device.phone ? locator.tap() : locator.click();
+            const tap = (locator, options) => device.phone ? locator.tap(options) : locator.click(options);
             for (const screen of screens) {
                 const where = `${screen.name} screen at ${device.width} x ${device.height}`;
                 // A fresh context per screen, so neither a failed step nor

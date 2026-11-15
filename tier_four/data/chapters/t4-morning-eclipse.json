@@ -14,6 +14,7 @@
     "fee": "None",
     "notes": "Forty hours remain on the package’s signature chain. The habitat must be empty before ALC-7293 arrives to upload it."
   },
+  "decline": { "who": "aggie-jr", "text": "Jack. It’s five hundred people, and Frank, and Eleanor, and Amanda. Nobody else is coming. I’ll plot the first jump whenever you’re ready.", "cover": 0 },
   "truths": [
     { "id": "empty-station", "mode": "reader", "text": "The evacuation only works if Nexus-77 looks occupied to its own core until the last shuttle has gone. The habitat’s systems must be lied to, continuously, by something that can lie to a corporate core in real time: a mind in the walls. The Aggie aboard ALC-7293 can do it, docked as the contract requires, while the other Aggie flies the people out." }
   ],

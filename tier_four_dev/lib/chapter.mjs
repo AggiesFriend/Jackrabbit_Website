@@ -46,10 +46,12 @@ const TYPES = {
 // Field specs: name -> type, or [type] for an optional field.
 const CHAPTER = {
     format: 'format', id: 'id', tier: 'tier', kind: 'chapterKind', mode: 'mode', ship: 'ship',
-    title: 'text', subtitle: ['text'], brief: ['object'], requires: ['conditions'], unless: ['conditions'],
+    title: 'text', subtitle: ['text'], brief: ['object'], decline: ['object'], requires: ['conditions'], unless: ['conditions'],
     truths: 'list', understandings: 'list', start: 'id', scenes: 'list',
 };
 const BRIEF = { client: 'text', route: 'text', cargo: 'text', fee: 'text', notes: ['text'] };
+const DECLINE = { side: ['boolean'], who: ['id'], text: ['text'], cover: ['integer'] };
+const CAMPAIGN_DECLINE = { who: 'id', text: 'text', cover: 'integer', sideText: 'text', sideCover: 'integer' };
 const TRUTH = { id: 'id', mode: 'mode', text: 'text' };
 const UNDERSTANDING = { id: 'id', mode: 'mode', truth: 'id', correct: 'boolean', journal: 'text' };
 const SCENE = {
@@ -110,6 +112,13 @@ export function validateChapter(chapter, { speakers = null } = {}) {
 
     if (chapter.kind === 'contract' && !chapter.brief) problems.push('chapter: a contract needs a "brief"');
     if (chapter.brief !== undefined) checkFields(chapter.brief, BRIEF, 'brief', problems);
+    if (chapter.decline !== undefined) {
+        if (chapter.kind !== 'contract') problems.push('chapter: only a contract can have "decline"');
+        if (checkFields(chapter.decline, DECLINE, 'decline', problems) && speakers && chapter.decline.who
+            && !['n', 'jack'].includes(chapter.decline.who) && !speakers[chapter.decline.who]) {
+            problems.push(`decline: unknown speaker "${chapter.decline.who}"`);
+        }
+    }
 
     // Truths and understandings.
     const truths = new Map();
@@ -238,7 +247,7 @@ export function validateChapter(chapter, { speakers = null } = {}) {
     return problems;
 }
 
-const CAMPAIGN = { format: 'format', title: 'text', chapters: 'ids', reviews: ['object'], speakers: ['object'], endings: ['object'] };
+const CAMPAIGN = { format: 'format', title: 'text', chapters: 'ids', reviews: ['object'], speakers: ['object'], endings: ['object'], decline: ['object'] };
 
 // `entries`: [{ name, data }], one per chapter file, plus the campaign.
 // Chapter IDs must be unique across files, and the campaign must list
@@ -258,6 +267,7 @@ export function validateCampaign(campaign, entries) {
         if (base !== id) problems.push(`${name}: file name should match the chapter ID "${id}"`);
     }
     if (!ok) return problems;
+    if (campaign.decline !== undefined) checkFields(campaign.decline, CAMPAIGN_DECLINE, 'campaign.decline', problems);
     for (const id of campaign.chapters) {
         if (!owners.has(id)) problems.push(`campaign: chapter "${id}" has no file`);
     }

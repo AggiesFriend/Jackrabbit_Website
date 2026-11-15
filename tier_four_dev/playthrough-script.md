@@ -283,6 +283,10 @@ Four jumps back to Rigel, and the contract board lights up the moment you sit do
 - Fee: Standard tier 1 rate
 - Notes: Probationary contract, the first of eight in your first three days. A VeriFact compliance inspection may be conducted at Meridian.
 
+**If declined** (the contract stands and goes back to the card; cover +8)
+
+**Coordinator Haynes:** Probationary couriers don’t decline, Abbott. Not in their first week. Accept the contract, or come to my office and explain why, and I promise you won’t enjoy explaining.
+
 **Truths (never shown in play)**
 
 - `vetting`: The ‘VeriFact inspector’ at Meridian is Aletheion’s own vetting. He was never checking the cargo. He was checking the new courier.
@@ -424,6 +428,10 @@ It is only later, days later, that you notice she never finished the sentence ab
 - Fee: Standard tier 1 rate
 - Notes: Hand to the consignee’s agent on the berth. No inspection expected.
 
+**If declined** (the contract stands and goes back to the card; cover +6; the campaign’s default line)
+
+**Dispatch:** Declining an assigned contract is noted against your file, courier. There is no other courier on this route in the window. The contract stands.
+
 **Truths (never shown in play)**
 
 - `undeclared`: The crate is thirty-five kilos heavier than declared, because it isn’t instrumentation. QuantumGrid is moving a sealed data module under a label nobody will question.
@@ -536,6 +544,10 @@ You sit in the pilot’s chair for a while with the engine ticking. Three weeks 
 - Cargo: Refrigerated pharmaceuticals, one cold case
 - Fee: Standard tier 1 rate, plus cold-chain supplement
 - Notes: Client requests STANDARD transit. Do not expedite. Deliver within the contracted window, not before.
+
+**If declined** (side work: the contract closes unflown; cover +8)
+
+**Dispatch:** Declined. The HeliosMed cold case has been reassigned at standard transit. A declined contract is logged against your file.
 
 **Truths (never shown in play)**
 
@@ -666,7 +678,9 @@ Eleven months. Two hundred and some contracts, all closed, most of them on time.
 
 **Director Halsey:** I am also, off this desk, aware that a clinic on Farrow’s Reach did not run dry. I have no further comment on that. *[if saved-farrow]*
 
-**Director Halsey:** Your file is clean. Not a deviation on it. The review panel has you up for tier 2 in under a year, which has not happened in my sixteen years with this company, and clean files get left alone. Keep it that way. *[unless saved-farrow]*
+**Director Halsey:** Your file has one declined contract on it. Side work, the HeliosMed cold case, and nobody came to harm that I know of. I am required to tell you that couriers who decline work are noticed, and not by me. The review panel has you up for tier 2 in under a year anyway, which has not happened in my sixteen years with this company. Don’t make a habit of it. *[if declined:t1-cold-chain; unless saved-farrow]*
+
+**Director Halsey:** Your file is clean. Not a deviation on it. The review panel has you up for tier 2 in under a year, which has not happened in my sixteen years with this company, and clean files get left alone. Keep it that way. *[unless saved-farrow or declined:t1-cold-chain]*
 
 Choices:
 
@@ -927,6 +941,10 @@ Aboard ALC-7293, the container in the galley cooler and the habitat’s lights s
 - Fee: Tier 2 rate
 - Notes: Internal consignment. Consignor and consignee details are on the manifest. Handle with discretion.
 
+**If declined** (the contract stands and goes back to the card; cover +6)
+
+**Dispatch:** Internal consignments are assigned, courier, not offered. The relocation stands.
+
 **Truths (never shown in play)**
 
 - `absorbed`: The ‘personal effects’ are the records of a small shipping firm Aletheion absorbed last quarter, being moved off Tethys before the auditors arrive. The ‘executive’ is the firm’s former owner, who now works for the company that ate his.
@@ -1040,6 +1058,10 @@ He signs. He thanks you. He walks away from nineteen years of his own life in el
 - Cargo: One data consignment, physical transport
 - Fee: Tier 2 rate, standard. Client declined the priority tariff.
 - Notes: A SnapMesh node on the Kessler corridor is down. Physical data transport booked at standard priority.
+
+**If declined** (side work: the contract closes unflown; cover +8)
+
+**Dispatch:** Declined. The Kessler consignment returns to the time-critical desk and will go with the next courier on the corridor: tomorrow night, at the earliest. Logged against your file.
 
 **Truths (never shown in play)**
 
@@ -1403,6 +1425,10 @@ Frank’s message is waiting on the private channel, three words, sent from Nexu
 - Fee: Tier 3 rate
 - Notes: The site is unstaffed. A loading crew will meet you. Manifest line seven is to be secured in the forward hold and not opened under any circumstances.
 
+**If declined** (the contract stands and goes back to the card; cover +8)
+
+**Director Halsey:** Q-19 came down from QuantumGrid with your name already on it, Abbott. I can log that you asked. I can’t give it to anyone else. Fly it.
+
 **Truths (never shown in play)**
 
 - `vectarion`: Site 19 was Vectarion Research. The crates carry its name under QuantumGrid’s labels. Four years in, Jack is finally standing in the trail he came to follow, and Aggie, who has no record of Vectarion to give him, can only point at the tape.
@@ -1573,6 +1599,10 @@ That is the whole of her reply. Four years ago she would have had a page of it. 
 - Cargo: Level III sovereign key material, one tamper-evident module, never transmitted electronically
 - Fee: Executive rate
 - Notes: The escort lead has authority over the route. Follow the escort’s jump timings exactly. No deviation of any kind.
+
+**If declined** (the contract stands and goes back to the card; cover +12)
+
+**Director Halsey:** It’s from her office. Nobody declines her office. I’m not sure anybody knows what would happen if they did, and I’d rather you weren’t the one to find out. Fly it.
 
 **Truths (never shown in play)**
 
@@ -2179,6 +2209,10 @@ Four jumps back to Rigel, and the contract board lights up the moment you sit do
 - Fee: Standard tier 1 rate
 - Notes: Probationary contract, the first of eight in your first three days. A VeriFact compliance inspection may be conducted at Meridian.
 
+**If declined** (the contract stands and goes back to the card; cover +8)
+
+**Coordinator Haynes:** Probationary couriers don’t decline, Abbott. Not in their first week. Accept the contract, or come to my office and explain why, and I promise you won’t enjoy explaining.
+
 **Truths (never shown in play)**
 
 - `vetting`: The ‘VeriFact inspector’ at Meridian is Aletheion’s own vetting. He was never checking the cargo. He was checking the new courier.
@@ -2326,6 +2360,10 @@ The rest, Vectarion and the inspector and all of it, was not an order. It was a 
 - Fee: Standard tier 1 rate
 - Notes: Hand to the consignee’s agent on the berth. No inspection expected.
 
+**If declined** (the contract stands and goes back to the card; cover +6; the campaign’s default line)
+
+**Dispatch:** Declining an assigned contract is noted against your file, courier. There is no other courier on this route in the window. The contract stands.
+
 **Truths (never shown in play)**
 
 - `undeclared`: The crate is thirty-five kilos heavier than declared, because it isn’t instrumentation. QuantumGrid is moving a sealed data module under a label nobody will question.
@@ -2445,6 +2483,10 @@ You sit in the pilot’s chair for a while with the engine ticking. Three weeks 
 - Cargo: Refrigerated pharmaceuticals, one cold case
 - Fee: Standard tier 1 rate, plus cold-chain supplement
 - Notes: Client requests STANDARD transit. Do not expedite. Deliver within the contracted window, not before.
+
+**If declined** (side work: the contract closes unflown; cover +8)
+
+**Dispatch:** Declined. The HeliosMed cold case has been reassigned at standard transit. A declined contract is logged against your file.
 
 **Truths (never shown in play)**
 
@@ -2575,7 +2617,9 @@ Eleven months. Two hundred and some contracts, all closed, most of them on time.
 
 **Director Halsey:** I am also, off this desk, aware that a clinic on Farrow’s Reach did not run dry. I have no further comment on that. *[if saved-farrow]*
 
-**Director Halsey:** Your file is clean. Not a deviation on it. The review panel has you up for tier 2 in under a year, which has not happened in my sixteen years with this company, and clean files get left alone. Keep it that way. *[unless saved-farrow]*
+**Director Halsey:** Your file has one declined contract on it. Side work, the HeliosMed cold case, and nobody came to harm that I know of. I am required to tell you that couriers who decline work are noticed, and not by me. The review panel has you up for tier 2 in under a year anyway, which has not happened in my sixteen years with this company. Don’t make a habit of it. *[if declined:t1-cold-chain; unless saved-farrow]*
+
+**Director Halsey:** Your file is clean. Not a deviation on it. The review panel has you up for tier 2 in under a year, which has not happened in my sixteen years with this company, and clean files get left alone. Keep it that way. *[unless saved-farrow or declined:t1-cold-chain]*
 
 Choices:
 
@@ -2836,6 +2880,10 @@ Aboard ALC-7293, the container in the galley cooler and the habitat’s lights s
 - Fee: Tier 2 rate
 - Notes: Internal consignment. Consignor and consignee details are on the manifest. Handle with discretion.
 
+**If declined** (the contract stands and goes back to the card; cover +6)
+
+**Dispatch:** Internal consignments are assigned, courier, not offered. The relocation stands.
+
 **Truths (never shown in play)**
 
 - `absorbed`: The ‘personal effects’ are the records of a small shipping firm Aletheion absorbed last quarter, being moved off Tethys before the auditors arrive. The ‘executive’ is the firm’s former owner, who now works for the company that ate his.
@@ -2949,6 +2997,10 @@ He signs. He thanks you. He walks away from nineteen years of his own life in el
 - Cargo: One data consignment, physical transport
 - Fee: Tier 2 rate, standard. Client declined the priority tariff.
 - Notes: A SnapMesh node on the Kessler corridor is down. Physical data transport booked at standard priority.
+
+**If declined** (side work: the contract closes unflown; cover +8)
+
+**Dispatch:** Declined. The Kessler consignment returns to the time-critical desk and will go with the next courier on the corridor: tomorrow night, at the earliest. Logged against your file.
 
 **Truths (never shown in play)**
 
@@ -3312,6 +3364,10 @@ Frank’s message is waiting on the private channel, three words, sent from Nexu
 - Fee: Tier 3 rate
 - Notes: The site is unstaffed. A loading crew will meet you. Manifest line seven is to be secured in the forward hold and not opened under any circumstances.
 
+**If declined** (the contract stands and goes back to the card; cover +8)
+
+**Director Halsey:** Q-19 came down from QuantumGrid with your name already on it, Abbott. I can log that you asked. I can’t give it to anyone else. Fly it.
+
 **Truths (never shown in play)**
 
 - `vectarion`: Site 19 was Vectarion Research. The crates carry its name under QuantumGrid’s labels. Four years in, Jack is finally standing in the trail he came to follow, and Aggie, who has no record of Vectarion to give him, can only point at the tape.
@@ -3506,6 +3562,10 @@ That is the whole of her reply. Four years ago she would have had a page of it. 
 - Cargo: Level III sovereign key material, one tamper-evident module, never transmitted electronically
 - Fee: Executive rate
 - Notes: The escort lead has authority over the route. Follow the escort’s jump timings exactly. No deviation of any kind.
+
+**If declined** (the contract stands and goes back to the card; cover +12)
+
+**Director Halsey:** It’s from her office. Nobody declines her office. I’m not sure anybody knows what would happen if they did, and I’d rather you weren’t the one to find out. Fly it.
 
 **Truths (never shown in play)**
 
@@ -3810,6 +3870,10 @@ Four words. You wait. The engine ticks. The station lights slide past the port. 
 - Cargo: One data package, class unlisted, to be uploaded to the Nexus-77 habitat core on arrival by the courier in person
 - Fee: Tier 5 rate
 - Notes: Upload on arrival. Depart within one hour of upload. Do not remain on station. Do not discuss.
+
+**If declined** (the contract stands and goes back to the card; cover +15)
+
+**Katherine Keller:** Tier 5 couriers do not decline, Abbott. If you would like to be the first, I will want to hear why, in this office, today. I don’t think you would like to be the first.
 
 **Truths (never shown in play)**
 
@@ -4134,6 +4198,10 @@ You put your hands on the Jackrabbit’s controls. They are smaller than ALC-729
 - Cargo: About five hundred people, if it works
 - Fee: None
 - Notes: Forty hours remain on the package’s signature chain. The habitat must be empty before ALC-7293 arrives to upload it.
+
+**If declined** (the contract stands and goes back to the card; cover 0)
+
+**Aggie (Jackrabbit):** Jack. It’s five hundred people, and Frank, and Eleanor, and Amanda. Nobody else is coming. I’ll plot the first jump whenever you’re ready.
 
 **Truths (never shown in play)**
 

@@ -74,5 +74,12 @@
         "Below is your debrief: everything Aggie tried to tell you on the way up, and what you made of it."
       ]
     }
+  },
+  "decline": {
+    "who": "dispatch",
+    "text": "Declining an assigned contract is noted against your file, courier. There is no other courier on this route in the window. The contract stands.",
+    "cover": 6,
+    "sideText": "Declined. The consignment has been reassigned to another courier. A declined contract is logged against your file.",
+    "sideCover": 8
   }
 }

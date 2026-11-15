@@ -49,6 +49,7 @@ export function viewChapter(chapter, mode) {
         title: chapter.title,
         subtitle: chapter.subtitle ?? '',
         brief: chapter.brief ?? null,
+        decline: chapter.decline ?? null,
         requires: chapter.requires ?? [],
         unless: chapter.unless ?? [],
         start: chapter.start,
@@ -72,7 +73,14 @@ export function viewCampaign(campaign, chapters, mode) {
         const c = get(id);
         if (shownIn(c, mode)) reviews[tier] = viewChapter(c, mode);
     }
-    return { mode, title: campaign.title, speakers: campaign.speakers ?? {}, chapters: order, reviews };
+    return {
+        mode,
+        title: campaign.title,
+        speakers: campaign.speakers ?? {},
+        decline: campaign.decline ?? null,
+        chapters: order,
+        reviews,
+    };
 }
 
 export const chapterById = (view, id) =>
@@ -137,6 +145,7 @@ export function newPlay(view) {
         history: [],         // snapshots for rewinding within the chapter
         rewinds: 0,
         reviews: 0,
+        declines: 0,
         choices: 0,
         started: Date.now(),
     };
@@ -316,11 +325,12 @@ export function rewind(play) {
 
 // The chapter is done: record it, queue a review if cover has filled, and
 // show the closing card.
-function closeChapter(play, view) {
+function closeChapter(play, view, { declined = false } = {}) {
     const next = clone(play);
     const chapter = currentChapter(next, view);
-    next.completed.push(chapter.id);
-    if (!next.flags.includes(`done:${chapter.id}`)) next.flags.push(`done:${chapter.id}`);
+    const flag = declined ? `declined:${chapter.id}` : `done:${chapter.id}`;
+    if (!declined) next.completed.push(chapter.id);
+    if (!next.flags.includes(flag)) next.flags.push(flag);
     next.phase = 'closed';
     next.history = [];
     const isReview = Object.values(view.reviews).some(r => r.id === chapter.id);
@@ -331,6 +341,44 @@ function closeChapter(play, view) {
         const review = view.reviews[chapter.tier] ?? view.reviews.any;
         if (review && !next.queue.includes(review.id)) next.queue.push(review.id);
     }
+    return next;
+}
+
+// What declining the current contract would do, from its own `decline`
+// entry or the campaign's default: { side, who, text, cover }. A side
+// contract can be skipped; a main one can't, because the story needs it.
+export function declineTerms(play, view) {
+    const chapter = currentChapter(play, view);
+    if (!chapter || chapter.kind !== 'contract' || play.phase !== 'brief') return null;
+    const own = chapter.decline ?? {};
+    const base = view.decline ?? {};
+    const side = Boolean(own.side);
+    return {
+        side,
+        who: own.who ?? base.who ?? 'dispatch',
+        text: own.text ?? (side ? base.sideText : base.text) ?? '',
+        cover: own.cover ?? (side ? base.sideCover : base.cover) ?? 0,
+    };
+}
+
+// Declining from the contract card. Every refusal costs cover and is logged
+// in the journal. A side contract then closes without being played (it is
+// not counted as completed, so its truths stay out of the debrief). A main
+// contract stays on the card, to be accepted.
+export function declineChapter(play, view) {
+    const terms = declineTerms(play, view);
+    if (!terms) return play;
+    const chapter = currentChapter(play, view);
+    const next = clone(play);
+    next.cover = clamp(next.cover + terms.cover, 0, COVER_MAX);
+    next.declines = (next.declines ?? 0) + 1;
+    if (terms.side) {
+        next.journal.push({ chapter: chapter.id, kind: 'note', text: `Declined the ${chapter.title} contract. Dispatch logged it.` });
+        return closeChapter(next, view, { declined: true });
+    }
+    const flag = `refused:${chapter.id}`;
+    if (!next.flags.includes(flag)) next.flags.push(flag);
+    next.journal.push({ chapter: chapter.id, kind: 'note', text: `Tried to decline the ${chapter.title} contract. It stood.` });
     return next;
 }
 
@@ -440,6 +488,7 @@ export function debrief(play, view) {
             lateJumps: play.jumps.filter(j => j.late).length,
             rewinds: play.rewinds,
             reviews: play.reviews,
+            declines: play.declines ?? 0,
             cover: play.cover,
         },
     };

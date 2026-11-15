@@ -14,6 +14,7 @@
     "fee": "Tier 3 rate",
     "notes": "The site is unstaffed. A loading crew will meet you. Manifest line seven is to be secured in the forward hold and not opened under any circumstances."
   },
+  "decline": { "who": "halsey", "text": "Q-19 came down from QuantumGrid with your name already on it, Abbott. I can log that you asked. I can’t give it to anyone else. Fly it.", "cover": 8 },
   "truths": [
     { "id": "vectarion", "mode": "both", "text": "Site 19 was Vectarion Research. The crates carry its name under QuantumGrid’s labels. Four years in, Jack is finally standing in the trail he came to follow, and Aggie, who has no record of Vectarion to give him, can only point at the tape." },
     { "id": "rig", "mode": "reader", "text": "Manifest line seven is a Quantum Flux Regulator casing: a rejected spare from Vectarion’s one project, the one part of the Starling device that QuantumGrid still makes itself. Aggie knows exactly what it is and what it could mean, and the directive holds her silent while Jack straps it into the hold." }

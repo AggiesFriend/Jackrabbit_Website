@@ -14,6 +14,7 @@
     "fee": "Standard tier 1 rate, plus cold-chain supplement",
     "notes": "Client requests STANDARD transit. Do not expedite. Deliver within the contracted window, not before."
   },
+  "decline": { "side": true, "who": "dispatch", "text": "Declined. The HeliosMed cold case has been reassigned at standard transit. A declined contract is logged against your file.", "cover": 8 },
   "truths": [
     { "id": "timed-late", "mode": "both", "text": "The ‘do not expedite’ instruction is the point of the contract. HeliosMed has timed the delivery to land after the Reach’s clinic runs dry, so the settlement will sign whatever supply terms HeliosMed offers next." }
   ],

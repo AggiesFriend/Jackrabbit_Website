@@ -100,6 +100,16 @@ for (const m of MODES) {
             p('');
             for (const [k, v] of Object.entries(c.brief)) p(`- ${k[0].toUpperCase() + k.slice(1)}: ${v}`);
             p('');
+            const own = c.decline ?? {};
+            const base = view.decline ?? {};
+            const side = Boolean(own.side);
+            const who = own.who ?? base.who ?? 'dispatch';
+            const text = own.text ?? (side ? base.sideText : base.text);
+            const cover = own.cover ?? (side ? base.sideCover : base.cover) ?? 0;
+            p(`**If declined** (${side ? 'side work: the contract closes unflown' : 'the contract stands and goes back to the card'}; cover ${cover > 0 ? '+' : ''}${cover}${own.text ? '' : '; the campaign’s default line'})`);
+            p('');
+            p(`**${speaker(who)}:** ${text}`);
+            p('');
         }
         if (c.truths.length) {
             p('**Truths (never shown in play)**');

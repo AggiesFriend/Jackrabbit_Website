@@ -51,7 +51,7 @@ export default async function checkPlaythrough() {
             await prepare(context, { mode: 'spoiler-free' });
             context.setDefaultTimeout(15000);
             const page = await context.newPage();
-            const click = locator => locator.click();
+            const click = (locator, options) => locator.click(options);
             try {
                 await page.goto(`${base}/tier_four/`, { waitUntil: 'load' });
                 await startCareer(page, click);
@@ -89,7 +89,7 @@ export default async function checkPlaythrough() {
             page.on('response', r => {
                 if (r.status() >= 400 && r.url().startsWith(base)) errors.push(`${r.status()} for ${r.url().slice(base.length)}`);
             });
-            const tap = locator => run.phone ? locator.tap() : locator.click();
+            const tap = (locator, options) => run.phone ? locator.tap(options) : locator.click(options);
             const pick = seeded(run.seed);
             const leaks = new Set();
             const recent = [];
@@ -129,7 +129,9 @@ export default async function checkPlaythrough() {
                     dialog: [...document.querySelectorAll('dialog[open]')].map(d => d.id).join(','),
                     scene: document.querySelector('#lines')?.dataset.scene,
                 })).catch(() => ({}));
-                problems.push(`${where}: ${err.message.split('\n')[0]} at ${JSON.stringify(state)}; last steps: ${recent.join(' > ')}; see ${path.basename(shot)}`);
+                // Playwright's call log says why an action timed out.
+                const why = err.message.split('\n').map(s => s.trim()).filter(Boolean).slice(0, 8).join(' | ');
+                problems.push(`${where}: ${why} at ${JSON.stringify(state)}; last steps: ${recent.join(' > ')}; see ${path.basename(shot)}`);
             }
             for (const e of errors) problems.push(`${where}: ${e}`);
             for (const phrase of leaks) problems.push(`${where}: reader-only text was shown: "${phrase}"`);

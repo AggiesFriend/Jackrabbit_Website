@@ -14,6 +14,7 @@
     "fee": "Tier 2 rate, standard. Client declined the priority tariff.",
     "notes": "A SnapMesh node on the Kessler corridor is down. Physical data transport booked at standard priority."
   },
+  "decline": { "side": true, "who": "dispatch", "text": "Declined. The Kessler consignment returns to the time-critical desk and will go with the next courier on the corridor: tomorrow night, at the earliest. Logged against your file.", "cover": 8 },
   "truths": [
     {
       "id": "deadline",

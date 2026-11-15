@@ -14,6 +14,7 @@
     "fee": "Tier 5 rate",
     "notes": "Upload on arrival. Depart within one hour of upload. Do not remain on station. Do not discuss."
   },
+  "decline": { "who": "keller", "text": "Tier 5 couriers do not decline, Abbott. If you would like to be the first, I will want to hear why, in this office, today. I don’t think you would like to be the first.", "cover": 15 },
   "truths": [
     { "id": "destruct", "mode": "reader", "text": "The package is a comprehensive destruct sequence for Nexus-77: life support termination, bulkheads sealed, atmosphere vented, reactor containment released. It is built to kill everyone on the habitat with the least possible chance of evacuation, and Jack is to carry it there in person." },
     { "id": "why", "mode": "reader", "text": "Nexus-77 is being destroyed to bury CyberNexus’s forbidden research and everyone who touched it, with the Jackrabbit to be blamed. Amanda’s high-security section is the reason. Frank and Eleanor are collateral." }

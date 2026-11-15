@@ -14,6 +14,7 @@
     "fee": "Tier 2 rate",
     "notes": "Internal consignment. Consignor and consignee details are on the manifest. Handle with discretion."
   },
+  "decline": { "who": "dispatch", "text": "Internal consignments are assigned, courier, not offered. The relocation stands.", "cover": 6 },
   "truths": [
     { "id": "absorbed", "mode": "both", "text": "The ‘personal effects’ are the records of a small shipping firm Aletheion absorbed last quarter, being moved off Tethys before the auditors arrive. The ‘executive’ is the firm’s former owner, who now works for the company that ate his." }
   ],

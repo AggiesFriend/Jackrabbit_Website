@@ -14,6 +14,7 @@
     "fee": "Executive rate",
     "notes": "The escort lead has authority over the route. Follow the escort’s jump timings exactly. No deviation of any kind."
   },
+  "decline": { "who": "halsey", "text": "It’s from her office. Nobody declines her office. I’m not sure anybody knows what would happen if they did, and I’d rather you weren’t the one to find out. Fly it.", "cover": 12 },
   "truths": [
     {
       "id": "watching-you",

@@ -144,6 +144,18 @@ export const SCREENS = [
         },
     },
     {
+        name: 'decline-pushback',
+        path: '/tier_four/',
+        steps: async (page, tap) => {
+            await ready(page);
+            await startCareer(page, tap);
+            await until(page, tap, '#screen-brief', { limit: 600 });
+            await tap(page.locator('#decline'));
+            await tap(page.locator('#confirm[open] #confirm-ok'));
+            await page.locator('#confirm[open] #confirm-ok', { hasText: 'Accept the contract' }).waitFor();
+        },
+    },
+    {
         name: 'contract-closed',
         path: '/tier_four/',
         steps: async (page, tap) => {

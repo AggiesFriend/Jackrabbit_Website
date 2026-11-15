@@ -1381,7 +1381,7 @@ On the way back to the ship you pass the executive housing where a man in a suit
 
 **Frank:** How was it?
 
-Frank’s message is waiting on the private channel, two words, sent from Nexus-77 between runs. You tell him it was fine. You tell him Eleanor’s container is in the cooler. You do not tell him they were talking about Europa. He flew tier 3 for twelve years. He knows what they talk about.
+Frank’s message is waiting on the private channel, three words, sent from Nexus-77 between runs. You tell him it was fine. You tell him Eleanor’s container is in the cooler. You do not tell him they were talking about Europa. He flew tier 3 for twelve years. He knows what they talk about.
 
 *The chapter ends.*
 
@@ -3290,7 +3290,7 @@ On the way back to the ship you pass the executive housing where a man in a suit
 
 **Frank:** How was it?
 
-Frank’s message is waiting on the private channel, two words, sent from Nexus-77 between runs. You tell him it was fine. You tell him Eleanor’s container is in the cooler. You do not tell him they were talking about Europa. He flew tier 3 for twelve years. He knows what they talk about.
+Frank’s message is waiting on the private channel, three words, sent from Nexus-77 between runs. You tell him it was fine. You tell him Eleanor’s container is in the cooler. You do not tell him they were talking about Europa. He flew tier 3 for twelve years. He knows what they talk about.
 
 *The chapter ends.*
 

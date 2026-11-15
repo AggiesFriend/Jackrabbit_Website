@@ -341,6 +341,9 @@ async function revealNext() {
     const lines = visibleLines(play, view);
     if (play.shown >= lines.length) return drawControls();
     revealing = true;
+    // A new scene's first line may follow a choice: the old choices go at once.
+    $('choices').hidden = true;
+    $('advance').hidden = false;
     const line = lines[play.shown];
     const li = lineElement(line, true);
     $('lines').append(li);

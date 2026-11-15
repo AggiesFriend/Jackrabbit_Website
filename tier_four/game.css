@@ -961,13 +961,13 @@ dialog h2 {
 
 .tabs {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.4rem;
     margin: 1rem 0;
-    overflow-x: auto;
 }
 
 .tabs button {
-    flex: 1 1 auto;
+    flex: 1 1 5.5rem;
     min-height: 44px;
     padding: 0.4rem 0.6rem;
     border-color: var(--edge);

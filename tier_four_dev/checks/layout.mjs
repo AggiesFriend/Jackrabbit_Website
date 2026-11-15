@@ -47,9 +47,9 @@ function measure({ minTarget, deviceWidth }) {
             out.offscreen.push(`${describe(el)} spans ${Math.round(r.left)} to ${Math.round(r.right)} px`);
         }
     }
-    // An open dialog can't be scrolled with the page, so its buttons must be
-    // on screen as it opens.
-    for (const el of document.querySelectorAll('dialog[open] button')) {
+    // The confirmation dialog can't be scrolled with the page, so its
+    // buttons must be on screen as it opens. The drawer scrolls.
+    for (const el of document.querySelectorAll('#confirm[open] button')) {
         const r = el.getBoundingClientRect();
         if (r.top < 0 || r.bottom > window.innerHeight + 1) {
             out.offscreen.push(`${describe(el)} in an open dialog spans ${Math.round(r.top)} to ${Math.round(r.bottom)} px, below the ${window.innerHeight} px screen`);

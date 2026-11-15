@@ -8,11 +8,13 @@ export const FAST_SETTINGS = { speed: 'instant', autoPlot: 'on', motion: 'reduce
 
 // Puts the saved settings and mode in place before the page loads, so the
 // spoiler warning doesn't need answering and text appears at once.
-export async function prepare(context, { mode = 'spoiler-free', settings = FAST_SETTINGS } = {}) {
+// The script runs on every load, so the mode is only written when asked
+// for; otherwise a reload would undo the Spoilers switch.
+export async function prepare(context, { mode = null, settings = FAST_SETTINGS } = {}) {
     await context.addInitScript(({ mode, settings }) => {
         try {
             localStorage.setItem('tier-four.settings', JSON.stringify(settings));
-            localStorage.setItem('tier-four.mode', mode);
+            if (mode) localStorage.setItem('tier-four.mode', mode);
         } catch { /* storage blocked */ }
     }, { mode, settings });
 }

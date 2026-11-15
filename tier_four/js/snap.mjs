@@ -131,6 +131,7 @@ export function runJump(host, spec, { reducedMotion = false, autoPlot = false, o
     const deadline = spec.deadline ?? s.deadline;
     const field = buildField(hash(spec.seed ?? spec.name), s);
     let tries = 0;
+    let lockedOnce = false;
     let step = 0;
 
     return new Promise(resolve => {
@@ -278,8 +279,14 @@ export function runJump(host, spec, { reducedMotion = false, autoPlot = false, o
 
         // The probe strands sweep in from the survey fan and converge on the
         // chosen anchor, each a moment after the last. Resolves when done.
-        const converge = c => new Promise(resolve => {
+        // With `back`, the same sweep in reverse: from the anchor out to the
+        // survey fan.
+        const converge = (c, back = false) => new Promise(resolve => {
             const { group, paths } = field.strands;
+            if (back) {
+                group.classList.remove('converged');
+                c.ring.classList.remove('pulse');
+            }
             const curve = (p, t) => {
                 const ex = p.x1 + (c.x - p.x1) * t;
                 const ey = 14 + (c.y - 14) * t;
@@ -287,10 +294,15 @@ export function runJump(host, spec, { reducedMotion = false, autoPlot = false, o
                 const qy = H / 2 + ((H + c.y) / 2 - H / 2) * t;
                 return `M${p.x0} ${H + 4} Q${qx.toFixed(1)} ${qy.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}`;
             };
+            let settled = false;
             const finishUp = () => {
-                for (const p of paths) p.el.setAttribute('d', curve(p, 1));
-                group.classList.add('converged');
-                c.ring.classList.add('pulse');
+                if (settled) return;
+                settled = true;
+                for (const p of paths) p.el.setAttribute('d', curve(p, back ? 0 : 1));
+                if (!back) {
+                    group.classList.add('converged');
+                    c.ring.classList.add('pulse');
+                }
                 resolve();
             };
             if (reducedMotion) return finishUp();
@@ -303,16 +315,39 @@ export function runJump(host, spec, { reducedMotion = false, autoPlot = false, o
                 paths.forEach((p, i) => {
                     const t = Math.min(1, Math.max(0, (now - start - i * stagger) / length));
                     if (t < 1) done = false;
-                    p.el.setAttribute('d', curve(p, ease(t)));
+                    p.el.setAttribute('d', curve(p, back ? 1 - ease(t) : ease(t)));
                 });
+                if (settled) return;
                 if (done) finishUp();
                 else requestAnimationFrame(frame);
             };
             requestAnimationFrame(frame);
+            // Browsers pause animation frames in a hidden tab or a
+            // backgrounded app; never leave the player waiting on one.
+            setTimeout(finishUp, length + stagger * paths.length + 300);
         });
 
+        // Back from a locked anchor: the strands return to the survey fan,
+        // then every anchor not already rejected can be chosen again.
+        const unlock = async (c, btn) => {
+            foot.replaceChildren();
+            status.textContent = 'Releasing the anchor. Strands returning to survey…';
+            onEvent('unlock');
+            await converge(c, true);
+            btn.classList.remove('locked');
+            c.ring.classList.remove('locked');
+            for (const b of btn.parentNode.children) {
+                if (!b.classList.contains('rejected')) b.disabled = false;
+            }
+            status.textContent = 'Step 3 of 3. Choose an anchor with room for the ship and a safety margin.';
+            btn.focus();
+        };
+
         const pick = async (c, btn, letter) => {
-            tries++;
+            // Changing your mind between clear anchors is free; only a
+            // rejected anchor costs another try.
+            if (!(c.ok && lockedOnce)) tries++;
+            if (c.ok) lockedOnce = true;
             onEvent('anchor', { letter, ok: c.ok, tries });
             if (c.ok) {
                 btn.classList.add('locked');
@@ -322,7 +357,8 @@ export function runJump(host, spec, { reducedMotion = false, autoPlot = false, o
                 await converge(c);
                 status.textContent = `Anchor ${letter} locked. ${tries === 1 ? 'A clean plot.' : tries <= deadline ? 'Plotted.' : 'Plotted, late.'}`;
                 const jump = el('button', { type: 'button', class: 'primary', text: 'Jump', onclick: () => finish({ tries, late: tries > deadline, auto: false }) });
-                foot.replaceChildren(jump);
+                const again = el('button', { type: 'button', text: 'Choose another anchor', onclick: () => unlock(c, btn) });
+                foot.replaceChildren(jump, again);
                 jump.focus();
                 return;
             }

@@ -785,10 +785,16 @@ body[data-ship="jackrabbit"] .snap-map {
 /* Converged on the chosen anchor: the strands brighten, and the anchor's
    ring pulses once before the jump. */
 .snap-strands.converged .snap-strand {
-    opacity: 0.95;
-    stroke-width: 0.8;
+    opacity: 0.9;
     stroke: var(--right);
     transition: stroke 0.3s, opacity 0.3s;
+}
+
+/* Strands keep a fixed on-screen width however large the map is drawn:
+   half a CSS pixel, a single physical pixel on most phones. */
+.snap-strand {
+    vector-effect: non-scaling-stroke;
+    stroke-width: 0.5px;
 }
 
 .snap-ring.pulse {

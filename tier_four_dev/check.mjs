@@ -1,12 +1,16 @@
 // Runs every automated check. Usage: npm run check
 // Exits with code 1 if any check finds a problem.
+// TF_CHECKS=playthrough,layout runs only the named checks.
 import checkData from './checks/data.mjs';
 import checkSiteRules from './checks/site-rules.mjs';
 import checkEngine from './checks/engine.mjs';
 import checkLayout from './checks/layout.mjs';
 import checkPlaythrough from './checks/playthrough.mjs';
 
-const CHECKS = [checkData, checkEngine, checkSiteRules, checkPlaythrough, checkLayout];
+const ALL = { data: checkData, engine: checkEngine, 'site-rules': checkSiteRules, playthrough: checkPlaythrough, layout: checkLayout };
+const CHECKS = process.env.TF_CHECKS
+    ? process.env.TF_CHECKS.split(',').map(k => ALL[k]).filter(Boolean)
+    : Object.values(ALL);
 
 let failed = 0;
 for (const run of CHECKS) {

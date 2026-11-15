@@ -838,9 +838,9 @@ body[data-ship="jackrabbit"] .snap-map {
 
 /* The ship plus its safety margin, at true scale, so a clash is visible. */
 .snap-ring {
-    fill: rgba(52, 152, 219, 0.12);
+    fill: rgba(52, 152, 219, 0.18);
     stroke: var(--accent);
-    stroke-width: 1;
+    stroke-width: 1.6;
     stroke-dasharray: 3 2;
     opacity: 0;
     transition: opacity 0.3s;
@@ -851,7 +851,7 @@ body[data-ship="jackrabbit"] .snap-map {
 }
 
 .snap-ring.rejected {
-    fill: rgba(232, 132, 107, 0.15);
+    fill: rgba(232, 132, 107, 0.2);
     stroke: var(--danger);
 }
 

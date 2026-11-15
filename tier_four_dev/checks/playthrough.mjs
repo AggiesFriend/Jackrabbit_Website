@@ -3,8 +3,14 @@
 // seeded choice policies, and nothing reader-only is ever shown in
 // spoiler-free mode (the spoiler graph check, Q7, on what play actually
 // reaches).
+//
+// TF_RUNS=reader:42:phone,spoiler-free:7:desktop narrows a run. A failed
+// run says where it stopped and leaves a screenshot in screenshots/.
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { chromium } from 'playwright';
 import { startServer } from '../lib/server.mjs';
+import { SCREENSHOT_DIR } from '../lib/paths.mjs';
 import { prepare, playThrough, seeded, startCareer } from '../lib/autoplay.mjs';
 
 // Phrases that only reader mode may ever show. Kept short and distinctive.
@@ -25,6 +31,9 @@ const RUNS = [
     { mode: 'reader', seed: 42, phone: true },
 ];
 
+const key = r => `${r.mode}:${r.seed}:${r.phone ? 'phone' : 'desktop'}`;
+const selected = process.env.TF_RUNS ? RUNS.filter(r => process.env.TF_RUNS.split(',').includes(key(r))) : RUNS;
+
 export default async function checkPlaythrough() {
     const problems = [];
     const server = await startServer();
@@ -33,7 +42,7 @@ export default async function checkPlaythrough() {
     let runs = 0;
     let totalSteps = 0;
     try {
-        for (const run of RUNS) {
+        for (const run of selected) {
             const where = `${run.mode}, seed ${run.seed}, ${run.phone ? 'phone by touch' : 'desktop by mouse'}`;
             const context = await browser.newContext({
                 viewport: run.phone ? { width: 360, height: 640 } : { width: 1280, height: 800 },
@@ -42,7 +51,8 @@ export default async function checkPlaythrough() {
             });
             await context.route('https://cloud.umami.is/**', route => route.abort());
             await prepare(context, { mode: run.mode });
-            context.setDefaultTimeout(5000);
+            // Generous: a slow machine must not fail the career.
+            context.setDefaultTimeout(15000);
             const page = await context.newPage();
             const errors = [];
             page.on('pageerror', err => errors.push(err.message));
@@ -52,20 +62,24 @@ export default async function checkPlaythrough() {
             const tap = locator => run.phone ? locator.tap() : locator.click();
             const pick = seeded(run.seed);
             const leaks = new Set();
+            const recent = [];
             try {
                 await page.goto(`${base}/tier_four/`, { waitUntil: 'load' });
                 await startCareer(page, tap);
                 const result = await playThrough(page, tap, {
                     pick,
-                    onStep: async () => {
+                    onStep: async did => {
+                        recent.push(did);
+                        if (recent.length > 8) recent.shift();
                         if (run.mode !== 'spoiler-free') return;
                         const text = await page.locator('#app').innerText().catch(() => '');
                         for (const phrase of READER_ONLY) if (text.includes(phrase)) leaks.add(phrase);
                     },
                 });
                 totalSteps += result.steps;
-                if (result.outcome !== 'end') problems.push(`${where}: play stopped (${result.outcome}) after ${result.steps} steps, last at ${result.chapters.at(-1) ?? 'the start'}`);
-                else {
+                if (result.outcome !== 'end') {
+                    problems.push(`${where}: play stopped (${result.outcome}) after ${result.steps} steps, last at ${result.chapters.at(-1) ?? 'the start'}`);
+                } else {
                     // The debrief must list at least one truth per tier played.
                     const truths = await page.locator('#debrief .truth').count();
                     if (truths < 3) problems.push(`${where}: the debrief shows only ${truths} truth(s)`);
@@ -76,7 +90,16 @@ export default async function checkPlaythrough() {
                     if (!await page.locator('#screen-end').isVisible()) problems.push(`${where}: a finished career didn't reload to its debrief`);
                 }
             } catch (err) {
-                problems.push(`${where}: ${err.message.split('\n')[0]}`);
+                // Say where it stopped, and keep a picture of it.
+                const shot = path.join(SCREENSHOT_DIR, `playthrough-failure-${run.mode}-${run.seed}.png`);
+                await fs.mkdir(SCREENSHOT_DIR, { recursive: true });
+                await page.screenshot({ path: shot, fullPage: true }).catch(() => {});
+                const state = await page.evaluate(() => ({
+                    screen: [...document.querySelectorAll('.screen')].filter(s => !s.hidden).map(s => s.id).join(','),
+                    dialog: [...document.querySelectorAll('dialog[open]')].map(d => d.id).join(','),
+                    scene: document.querySelector('#lines')?.dataset.scene,
+                })).catch(() => ({}));
+                problems.push(`${where}: ${err.message.split('\n')[0]} at ${JSON.stringify(state)}; last steps: ${recent.join(' > ')}; see ${path.basename(shot)}`);
             }
             for (const e of errors) problems.push(`${where}: ${e}`);
             for (const phrase of leaks) problems.push(`${where}: reader-only text was shown: "${phrase}"`);

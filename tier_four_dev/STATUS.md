@@ -24,6 +24,10 @@ Local only, nothing pushed. Not merged into `main`.
 - `tier_four_dev/`: checks, fixtures, tests, the autoplayer and the local
   server. `npm run check` runs everything; `npm run serve` serves the site
   for a phone. `.claude/launch.json` has a `tier-four` dev server entry.
+- `tier_four_dev/playthrough-script.md`: the whole game as a readable
+  script, per chapter and mode, with every choice, where it leads and the
+  routes through each chapter. For canon review. Regenerate after any
+  content change with `node tools/script.mjs`.
 
 ### Features
 
@@ -149,18 +153,26 @@ listed in the campaign.
 
 ## Automated checks
 
-`npm run check`, 15 November 2026:
+`npm run check`, 15 November 2026, all passing:
 
 | Check | Result |
 |---|---|
 | Data validation | 22 JSON files, 21 chapters, 1 valid sample, 28 broken cases |
 | Engine unit tests | 26 tests |
-| Site rules | passes |
-| Scripted play-through | 6 careers to the end (3 seeds × 2 modes, phone by touch and desktop by mouse), no page errors, no reader-only text in spoiler-free play |
-| Layout sweep | 15 screens at 7 sizes; see the latest run's notes below |
+| Site rules | 107 pages checked for umami, 1 Tier Four page checked for links |
+| Scripted play-through | 6 careers to the end, 2245 steps (3 seeds × 2 modes, phone by touch and desktop by mouse), no page errors, no reader-only text in spoiler-free play, finished careers reload to their debrief |
+| Layout sweep | 15 screens at 7 sizes, 105 screenshots, no sideways scrolling, no small tap targets, nothing off-screen |
 
-`TF_SCREENS=play,choices TF_DEVICES=design-360 npm run check` narrows the
-sweep while working on a screen.
+One caveat: the play-through runs six whole careers through a real browser
+and takes about six minutes. Twice, when other Playwright runs or the
+browser pane were busy at the same time, one career stopped on a tap
+timeout; alone, the same seeded career passes every time. The per-action
+timeout is now 15 s and a failure reports its last steps and saves a
+screenshot. Run the suite on a quiet machine.
+
+Narrowing a run while working: `TF_CHECKS=playthrough,layout`,
+`TF_SCREENS=play,choices`, `TF_DEVICES=design-360`,
+`TF_RUNS=reader:42:phone`, in any combination, before `npm run check`.
 
 ## Next
 

@@ -6,7 +6,7 @@
   "mode": "both",
   "ship": "alc",
   "title": "Tier 3",
-  "subtitle": "Callisto administrative ring",
+  "subtitle": "Rigel, Regional Operations; then Nexus-77",
   "truths": [],
   "understandings": [],
   "start": "office",
@@ -14,63 +14,76 @@
     {
       "id": "office",
       "lines": [
-        { "who": "n", "text": "Two years at tier 2. You are sixteen on the records nobody keeps, twenty-one on the ones Aletheion does, and the mask has stopped feeling like a mask most days, which Aggie once told you would be the dangerous part." },
-        { "who": "halsey", "text": "Tier 3. Sit down, Abbott, this one comes with a conversation." },
-        { "who": "halsey", "text": "Tier 3 contracts are the ones the company doesn’t put on the open board. Strategic cargo. Sovereign keys. Things that move under escort. The couriers who fly them are vetted by Keller’s office, and Keller’s office has vetted you, and I want you to understand that I didn’t ask them to." }
+        { "who": "n", "text": "Three years and nine months with Aletheion, almost three of them at tier 2. You are sixteen. The video filter has had to grow up with you, line by line, and in a room nobody looks twice any more; a sixteen-year-old with a tier 2 record is only a prodigy, not a mystery." },
+        { "who": "halsey", "text": "Tier 3. Sit down, Abbott, this one comes with a conversation and a card." },
+        { "who": "n", "text": "Halsey is alone in his office. He slides a tier 3 credential card and a secure comms module across the desk, and does not let go of them straight away." },
+        { "who": "halsey", "text": "From tier 1 to tier 3 in under four years. The norm is five to seven. Kowalski speaks highly of you, which he does of almost nobody, and his endorsement is on this. Tier 3 contracts are the ones the company doesn’t put on the open board: strategic cargo, sovereign keys, things that move under escort. Some of them you will not like. Choose wisely which ones you don’t like out loud." }
       ],
       "choices": [
-        { "text": "“Should I be worried that they did?”", "goto": "worried", "trust": { "halsey": 1 } },
-        { "text": "“Then I’ll make sure they don’t regret it.”", "goto": "regret" }
+        { "text": "“Should I be worried about who vets tier 3?”", "goto": "worried", "trust": { "halsey": 1 } },
+        { "text": "“Then I’ll make sure nobody regrets it.”", "goto": "regret" }
       ]
     },
     {
       "id": "worried",
       "lines": [
-        { "who": "halsey", "text": "You should be aware. Worried is for people who can do something about it. Keller promotes people she can use, and she uses them until they’re used, and then she promotes someone else. Fly well. Keep your head down. Don’t become interesting." },
+        { "who": "halsey", "text": "You should be aware. Worried is for people who can do something about it. The executive floor promotes people it can use, and it uses them until they’re used, and then it promotes someone else. Fly well. Keep your head down. Don’t become interesting." },
         { "who": "n", "text": "You have been interesting since the day you arrived. You both know it. He is telling you, in the only way his job allows, that he will go on pretending otherwise for as long as he can." }
       ],
-      "next": "frank"
+      "next": "message"
     },
     {
       "id": "regret",
       "lines": [
-        { "who": "halsey", "text": "She won’t regret it. That’s not how it works up there. You might. That’s all I’ll say, and I’ve said more than I should." }
+        { "who": "halsey", "text": "The floor above me doesn’t regret things. That isn’t how it works up there. You might. That’s all I’ll say, and I’ve said more than I should." }
       ],
-      "next": "frank"
+      "next": "message"
     },
     {
-      "id": "frank",
+      "id": "message",
       "lines": [
-        { "who": "n", "text": "Frank finds you in the lounge afterwards. He has heard; Frank always hears. He is pleased in the loud way and worried in the quiet way, and he does both at once over two cups of the coffee." },
-        { "who": "frank", "text": "Tier 3. I flew tier 3 for eleven years, son. The money’s better. The sleep’s worse. You’ll meet people at the receptions who talk about things over drinks that you’ll want to walk out on, and you won’t walk out, because that’s the job. Don’t let it get into you. That’s the only advice I’ve got." },
-        { "who": "frank", "text": "Eleanor says come for dinner before you go up. She says it like an order. It is an order." }
+        { "who": "n", "text": "Frank’s message is waiting on the private channel before you reach the ship. Frank always hears." },
+        { "who": "frank", "text": "Tier 3! Dinner tomorrow, no arguments. Eleanor’s making her special roast. Amanda’s coming home for it. Bring the container." }
+      ],
+      "next": "dinner"
+    },
+    {
+      "id": "dinner",
+      "jump": { "name": "Nexus-77, celebration run", "difficulty": 2 },
+      "lines": [
+        { "who": "n", "text": "The special roast is the roast, with more of everything. Amanda, sixteen, back from the high-security section with a badge that is a different colour now, talks about plasticity until Eleanor makes the face. Frank is pleased in the loud way and worried in the quiet way, and does both at once." },
+        { "who": "frank", "text": "Tier 3. I flew tier 3 for the last twelve years, son. The money’s better. The sleep’s worse. You’ll meet people at the receptions who talk about things over drinks that you’ll want to walk out on, and you won’t walk out, because that’s the job. Don’t let it get into you." },
+        { "who": "n", "text": "Then he puts a small box on the table and pushes it across. Inside is a mechanical pilot’s chronometer, old, heavy, its face scratched and its hands exact." },
+        { "who": "frank", "text": "Mine. From my first tier 3 run. It doesn’t need power and it doesn’t talk to anybody’s network, which at tier 3 you will come to appreciate. Wind it. Every day. It keeps better time than you’d think, and it’s the only thing on your wrist that will never report you." }
       ],
       "choices": [
-        { "text": "“I’ll be there. Frank, thank you. For all of it.”", "goto": "thanks", "trust": { "frank": 1 } },
-        { "text": "“Did it get into you? Tier 3?”", "goto": "into-you", "trust": { "frank": 1 } }
+        { "text": "“Frank. I can’t take this.”", "goto": "cant-take", "trust": { "frank": 1 } },
+        { "text": "Put it on. Wind it. Say thank you.", "goto": "europa", "trust": { "frank": 2 } }
       ]
     },
     {
-      "id": "thanks",
+      "id": "cant-take",
       "lines": [
-        { "who": "frank", "text": "Don’t thank me, you’ll make me feel old. I’m retiring at the end of the year. Thirty-seven years. Eleanor’s already bought the chair." },
-        { "who": "n", "text": "He says it lightly. It lands on you like a bulkhead." }
+        { "who": "frank", "text": "You can, because I’m giving it to you, and I outrank you at this table. Put it on. Wind it." },
+        { "who": "n", "text": "You put it on. It is heavier than it looks. You wind it, and it ticks against your wrist like a second pulse." }
       ],
-      "next": "close"
+      "next": "europa"
     },
     {
-      "id": "into-you",
+      "id": "europa",
       "lines": [
-        { "who": "frank", "text": "Some. I got it back out. Eleanor got it back out, mostly. That’s why I keep telling you to come to dinner, Jack. It’s not the stew." },
-        { "who": "frank", "text": "I’m retiring at the end of the year, by the way. Thirty-seven years. Eleanor’s already bought the chair." }
+        { "who": "eleanor", "text": "Tell him about Europa, Frank. He’s tier 3 now. He should hear it from you and not from one of them." },
+        { "who": "frank", "text": "Fifteen years ago. HeliosMed. An unmarked container to their facility on Europa, biohazard seals, no manifest beyond a weight. I flew it, because that’s the job, and I signed it over to a man who didn’t give his name. Three weeks later thirty-eight researchers at that facility were dead. Official story: containment failure. I have never once believed it, and I have never once said so to anyone who could do anything about it, because that is also the job." },
+        { "who": "frank", "text": "That’s tier 3, Jack. You’ll carry a box like that. When you do, remember I told you about mine." },
+        { "who": "n", "text": "Amanda has gone quiet. Frank looks at her badge, the new colour of it, and says nothing, and the saying nothing is the loudest thing at the table." }
       ],
       "next": "close"
     },
     {
       "id": "close",
       "lines": [
-        { "who": "n", "text": "Aboard the ship, with the tier 3 board already unlocking on your displays and contracts on it that have no client names, only codes, you ask Aggie what she thinks of the promotion." },
-        { "who": "aggie", "text": "I think you earned it. I think tier 3 is where the routes go that we came here to find. And I think you should go to dinner." },
+        { "who": "n", "text": "Aboard the ship, with the tier 3 board already unlocking on your displays and contracts on it that have no client names, only codes, you wind the chronometer and ask Aggie what she thinks of the promotion." },
+        { "who": "aggie", "text": "I think you earned it. I think tier 3 is where the routes go that we came here to find. And I think you should wind that every day, the way he said." },
         { "who": "n", "text": "Three things. For Aggie, these days, that is a speech." }
       ],
       "end": true

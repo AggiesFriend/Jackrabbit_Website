@@ -6,10 +6,10 @@
   "mode": "both",
   "ship": "alc",
   "title": "Cold chain",
-  "subtitle": "Callisto to Farrow’s Reach",
+  "subtitle": "Rigel to Farrow’s Reach",
   "brief": {
     "client": "HeliosMed Biotech, regional supply",
-    "route": "Callisto to Farrow’s Reach, an independent settlement, two jumps",
+    "route": "Rigel to Farrow’s Reach, an independent settlement, two jumps",
     "cargo": "Refrigerated pharmaceuticals, one cold case",
     "fee": "Standard tier 1 rate, plus cold-chain supplement",
     "notes": "Client requests STANDARD transit. Do not expedite. Deliver within the contracted window, not before."
@@ -90,7 +90,7 @@
         { "who": "jack", "text": "Standard transit." },
         { "who": "medic", "text": "Then God bless standard transit. Help me get this inside." },
         { "who": "n", "text": "On the way home, dispatch logs an ‘unauthorised schedule deviation’ against your name. Nobody calls. Somewhere, the deviation sits in a file, waiting to be worth something to someone." },
-        { "who": "aggie", "text": "Callisto in two hours. Jack. That was well flown." }
+        { "who": "aggie", "text": "Rigel in two hours. Jack. That was well flown." }
       ],
       "end": true
     },
@@ -107,7 +107,7 @@
       "id": "arrive-standard",
       "lines": [
         { "who": "n", "text": "Farrow’s Reach is a ring of hydroponics domes around a dock too small for the ship. The clinic’s medic takes the cold case without a word. There is a HeliosMed representative on the apron who was not on any manifest, with a contract on a datapad, waiting for the medic to finish." },
-        { "who": "aggie", "text": "Closed, inside the window. Callisto in two hours." },
+        { "who": "aggie", "text": "Closed, inside the window. Rigel in two hours." },
         { "who": "n", "text": "She does not say it was well flown. You find you had been waiting for her to." }
       ],
       "end": true

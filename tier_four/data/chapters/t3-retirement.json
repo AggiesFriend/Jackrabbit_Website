@@ -5,7 +5,7 @@
   "kind": "scene",
   "mode": "both",
   "ship": "alc",
-  "title": "Thirty-seven years",
+  "title": "Thirty-four years",
   "subtitle": "Nexus-77",
   "truths": [],
   "understandings": [],
@@ -14,8 +14,8 @@
     {
       "id": "party",
       "lines": [
-        { "who": "n", "text": "Frank Kowalski retires on a Thursday, with a certificate from Aletheion that thanks him for thirty-seven years of service in a font chosen to look like handwriting, and a party in the Kowalskis’ flat that overflows into the corridor and takes the plant pot with it." },
-        { "who": "n", "text": "Half the courier quarter is there. Halsey sends a message, which Frank reads aloud, and which is three sentences long and makes Eleanor cry. Amanda has taken the afternoon off, which she tells you she has never done, with the slightly dazed air of someone who has just discovered it is possible." },
+        { "who": "n", "text": "Frank Kowalski retires on a Thursday, eight years past the age the company would have liked, with a certificate from Aletheion that thanks him for thirty-four years of service in a font chosen to look like handwriting, and a party in the Kowalskis’ flat that overflows into the corridor and takes the plant pot with it. You are eighteen. The chronometer on your wrist has not lost a second." },
+        { "who": "n", "text": "About thirty guests, most of them in Aletheion blue. Director Walters makes a speech about delivered tonnage that Frank endures. Halsey sends a message, which Frank reads aloud, and which is three sentences long and makes Eleanor cry. Amanda, eighteen, arrives late and in uniform, straight from the section, and the room rearranges itself around her the way it did the first time." },
         { "who": "frank", "text": "Abbott. Jack. Come here. I want to say something and I’ve had two of Eleanor’s drinks, so it’ll come out wrong." },
         { "who": "frank", "text": "I said I wanted to leave something in that outfit that wasn’t tonnage. I did. It’s you. Don’t argue, I’m retired, I outrank everybody." }
       ],
@@ -27,57 +27,63 @@
     {
       "id": "hug",
       "lines": [
-        { "who": "n", "text": "You have never hugged anyone. You discover that your body knows how, that it has been waiting four years for somebody to be hugged, and that Frank Kowalski is built for the job." },
+        { "who": "n", "text": "You have hugged exactly one person in your life, and she did it first, at a door, five years ago. Your body turns out to have been waiting for the second, and Frank Kowalski is built for the job." },
         { "who": "frank", "text": "All right. All right. Eleanor, he’s hugging me, you owe me a drink, I said he was a hugger." },
         { "who": "eleanor", "text": "I said he was a hugger. You said he was a two-second hold station." }
       ],
-      "next": "eleanor"
+      "next": "balcony"
     },
     {
       "id": "holes",
       "lines": [
-        { "who": "frank", "text": "You’ve fallen in two. You climbed out. That’s the only version of not falling in that exists, son. Now go and talk to my granddaughter before she takes another afternoon off and the facility collapses." }
+        { "who": "frank", "text": "You’ve fallen in two. You climbed out. That’s the only version of not falling in that exists, son. Come out on the balcony a minute before my granddaughter takes you off me." }
+      ],
+      "next": "balcony"
+    },
+    {
+      "id": "balcony",
+      "lines": [
+        { "who": "n", "text": "The balcony is not really a balcony, a window alcove with two chairs in it, looking out along the habitat’s spin towards the ring. Frank shuts the door on the party and is, for a moment, the man from the lounge again, sober as an airlock." },
+        { "who": "frank", "text": "Tier 4 will come for you. Not this year, maybe, but it’ll come, and when it does it won’t feel like an offer. I’ve known maybe a dozen tier 4 couriers in thirty-four years. Good pilots, every one. I couldn’t tell you what became of half of them, and the other half I wouldn’t have at my table." },
+        { "who": "n", "text": "He takes a data card out of his jacket, an old one, the kind that doesn’t talk to a network, and puts it in your hand." },
+        { "who": "frank", "text": "People I trust. Not Aletheion people; people. Dock masters, a doctor, a woman on Horizon who runs more than she admits to. If you ever need to be somewhere the company can’t follow, start with the names on that. Don’t copy it to anything with a transmitter. Don’t thank me, I’m retired." }
+      ],
+      "choices": [
+        { "text": "“I don’t know what that’s like. Being somewhere I don’t have to be somebody else.”", "goto": "confess", "trust": { "frank": 1 }, "set": ["franks-card"] },
+        { "text": "Put the card inside your jacket, next to the chronometer. Say nothing.", "goto": "eleanor", "trust": { "frank": 1 }, "set": ["franks-card"] }
+      ]
+    },
+    {
+      "id": "confess",
+      "lines": [
+        { "who": "frank", "text": "I know you don’t. I’ve known since about your second dinner, son, and Eleanor knew at the door. One day you’ll tell us who you are, or you won’t, and either way the roast’s the same. That’s what this place is. It doesn’t ask." },
+        { "who": "n", "text": "You sit with him until the ring has turned all the way round once. Neither of you says anything else. Nothing else is needed." }
       ],
       "next": "eleanor"
     },
     {
       "id": "eleanor",
       "lines": [
-        { "who": "n", "text": "Later, when the corridor has gone quiet and the plant pot has been righted, you find Eleanor on the balcony that is not really a balcony, a window alcove with two chairs in it, looking out at the station’s ring." },
+        { "who": "n", "text": "Later, when the corridor has gone quiet and the plant pot has been righted, you find Eleanor in the alcove, looking out at the ring." },
         { "who": "eleanor", "text": "He’ll be impossible for a month. Then he’ll find something to fix. There’s always something to fix." },
-        { "who": "eleanor", "text": "You know what I’ve lived in, Jack? Mining habitats, corporate housing, a station flat, and for eleven months a converted freighter that Frank swore was temporary. Home was never any of them. Home is where that idiot is, and where Amanda is safe. Home is where you don’t have to be somebody else." },
+        { "who": "eleanor", "text": "You know what I’ve lived in, Jack? Mining habitats, corporate housing, this flat for sixteen years, and for eleven months a converted freighter that Frank swore was temporary. Home was never any of them. Home is where that idiot is, and where Amanda is safe. Home is where you don’t have to be somebody else." },
         { "who": "n", "text": "She looks at you when she says the last part. She has always known. You have always known she knew." }
       ],
       "choices": [
-        { "text": "“I don’t know what that’s like. Being somewhere I don’t have to be somebody else.”", "goto": "confess", "trust": { "eleanor": 2 } },
-        { "text": "“Thank you for the stew. All of it. Every time.”", "goto": "stew", "trust": { "eleanor": 1 } }
+        { "text": "“Thank you for the roast. All of it. Every time.”", "goto": "amanda", "trust": { "eleanor": 1 } },
+        { "text": "Sit with her until the ring comes round.", "goto": "amanda", "trust": { "eleanor": 2 } }
       ]
-    },
-    {
-      "id": "confess",
-      "lines": [
-        { "who": "eleanor", "text": "I know you don’t. That’s why you keep bringing the container back. One day you’ll tell us who you are, or you won’t, and either way the stew’s the same. That’s what home is. It doesn’t ask." },
-        { "who": "n", "text": "You sit with her until the ring has turned all the way round once. Neither of you says anything else. Nothing else is needed." }
-      ],
-      "next": "amanda"
-    },
-    {
-      "id": "stew",
-      "lines": [
-        { "who": "eleanor", "text": "You’re welcome. Bring the container back. That’s the rule, and the rule’s the whole point." }
-      ],
-      "next": "amanda"
     },
     {
       "id": "amanda",
       "lines": [
-        { "who": "n", "text": "Amanda walks you to the courier ring. The station is on its night cycle and the corridors are empty, and she holds your hand in them in a way that would have been unthinkable to the boy who arrived at Callisto, and is now simply what happens." },
-        { "who": "amanda", "text": "They’re going to stay here. Both of them. Grandad says the pension stretches further on Nexus than anywhere, and Gran says the plant likes it. So this is where home is, now. For them. For me, as long as the facility has me." },
-        { "who": "amanda", "text": "I’m telling you so that you know where to come back to. Whatever you are when you come back." },
-        { "who": "n", "text": "You kiss her at the ring, with ALC-7293 behind you and the whole of a station full of people you love in front, and you fly back to Callisto with the feeling, for the first time, of leaving somewhere rather than arriving." },
-        { "who": "aggie", "text": "Callisto in two jumps." },
-        { "who": "aggie", "text": "Jack. Hold onto that. All of it. Whatever happens next, hold onto where they are." },
-        { "who": "n", "text": "It is not a hint. There is no contract. It is the nearest thing to a warning that she has been able to give you in four years, and you hear it, and you do not yet know what it is warning you about." }
+        { "who": "n", "text": "Amanda walks you to the courier ring. The habitat is on its night cycle and the corridors are empty, and she holds your hand in them in a way that would have been unthinkable to the boy at his fourteenth birthday, and is now simply what happens." },
+        { "who": "amanda", "text": "They’re staying. Both of them. This is home, for them. For me, as long as the section has me. I’m telling you so that you know where to come back to. Whatever you are when you come back." },
+        { "who": "jack", "text": "Come up. One jump. There’s something I want to show you, and it isn’t on any manifest." },
+        { "who": "n", "text": "One jump, with a researcher in uniform in the second seat of a corporate courier ship, is a deviation that will be in your file by morning. You make it anyway. The Laomedon Nebula fills the viewport from edge to edge, red and gold and slow, and Amanda Kowalski, eighteen, says nothing at all for a full minute, and then kisses you, properly, for the first time." },
+        { "who": "n", "text": "You fly her home before curfew. You fly back to Rigel with the feeling, for the first time, of leaving somewhere rather than arriving." },
+        { "who": "aggie", "text": "Rigel in two jumps. Jack. Hold onto that. All of it. Whatever happens next, hold onto where they are." },
+        { "who": "n", "text": "It is not a hint. There is no contract. It is the nearest thing to a warning that she has given you in five years, and you hear it, and you do not yet know what it is warning you about." }
       ],
       "end": true
     }

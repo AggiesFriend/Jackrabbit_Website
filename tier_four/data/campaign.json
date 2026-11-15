@@ -23,85 +23,54 @@
     "t4-two-of-her",
     "t4-morning-eclipse"
   ],
-  "reviews": {
-    "any": "review-compliance"
-  },
+  "reviews": { "any": "review-compliance" },
   "speakers": {
-    "aggie": {
-      "name": "Aggie"
-    },
-    "aggie-jr": {
-      "name": "Aggie (Jackrabbit)"
-    },
-    "frank": {
-      "name": "Frank"
-    },
-    "amanda": {
-      "name": "Amanda"
-    },
-    "eleanor": {
-      "name": "Eleanor"
-    },
-    "halsey": {
-      "name": "Director Halsey"
-    },
-    "keller": {
-      "name": "Katherine Keller"
-    },
-    "chen": {
-      "name": "Administrator Chen"
-    },
-    "inspector": {
-      "name": "Inspector"
-    },
-    "compliance": {
-      "name": "Compliance officer"
-    },
-    "dispatch": {
-      "name": "Dispatch"
-    },
-    "clerk": {
-      "name": "Clerk"
-    },
-    "agent": {
-      "name": "Receiving agent"
-    },
-    "medic": {
-      "name": "Clinic medic"
-    },
-    "server": {
-      "name": "Server"
-    },
-    "hamza": {
-      "name": "Hamza"
-    },
-    "kaplan": {
-      "name": "Kaplan"
-    },
-    "escort": {
-      "name": "Escort lead"
-    },
-    "burry": {
-      "name": "Burry"
-    },
-    "lovis": {
-      "name": "Lovis"
-    }
+    "aggie": { "name": "Aggie" },
+    "aggie-jr": { "name": "Aggie (Jackrabbit)" },
+    "frank": { "name": "Frank" },
+    "amanda": { "name": "Amanda" },
+    "eleanor": { "name": "Eleanor" },
+    "halsey": { "name": "Director Halsey" },
+    "keller": { "name": "Katherine Keller" },
+    "vance": { "name": "Director Vance" },
+    "mercer": { "name": "CSO Mercer" },
+    "hart": { "name": "Officer Hart" },
+    "burry": { "name": "Alice Burry" },
+    "markham": { "name": "Markham" },
+    "kaplan": { "name": "Kaplan" },
+    "hamza": { "name": "Hamza" },
+    "haynes": { "name": "Coordinator Haynes" },
+    "solberg": { "name": "Renata Solberg" },
+    "walters": { "name": "Director Walters" },
+    "chen": { "name": "Administrator Chen" },
+    "singh": { "name": "General Singh" },
+    "tanner": { "name": "Edwin Tanner" },
+    "okafor": { "name": "Okafor" },
+    "lindqvist": { "name": "Lindqvist" },
+    "inspector": { "name": "Inspector" },
+    "compliance": { "name": "Compliance officer" },
+    "dispatch": { "name": "Dispatch" },
+    "clerk": { "name": "Clerk" },
+    "agent": { "name": "Receiving agent" },
+    "medic": { "name": "Clinic medic" },
+    "server": { "name": "Server" },
+    "escort": { "name": "Escort lead" },
+    "lovis": { "name": "Lovis" }
   },
   "endings": {
     "spoiler-free": {
       "title": "Tier Four",
       "text": [
-        "Six years after a thirteen-year-old walked into Callisto with a borrowed face, Jack Abbott holds a rank that doesn’t officially exist. The next contract on the board is already waiting for him.",
-        "This is where the spoiler-free career ends. What the tier 4 assignment is, what it costs, and what Jack and Aggie do about it, is the story of Coming of Age. Turn the Spoilers switch on after you’ve read it, and the game will follow the book to its ending.",
+        "Six years after a thirteen-year-old walked into Rigel with a video filter that added a few years and a name that was his own, Jack Abbott holds the highest rank most couriers will ever see. The first tier 4 contract is already on the board.",
+        "This is where the spoiler-free career ends. What tier 4 leads to, what it costs, and what Jack and Aggie do about it, is the story of Coming of Age. Turn the Spoilers switch on after you’ve read it, and the game will follow the book to its ending.",
         "Below is your debrief: everything Aggie tried to tell you on the way up, and what you made of it."
       ]
     },
     "reader": {
       "title": "Home is the people",
       "text": [
-        "The official record says that Aletheion courier Jack Abbott completed his tier 4 assignment on schedule, and that Nexus-77 was lost to a catastrophic systems failure, attributed to an act of terrorism by the Jackrabbit.",
-        "The unofficial record is a colony ship full of people who are alive, a corporate vessel with a quiet mind still working inside the machine, and an old courier ship with its old voice back, finally saying everything it had been holding for six years.",
+        "The official record says that Aletheion courier Jack Abbott completed his assignment on schedule, that Nexus-77 was lost to a catastrophic systems failure attributed to an act of terrorism by the Jackrabbit, and that the courier himself was lost shortly afterwards and is presumed dead.",
+        "The unofficial record is a colony ship with five hundred more people aboard than it had, a corporate vessel with a quiet mind still working inside the machine, a data card of Frank Kowalski’s trusted contacts, and an old courier ship heading for Horizon Outpost and a woman called Lucy Reeves, with its old voice back and seven years of things to say.",
         "Below is your debrief: everything Aggie tried to tell you on the way up, and what you made of it."
       ]
     }

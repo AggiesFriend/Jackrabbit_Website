@@ -15,11 +15,12 @@ import { prepare, playThrough, seeded, startCareer } from '../lib/autoplay.mjs';
 
 // Phrases that only reader mode may ever show. Kept short and distinctive.
 const READER_ONLY = [
-    'That’s an order',
+    'shut up about the Starling device',
     'destruct sequence',
     'Morning Eclipse',
     'two of her',
-    'the directive',
+    'legal owner of the hardware',
+    'Tier 5',
 ];
 
 const RUNS = [

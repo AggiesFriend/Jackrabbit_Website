@@ -6,10 +6,10 @@
   "mode": "both",
   "ship": "alc",
   "title": "Relay down",
-  "subtitle": "Callisto to Kessler Habitat, two jumps",
+  "subtitle": "Rigel to Kessler Habitat, two jumps",
   "brief": {
     "client": "Kessler Habitat clinic, via the Aletheion time-critical desk",
-    "route": "Callisto to Kessler Habitat, two jumps, SnapMesh unavailable on this corridor",
+    "route": "Rigel to Kessler Habitat, two jumps, SnapMesh unavailable on this corridor",
     "cargo": "One data consignment, physical transport",
     "fee": "Tier 2 rate, standard. Client declined the priority tariff.",
     "notes": "A SnapMesh node on the Kessler corridor is down. Physical data transport booked at standard priority."
@@ -240,7 +240,7 @@
         },
         {
           "who": "aggie",
-          "text": "Closed, inside the window. Callisto in two jumps."
+          "text": "Closed, inside the window. Rigel in two jumps."
         },
         {
           "who": "n",

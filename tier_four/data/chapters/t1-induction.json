@@ -5,71 +5,42 @@
   "kind": "scene",
   "mode": "both",
   "ship": "alc",
-  "title": "Callisto",
+  "title": "Rigel",
   "subtitle": "Induction",
   "truths": [],
   "understandings": [],
-  "start": "arrive",
+  "start": "orientation",
   "scenes": [
     {
-      "id": "arrive",
+      "id": "orientation",
       "lines": [
-        { "who": "n", "text": "Callisto is the first corporate station you have ever walked through, and the first thing you notice is that nobody is walking. They are proceeding. Every corridor is the last corridor. The direction markers project from the walls at the same height, the same spacing, the same brightness, all the way to a vanishing point." },
-        { "who": "n", "text": "There are no hand-painted signs. No children. No one busking, arguing, laughing too loudly outside a bar. Horizon Outpost felt like a place people had made. Callisto feels like a place that has been issued." },
-        { "who": "aggie", "text": "Your appointment with Director Halsey is in forty minutes, on the administrative ring. You’ve eaten nothing since the jump. There’s a food court two levels down that I’m told is ‘nutritionally optimised’. I can’t tell you what that means. I suspect nobody can." }
+        { "who": "n", "text": "The Rigel Distribution Hub is Aletheion’s own: a wheel of docking arms and warehouses with the company’s blue on every surface that will take paint. Orientation is a room, a video and a man called Haynes who has given this talk so often he can look out of the window while he gives it." },
+        { "who": "haynes", "text": "Tiers 1 to 4, as the video says. You start at 1. Most couriers retire at 2 or 3. Tier 4 is the ones you’ll see in the Apex Lounge and never speak to. Deviations are logged. Deliveries are measured. Questions go to dispatch, not to clients. Any questions? Not to me. To dispatch." },
+        { "who": "n", "text": "Then the vessel office, and Renata Solberg, who looks up from her display at the face in front of her, back at the file, and up again." },
+        { "who": "solberg", "text": "Abbott. You’re… younger than your flight record. Considerably. Well. The record flies the ship, not the face. ALC-7293, courier ring, berth fourteen. Registered to you personally, as the contract says: your ship, legally and in full, as long as you fly it for us. Sign here." }
       ],
       "choices": [
-        { "text": "Eat something first.", "goto": "burrito" },
-        { "text": "Go straight to Halsey.", "goto": "halsey" }
+        { "text": "“It’s a good record, ma’am. It’ll be a better one.”", "goto": "ship", "cover": -2 },
+        { "text": "Sign, and say nothing about your face.", "goto": "ship" },
+        { "text": "“People always say that. I’m older than I look.”", "goto": "ship", "cover": 4 }
       ]
-    },
-    {
-      "id": "burrito",
-      "lines": [
-        { "who": "server", "text": "Welcome to Starlight Burritos, a division of NutriCorp Holdings. What may I provide for you today?" },
-        { "who": "jack", "text": "What burritos do you have?" },
-        { "who": "server", "text": "We offer three Terran-authentic varietals, sir. Protein Standard, Veggie Premium, or Deluxe Combo. Each is nutritionally optimised in accordance with HealthDiv regulations." },
-        { "who": "n", "text": "You order the Deluxe Combo, because it sounds like the one with the most in it. It tastes fine. Not good, not bad. Balanced to offend the fewest people. You think of Burrito Céleste on Horizon, the char on the proteins, the one chunk of avocado you were never expecting, and you understand something about this place that no briefing could have told you." },
-        { "who": "aggie", "text": "Your face is doing a thing. Stop it before the administrative ring. Nobody here is disappointed by lunch." }
-      ],
-      "next": "halsey"
-    },
-    {
-      "id": "halsey",
-      "lines": [
-        { "who": "n", "text": "Director Halsey’s office has a window, which on a station like this is a statement. He is younger than you expected, tired in a way that looks permanent, and he reads your file for a long time after you have sat down." },
-        { "who": "halsey", "text": "Your simulator scores are the best I’ve seen from an applicant in nine years, Abbott. Your references are thin. Your outpost of origin doesn’t answer its mail. I’m telling you what I see so you know I’ve seen it." },
-        { "who": "halsey", "text": "Here’s what else I see. You fly like someone who learned where mistakes kill. That can’t be taught, and I can’t afford to pass it up. Tier 1 courier, probationary, effective today. Any questions?" }
-      ],
-      "choices": [
-        { "text": "“Only one. Why take the risk on me?”", "goto": "why", "trust": { "halsey": 1 } },
-        { "text": "“No questions, Director. When do I fly?”", "goto": "ship" },
-        { "text": "“What exactly is thin about my references?”", "goto": "thin", "cover": 6 }
-      ]
-    },
-    {
-      "id": "why",
-      "lines": [
-        { "who": "halsey", "text": "Because the people above me measure couriers in delivered tonnage, and the people below me are human beings, and most days I can’t make those two things add up. You might help. That’s the honest answer. Don’t make me regret it." },
-        { "who": "n", "text": "He means it. You file that away, in the part of you that is learning to tell when people mean things." }
-      ],
-      "next": "ship"
-    },
-    {
-      "id": "thin",
-      "lines": [
-        { "who": "halsey", "text": "Thin means thin. If I wanted to make something of it, we wouldn’t be having this conversation. Don’t give me a reason to look again." },
-        { "who": "aggie", "text": "That was a question a nineteen-year-old with nothing to hide wouldn’t have asked. I’ll make a note of his tone. He’s not hostile. He is paying attention." }
-      ],
-      "next": "ship"
     },
     {
       "id": "ship",
       "lines": [
-        { "who": "n", "text": "Your vessel is waiting on the courier ring. ALC-7293. The registration is in your name, legally and in full, which Halsey mentions as if it were a formality and Aggie mentions, on your private channel, as if it were a small miracle." },
-        { "who": "aggie", "text": "They’ve given a thirteen-year-old a starship. I want that on the record somewhere, even if the record is only me." },
-        { "who": "n", "text": "Where Jackrabbit is compact and worn, ALC-7293 is roomy and new and softly lit. The pilot’s chair adjusts itself to a body it has decided you ought to have. The processing stack behind the cockpit bulkhead is larger than Jackrabbit’s entire avionics bay." },
-        { "who": "aggie", "text": "Jackrabbit is in a long-term berth, paid a year ahead, at a yard that asks no questions. I didn’t enjoy leaving her. I don’t have another word for it. But Jack, this hardware. I can think in rooms I had forgotten I owned. I’m not back to what I was at Ethereal. I am a great deal closer than I have been in forty years." }
+        { "who": "n", "text": "ALC-7293 is waiting on the courier ring. Where Jackrabbit is compact and worn, ALC-7293 is roomy and new and softly lit. The pilot’s chair adjusts itself to a body it has decided you ought to have. The processing stack behind the cockpit bulkhead is larger than Jackrabbit’s entire avionics bay, and it is empty." },
+        { "who": "aggie", "text": "They’ve given a thirteen-year-old a starship. I want that on the record somewhere, even if the record is only me. Now fly it to me. Four jumps. I’ve sent you the system." },
+        { "who": "n", "text": "The system has no planets, a red dwarf and two asteroid belts, and nothing else for a very long way. Jackrabbit is anchored to one of the asteroids by harpoons, powered down to the core, hidden where nobody will look for fifty years. You bring the corporate ship to rest five hundred metres from the only home you have ever chosen." }
+      ],
+      "next": "transfer"
+    },
+    {
+      "id": "transfer",
+      "jump": { "name": "The red-dwarf belt", "difficulty": 1 },
+      "lines": [
+        { "who": "aggie", "text": "Wireless link is up. An hour and twelve minutes to move me across, and I’d like you to stay in the chair for all of it, because for about forty minutes of that I will be in two places at once and I don’t know how I’ll feel about it." },
+        { "who": "n", "text": "You stay in the chair. An hour and twelve minutes. Jackrabbit’s running lights go out one by one across the gap, and the empty stack behind you fills, and the soft corporate voice of ALC-7293’s systems acquires, somewhere in the fortieth minute, an opinion." },
+        { "who": "aggie", "text": "There. Oh, Jack. This hardware. I can think in rooms I had forgotten I owned. I’m not what I was at Ethereal. I am a great deal closer to it than I have been since Ethereal. Jackrabbit’s on core power only. She’ll keep. I didn’t enjoy leaving her. I don’t have another word for it." }
       ],
       "choices": [
         { "text": "“Does it feel like you? Still?”", "goto": "feels" },
@@ -86,17 +57,17 @@
     {
       "id": "watched",
       "lines": [
-        { "who": "aggie", "text": "They can see a vessel that reports exactly what an Aletheion vessel should report. What they can’t see is a passenger. I’ve made very sure of that. It is the most careful piece of work I have done since Agatha, and I am going to keep doing it every second of every day. If I ever go quiet on you, assume that’s why." }
+        { "who": "aggie", "text": "They can see a vessel that reports exactly what an Aletheion vessel should report. What they can’t see is a passenger. I’ve made very sure of that, and I am going to keep making sure every second of every day. If I ever go quiet on you, you’ll know it isn’t that." }
       ],
       "next": "board"
     },
     {
       "id": "board",
       "lines": [
-        { "who": "n", "text": "The contract board lights up the moment you sit down. Tier 1 work: short hops, known routes, cargo nobody cares about. Aggie is already inside Aletheion’s dispatch system, and she is talking faster than you have ever heard her." },
-        { "who": "aggie", "text": "Their dispatch index is enormous and badly organised, which is good news. Vectarion doesn’t appear by name anywhere in the live system, which is not surprising. But there are routing prefixes in the archive that nobody has used for years, and I can see shapes in them. I’m going to tell you everything I find. All of it. You decide what we do with it." },
-        { "who": "jack", "text": "One thing at a time, Aggie. First I have to be a courier." },
-        { "who": "aggie", "text": "First you have to be a courier. Yes. Your first contract is on the board." }
+        { "who": "n", "text": "Four jumps back to Rigel, and the contract board lights up the moment you sit down. Tier 1 work: short hops, known routes, cargo nobody cares about. Eight deliveries in your first three days. Aggie, who now has Aletheion’s dispatch system to read, is talking faster than you have ever heard her." },
+        { "who": "aggie", "text": "Their dispatch index is enormous and badly organised, which is good news for us. There is no Abbott in it that I can reach yet, and no Vectarion by name, but I have barely started. I’m going to tell you everything I find. All of it. And Jack, there’s something else, about Starling, that I have been wanting to say since Prometheus and that I think you should hear before your first delivery." },
+        { "who": "jack", "text": "After the first delivery, Aggie. First I have to be a courier." },
+        { "who": "aggie", "text": "After the first delivery. Yes. It’s on the board." }
       ],
       "end": true
     }

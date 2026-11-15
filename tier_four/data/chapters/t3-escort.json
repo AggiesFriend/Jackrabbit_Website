@@ -6,10 +6,10 @@
   "mode": "both",
   "ship": "alc",
   "title": "Under escort",
-  "subtitle": "Callisto to Thule node, three jumps, escorted",
+  "subtitle": "Rigel to Thule node, three jumps, escorted",
   "brief": {
     "client": "Executive office (code K-7)",
-    "route": "Callisto to the Secure Consortium Backbone node at Thule, three jumps, with a two-ship NovaFoundry escort",
+    "route": "Rigel to the Secure Consortium Backbone node at Thule, three jumps, with a two-ship NovaFoundry escort",
     "cargo": "Level III sovereign key material, one tamper-evident module, never transmitted electronically",
     "fee": "Executive rate",
     "notes": "The escort lead has authority over the route. Follow the escort’s jump timings exactly. No deviation of any kind."
@@ -129,7 +129,7 @@
         },
         {
           "who": "aggie",
-          "text": "Their sweep hasn’t moved off us since Callisto. They haven’t looked at the lane once.",
+          "text": "Their sweep hasn’t moved off us since Rigel. They haven’t looked at the lane once.",
           "kind": "question",
           "hint": "havent-looked",
           "truth": "watching-you"
@@ -150,7 +150,7 @@
         },
         {
           "who": "aggie",
-          "text": "Did you notice they haven’t looked at the lane? Not once since Callisto.",
+          "text": "Did you notice they haven’t looked at the lane? Not once since Rigel.",
           "kind": "question",
           "hint": "havent-looked-2",
           "truth": "watching-you"
@@ -248,15 +248,15 @@
         },
         {
           "who": "escort",
-          "text": "ALC-7293, escort complete. Return to Callisto at your own timing."
+          "text": "ALC-7293, escort complete. Return to Rigel at your own timing."
         },
         {
           "who": "n",
-          "text": "At your own timing. The corvettes peel away, and for the first time in three jumps their sweep goes outward, where a guard’s sweep belongs. They were never guarding the box. You knew that at Callisto. You know now what they were doing instead, and whose office the report is going to."
+          "text": "At your own timing. The corvettes peel away, and for the first time in three jumps their sweep goes outward, where a guard’s sweep belongs. They were never guarding the box. You knew that at Rigel. You know now what they were doing instead, and whose office the report is going to."
         },
         {
           "who": "aggie",
-          "text": "Callisto in three jumps. Jack. Whatever that was, it’s over."
+          "text": "Rigel in three jumps. Jack. Whatever that was, it’s over."
         },
         {
           "who": "n",

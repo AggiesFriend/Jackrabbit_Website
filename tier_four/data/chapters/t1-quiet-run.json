@@ -6,10 +6,10 @@
   "mode": "both",
   "ship": "alc",
   "title": "The quiet run",
-  "subtitle": "Callisto to Oberon Station",
+  "subtitle": "Rigel to Oberon Station",
   "brief": {
     "client": "QuantumGrid Energy, field instrumentation division",
-    "route": "Callisto to Oberon Station, one jump",
+    "route": "Rigel to Oberon Station, one jump",
     "cargo": "Calibration instrumentation, one crate, 212 kg declared",
     "fee": "Standard tier 1 rate",
     "notes": "Hand to the consignee’s agent on the berth. No inspection expected."
@@ -29,7 +29,7 @@
     {
       "id": "load",
       "lines": [
-        { "who": "n", "text": "Three weeks and nine contracts in, you know the Callisto loading bays better than you ever knew the tunnels of Alpha-7. The work is easy. The ship is easy. The thing that is not easy is the quiet." },
+        { "who": "n", "text": "Three weeks and nine contracts in, you know the Rigel loading bays better than you ever knew the tunnels of Alpha-7. The work is easy. The ship is easy. The thing that is not easy is the quiet." },
         { "who": "n", "text": "Aggie still answers. She reads you the board, confirms your windows, talks you through control’s moods. She has simply stopped offering. There was a time she couldn’t find a shipping stub without telling you what it meant, and now a QuantumGrid crate comes aboard and she says nothing at all." },
         { "who": "aggie", "text": "Crate’s aboard. Oberon window opens in eleven minutes." },
         { "who": "jack", "text": "That’s it?" },
@@ -100,7 +100,7 @@
       "lines": [
         { "who": "agent", "text": "Courier. That the QuantumGrid consignment? Good." },
         { "who": "n", "text": "He signs for it without reading the manifest. He does not weigh it. He does not look at the tag. He looks at you, once, the way people here look at everything that is not a procedure, and then the crate is gone into the station and so is he." },
-        { "who": "aggie", "text": "Closed and on time. Callisto has a window in forty minutes." },
+        { "who": "aggie", "text": "Closed and on time. Rigel has a window in forty minutes." },
         { "who": "n", "text": "You sit in the pilot’s chair for a while with the engine ticking. Three weeks ago she would have had an opinion about that man. You would have liked to hear it." }
       ],
       "end": true

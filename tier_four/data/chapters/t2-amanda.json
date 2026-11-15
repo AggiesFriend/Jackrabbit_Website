@@ -15,12 +15,12 @@
     {
       "id": "deck",
       "lines": [
-        { "who": "n", "text": "A year into tier 2, Nexus-77 has become the place you fly back to. Eleanor’s container has been returned and refilled six times. Frank has stopped introducing you as a manoeuvre. Amanda has started meeting you on the observation deck when your windows line up, which they do more often than chance would manage." },
-        { "who": "amanda", "text": "You do that thing again. When Grandad asks where you grew up. You answer, and it’s a perfectly good answer, and then you go somewhere else for about a second." },
-        { "who": "n", "text": "The deck looks out over the station’s spin axis. Stars wheel slowly past. You have had sixteen months of practice at not hesitating, and she has found the one place you still do." }
+        { "who": "n", "text": "Nearly three years into tier 2, Nexus-77 has become the place you fly back to. Eleanor’s container has been returned and refilled more times than either of you counts. Frank has stopped introducing you as a manoeuvre. Amanda, sixteen now to your sixteen and a bit, has started meeting you on the observation deck when your windows line up, which they do more often than chance would manage." },
+        { "who": "amanda", "text": "You do that thing again. When Grandfather asks where you grew up. You say Horizon, and it’s a perfectly good answer, and then you go somewhere else for about a second." },
+        { "who": "n", "text": "The deck looks out along the habitat’s spin axis. Stars wheel slowly past. You have had three years of practice at not hesitating, and she has found the one place you still do." }
       ],
       "choices": [
-        { "text": "“It wasn’t a good place. I’d rather not go back there, even for a second.”", "goto": "honest", "trust": { "amanda": 2 } },
+        { "text": "“Before Horizon wasn’t a good place. I’d rather not go back there, even for a second.”", "goto": "honest", "trust": { "amanda": 2 } },
         { "text": "“You see patterns for a living. Some of them aren’t there.”", "goto": "deflect", "trust": { "amanda": 0 }, "cover": 2 },
         { "text": "Say nothing. Watch the stars with her.", "goto": "quiet", "trust": { "amanda": 1 } }
       ]
@@ -29,7 +29,7 @@
       "id": "honest",
       "lines": [
         { "who": "amanda", "text": "All right. Then I won’t ask. I notice things, Jack, I don’t collect them. There’s a difference and I’d like you to believe I know it." },
-        { "who": "n", "text": "It is the truest thing you have said to anyone in sixteen months, and it is still a lie by omission the size of a starship, and she takes your hand anyway." }
+        { "who": "n", "text": "It is the truest thing you have said to anyone in three years, and it is still a lie by omission the size of a starship, and she takes your hand anyway." }
       ],
       "next": "work"
     },
@@ -52,27 +52,28 @@
       "id": "work",
       "lines": [
         { "who": "amanda", "text": "Can I tell you something I shouldn’t? About work. You don’t have a clearance, so technically this is a crime, and I’d like to commit it with someone who won’t repeat it." },
-        { "who": "amanda", "text": "There’s a project at the facility I’m not on. Nobody junior is on it. The hardware budget is bigger than the rest of the site put together and the people on it don’t talk, not in the careful way, in the frightened way. I think someone upstairs is going near the thing we’re not allowed to go near. And I think it’s going badly." },
+        { "who": "amanda", "text": "We’ve had a breakthrough. Neural network plasticity: networks that reorganise themselves the way a brain does, and keep what they learn. The funding’s tripled. They’re moving the whole team into a high-security section next month, and I’m on it, Jack, a junior researcher at sixteen, on the project. I can’t say more and I want to say all of it." },
+        { "who": "amanda", "text": "Grandfather hates it. He hasn’t said so, he’s just gone quiet about work, which from Grandfather is shouting. He thinks a tripled budget and a locked door mean somebody upstairs is going near the thing we’re not allowed to go near. Maybe they are. I still want to be in the room." },
         { "who": "n", "text": "On the private channel, Aggie is silent. Not her usual silence. Something that, if she were a person, you would call holding her breath." }
       ],
       "choices": [
         { "text": "“Be careful. Please. People who go near that don’t get told off, they get removed.”", "goto": "careful", "trust": { "amanda": 1 } },
-        { "text": "“Could you find out more without being noticed?”", "goto": "find-out", "cover": 4 }
+        { "text": "“Could you find out what’s behind the door without being noticed?”", "goto": "find-out", "cover": 4 }
       ]
     },
     {
       "id": "careful",
       "lines": [
-        { "who": "amanda", "text": "I know. That’s why I’m telling you and not a colleague. I just needed one person outside the building to know that I know. That’s all. Now I feel better and you feel worse, and that’s what sharing is." },
-        { "who": "n", "text": "She kisses you on the cheek and goes back to work, and you stand on the deck for a long time, with a frightened research facility behind you and a silent AGI in your ear, and the stars going round." }
+        { "who": "amanda", "text": "I know. That’s why I’m telling you and not a colleague. I just needed one person outside the building to know that I know. That’s all. Now I feel better and you feel worse, and Gram says that’s what sharing is." },
+        { "who": "n", "text": "She squeezes your hand and goes back to work, and you stand on the deck for a long time, with a locked research section behind you and a silent AGI in your ear, and the stars going round." }
       ],
       "next": "after"
     },
     {
       "id": "find-out",
       "lines": [
-        { "who": "amanda", "text": "No. And I wouldn’t if I could. Jack, I told you because it frightened me, not because I wanted a plan. Don’t make it a plan." },
-        { "who": "n", "text": "You apologise. She accepts it, mostly. You stand on the deck for a long time afterwards, with a frightened research facility behind you and a silent AGI in your ear, and the stars going round." }
+        { "who": "amanda", "text": "No. And I wouldn’t if I could. Jack, I told you because it’s the most exciting thing that has ever happened to me and it frightens Grandfather, not because I wanted a plan. Don’t make it a plan." },
+        { "who": "n", "text": "You apologise. She accepts it, mostly. You stand on the deck for a long time afterwards, with a locked research section behind you and a silent AGI in your ear, and the stars going round." }
       ],
       "next": "after"
     },
@@ -80,7 +81,7 @@
       "id": "after",
       "lines": [
         { "who": "jack", "text": "Aggie. The project she’s talking about." },
-        { "who": "aggie", "text": "Is at a CyberNexus facility, on a station where you have friends. Jack, I don’t have a clearance either." },
+        { "who": "aggie", "text": "Is at a CyberNexus facility, on a habitat where you have friends. Jack, I don’t have a clearance either." },
         { "who": "n", "text": "It is a joke. It is almost a joke. Under it there is something that is not a joke at all, and you are not yet old enough to hear it." }
       ],
       "end": true

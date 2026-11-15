@@ -16,21 +16,21 @@
       "lines": [
         { "who": "n", "text": "Eleven months. Two hundred and some contracts, all closed, most of them on time. The quarterly review promised a ‘comprehensive evaluation’, and the evaluation turns out to be a summons to Regional Operations, and a lean man with close-cropped grey hair who looks at you the way Solberg did, and then keeps looking." },
         { "who": "halsey", "text": "Halsey. Regional Operations Director. Sit down, Abbott. I read everything that crosses this desk, and your file crosses it more than most." },
-        { "who": "halsey", "text": "Your file has a deviation on it. Farrow’s Reach. You flew a client’s schedule a day early and the client has complained. I am required to warn you that deviations are logged, that they count, and that a courier who makes a habit of them does not stay a courier. Consider yourself warned.", "requires": ["saved-farrow"] },
+        { "who": "halsey", "text": "Your file has a deviation on it. Farrow’s Reach. You delivered a standard-transit consignment a day ahead of schedule, and Dispatch Scheduling has raised it: early delivery is a priority service, and priority is paid for. I am required to warn you that deviations are logged, that they count, and that a courier who makes a habit of them does not stay a courier. Consider yourself warned.", "requires": ["saved-farrow"] },
         { "who": "halsey", "text": "I am also, off this desk, aware that a clinic on Farrow’s Reach did not run dry. I have no further comment on that.", "requires": ["saved-farrow"] },
         { "who": "halsey", "text": "Your file has one declined contract on it. Side work, the HeliosMed cold case, and nobody came to harm that I know of. I am required to tell you that couriers who decline work are noticed, and not by me. The review panel has you up for tier 2 in under a year anyway, which has not happened in my sixteen years with this company. Don’t make a habit of it.", "requires": ["declined:t1-cold-chain"], "unless": ["saved-farrow"] },
         { "who": "halsey", "text": "Your file is clean. Not a deviation on it. The review panel has you up for tier 2 in under a year, which has not happened in my sixteen years with this company, and clean files get left alone. Keep it that way.", "unless": ["saved-farrow", "declined:t1-cold-chain"] }
       ],
       "choices": [
         { "text": "“Understood, Director. Thank you.”", "goto": "panel", "trust": { "halsey": 1 } },
-        { "text": "“Who complained? The client, or the people the client was waiting out?”", "goto": "pushback", "cover": 4, "requires": ["saved-farrow"] },
+        { "text": "“Early isn’t usually a problem, Director. Who was harmed?”", "goto": "pushback", "cover": 4, "requires": ["saved-farrow"] },
         { "text": "“Why tell me yourself?”", "goto": "why", "trust": { "halsey": 1 }, "unless": ["saved-farrow"] }
       ]
     },
     {
       "id": "pushback",
       "lines": [
-        { "who": "halsey", "text": "The client, Abbott. The client always complains. The people the client was waiting out don’t have a complaints channel; that’s rather the point of them. Don’t make me have this conversation twice." },
+        { "who": "halsey", "text": "Nobody, Abbott. That’s the trouble. If standard can arrive early, nobody pays for priority, and Scheduling exists to make sure nobody finds out that it can. The clinic would like to thank you. It can’t, because officially you didn’t do it. Don’t make me have this conversation twice." },
         { "who": "n", "text": "It is a warning. It is also, you think, something else, delivered in the only shape the desk allows." }
       ],
       "next": "panel"

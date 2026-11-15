@@ -674,7 +674,7 @@ Eleven months. Two hundred and some contracts, all closed, most of them on time.
 
 **Director Halsey:** Halsey. Regional Operations Director. Sit down, Abbott. I read everything that crosses this desk, and your file crosses it more than most.
 
-**Director Halsey:** Your file has a deviation on it. Farrow’s Reach. You flew a client’s schedule a day early and the client has complained. I am required to warn you that deviations are logged, that they count, and that a courier who makes a habit of them does not stay a courier. Consider yourself warned. *[if saved-farrow]*
+**Director Halsey:** Your file has a deviation on it. Farrow’s Reach. You delivered a standard-transit consignment a day ahead of schedule, and Dispatch Scheduling has raised it: early delivery is a priority service, and priority is paid for. I am required to warn you that deviations are logged, that they count, and that a courier who makes a habit of them does not stay a courier. Consider yourself warned. *[if saved-farrow]*
 
 **Director Halsey:** I am also, off this desk, aware that a clinic on Farrow’s Reach did not run dry. I have no further comment on that. *[if saved-farrow]*
 
@@ -685,12 +685,12 @@ Eleven months. Two hundred and some contracts, all closed, most of them on time.
 Choices:
 
 - “Understood, Director. Thank you.” → `panel` *(Director Halsey trust +1)*
-- “Who complained? The client, or the people the client was waiting out?” *[if saved-farrow]* → `pushback` *(cover +4)*
+- “Early isn’t usually a problem, Director. Who was harmed?” *[if saved-farrow]* → `pushback` *(cover +4)*
 - “Why tell me yourself?” *[unless saved-farrow]* → `why` *(Director Halsey trust +1)*
 
 ### Scene `pushback`
 
-**Director Halsey:** The client, Abbott. The client always complains. The people the client was waiting out don’t have a complaints channel; that’s rather the point of them. Don’t make me have this conversation twice.
+**Director Halsey:** Nobody, Abbott. That’s the trouble. If standard can arrive early, nobody pays for priority, and Scheduling exists to make sure nobody finds out that it can. The clinic would like to thank you. It can’t, because officially you didn’t do it. Don’t make me have this conversation twice.
 
 It is a warning. It is also, you think, something else, delivered in the only shape the desk allows.
 
@@ -2613,7 +2613,7 @@ Eleven months. Two hundred and some contracts, all closed, most of them on time.
 
 **Director Halsey:** Halsey. Regional Operations Director. Sit down, Abbott. I read everything that crosses this desk, and your file crosses it more than most.
 
-**Director Halsey:** Your file has a deviation on it. Farrow’s Reach. You flew a client’s schedule a day early and the client has complained. I am required to warn you that deviations are logged, that they count, and that a courier who makes a habit of them does not stay a courier. Consider yourself warned. *[if saved-farrow]*
+**Director Halsey:** Your file has a deviation on it. Farrow’s Reach. You delivered a standard-transit consignment a day ahead of schedule, and Dispatch Scheduling has raised it: early delivery is a priority service, and priority is paid for. I am required to warn you that deviations are logged, that they count, and that a courier who makes a habit of them does not stay a courier. Consider yourself warned. *[if saved-farrow]*
 
 **Director Halsey:** I am also, off this desk, aware that a clinic on Farrow’s Reach did not run dry. I have no further comment on that. *[if saved-farrow]*
 
@@ -2624,12 +2624,12 @@ Eleven months. Two hundred and some contracts, all closed, most of them on time.
 Choices:
 
 - “Understood, Director. Thank you.” → `panel` *(Director Halsey trust +1)*
-- “Who complained? The client, or the people the client was waiting out?” *[if saved-farrow]* → `pushback` *(cover +4)*
+- “Early isn’t usually a problem, Director. Who was harmed?” *[if saved-farrow]* → `pushback` *(cover +4)*
 - “Why tell me yourself?” *[unless saved-farrow]* → `why` *(Director Halsey trust +1)*
 
 ### Scene `pushback`
 
-**Director Halsey:** The client, Abbott. The client always complains. The people the client was waiting out don’t have a complaints channel; that’s rather the point of them. Don’t make me have this conversation twice.
+**Director Halsey:** Nobody, Abbott. That’s the trouble. If standard can arrive early, nobody pays for priority, and Scheduling exists to make sure nobody finds out that it can. The clinic would like to thank you. It can’t, because officially you didn’t do it. Don’t make me have this conversation twice.
 
 It is a warning. It is also, you think, something else, delivered in the only shape the desk allows.
 

@@ -540,8 +540,13 @@ nav a {
     background-color: var(--panel);
 }
 
+/* A scene with no choices ends with one button (Continue, Close the
+   contract, Try again). It moves on rather than choosing, so it is centred
+   like the reading button, but keeps the accent colour. */
 .choices button.primary {
     background-color: var(--accent);
+    text-align: center;
+    justify-content: center;
 }
 
 .choices .rewind-link {

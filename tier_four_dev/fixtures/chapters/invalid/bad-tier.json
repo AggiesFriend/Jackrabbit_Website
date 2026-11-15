@@ -1,0 +1,159 @@
+{
+  "format": 2,
+  "id": "bad-tier",
+  "tier": 5,
+  "kind": "contract",
+  "mode": "both",
+  "ship": "alc",
+  "title": "Sample contract",
+  "subtitle": "Placeholder route",
+  "brief": {
+    "client": "Placeholder client",
+    "route": "A to B",
+    "cargo": "One crate",
+    "fee": "Standard"
+  },
+  "truths": [
+    {
+      "id": "truth-a",
+      "mode": "both",
+      "text": "Placeholder truth A, shown in both modes."
+    },
+    {
+      "id": "truth-b",
+      "mode": "reader",
+      "text": "Placeholder truth B, shown in reader mode only."
+    }
+  ],
+  "understandings": [
+    {
+      "id": "und-a",
+      "mode": "both",
+      "truth": "truth-a",
+      "correct": true,
+      "journal": "Placeholder journal entry after inspecting the crate."
+    },
+    {
+      "id": "und-a-misread",
+      "mode": "both",
+      "truth": "truth-a",
+      "correct": false,
+      "journal": "Placeholder journal entry after waving the crate through."
+    },
+    {
+      "id": "und-b",
+      "mode": "reader",
+      "truth": "truth-b",
+      "correct": true,
+      "journal": "A second placeholder journal entry."
+    }
+  ],
+  "start": "arrive",
+  "scenes": [
+    {
+      "id": "arrive",
+      "jump": {
+        "name": "Placeholder approach",
+        "difficulty": 1
+      },
+      "lines": [
+        {
+          "who": "n",
+          "text": "Placeholder narration."
+        },
+        {
+          "who": "aggie",
+          "text": "Did you check the manifest weight?",
+          "kind": "question",
+          "hint": "hint-a1",
+          "truth": "truth-a"
+        },
+        {
+          "who": "aggie",
+          "text": "Placeholder short reply.",
+          "kind": "hesitate",
+          "hint": "hint-b1",
+          "truth": "truth-b",
+          "mode": "reader"
+        },
+        {
+          "who": "frank",
+          "text": "Placeholder line from Frank.",
+          "requires": [
+            "met-frank"
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "text": "Inspect the crate",
+          "goto": "inspect",
+          "logs": [
+            "und-a"
+          ],
+          "cover": 6
+        },
+        {
+          "text": "Wave it through",
+          "goto": "deliver",
+          "logs": [
+            "und-a-misread"
+          ],
+          "cover": -2
+        },
+        {
+          "text": "Ask about the tag",
+          "goto": "deliver",
+          "logs": [
+            "und-b"
+          ],
+          "mode": "reader"
+        },
+        {
+          "text": "Refuse the contract",
+          "goto": "refuse",
+          "confirm": "This can't be undone."
+        }
+      ]
+    },
+    {
+      "id": "inspect",
+      "enter": {
+        "set": [
+          "inspected"
+        ],
+        "note": "Placeholder note."
+      },
+      "lines": [
+        {
+          "who": "aggie",
+          "text": "Placeholder change of subject.",
+          "kind": "deflect",
+          "hint": "hint-a2",
+          "truth": "truth-a"
+        }
+      ],
+      "next": "deliver"
+    },
+    {
+      "id": "refuse",
+      "lines": [
+        {
+          "who": "aggie",
+          "text": "Placeholder pressing, as far as the directive allows."
+        }
+      ],
+      "rewindTo": "arrive"
+    },
+    {
+      "id": "deliver",
+      "lines": [
+        {
+          "who": "n",
+          "text": "Placeholder delivery."
+        }
+      ],
+      "end": true
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "format": 2,
+  "id": "sample-scene",
+  "tier": 1,
+  "kind": "scene",
+  "mode": "reader",
+  "ship": "alc",
+  "title": "Sample scene",
+  "requires": ["read:truth-a"],
+  "truths": [],
+  "understandings": [],
+  "start": "talk",
+  "scenes": [
+    {
+      "id": "talk",
+      "lines": [{ "who": "frank", "text": "Placeholder reader-only scene." }],
+      "choices": [{ "text": "Nod", "goto": "end", "trust": { "frank": 1 } }]
+    }
+  ]
+}

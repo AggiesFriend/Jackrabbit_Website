@@ -1,0 +1,114 @@
+{
+  "wrong-format": {
+    "why": "format is 1",
+    "expect": "\"format\" must be 2"
+  },
+  "bad-id": {
+    "why": "ID has capitals",
+    "expect": "\"id\" must be a lower-case kebab-case ID"
+  },
+  "bad-tier": {
+    "why": "tier 5",
+    "expect": "\"tier\" must be a whole number from 0 to 4"
+  },
+  "bad-mode": {
+    "why": "unknown mode",
+    "expect": "\"mode\" must be one of"
+  },
+  "bad-ship": {
+    "why": "unknown ship",
+    "expect": "\"ship\" must be one of"
+  },
+  "missing-brief": {
+    "why": "contract without a brief",
+    "expect": "a contract needs a \"brief\""
+  },
+  "unknown-field": {
+    "why": "typo in a field name",
+    "expect": "unknown field \"scens\""
+  },
+  "missing-truth": {
+    "why": "understanding points at a missing truth",
+    "expect": "truth \"truth-z\" does not exist"
+  },
+  "spoiler-leak": {
+    "why": "reader-only truth hinted in both modes",
+    "expect": "where its truth \"truth-b\" (mode \"reader\") is hidden"
+  },
+  "item-wider-than-chapter": {
+    "why": "chapter is reader-only but a truth is both",
+    "expect": "would show it outside its chapter"
+  },
+  "hint-without-kind": {
+    "why": "hint line missing its kind",
+    "expect": "a hint needs \"kind\", \"hint\" and \"truth\" together"
+  },
+  "hint-not-aggie": {
+    "why": "a hint spoken by Frank",
+    "expect": "only Aggie's lines can be hints"
+  },
+  "duplicate-hint-id": {
+    "why": "two hints share an ID",
+    "expect": "hint ID \"hint-a1\" is already used"
+  },
+  "truth-without-hint": {
+    "why": "a truth no hint points to",
+    "expect": "no hint points to it in spoiler-free mode"
+  },
+  "only-misreadings": {
+    "why": "a truth with no correct understanding",
+    "expect": "no correct understanding of it in spoiler-free mode"
+  },
+  "too-many-truths": {
+    "why": "three truths in one mode",
+    "expect": "at most 2 truths in reader mode, found 3"
+  },
+  "missing-scene": {
+    "why": "a choice leads to a scene that does not exist",
+    "expect": "scene \"nowhere\" does not exist"
+  },
+  "choice-into-hidden-scene": {
+    "why": "a both-modes choice leads to a reader-only scene",
+    "expect": "which is hidden in a mode where this step is shown"
+  },
+  "unknown-understanding": {
+    "why": "a choice logs an understanding that does not exist",
+    "expect": "understanding \"und-z\" does not exist"
+  },
+  "scene-without-exit": {
+    "why": "a scene with no way out",
+    "expect": "a scene needs choices, \"next\", \"end\" or \"rewindTo\""
+  },
+  "unreachable-scene": {
+    "why": "a scene nothing leads to",
+    "expect": "scene \"inspect\": unreachable in spoiler-free mode"
+  },
+  "no-ending": {
+    "why": "no path reaches the end",
+    "expect": "no path reaches the end in spoiler-free mode"
+  },
+  "bad-condition": {
+    "why": "a malformed condition",
+    "expect": "\"requires\" must be a list of flags or comparisons"
+  },
+  "empty-text": {
+    "why": "a blank line",
+    "expect": "\"text\" must be non-empty text"
+  },
+  "unknown-speaker": {
+    "why": "a line from someone the campaign does not list",
+    "expect": "unknown speaker \"halsey\""
+  },
+  "correct-not-boolean": {
+    "why": "correct given as a string",
+    "expect": "\"correct\" must be true or false"
+  },
+  "bad-jump": {
+    "why": "jump difficulty out of range",
+    "expect": "\"difficulty\" must be a whole number from 1 to 4"
+  },
+  "start-hidden": {
+    "why": "start scene is reader-only",
+    "expect": "must be shown in every mode the chapter is"
+  }
+}

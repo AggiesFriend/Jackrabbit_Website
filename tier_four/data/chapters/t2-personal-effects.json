@@ -1,0 +1,103 @@
+{
+  "format": 2,
+  "id": "t2-personal-effects",
+  "tier": 2,
+  "kind": "contract",
+  "mode": "both",
+  "ship": "alc",
+  "title": "Personal effects",
+  "subtitle": "Tethys Yards to Hub Meridian, three jumps",
+  "brief": {
+    "client": "Aletheion Logistics, executive relocation (internal)",
+    "route": "Tethys Yards to Hub Meridian, three jumps, a dwell at Vantage Relay",
+    "cargo": "Personal effects of a relocating executive, eleven sealed containers",
+    "fee": "Tier 2 rate",
+    "notes": "Internal consignment. Consignor and consignee details are on the manifest. Handle with discretion."
+  },
+  "truths": [
+    { "id": "absorbed", "mode": "both", "text": "The ‘personal effects’ are the records of a small shipping firm Aletheion absorbed last quarter, being moved off Tethys before the auditors arrive. The ‘executive’ is the firm’s former owner, who now works for the company that ate his." }
+  ],
+  "understandings": [
+    { "id": "read-labels", "mode": "both", "truth": "absorbed", "correct": true, "journal": "Read the container labels at Vantage: not furniture, but ledgers and drive cases marked Tethys Independent Carriage, a firm that no longer exists." },
+    { "id": "relocation", "mode": "both", "truth": "absorbed", "correct": false, "journal": "Carried eleven containers of an executive’s belongings from Tethys to Hub Meridian. Relocations happen." },
+    { "id": "report-agent", "mode": "both", "truth": "absorbed", "correct": false, "journal": "Reported to dispatch that the consignor and consignee shared a registered agent, as a possible paperwork error." }
+  ],
+  "start": "load",
+  "scenes": [
+    {
+      "id": "load",
+      "lines": [
+        { "who": "n", "text": "Tethys Yards used to be a working shipyard with a dozen independent carriers flying out of it. You know this because the signage is still up, and because the people loading your containers have the look of men whose names were on that signage once." },
+        { "who": "n", "text": "Eleven containers, sealed, heavy for furniture. The manifest names the consignor as an Aletheion executive you have never heard of and the consignee as the same man, at a new address on Hub Meridian." },
+        { "who": "aggie", "text": "Loaded. Three jumps, with the dwell at Vantage. Have you noticed that the consignor and the consignee share a registered agent? It’s on the second page.", "kind": "question", "hint": "registered-agent", "truth": "absorbed" },
+        { "who": "n", "text": "It is on the second page. The registered agent is Aletheion’s own legal office. A man moving house does not usually route his furniture through his employer’s lawyers." }
+      ],
+      "choices": [
+        { "text": "“Who was he, before he was an Aletheion executive?”", "goto": "who" },
+        { "text": "Report the shared agent to dispatch as a possible error.", "goto": "report", "logs": ["report-agent"], "cover": 5 },
+        { "text": "Fly the contract. People move house.", "goto": "jump-one", "logs": ["relocation"], "cover": -3 }
+      ]
+    },
+    {
+      "id": "who",
+      "lines": [
+        { "who": "aggie", "text": "He joined Aletheion fourteen weeks ago. His previous employment is on the public register, if you wanted to look. I haven’t looked.", "kind": "hesitate", "hint": "havent-looked", "truth": "absorbed" },
+        { "who": "n", "text": "She hasn’t looked. Aggie, who can read the public register faster than you can say the words, has not looked, and wants you to know she hasn’t. You pull it up yourself. Owner and operator, Tethys Independent Carriage, nineteen years, until a quarter ago." }
+      ],
+      "choices": [
+        { "text": "Fly, and look at the containers at Vantage.", "goto": "jump-one", "set": ["will-look"] },
+        { "text": "Report the shared agent to dispatch as a possible error.", "goto": "report", "logs": ["report-agent"], "cover": 5 }
+      ]
+    },
+    {
+      "id": "report",
+      "lines": [
+        { "who": "dispatch", "text": "The manifest is correct as filed, courier. Internal consignments are reviewed by legal before release. Proceed." },
+        { "who": "aggie", "text": "Proceeding. Vantage in two jumps.", "kind": "over-comply", "hint": "proceeding-vantage", "truth": "absorbed" }
+      ],
+      "next": "jump-one"
+    },
+    {
+      "id": "jump-one",
+      "jump": { "name": "Tethys departure", "difficulty": 2 },
+      "lines": [
+        { "who": "n", "text": "Tier 2 routes are longer and emptier. Between the first jump and the second there is nothing but the ship, the hum of eleven containers settling, and Aggie reading you traffic that is three hours away." },
+        { "who": "aggie", "text": "Vantage Relay next. Nine-hour dwell for the beacon cycle. Then Meridian." }
+      ],
+      "next": "vantage"
+    },
+    {
+      "id": "vantage",
+      "jump": { "name": "Vantage Relay", "difficulty": 2 },
+      "lines": [
+        { "who": "n", "text": "Vantage Relay is a beacon, a fuel bowser and nine hours of nothing. The hold is the only place on the ship you have not already walked twice." },
+        { "who": "aggie", "text": "Nine hours. The containers are rated for the dwell. There’s no reason to go into the hold.", "kind": "deflect", "hint": "no-reason", "truth": "absorbed" }
+      ],
+      "choices": [
+        { "text": "Go into the hold and read the labels.", "goto": "labels", "logs": ["read-labels"], "cover": 6 },
+        { "text": "Sleep through the dwell.", "goto": "jump-last", "logs": ["relocation"], "cover": -2 }
+      ]
+    },
+    {
+      "id": "labels",
+      "lines": [
+        { "who": "n", "text": "The outer labels say household effects. Under the outer labels, where the tape has lifted on the fourth container, there are older labels. Tethys Independent Carriage. Ledgers, 2251 to 2258. Drive cases. Client correspondence." },
+        { "who": "n", "text": "Nineteen years of a small company that did its own flying and kept its own books, going to a new address in a sealed box, a quarter after the people who built it were given a job title and a flat on Hub Meridian." },
+        { "who": "aggie", "text": "Four hours to the beacon cycle.", "kind": "hesitate", "hint": "four-hours", "truth": "absorbed" },
+        { "who": "n", "text": "It is the same pattern you saw at Dead End Drift, with better lighting. Buy the thing that works. Take what’s valuable. Move the evidence before anyone asks why it stopped working." }
+      ],
+      "next": "jump-last"
+    },
+    {
+      "id": "jump-last",
+      "jump": { "name": "Hub Meridian approach", "difficulty": 2 },
+      "lines": [
+        { "who": "n", "text": "Hub Meridian is Aletheion’s regional seat, a station so clean it hums. The consignee’s new address is in executive housing, and the man himself is on the berth to meet his belongings." },
+        { "who": "n", "text": "He is perhaps fifty, in a suit that does not yet fit him, and he watches the containers come off with an expression you recognise from the loaders at Tethys. He does not look at the labels. He has read them." },
+        { "who": "jack", "text": "Sign here, sir." },
+        { "who": "n", "text": "He signs. He thanks you. He walks away from nineteen years of his own life in eleven sealed boxes, and you fly back to Callisto with the fee in your account and a hold that feels emptier than empty." }
+      ],
+      "end": true
+    }
+  ]
+}

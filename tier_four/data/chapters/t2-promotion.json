@@ -1,0 +1,79 @@
+{
+  "format": 2,
+  "id": "t2-promotion",
+  "tier": 2,
+  "kind": "scene",
+  "mode": "both",
+  "ship": "alc",
+  "title": "Tier 3",
+  "subtitle": "Callisto administrative ring",
+  "truths": [],
+  "understandings": [],
+  "start": "office",
+  "scenes": [
+    {
+      "id": "office",
+      "lines": [
+        { "who": "n", "text": "Two years at tier 2. You are sixteen on the records nobody keeps, twenty-one on the ones Aletheion does, and the mask has stopped feeling like a mask most days, which Aggie once told you would be the dangerous part." },
+        { "who": "halsey", "text": "Tier 3. Sit down, Abbott, this one comes with a conversation." },
+        { "who": "halsey", "text": "Tier 3 contracts are the ones the company doesn’t put on the open board. Strategic cargo. Sovereign keys. Things that move under escort. The couriers who fly them are vetted by Keller’s office, and Keller’s office has vetted you, and I want you to understand that I didn’t ask them to." }
+      ],
+      "choices": [
+        { "text": "“Should I be worried that they did?”", "goto": "worried", "trust": { "halsey": 1 } },
+        { "text": "“Then I’ll make sure they don’t regret it.”", "goto": "regret" }
+      ]
+    },
+    {
+      "id": "worried",
+      "lines": [
+        { "who": "halsey", "text": "You should be aware. Worried is for people who can do something about it. Keller promotes people she can use, and she uses them until they’re used, and then she promotes someone else. Fly well. Keep your head down. Don’t become interesting." },
+        { "who": "n", "text": "You have been interesting since the day you arrived. You both know it. He is telling you, in the only way his job allows, that he will go on pretending otherwise for as long as he can." }
+      ],
+      "next": "frank"
+    },
+    {
+      "id": "regret",
+      "lines": [
+        { "who": "halsey", "text": "She won’t regret it. That’s not how it works up there. You might. That’s all I’ll say, and I’ve said more than I should." }
+      ],
+      "next": "frank"
+    },
+    {
+      "id": "frank",
+      "lines": [
+        { "who": "n", "text": "Frank finds you in the lounge afterwards. He has heard; Frank always hears. He is pleased in the loud way and worried in the quiet way, and he does both at once over two cups of the coffee." },
+        { "who": "frank", "text": "Tier 3. I flew tier 3 for eleven years, son. The money’s better. The sleep’s worse. You’ll meet people at the receptions who talk about things over drinks that you’ll want to walk out on, and you won’t walk out, because that’s the job. Don’t let it get into you. That’s the only advice I’ve got." },
+        { "who": "frank", "text": "Eleanor says come for dinner before you go up. She says it like an order. It is an order." }
+      ],
+      "choices": [
+        { "text": "“I’ll be there. Frank, thank you. For all of it.”", "goto": "thanks", "trust": { "frank": 1 } },
+        { "text": "“Did it get into you? Tier 3?”", "goto": "into-you", "trust": { "frank": 1 } }
+      ]
+    },
+    {
+      "id": "thanks",
+      "lines": [
+        { "who": "frank", "text": "Don’t thank me, you’ll make me feel old. I’m retiring at the end of the year. Thirty-seven years. Eleanor’s already bought the chair." },
+        { "who": "n", "text": "He says it lightly. It lands on you like a bulkhead." }
+      ],
+      "next": "close"
+    },
+    {
+      "id": "into-you",
+      "lines": [
+        { "who": "frank", "text": "Some. I got it back out. Eleanor got it back out, mostly. That’s why I keep telling you to come to dinner, Jack. It’s not the stew." },
+        { "who": "frank", "text": "I’m retiring at the end of the year, by the way. Thirty-seven years. Eleanor’s already bought the chair." }
+      ],
+      "next": "close"
+    },
+    {
+      "id": "close",
+      "lines": [
+        { "who": "n", "text": "Aboard the ship, with the tier 3 board already unlocking on your displays and contracts on it that have no client names, only codes, you ask Aggie what she thinks of the promotion." },
+        { "who": "aggie", "text": "I think you earned it. I think tier 3 is where the routes go that we came here to find. And I think you should go to dinner." },
+        { "who": "n", "text": "Three things. For Aggie, these days, that is a speech." }
+      ],
+      "end": true
+    }
+  ]
+}

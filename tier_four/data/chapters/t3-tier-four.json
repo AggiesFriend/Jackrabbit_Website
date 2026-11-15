@@ -1,0 +1,103 @@
+{
+  "format": 2,
+  "id": "t3-tier-four",
+  "tier": 3,
+  "kind": "scene",
+  "mode": "both",
+  "ship": "alc",
+  "title": "Tier four",
+  "subtitle": "Hub Meridian, executive floor",
+  "truths": [],
+  "understandings": [],
+  "start": "office",
+  "scenes": [
+    {
+      "id": "office",
+      "lines": [
+        {
+          "who": "n",
+          "text": "Six years. You are nineteen on the records nobody keeps and twenty-five on Aletheion’s, and the face Aggie built you has aged with you, line by line, until the day you stopped being able to say which lines were hers."
+        },
+        {
+          "who": "n",
+          "text": "Keller does not make you wait twelve seconds this time. She is standing when you come in."
+        },
+        {
+          "who": "keller",
+          "text": "Tier 4, Abbott. Effective now. There is no certificate. There is no board. There is a contract, which you will receive on your ship and nowhere else, and a rate that we will not discuss in this building. You have been observed for two years and you have given me no reason not to do this. I’d like you to understand how rare that is."
+        },
+        {
+          "who": "keller",
+          "text": "Tier 4 couriers do not ask what a contract is for. They do not deviate. They do not discuss their work with directors, mentors or girlfriends on Nexus-77. In exchange, they are the most trusted people in Aletheion, and Aletheion looks after the people it trusts. Do you accept?"
+        }
+      ],
+      "choices": [
+        {
+          "text": "“I accept.”",
+          "goto": "accept",
+          "cover": -10
+        },
+        {
+          "text": "“What happens to the ones who don’t?”",
+          "goto": "dont",
+          "cover": 6
+        }
+      ]
+    },
+    {
+      "id": "dont",
+      "lines": [
+        {
+          "who": "keller",
+          "text": "Nobody has asked me that before. I find I don’t know, because nobody has declined. Would you like to be the first, or would you like to accept?"
+        },
+        {
+          "who": "jack",
+          "text": "I accept."
+        }
+      ],
+      "next": "accept"
+    },
+    {
+      "id": "accept",
+      "lines": [
+        {
+          "who": "keller",
+          "text": "Good. Your first assignment will be on your ship by the time you reach it. Fly it well, and we’ll never need to speak again. That is the greatest compliment this office gives."
+        },
+        {
+          "who": "n",
+          "text": "Halsey is not at the lift this time. You find later that he was not told. You find later that this, too, is what tier 4 means."
+        }
+      ],
+      "next": "ship"
+    },
+    {
+      "id": "ship",
+      "lines": [
+        {
+          "who": "n",
+          "text": "ALC-7293 is waiting on the ring, and the board, when you sit down, has one item on it. No client. No code. A destination, a cargo class you have never seen, and a fee with a number of digits you have to count."
+        },
+        {
+          "who": "n",
+          "text": "The destination is Nexus-77."
+        },
+        {
+          "who": "aggie",
+          "text": "The assignment has loaded."
+        },
+        {
+          "who": "n",
+          "text": "Four words. You wait. The engine ticks. The station lights slide past the port. You have spent six years learning to hear what she doesn’t say, and what she is not saying now fills the cockpit from wall to wall."
+        },
+        {
+          "who": "n",
+          "text": "This is where the spoiler-free career ends: at tier 4, with the assignment on the board and Aggie silent. What the assignment is, and what Jack and Aggie do about it, is the story of Coming of Age.",
+          "mode": "spoiler-free"
+        }
+      ],
+      "end": true
+    }
+  ]
+}

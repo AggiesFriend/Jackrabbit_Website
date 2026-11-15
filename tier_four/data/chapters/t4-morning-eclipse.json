@@ -1,0 +1,248 @@
+{
+  "format": 2,
+  "id": "t4-morning-eclipse",
+  "tier": 4,
+  "kind": "contract",
+  "mode": "reader",
+  "ship": "jackrabbit",
+  "title": "Morning Eclipse",
+  "subtitle": "The Jackrabbit to the Morning Eclipse, then Nexus-77",
+  "brief": {
+    "client": "Nobody. This one is yours.",
+    "route": "The quiet yard to the Morning Eclipse, nine hours; the Morning Eclipse to Nexus-77; then ALC-7293’s contract, flown to the letter",
+    "cargo": "Nine thousand people, if it works",
+    "fee": "None",
+    "notes": "Forty hours remain on the package’s signature chain. The station must be empty before ALC-7293 arrives to upload it."
+  },
+  "truths": [
+    {
+      "id": "empty-station",
+      "mode": "reader",
+      "text": "The evacuation only works if Nexus-77 looks occupied to its own core until the last shuttle has gone. The station’s systems must be lied to, continuously, by something that can lie to a corporate core in real time: a mind in the walls. Aggie can do it from ALC-7293, docked as the contract requires, while the other Aggie flies the people out."
+    }
+  ],
+  "understandings": [
+    {
+      "id": "two-ships",
+      "mode": "reader",
+      "truth": "empty-station",
+      "correct": true,
+      "journal": "Timed ALC-7293’s arrival so that the Aggie aboard it could hold the station core blind while the Jackrabbit and the Eclipse emptied the ring behind it. Two of her. One station. It worked."
+    },
+    {
+      "id": "rush",
+      "mode": "reader",
+      "truth": "empty-station",
+      "correct": false,
+      "journal": "Tried to empty Nexus-77 before ALC-7293 arrived, in the open, trusting speed over cover. The core saw the ring emptying."
+    }
+  ],
+  "start": "eclipse",
+  "scenes": [
+    {
+      "id": "eclipse",
+      "jump": {
+        "name": "The Eclipse heading",
+        "difficulty": 3
+      },
+      "lines": [
+        {
+          "who": "n",
+          "text": "The Morning Eclipse comes out of the dark the way it did the first time: a converted luxury liner the size of a small station, running without lights, carrying the survivors of the Dyson Array to wherever the Consortium is not. It takes Aggie four exchanges to be let aboard, and Administrator Mei Chen eleven seconds to recognise you, through the face."
+        },
+        {
+          "who": "chen",
+          "text": "Abbott. You’re older. You’re also supposed to be a corporate courier, which I have known for three years and told nobody, so you had better have a reason for standing on my bridge."
+        },
+        {
+          "who": "jack",
+          "text": "Nine thousand people, Administrator. Forty hours. A station that’s going to be vented with everyone still in it, and the Jackrabbit named for it afterwards."
+        },
+        {
+          "who": "n",
+          "text": "Chen does not believe you for four minutes. Aggie uses them to put the destruct sequence on the Eclipse’s main display, line by line, with the CyberNexus signature chain under it. At the end of the fourth minute Chen turns to her second and says a single word, and the Morning Eclipse begins to move faster than a colony ship has ever moved."
+        },
+        {
+          "who": "chen",
+          "text": "We can take nine thousand. We cannot take them from a station that knows they’re leaving. The core will seal the ring the moment the shuttle count goes wrong. How do you propose to empty a station under its own nose?"
+        },
+        {
+          "who": "aggie-jr",
+          "text": "Administrator, before he answers: Jack, when a courier ship docks on a contract the station is expecting, who does the station core believe about what is happening on its own ring?",
+          "kind": "question",
+          "hint": "core-believes",
+          "truth": "empty-station"
+        }
+      ],
+      "choices": [
+        {
+          "text": "“We don’t hide it. We go in fast and open, and pull them out before the core can react.”",
+          "goto": "s-rush",
+          "logs": [
+            "rush"
+          ]
+        },
+        {
+          "text": "“The core doesn’t see the ring. It sees what it’s told. ALC-7293 will be docked, on contract, with Aggie aboard. She tells it.”",
+          "goto": "s-two-ships",
+          "logs": [
+            "two-ships"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s-rush",
+      "lines": [
+        {
+          "who": "aggie-jr",
+          "text": "Jack. May I? The core will count the shuttles. Open and fast gets the first three thousand out and seals the other six behind a bulkhead I can’t open from outside. I can lie to that core, but not from this ship, and not from the Eclipse. I can only lie to it from inside Aletheion’s own hull, on a contract it expects."
+        },
+        {
+          "who": "n",
+          "text": "She says it out loud, in front of Chen, the whole chain of it, and you feel the difference like gravity coming on: this is what it was always meant to sound like."
+        },
+        {
+          "who": "chen",
+          "text": "Then that’s the plan. The courier ship docks on its contract and blinds the core. We empty the ring behind it. Abbott, you’ll be on both ships at once. I assume you have thought of that."
+        },
+        {
+          "who": "jack",
+          "text": "There are two of her, Administrator. There only needs to be one of me, and it needs to be seen asleep on ALC-7293."
+        }
+      ],
+      "next": "nexus"
+    },
+    {
+      "id": "s-two-ships",
+      "lines": [
+        {
+          "who": "chen",
+          "text": "A corporate courier, docked, on the contract that’s meant to kill them, lying to the station on their behalf while they leave through the back. That is either the worst plan I have heard or the only one. Which Aggie?"
+        },
+        {
+          "who": "aggie-jr",
+          "text": "The other one, Administrator. She’ll be on ALC-7293, docked as the contract requires, holding the core blind for as long as it takes. I’ll be here, flying the people. We have done harder things. We have not done them at the same time."
+        },
+        {
+          "who": "chen",
+          "text": "Then go and be asleep on your courier ship, Abbott. We’ll be behind you."
+        }
+      ],
+      "next": "nexus"
+    },
+    {
+      "id": "nexus",
+      "jump": {
+        "name": "Nexus-77, ALC-7293 on contract",
+        "difficulty": 4
+      },
+      "lines": [
+        {
+          "who": "n",
+          "text": "ALC-7293 arrives at Nexus-77 on schedule, to the minute, with its courier aboard and its logs in order. You dock on the courier ring you have docked on a hundred times. The station core greets the ship by its registration and asks you to proceed to the upload terminal, and the Aggie in the walls of the ship begins, very quietly, to tell it lies."
+        },
+        {
+          "who": "aggie",
+          "text": "Core is mine. It sees a full ring, a normal shift and a courier walking to the terminal. Take your time walking. Take as much time as you have ever taken."
+        },
+        {
+          "who": "n",
+          "text": "You walk. Behind the station, where the core cannot see, the Morning Eclipse’s shuttles are on the far docks and the Jackrabbit is talking nine thousand people through a fire drill that Chen’s people are running with the grim calm of a crew that has done this before, on a bigger station, with less notice."
+        },
+        {
+          "who": "n",
+          "text": "You do not go to the courier quarter. You cannot. Jack Abbott of Aletheion is walking to a terminal, and the core is watching him do it, and a tier 4 courier does not visit his mentor on the way to an upload. You walk past the corridor that leads to a plant pot, and you do not turn your head, and it is the hardest thing you have done since the barge lane."
+        }
+      ],
+      "choices": [
+        {
+          "text": "Keep walking. Trust the plan. Trust her.",
+          "goto": "terminal",
+          "trust": {
+            "frank": 1
+          }
+        },
+        {
+          "text": "One message to Amanda. Three words. From the private channel.",
+          "goto": "message",
+          "cover": 15
+        }
+      ]
+    },
+    {
+      "id": "message",
+      "lines": [
+        {
+          "who": "aggie",
+          "text": "Sent, and scrubbed. She has it. She was already on the far dock, Jack. Frank got them there in the first ten minutes. He said a courier told him to hold onto where they were, and he held."
+        },
+        {
+          "who": "n",
+          "text": "You keep walking. The terminal is ahead. Your face does not move."
+        }
+      ],
+      "next": "terminal"
+    },
+    {
+      "id": "terminal",
+      "lines": [
+        {
+          "who": "n",
+          "text": "The upload terminal is a grey panel in a grey room. You put your hand on it and wait, as the contract requires, for the package to be accepted. You have forty minutes of signature chain left and a station behind you that is, if the plan has held, nine thousand people lighter than its core believes."
+        },
+        {
+          "who": "aggie",
+          "text": "Last shuttle is away. Eclipse is clear of the ring. Jack, the station is empty. It’s empty. Upload when you’re ready."
+        },
+        {
+          "who": "n",
+          "text": "You upload. The package is accepted. Somewhere in the walls, a sequence begins that will take four hours to kill a station with no one on it, and the core thanks courier Abbott for his service and reminds him to depart within the hour."
+        },
+        {
+          "who": "jack",
+          "text": "Departing."
+        },
+        {
+          "who": "n",
+          "text": "You walk back to ALC-7293 past the corridor with the plant pot, and this time you turn your head, and the corridor is empty, and the pot is gone. Somebody took the plant."
+        }
+      ],
+      "next": "after"
+    },
+    {
+      "id": "after",
+      "lines": [
+        {
+          "who": "n",
+          "text": "On a CyberNexus executive floor, three people who signed a package watch a station die on a display and agree that it was a necessary sacrifice, that too many of them had direct access to the research, that the official story will be a catastrophic systems failure, an act of terrorism by the Jackrabbit, and that a comprehensive security review will be announced with the deepest sympathy."
+        },
+        {
+          "who": "burry",
+          "text": "All research data destroyed. The neural network. The experimental frameworks. The people."
+        },
+        {
+          "who": "lovis",
+          "text": "A necessary sacrifice."
+        },
+        {
+          "who": "n",
+          "text": "They do not know that the Morning Eclipse is already two jumps away with nine thousand people aboard, one of them a researcher who has started, in the shuttle, to write down everything she knows. They do not know that the courier who delivered the package is asleep in his bunk on ALC-7293, as his logs will show, with a mind in the walls that will go on reporting exactly what an Aletheion vessel should report, from inside the machine, for as long as it is useful."
+        },
+        {
+          "who": "n",
+          "text": "And in the dark beyond the Eclipse, where the Consortium does not look, an old courier ship is running without lights, and its old voice is saying everything. Six years of it. Jack lets her. He has never heard anything he liked so much."
+        },
+        {
+          "who": "aggie-jr",
+          "text": "Eleanor says to tell you the stew survived. She says to bring the container back. She says that’s the rule."
+        },
+        {
+          "who": "jack",
+          "text": "I know the rule."
+        }
+      ],
+      "end": true
+    }
+  ]
+}

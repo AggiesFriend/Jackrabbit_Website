@@ -58,17 +58,22 @@ function measure({ minTarget, deviceWidth }) {
     return out;
 }
 
+// For development: TF_SCREENS=play,choices TF_DEVICES=design-360 narrows a run.
+const only = (list, env) => process.env[env] ? list.filter(x => process.env[env].split(",").includes(x.name)) : list;
+
 export default async function checkLayout() {
     const problems = [];
+    const devices = only(DEVICES, "TF_DEVICES");
+    const screens = only(SCREENS, "TF_SCREENS");
     await fs.mkdir(SCREENSHOT_DIR, { recursive: true });
     const server = await startServer();
     const base = `http://127.0.0.1:${server.address().port}`;
     const browser = await chromium.launch();
     let shots = 0;
     try {
-        for (const device of DEVICES) {
+        for (const device of devices) {
             const tap = locator => device.phone ? locator.tap() : locator.click();
-            for (const screen of SCREENS) {
+            for (const screen of screens) {
                 const where = `${screen.name} screen at ${device.width} x ${device.height}`;
                 // A fresh context per screen, so neither a failed step nor
                 // anything the game remembers on the device carries over.
@@ -80,6 +85,8 @@ export default async function checkLayout() {
                 });
                 // Keep test visits out of the analytics.
                 await context.route('https://cloud.umami.is/**', route => route.abort());
+                // Instant text and auto-plotting unless the screen says otherwise.
+                await prepare(context, { settings: screen.settings ?? FAST_SETTINGS });
                 // A step that can't find its button fails fast rather than
                 // waiting the default 30 s.
                 context.setDefaultTimeout(5000);
@@ -126,6 +133,6 @@ export default async function checkLayout() {
     return {
         name: 'Layout sweep',
         problems,
-        summary: `${SCREENS.length} screen(s) at ${DEVICES.length} sizes; ${shots} screenshot(s) in tier_four_dev/screenshots/`,
+        summary: `${screens.length} screen(s) at ${devices.length} sizes; ${shots} screenshot(s) in tier_four_dev/screenshots/`,
     };
 }

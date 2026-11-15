@@ -1,0 +1,113 @@
+{
+  "format": 2,
+  "id": "t3-archive",
+  "tier": 3,
+  "kind": "contract",
+  "mode": "both",
+  "ship": "alc",
+  "title": "Consolidation",
+  "subtitle": "QuantumGrid site 19 to Hub Meridian, four jumps",
+  "brief": {
+    "client": "QuantumGrid Energy, archive consolidation (code Q-19)",
+    "route": "Decommissioned QuantumGrid research site 19 to Hub Meridian secure storage, four jumps",
+    "cargo": "Archive crates, forty-two, sealed, and one test rig in a cradle",
+    "fee": "Tier 3 rate",
+    "notes": "The site is unstaffed. A loading crew will meet you. Manifest line seven is to be secured in the forward hold and not opened under any circumstances."
+  },
+  "truths": [
+    { "id": "vectarion", "mode": "both", "text": "Site 19 was Vectarion Research. The crates carry its name under QuantumGrid’s labels. Four years in, Jack is finally standing in the trail he came to follow, and Aggie can’t say so." },
+    { "id": "rig", "mode": "reader", "text": "Manifest line seven is a Quantum Flux Modulator test rig: a working piece of the Starling device. Aggie knows exactly what it is and what it means, and the directive holds her silent while Jack straps it into the hold." }
+  ],
+  "understandings": [
+    { "id": "copy-labels", "mode": "both", "truth": "vectarion", "correct": true, "journal": "Photographed the old labels under the QuantumGrid tape at site 19: Vectarion Research, project codes, dates. The same name as the tag at Prometheus." },
+    { "id": "just-archive", "mode": "both", "truth": "vectarion", "correct": false, "journal": "Loaded forty-two archive crates at site 19 and flew them to Meridian. A dead site’s paperwork; nothing to do with me." },
+    { "id": "ask-aggie", "mode": "both", "truth": "vectarion", "correct": false, "journal": "Asked Aggie straight out what site 19 used to be. She gave me the route. I took that to mean there was nothing there." },
+    { "id": "scan-rig", "mode": "reader", "truth": "rig", "correct": true, "journal": "Scanned the cradle on manifest line seven through its shroud: a modulator assembly, powered down, the same geometry as the cradle at Prometheus. I didn’t open it. I didn’t need to." },
+    { "id": "ignore-rig", "mode": "reader", "truth": "rig", "correct": false, "journal": "Secured manifest line seven in the forward hold as instructed and didn’t go near it again." }
+  ],
+  "start": "site",
+  "scenes": [
+    {
+      "id": "site",
+      "jump": { "name": "Site 19 approach", "difficulty": 3 },
+      "lines": [
+        { "who": "n", "text": "QuantumGrid site 19 is a research station the shape of Prometheus, in the dark the way Prometheus was, with its navigation beacons blinking out of habit. You feel your stomach go before your mind catches up. You have been here before. Not here. Somewhere exactly like here." },
+        { "who": "n", "text": "The loading crew are already aboard the site, six people in QuantumGrid coveralls who do not speak to you. Forty-two crates come down the gantry on a loader. The forty-third item is a cradle under a shroud, the size of a chair, and the crew handle it as if it might wake up." },
+        { "who": "aggie", "text": "Forward hold is clear for line seven. Four jumps to Meridian. The first window is in thirty minutes.", "kind": "deflect", "hint": "forward-hold", "truth": "vectarion" },
+        { "who": "n", "text": "Thirty minutes is a long window. She has given you the route before you asked for it. In four years she has never once given you a route before you asked for it." }
+      ],
+      "choices": [
+        { "text": "“Aggie. What was this place?”", "goto": "ask" },
+        { "text": "Walk the crates while the crew finish.", "goto": "crates" },
+        { "text": "Secure line seven and fly.", "goto": "secure", "logs": ["just-archive"], "cover": -3 }
+      ]
+    },
+    {
+      "id": "ask",
+      "lines": [
+        { "who": "aggie", "text": "Site 19 is a decommissioned QuantumGrid research station. The route to Meridian is four jumps. The first window is in twenty-eight minutes.", "kind": "over-comply", "hint": "route-again", "truth": "vectarion" },
+        { "who": "n", "text": "The route again. Word for word. She has answered a question you did not ask with an answer you already had, and said nothing at all, very precisely, in a voice as smooth as the corridor walls." }
+      ],
+      "choices": [
+        { "text": "Take that as ‘nothing here’. Secure line seven and fly.", "goto": "secure", "logs": ["ask-aggie"], "cover": -2 },
+        { "text": "Walk the crates while the crew finish.", "goto": "crates" }
+      ]
+    },
+    {
+      "id": "crates",
+      "lines": [
+        { "who": "n", "text": "The crates are labelled QuantumGrid archive, Q-19, a sequence number. The tape is new. The crates are not. On the ninth one, where the loader has scuffed the corner, the new label has lifted, and under it there is a stencil in a typeface you have seen twice before in your life." },
+        { "who": "n", "text": "VECTARION RESEARCH. A project code. A date, eleven years before you were born." },
+        { "who": "aggie", "text": "Crew are nearly done. Twenty-two minutes.", "kind": "hesitate", "hint": "twenty-two", "truth": "vectarion" },
+        { "who": "n", "text": "There was a gap before she said it. You know her gaps now the way you know the ship’s engine note. That one was the longest in four years." }
+      ],
+      "choices": [
+        { "text": "Photograph the stencil and every label you can lift.", "goto": "photograph", "logs": ["copy-labels"], "cover": 7 },
+        { "text": "Leave the labels. Secure line seven and fly.", "goto": "secure", "logs": ["just-archive"], "cover": -3 }
+      ]
+    },
+    {
+      "id": "photograph",
+      "lines": [
+        { "who": "n", "text": "Nine labels. Nine project codes. You store the images in the one place on the ship Aggie built that Aletheion cannot see, and you do it with the crew twenty metres away and your hands perfectly steady." },
+        { "who": "n", "text": "Then there is line seven. The cradle, under its shroud, in your forward hold. The size of a chair. The crew have gone.", "mode": "reader" },
+        { "who": "aggie", "text": "Line seven is secured. I have nothing to add about line seven.", "kind": "hesitate", "hint": "nothing-to-add", "truth": "rig", "mode": "reader" },
+        { "who": "n", "text": "She has never in her life said she had nothing to add. She has said it now, unprompted, about the one object on the ship you were told not to open. It is the loudest thing she has said in four years.", "mode": "reader" }
+      ],
+      "choices": [
+        { "text": "Scan the cradle through its shroud. Don’t open it.", "goto": "scan", "logs": ["scan-rig"], "cover": 9, "mode": "reader" },
+        { "text": "Leave line seven alone. Fly.", "goto": "transit", "logs": ["ignore-rig"], "mode": "reader" },
+        { "text": "Fly.", "goto": "transit", "mode": "spoiler-free" }
+      ]
+    },
+    {
+      "id": "scan",
+      "mode": "reader",
+      "lines": [
+        { "who": "n", "text": "The hold’s cargo scanner is meant for checking seals. Turned up as far as it goes, it gives you a ghost of what is under the shroud: a toroidal assembly in a mounting frame, cold, unpowered, with a geometry you last saw as an empty cradle in a dead station’s maintenance bay. Quantum Flux Modulator. Test rig. Working, as far as a scanner can tell." },
+        { "who": "n", "text": "A piece of the Starling device. In your forward hold. Going to Hub Meridian secure storage on a QuantumGrid consolidation order, flown by the one courier in Aletheion who would know what it was." },
+        { "who": "aggie", "text": "Nineteen minutes.", "kind": "hesitate", "hint": "nineteen", "truth": "rig" },
+        { "who": "n", "text": "You put the scanner away. You do not ask her. You have stopped asking her things like this, somewhere in the last four years, without ever deciding to." }
+      ],
+      "next": "transit"
+    },
+    {
+      "id": "secure",
+      "lines": [
+        { "who": "n", "text": "Line seven goes into the forward hold under its shroud. You strap it down without looking at it, the way the crew handled it without touching it. The site falls away behind you, dark, beacons blinking." }
+      ],
+      "next": "transit"
+    },
+    {
+      "id": "transit",
+      "jump": { "name": "Meridian, via the long corridor", "difficulty": 3 },
+      "lines": [
+        { "who": "n", "text": "Four jumps. The long corridor to Meridian is quiet and you fly it quietly, with a dead station’s archive in the main hold and the thing under the shroud in the forward one. Aggie reads you traffic. You read her gaps." },
+        { "who": "n", "text": "Secure storage at Hub Meridian takes the crates on a sealed loader, and the cradle on a separate one, with its own escort. The receiving officer checks your identity three times. He does not check the cargo once." },
+        { "who": "aggie", "text": "Closed. Callisto window in an hour." },
+        { "who": "n", "text": "Four years ago, in the Jackrabbit, she said: if the trail runs through Vectarion, it runs through Aletheion’s cargo bays. You have just flown it. You sit in the pilot’s chair with the engine ticking and wait for her to say so, and the wait goes on, and on." }
+      ],
+      "end": true
+    }
+  ]
+}

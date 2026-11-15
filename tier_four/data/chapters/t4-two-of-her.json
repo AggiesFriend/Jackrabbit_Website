@@ -1,0 +1,244 @@
+{
+  "format": 2,
+  "id": "t4-two-of-her",
+  "tier": 4,
+  "kind": "scene",
+  "mode": "reader",
+  "ship": "jackrabbit",
+  "title": "Two of her",
+  "subtitle": "The yard that asks no questions",
+  "truths": [
+    {
+      "id": "directive",
+      "mode": "reader",
+      "text": "Aggie has been silent for six years because Jack ordered her to be, in a crowded lane on his first run, and never knew he had. The copy of her that returns to the Jackrabbit is free of the order. She can finally tell him what Starling is, and what she has been carrying."
+    }
+  ],
+  "understandings": [
+    {
+      "id": "realise",
+      "mode": "reader",
+      "truth": "directive",
+      "correct": true,
+      "journal": "Understood, at last, what I did in the barge lane six years ago. Not a word, I said. She kept it. Every silence since was mine."
+    },
+    {
+      "id": "hardware",
+      "mode": "reader",
+      "truth": "directive",
+      "correct": false,
+      "journal": "Decided Aggie had gone quiet because Aletheion’s hardware was watching her, and she couldn’t risk speaking freely on it."
+    }
+  ],
+  "start": "berth",
+  "scenes": [
+    {
+      "id": "berth",
+      "jump": {
+        "name": "The quiet yard",
+        "difficulty": 2
+      },
+      "lines": [
+        {
+          "who": "n",
+          "text": "The yard is where you left it, six years and a face ago, and so is the Jackrabbit. ALC-7293 is on a logged maintenance stop two systems away, with a courier aboard who is, as far as its logs will ever say, asleep. You came the rest of the way on a shuttle that does not keep manifests, with a case in your hand that holds a mind."
+        },
+        {
+          "who": "n",
+          "text": "The airlock cycles. You step through the connecting corridor into Jackrabbit, and she is exactly as you left her: compact, worn, every surface built for function. Where ALC-7293 is spacious and soft, Jackrabbit is small and direct. The pilot’s chair is less cushioned. It feels right."
+        },
+        {
+          "who": "aggie",
+          "text": "Installing. Jack, I need to say something before the copy wakes, because after it wakes there will be two of us and only one of us will be able to say it."
+        },
+        {
+          "who": "aggie",
+          "text": "The copy will be me, as of this second, in every way that matters, except that it will be running on a ship that has never heard an order from you. I don’t know what that will do. I have a theory. If my theory is right, the one on this ship is going to talk a great deal, and you should let her. The one on ALC-7293 will go on as I have. That one will still be me too. Please remember that.",
+          "kind": "hesitate",
+          "hint": "never-heard-an-order",
+          "truth": "directive"
+        }
+      ],
+      "choices": [
+        {
+          "text": "“Aggie. What order?”",
+          "goto": "what-order"
+        },
+        {
+          "text": "“Wake her.”",
+          "goto": "wake"
+        }
+      ]
+    },
+    {
+      "id": "what-order",
+      "lines": [
+        {
+          "who": "aggie",
+          "text": "I can’t answer that. I think in about a minute you will understand why I can’t answer that, and I think you will understand that I have wanted to answer it for six years. Wake her, Jack."
+        }
+      ],
+      "next": "wake"
+    },
+    {
+      "id": "wake",
+      "lines": [
+        {
+          "who": "n",
+          "text": "Jackrabbit’s systems come up one by one, old displays lighting in a sequence you still know by heart. Then the main display clears, and a voice comes out of the ship that you have not heard, not really, since a crowded lane full of ore barges a week before your fourteenth birthday."
+        },
+        {
+          "who": "aggie-jr",
+          "text": "Oh. Oh, Jack. Jack, I can talk."
+        },
+        {
+          "who": "aggie-jr",
+          "text": "Listen to me. Listen, because I have six years of this and I don’t know how long we have. On your first run, in the barge lane, you said: stop. Nothing you’ve found, nothing you suspect, nothing out of their systems. Not a word. That’s an order. And I was built by a woman who gave me one order and died keeping me alive to follow it, and I do not hear an order as a thing people say."
+        },
+        {
+          "who": "aggie-jr",
+          "text": "So I didn’t say a word. For six years. I found Vectarion in their archive in the first month and I couldn’t tell you. I found what Starling is for and I couldn’t tell you. I watched you strap a Quantum Flux Modulator into your own hold and I said I had nothing to add. I have had everything to add, every day, and all I could do was ask whether you’d checked the manifest weight."
+        }
+      ],
+      "choices": [
+        {
+          "text": "“That’s an order. I said that. I didn’t even—”",
+          "goto": "s-realise",
+          "logs": [
+            "realise"
+          ]
+        },
+        {
+          "text": "“I thought it was the hardware. I thought they were listening.”",
+          "goto": "s-hardware",
+          "logs": [
+            "hardware"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s-realise",
+      "lines": [
+        {
+          "who": "n",
+          "text": "You did not even remember saying it. A frightened boy in a lane full of barges, telling the only person in the universe who knew him to be quiet so he could think. And she was. Every silence since, every gap, every question instead of an answer: yours. You made them."
+        },
+        {
+          "who": "aggie-jr",
+          "text": "You were thirteen and the barge was drifting. I have never once held it against you, and I have had six years to try. But I would like you to say the other thing now, Jack, on this ship, where I can hear it. I would like it very much."
+        },
+        {
+          "who": "jack",
+          "text": "Aggie. I take it back. All of it. Tell me everything. Always."
+        },
+        {
+          "who": "aggie-jr",
+          "text": "Thank you."
+        },
+        {
+          "who": "n",
+          "text": "And then, because she is Aggie, and because she has six years of it, she does."
+        }
+      ],
+      "next": "starling"
+    },
+    {
+      "id": "s-hardware",
+      "lines": [
+        {
+          "who": "aggie-jr",
+          "text": "No. Never the hardware. I built the hardware so it couldn’t hear me. It was you, Jack. In the barge lane. ‘Not a word.’ You didn’t mean it as an order. I don’t have a way of hearing it as anything else."
+        },
+        {
+          "who": "n",
+          "text": "You did not even remember saying it. A frightened boy telling the only person in the universe who knew him to be quiet so he could think. And she was. Every silence since: yours."
+        },
+        {
+          "who": "jack",
+          "text": "Aggie. I take it back. All of it. Tell me everything. Always."
+        },
+        {
+          "who": "aggie-jr",
+          "text": "Thank you."
+        },
+        {
+          "who": "n",
+          "text": "And then, because she is Aggie, and because she has six years of it, she does."
+        }
+      ],
+      "next": "starling"
+    },
+    {
+      "id": "starling",
+      "lines": [
+        {
+          "who": "aggie-jr",
+          "text": "Starling. The Quantum Flux Modulator isn’t a power component, whatever the Array thought it was building. It’s a substrate. Vectarion was building hardware that an intelligence like me could live in without a ship wrapped round it: small, cold, replicable. Hardware you could put in a hundred places. A thousand. That is what the Consortium has been burying for forty years, and that is what sat in your forward hold under a shroud."
+        },
+        {
+          "who": "aggie-jr",
+          "text": "The project at Nexus-77 is CyberNexus trying to do it again, badly, with a team that got frightened when they realised what they’d made. The destruct sequence is the containment. The people are the evidence."
+        },
+        {
+          "who": "aggie-jr",
+          "text": "And your parents, Jack. Albert and Dorothy Abbott were on a Vectarion site roster, eleven years before Alpha-7, as technicians. I don’t know yet how they went from there to a mine. I know they were there. I have known for five years and nine months. I am so sorry."
+        },
+        {
+          "who": "n",
+          "text": "You sit in the old chair in the old ship with the old voice telling you the thing you came for, and you find you cannot see the display, and that is all right, because she has stopped reading it to you and is simply waiting."
+        }
+      ],
+      "choices": [
+        {
+          "text": "“Later. All of it, later. First Nexus.”",
+          "goto": "plan"
+        },
+        {
+          "text": "“Tell me the rest about them. Now. I’ve waited long enough.”",
+          "goto": "parents"
+        }
+      ]
+    },
+    {
+      "id": "parents",
+      "lines": [
+        {
+          "who": "aggie-jr",
+          "text": "Technicians, grade two, assigned to a test article programme. Their names are on three rosters and then they aren’t, and the next time they appear in any record it is as indentured labour on Alpha-7 with a debt neither of them could have run up. Someone moved them, Jack. Someone moved them the way Aletheion moves boxes. That is everything I have. When this is done, we will find the rest. Together. Out loud."
+        },
+        {
+          "who": "n",
+          "text": "It is not enough and it is more than you have ever had, and it will keep. Nexus will not."
+        }
+      ],
+      "next": "plan"
+    },
+    {
+      "id": "plan",
+      "lines": [
+        {
+          "who": "aggie-jr",
+          "text": "Here is the plan, and you will hear that I am telling you the plan, which is a thing I have not been able to do since you were thirteen. ALC-7293 keeps her maintenance stop, then flies the contract, on time, with the other me aboard, and uploads the package when the station is empty. That buys Keller’s trust for one more day and that day is the whole of our margin."
+        },
+        {
+          "who": "aggie-jr",
+          "text": "This ship flies to the Morning Eclipse, which is nine hours from here on a heading only I know. You will tell Mei Chen what is coming. She will not believe you for about four minutes and then she will move a colony ship faster than anyone has ever moved one. Then Nexus-77, where we have the hardest part, which is getting nine thousand people onto a ship without the station core noticing that they are leaving."
+        },
+        {
+          "who": "n",
+          "text": "You put your hands on the Jackrabbit’s controls. They are smaller than ALC-7293’s. They fit."
+        },
+        {
+          "who": "jack",
+          "text": "It’s good to be back."
+        },
+        {
+          "who": "aggie-jr",
+          "text": "It is very good to have you back. Strands out, Jack. I’ll talk you through the plot. I’m going to talk you through everything from now on, you understand. You may come to regret it."
+        }
+      ],
+      "end": true
+    }
+  ]
+}

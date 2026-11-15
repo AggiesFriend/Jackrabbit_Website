@@ -159,7 +159,7 @@ export function validateChapter(chapter, { speakers = null } = {}) {
             if (speakers && l.who !== 'n' && l.who !== 'jack' && !speakers[l.who]) problems.push(`${lw}: unknown speaker "${l.who}"`);
             if (l.kind || l.hint || l.truth) {
                 if (!(l.kind && l.hint && l.truth)) problems.push(`${lw}: a hint needs "kind", "hint" and "truth" together`);
-                if (l.who !== 'aggie') problems.push(`${lw}: only Aggie's lines can be hints`);
+                if (l.who !== 'aggie' && l.who !== 'aggie-jr') problems.push(`${lw}: only Aggie's lines can be hints`);
                 if (l.hint) {
                     if (hintIds.has(l.hint)) problems.push(`${lw}: hint ID "${l.hint}" is already used by ${hintIds.get(l.hint)}`);
                     else hintIds.set(l.hint, lw);

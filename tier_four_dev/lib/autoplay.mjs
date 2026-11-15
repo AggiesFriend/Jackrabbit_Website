@@ -34,6 +34,12 @@ const visible = (page, selector) => page.locator(selector).isVisible();
 // One step of play. Returns what it did: 'accept', 'plot', 'line', 'choice',
 // 'proceed', 'closed', 'end', or 'stuck'.
 export async function step(page, tap, { pick = () => 0, onClosed = 'continue' } = {}) {
+    // A confirmation left open by the previous step is answered first.
+    const pendingOk = page.locator('#confirm[open] #confirm-ok');
+    if (await pendingOk.isVisible().catch(() => false)) {
+        await tap(pendingOk);
+        return 'confirm';
+    }
     if (await visible(page, '#screen-end')) return 'end';
     if (await visible(page, '#screen-closed')) {
         if (onClosed === 'stop') return 'closed';
@@ -71,8 +77,9 @@ export async function step(page, tap, { pick = () => 0, onClosed = 'continue' } 
         const i = n === 1 ? 0 : Math.min(n - 1, Math.floor(pick(n) * n));
         const label = await choices.nth(i).innerText();
         await tap(choices.nth(i));
-        // A choice may ask for confirmation.
+        // A choice may ask for confirmation; the dialog opens a moment later.
         const ok = page.locator('#confirm[open] #confirm-ok');
+        await ok.waitFor({ timeout: 400 }).catch(() => {});
         if (await ok.isVisible().catch(() => false)) await tap(ok);
         return n === 1 ? 'proceed' : `choice:${label}`;
     }

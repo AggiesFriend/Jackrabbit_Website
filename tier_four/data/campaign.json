@@ -7,7 +7,21 @@
     "t1-first-run",
     "t1-quiet-run",
     "t1-cold-chain",
-    "t1-frank"
+    "t1-frank",
+    "t2-nexus-dinner",
+    "t2-personal-effects",
+    "t2-relay-down",
+    "t2-amanda",
+    "t2-promotion",
+    "t3-inner-circle",
+    "t3-archive",
+    "t3-keller",
+    "t3-escort",
+    "t3-retirement",
+    "t3-tier-four",
+    "t4-assignment",
+    "t4-two-of-her",
+    "t4-morning-eclipse"
   ],
   "reviews": {
     "any": "review-compliance"

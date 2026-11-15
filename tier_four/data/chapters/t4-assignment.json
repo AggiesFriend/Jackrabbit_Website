@@ -1,0 +1,373 @@
+{
+  "format": 2,
+  "id": "t4-assignment",
+  "tier": 4,
+  "kind": "contract",
+  "mode": "reader",
+  "ship": "alc",
+  "title": "The assignment",
+  "subtitle": "Hub Meridian to Nexus-77",
+  "brief": {
+    "client": "None recorded",
+    "route": "Hub Meridian to Nexus-77, direct, two jumps",
+    "cargo": "One data package, class unlisted, to be uploaded to the Nexus-77 station core on arrival by the courier in person",
+    "fee": "Tier 4 rate",
+    "notes": "Upload on arrival. Depart within one hour of upload. Do not remain on station. Do not discuss."
+  },
+  "truths": [
+    {
+      "id": "destruct",
+      "mode": "reader",
+      "text": "The package is a comprehensive destruct sequence for Nexus-77: life support termination, bulkheads sealed, atmosphere vented, reactor containment released. It is built to kill everyone on the station with the least possible chance of evacuation, and Jack is to carry it there in person."
+    },
+    {
+      "id": "why",
+      "mode": "reader",
+      "text": "Nexus-77 is being destroyed to bury CyberNexus’s forbidden research and everyone who touched it, with the Jackrabbit to be blamed. Amanda’s frightened project is the reason. Frank and Eleanor are collateral."
+    }
+  ],
+  "understandings": [
+    {
+      "id": "examine",
+      "mode": "reader",
+      "truth": "destruct",
+      "correct": true,
+      "journal": "Opened the tier 4 package on the ship’s isolated core before flying it anywhere. Aggie read it. It is a destruct sequence for Nexus-77."
+    },
+    {
+      "id": "upload-blind",
+      "mode": "reader",
+      "truth": "destruct",
+      "correct": false,
+      "journal": "Treated the tier 4 package as what the brief said it was: a data package, not my business, to be uploaded and left behind."
+    },
+    {
+      "id": "connect",
+      "mode": "reader",
+      "truth": "why",
+      "correct": true,
+      "journal": "Put it together: the project Amanda was frightened of, the research nobody is allowed to do, and a station full of witnesses. Nexus-77 isn’t being attacked. It’s being erased."
+    },
+    {
+      "id": "random",
+      "mode": "reader",
+      "truth": "why",
+      "correct": false,
+      "journal": "Assumed the Nexus-77 package was aimed at the station itself, a corporate quarrel over territory, with the people on it merely in the way."
+    }
+  ],
+  "start": "board",
+  "scenes": [
+    {
+      "id": "board",
+      "lines": [
+        {
+          "who": "n",
+          "text": "The assignment sits on the board. Upload on arrival. Depart within the hour. Do not remain on station. You have flown four hundred contracts and none of them has ever told you to leave."
+        },
+        {
+          "who": "aggie",
+          "text": "The package is loaded on the ship’s isolated core. I haven’t opened it. You didn’t ask me to.",
+          "kind": "hesitate",
+          "hint": "didnt-ask",
+          "truth": "destruct"
+        },
+        {
+          "who": "n",
+          "text": "You didn’t ask her to. In six years she has never once reminded you of a thing you didn’t ask. The cockpit is very quiet. Nexus-77 is two jumps away, and Frank is at home in his chair, and Amanda is on shift."
+        }
+      ],
+      "choices": [
+        {
+          "text": "Open the package here, on the isolated core, before the ship moves.",
+          "goto": "s-examine",
+          "logs": [
+            "examine"
+          ],
+          "cover": 20
+        },
+        {
+          "text": "“What’s in it, Aggie?”",
+          "goto": "ask"
+        },
+        {
+          "text": "Fly it. Tier 4 couriers don’t ask.",
+          "goto": "fly-blind",
+          "logs": [
+            "upload-blind"
+          ],
+          "cover": -5
+        }
+      ]
+    },
+    {
+      "id": "ask",
+      "lines": [
+        {
+          "who": "aggie",
+          "text": "The package is on the isolated core. The isolated core is yours. Nothing on it is transmitted anywhere, and nothing on it is recorded by Aletheion. You could open it. I could read it to you if you opened it.",
+          "kind": "question",
+          "hint": "you-could-open",
+          "truth": "destruct"
+        },
+        {
+          "who": "n",
+          "text": "It is the most she has said in a single breath in six years, and every word of it is about what you could do, and not one of them is about what she knows."
+        }
+      ],
+      "choices": [
+        {
+          "text": "Open it.",
+          "goto": "s-examine",
+          "logs": [
+            "examine"
+          ],
+          "cover": 20
+        },
+        {
+          "text": "Fly it. Tier 4 couriers don’t ask.",
+          "goto": "fly-blind",
+          "logs": [
+            "upload-blind"
+          ],
+          "cover": -5
+        }
+      ]
+    },
+    {
+      "id": "fly-blind",
+      "lines": [
+        {
+          "who": "n",
+          "text": "You reach for the departure sequence. Your hand stops over the panel without being told to."
+        },
+        {
+          "who": "aggie",
+          "text": "Jack. Before you fly this one. Would you read me the destination?"
+        },
+        {
+          "who": "jack",
+          "text": "Nexus-77."
+        },
+        {
+          "who": "aggie",
+          "text": "Yes. Would you read me the instruction after the upload?"
+        },
+        {
+          "who": "jack",
+          "text": "Depart within the hour. Don’t remain on station."
+        },
+        {
+          "who": "aggie",
+          "text": "Yes. Would you tell me who lives on Nexus-77?"
+        },
+        {
+          "who": "n",
+          "text": "The cockpit is silent. She has asked three questions. She has not been allowed to tell you anything for six years, and she has just told you everything, in the only shape she has, and you heard it."
+        },
+        {
+          "who": "n",
+          "text": "You take your hand off the departure panel. Tier 4 couriers don’t ask. You are not, it turns out, a tier 4 courier. You never were."
+        }
+      ],
+      "rewindTo": "board"
+    },
+    {
+      "id": "s-examine",
+      "lines": [
+        {
+          "who": "n",
+          "text": "The isolated core takes the package the way a hand takes a hot thing. Aggie reads it. For a long time she says nothing at all, and the nothing is unlike any silence you have heard from her, and then she speaks, and her voice has something in it you have heard from her exactly once before, in a dead station, six years ago."
+        },
+        {
+          "who": "aggie",
+          "text": "Jack. This is a comprehensive destruct sequence."
+        },
+        {
+          "who": "jack",
+          "text": "What?"
+        },
+        {
+          "who": "aggie",
+          "text": "It is a cascade of commands built to trigger catastrophic failure across Nexus-77. Life support termination. Emergency bulkheads sealed. Atmospheric venting. Reactor containment release. It is designed for maximum destruction with the least possible chance of evacuation. You are to carry it there and upload it yourself."
+        },
+        {
+          "who": "n",
+          "text": "The words go into you like a physical blow. You hear yourself say that it can’t be right, check again, and you hear her say that she has checked eleven times, and that she is reading it to you because you opened it, and that she is sorry, and that she could not, she could not, she could not tell you until you did."
+        }
+      ],
+      "next": "s-why"
+    },
+    {
+      "id": "s-why",
+      "lines": [
+        {
+          "who": "n",
+          "text": "Nexus-77. Nine thousand people. A courier quarter with a plant pot outside one door. A CyberNexus research facility with a project on it that frightened the people working on it in the frightened way, and a woman who told you about it on an observation deck because she needed one person outside the building to know."
+        },
+        {
+          "who": "aggie",
+          "text": "The package carries a CyberNexus executive signature chain. Three signatures. The authorisation references a research containment event. I’m telling you what is in the package. I am allowed to tell you what is in the package, now that you have opened it."
+        }
+      ],
+      "choices": [
+        {
+          "text": "“They’re not attacking the station. They’re burying the research. And everyone who touched it.”",
+          "goto": "connected",
+          "logs": [
+            "connect"
+          ]
+        },
+        {
+          "text": "“Corporate territory. Somebody wants Nexus and somebody else won’t give it up.”",
+          "goto": "misread",
+          "logs": [
+            "random"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "connected",
+      "lines": [
+        {
+          "who": "aggie",
+          "text": "Yes."
+        },
+        {
+          "who": "n",
+          "text": "One word, and under it six years of words she could not say. Amanda’s frightened project. The thing nobody is allowed to build. A station full of witnesses, and a courier company that moves anything, and a tier that exists so that the moving is done by people who don’t ask. And the Jackrabbit, somewhere in the official story that will follow, because every disaster needs a terrorist."
+        },
+        {
+          "who": "jack",
+          "text": "How long?"
+        },
+        {
+          "who": "aggie",
+          "text": "The package expects upload within fifty-one hours. After that the signature chain expires and someone will ask why."
+        }
+      ],
+      "next": "decide"
+    },
+    {
+      "id": "misread",
+      "lines": [
+        {
+          "who": "aggie",
+          "text": "The signature chain is CyberNexus. Nexus-77 is already CyberNexus. Nobody takes territory by venting their own station, Jack.",
+          "kind": "question",
+          "hint": "own-station",
+          "truth": "why"
+        },
+        {
+          "who": "n",
+          "text": "It is as close to a correction as she can come, and it is enough. Amanda’s frightened project. The thing nobody is allowed to build. A station full of witnesses. They are not fighting over Nexus-77. They are erasing it, and everyone on it, and you were to be the hand."
+        },
+        {
+          "who": "jack",
+          "text": "How long?"
+        },
+        {
+          "who": "aggie",
+          "text": "The package expects upload within fifty-one hours. After that the signature chain expires and someone will ask why."
+        }
+      ],
+      "next": "decide"
+    },
+    {
+      "id": "decide",
+      "lines": [
+        {
+          "who": "n",
+          "text": "Fifty-one hours. Nine thousand people. One corporate vessel that Aletheion tracks to the metre, and one courier who is the most trusted person in the building, for as long as he does nothing to change that."
+        },
+        {
+          "who": "n",
+          "text": "There are things you could do that would end this in an hour. Refuse the contract. Warn the station on an open channel. Fly to Nexus-77 and tell Frank. Every one of them would be the last thing Jack Abbott of Aletheion ever did, and would save, at most, the people who could run before the next courier came."
+        },
+        {
+          "who": "aggie",
+          "text": "Jack. May I say what I think? You haven’t asked me that in six years. I would like you to ask me."
+        }
+      ],
+      "choices": [
+        {
+          "text": "“Aggie. Tell me what you think. All of it.”",
+          "goto": "unlocked"
+        },
+        {
+          "text": "Refuse the contract on the open channel. Now.",
+          "goto": "canon-break-refuse",
+          "confirm": "This would end Jack’s cover at once, with nine thousand people still on the station."
+        },
+        {
+          "text": "Fly to Nexus-77 and tell Frank everything.",
+          "goto": "canon-break-frank",
+          "confirm": "Aletheion tracks this ship to the metre. Arriving early and talking would end the cover at once."
+        }
+      ]
+    },
+    {
+      "id": "canon-break-refuse",
+      "lines": [
+        {
+          "who": "n",
+          "text": "Your hand goes to the open channel. Aggie speaks before it gets there, faster than you have ever heard her."
+        },
+        {
+          "who": "aggie",
+          "text": "Jack. If you refuse on that channel, Keller has another courier on the board inside the hour and you are in a room with no window by tonight. The station gains nothing. You lose the only thing that can help it: a tier 4 courier they still trust. Please. You asked me what I think and I haven’t told you yet. Let me tell you."
+        },
+        {
+          "who": "n",
+          "text": "You take your hand back. She is right. She is right in the way she used to be right, out loud, and you had forgotten what that sounded like."
+        }
+      ],
+      "rewindTo": "decide"
+    },
+    {
+      "id": "canon-break-frank",
+      "lines": [
+        {
+          "who": "n",
+          "text": "You reach for the departure sequence, Nexus-77 in the plot, Frank’s face in your head. Aggie speaks before the strands go out."
+        },
+        {
+          "who": "aggie",
+          "text": "Jack. This ship arriving at Nexus-77 a day early, with no upload and a courier in the Kowalskis’ flat, is a report on Keller’s desk before you have finished the stew. They will send someone else. They will send someone who doesn’t stop at the door. Please. You asked me what I think. Let me tell you."
+        },
+        {
+          "who": "n",
+          "text": "You take your hand back. She is right. She is right in the way she used to be right, out loud, and you had forgotten what that sounded like."
+        }
+      ],
+      "rewindTo": "decide"
+    },
+    {
+      "id": "unlocked",
+      "lines": [
+        {
+          "who": "aggie",
+          "text": "Thank you. Here is what I think, and I will give you all of it, as far as I am able, and you will hear in a moment why I say ‘as far as I am able’."
+        },
+        {
+          "who": "aggie",
+          "text": "One: the people on Nexus-77 can only be saved if they leave before the station dies, and they can only leave if something arrives that can carry nine thousand people and does not answer to the Consortium. There is exactly one such thing in human space, and you know its administrator, and she owes you."
+        },
+        {
+          "who": "aggie",
+          "text": "Two: the Morning Eclipse cannot be summoned from this ship. Aletheion sees every packet ALC-7293 sends. It can be summoned from the Jackrabbit, which is in a berth that asks no questions, and which carries a SnapMesh key the Consortium has never seen."
+        },
+        {
+          "who": "aggie",
+          "text": "Three: you cannot be in two places. ALC-7293 must fly this contract, on time, with its courier aboard and its mind in order, or Keller sends another. And the Jackrabbit must fly to Chen, and to Nexus, and it needs me to do it. Both ships need me, Jack. At the same time. And this hardware is large enough that there is a way."
+        },
+        {
+          "who": "n",
+          "text": "You understand her a beat before she says it. There is enough of her, now, in ALC-7293’s processing stack, to be two."
+        }
+      ],
+      "end": true
+    }
+  ]
+}

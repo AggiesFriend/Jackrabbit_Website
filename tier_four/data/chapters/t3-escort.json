@@ -1,0 +1,269 @@
+{
+  "format": 2,
+  "id": "t3-escort",
+  "tier": 3,
+  "kind": "contract",
+  "mode": "both",
+  "ship": "alc",
+  "title": "Under escort",
+  "subtitle": "Callisto to Thule node, three jumps, escorted",
+  "brief": {
+    "client": "Executive office (code K-7)",
+    "route": "Callisto to the Secure Consortium Backbone node at Thule, three jumps, with a two-ship NovaFoundry escort",
+    "cargo": "Level III sovereign key material, one tamper-evident module, never transmitted electronically",
+    "fee": "Executive rate",
+    "notes": "The escort lead has authority over the route. Follow the escort’s jump timings exactly. No deviation of any kind."
+  },
+  "truths": [
+    {
+      "id": "watching-you",
+      "mode": "both",
+      "text": "The escort isn’t guarding the key module. Root key material moves under escort as a matter of course, but this escort’s instruments are pointed at ALC-7293, not outward. Keller is watching how Jack flies when he is watched: the last test before tier 4."
+    }
+  ],
+  "understandings": [
+    {
+      "id": "fly-clean",
+      "mode": "both",
+      "truth": "watching-you",
+      "correct": true,
+      "journal": "Flew the Thule escort as an exhibition: every timing exact, every anchor clean, nothing said on any channel that wasn’t a timing. If they were grading me, I gave them nothing to grade down."
+    },
+    {
+      "id": "test-escort",
+      "mode": "both",
+      "truth": "watching-you",
+      "correct": false,
+      "journal": "Took a slightly early anchor at the second jump to see whether the escort guarded the cargo or followed me. They followed me. Dispatch logged the deviation."
+    },
+    {
+      "id": "cargo-threat",
+      "mode": "both",
+      "truth": "watching-you",
+      "correct": false,
+      "journal": "Treated the Thule run as a genuine threat to the cargo: queried the escort’s sensor posture and asked for a wider formation."
+    }
+  ],
+  "start": "load",
+  "scenes": [
+    {
+      "id": "load",
+      "lines": [
+        {
+          "who": "n",
+          "text": "The module is the size of a book and comes aboard in a case that two NovaFoundry security officers carry between them, as if it weighed what it means. Consortium root key material. Installed at manufacture, never transmitted, delivered by courier under escort. You have read the encyclopaedia entry. Now you are in it."
+        },
+        {
+          "who": "n",
+          "text": "The escort is two NovaFoundry corvettes, blunt and grey, holding station either side of the berth. The escort lead’s voice comes over the channel with no greeting."
+        },
+        {
+          "who": "escort",
+          "text": "ALC-7293, you will jump on my mark and only on my mark. Hold station to our timing, not yours. Any deviation is a mission abort. Acknowledge."
+        },
+        {
+          "who": "jack",
+          "text": "Acknowledged."
+        },
+        {
+          "who": "aggie",
+          "text": "Acknowledged. Holding to the escort’s timing. Their timing is very good. Their sensor sweep is also very good. It’s sweeping us.",
+          "kind": "over-comply",
+          "hint": "sweeping-us",
+          "truth": "watching-you"
+        },
+        {
+          "who": "n",
+          "text": "Sweeping us. Not the lane, not the approaches. A guard looks outward. These two are looking in."
+        }
+      ],
+      "choices": [
+        {
+          "text": "“Then we give them something worth looking at. Perfect flying.”",
+          "goto": "jump-one-clean",
+          "set": [
+            "exhibition"
+          ]
+        },
+        {
+          "text": "Query the escort’s sensor posture. Ask for a wider formation.",
+          "goto": "query",
+          "logs": [
+            "cargo-threat"
+          ],
+          "cover": 7
+        },
+        {
+          "text": "Say nothing. Fly to their mark and see what they do.",
+          "goto": "jump-one"
+        }
+      ]
+    },
+    {
+      "id": "query",
+      "lines": [
+        {
+          "who": "escort",
+          "text": "Formation is as briefed, courier. Our posture is our business. Hold station for my mark."
+        },
+        {
+          "who": "aggie",
+          "text": "Holding.",
+          "kind": "hesitate",
+          "hint": "holding",
+          "truth": "watching-you"
+        }
+      ],
+      "next": "jump-one"
+    },
+    {
+      "id": "jump-one-clean",
+      "jump": {
+        "name": "Thule corridor, first leg",
+        "difficulty": 4
+      },
+      "lines": [
+        {
+          "who": "n",
+          "text": "You hold station to their mark so exactly that the escort lead’s next transmission has a half-second pause in it before the word ‘good’. The first anchor is clean. The corvettes come out of SnapSpace either side of you, closer than before."
+        },
+        {
+          "who": "aggie",
+          "text": "Their sweep hasn’t moved off us since Callisto. They haven’t looked at the lane once.",
+          "kind": "question",
+          "hint": "havent-looked",
+          "truth": "watching-you"
+        }
+      ],
+      "next": "jump-two"
+    },
+    {
+      "id": "jump-one",
+      "jump": {
+        "name": "Thule corridor, first leg",
+        "difficulty": 4
+      },
+      "lines": [
+        {
+          "who": "n",
+          "text": "The first jump goes to their mark. The corvettes come out of SnapSpace either side of you, closer than before, and their sensor sweep comes with them, still pointed at your hull."
+        },
+        {
+          "who": "aggie",
+          "text": "Did you notice they haven’t looked at the lane? Not once since Callisto.",
+          "kind": "question",
+          "hint": "havent-looked-2",
+          "truth": "watching-you"
+        }
+      ],
+      "next": "jump-two"
+    },
+    {
+      "id": "jump-two",
+      "lines": [
+        {
+          "who": "n",
+          "text": "The second leg. The escort lead calls the hold. You have perhaps forty seconds of station-keeping before his mark, and the question of what this escort is for has been sitting in the cockpit with you for an hour."
+        }
+      ],
+      "choices": [
+        {
+          "text": "Fly to the mark. Exactly. Every time.",
+          "goto": "jump-two-clean",
+          "logs": [
+            "fly-clean"
+          ],
+          "cover": -5
+        },
+        {
+          "text": "Take the anchor two seconds early, and watch what the escort does.",
+          "goto": "jump-two-early",
+          "logs": [
+            "test-escort"
+          ],
+          "cover": 14
+        }
+      ]
+    },
+    {
+      "id": "jump-two-clean",
+      "jump": {
+        "name": "Thule corridor, second leg",
+        "difficulty": 4
+      },
+      "lines": [
+        {
+          "who": "n",
+          "text": "To the mark. Exactly. The anchor is clean, the station-keeping is clean, the channel is clean: timings acknowledged and nothing else. If someone is grading you, you decide, they will have to invent something to grade down."
+        },
+        {
+          "who": "escort",
+          "text": "Good. Final leg. Hold for my mark."
+        },
+        {
+          "who": "aggie",
+          "text": "That was the best station-keeping I have ever seen from anyone. I’d like you to know I noticed, since I can’t say who else did.",
+          "kind": "hesitate",
+          "hint": "who-else",
+          "truth": "watching-you"
+        }
+      ],
+      "next": "thule"
+    },
+    {
+      "id": "jump-two-early",
+      "jump": {
+        "name": "Thule corridor, second leg",
+        "difficulty": 4
+      },
+      "lines": [
+        {
+          "who": "n",
+          "text": "Two seconds early. A nothing, in a lane this empty. You come out at the anchor alone, and for four full seconds the corridor is yours, and then both corvettes arrive on top of you with their sweep already locked, and neither of them so much as glances at the key module’s side of the ship."
+        },
+        {
+          "who": "escort",
+          "text": "ALC-7293, you jumped ahead of my mark. That is a deviation. It is logged. Do it again and the mission aborts and you fly home alone, and I would not recommend flying home alone."
+        },
+        {
+          "who": "aggie",
+          "text": "Logged. Holding for the final mark.",
+          "kind": "over-comply",
+          "hint": "logged-holding",
+          "truth": "watching-you"
+        }
+      ],
+      "next": "thule"
+    },
+    {
+      "id": "thule",
+      "jump": {
+        "name": "Thule node approach",
+        "difficulty": 4
+      },
+      "lines": [
+        {
+          "who": "n",
+          "text": "The Thule node is a black sphere with no lights, air-gapped from everything, the Secure Consortium Backbone made solid. The handover takes nine minutes and involves four people who never give their names. The module leaves your ship between two of them and the case goes with it."
+        },
+        {
+          "who": "escort",
+          "text": "ALC-7293, escort complete. Return to Callisto at your own timing."
+        },
+        {
+          "who": "n",
+          "text": "At your own timing. The corvettes peel away, and for the first time in three jumps their sweep goes outward, where a guard’s sweep belongs. They were never guarding the box. You knew that at Callisto. You know now what they were doing instead, and whose office the report is going to."
+        },
+        {
+          "who": "aggie",
+          "text": "Callisto in three jumps. Jack. Whatever that was, it’s over."
+        },
+        {
+          "who": "n",
+          "text": "Whatever that was. She knows exactly what that was. So, you find, do you."
+        }
+      ],
+      "end": true
+    }
+  ]
+}

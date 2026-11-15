@@ -1,0 +1,84 @@
+{
+  "format": 2,
+  "id": "t3-keller",
+  "tier": 3,
+  "kind": "scene",
+  "mode": "both",
+  "ship": "alc",
+  "title": "Keller",
+  "subtitle": "Hub Meridian, executive floor",
+  "truths": [],
+  "understandings": [],
+  "start": "summons",
+  "scenes": [
+    {
+      "id": "summons",
+      "lines": [
+        { "who": "n", "text": "The summons comes from the executive floor, which has never summoned a courier in Halsey’s memory. Halsey tells you this on the private channel in a voice that is trying to be neutral and failing." },
+        { "who": "halsey", "text": "Katherine Keller wants to see you. Personally. I don’t know why. I’d like to tell you to be yourself, but I’ve met you, so: be whoever you were at the Meridian inspection. That person passed." },
+        { "who": "n", "text": "Keller’s office has no window. It does not need one; it has Keller. She is sixty, perhaps, and precise in the way a scalpel is precise, and she does not look up from her display for the first twelve seconds you are in the room, which you understand is the point." },
+        { "who": "keller", "text": "Abbott. Four years, tier 1 to tier 3, zero losses, a handful of deviations I find I don’t mind. You fly the kind of cargo that other people lose and you don’t lose it. Do you know why I asked for you?" }
+      ],
+      "choices": [
+        { "text": "“Because I don’t lose cargo, ma’am.”", "goto": "cargo", "cover": -3 },
+        { "text": "“I assume you’ll tell me.”", "goto": "tell-me", "cover": 3 },
+        { "text": "“Because of site 19.”", "goto": "site-19", "cover": 10, "requires": ["read:vectarion"] }
+      ]
+    },
+    {
+      "id": "cargo",
+      "lines": [
+        { "who": "keller", "text": "Partly. Lots of people don’t lose cargo. Fewer people don’t lose cargo and don’t ask what it is. You asked, early on. You’ve stopped. I find that more interesting than if you’d never asked at all." },
+        { "who": "n", "text": "She has read every line in your file and understood every one. You keep your face where it is." }
+      ],
+      "next": "offer"
+    },
+    {
+      "id": "tell-me",
+      "lines": [
+        { "who": "keller", "text": "I will. I asked for you because you have stopped asking questions, Abbott, and the file shows exactly when. People who learn are more use to me than people who never needed to." },
+        { "who": "n", "text": "She has read every line in your file and understood every one. You keep your face where it is." }
+      ],
+      "next": "offer"
+    },
+    {
+      "id": "site-19",
+      "lines": [
+        { "who": "n", "text": "The silence that follows is not long. It is simply total." },
+        { "who": "keller", "text": "Site 19 was a consolidation. You flew it well. If there was anything else about site 19 you wished to mention, courier, this would be the moment to decide not to." },
+        { "who": "n", "text": "You decide not to. You feel the decision go into your file like a stamp." }
+      ],
+      "next": "offer"
+    },
+    {
+      "id": "offer",
+      "lines": [
+        { "who": "keller", "text": "There is a tier above tier 3. It is not on any board. The couriers in it fly for me, on contracts that do not have clients in the usual sense, and they are paid in a way that makes the tier 3 rate look like a tip. I don’t offer it. I observe people until they are ready for it, and then I tell them. You’re not ready. You will be." },
+        { "who": "keller", "text": "In the meantime, you’ll fly an escort contract for me. Sovereign key material, Callisto to the Secure Backbone node at Thule. Consider it a conversation we’re having without either of us needing to speak. That will be all." },
+        { "who": "n", "text": "That is all. You are in the corridor before you have finished standing up. Halsey is waiting at the lift, and his face asks the question, and you shake your head: not here." }
+      ],
+      "next": "halsey-warns"
+    },
+    {
+      "id": "halsey-warns",
+      "lines": [
+        { "who": "halsey", "text": "Whatever she offered you, Abbott, it isn’t an offer. I’ve watched three couriers go up to that floor in nine years. Two of them fly for her now and I don’t know what they fly. The third one I don’t know anything about at all." },
+        { "who": "halsey", "text": "I can’t protect you from the executive floor. I want you to hear me say that, so you don’t ever think I’m trying." }
+      ],
+      "choices": [
+        { "text": "“You’ve protected me more than you know, Director.”", "goto": "close", "trust": { "halsey": 2 } },
+        { "text": "“I never thought you were.”", "goto": "close", "trust": { "halsey": 1 } }
+      ]
+    },
+    {
+      "id": "close",
+      "lines": [
+        { "who": "n", "text": "Aboard ALC-7293, the escort contract is already on your private board. No client. A code. A route to a Secure Consortium Backbone node you have never heard of." },
+        { "who": "jack", "text": "Aggie. Did you hear all that?" },
+        { "who": "aggie", "text": "I heard it." },
+        { "who": "n", "text": "That is the whole of her reply. Four years ago she would have had a page of it. You are beginning to understand that the page is still there. She is simply not allowed to turn it." }
+      ],
+      "end": true
+    }
+  ]
+}

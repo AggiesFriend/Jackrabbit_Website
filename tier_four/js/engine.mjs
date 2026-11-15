@@ -334,6 +334,16 @@ function closeChapter(play, view) {
     return next;
 }
 
+// Playtest mode: start a fresh run at the given main-sequence chapter.
+export function skipTo(view, chapterId) {
+    const index = view.chapters.findIndex(c => c.id === chapterId);
+    if (index < 0) throw new Error(`chapter "${chapterId}" is not in the main sequence`);
+    const play = newPlay(view);
+    play.position = index - 1;
+    play.queue = [];
+    return advance(play, view);
+}
+
 // From the closing card to whatever comes next.
 export function nextChapter(play, view) {
     if (play.phase !== 'closed') return play;

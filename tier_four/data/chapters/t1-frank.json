@@ -1,0 +1,92 @@
+{
+  "format": 2,
+  "id": "t1-frank",
+  "tier": 1,
+  "kind": "scene",
+  "mode": "both",
+  "ship": "alc",
+  "title": "The mentor’s offer",
+  "subtitle": "Callisto courier lounge",
+  "truths": [],
+  "understandings": [],
+  "start": "halsey",
+  "scenes": [
+    {
+      "id": "halsey",
+      "lines": [
+        { "who": "n", "text": "Eight months. Forty-one contracts, all closed, most of them on time. Halsey calls you in on a day when the window in his office shows nothing but the gas giant’s cloud tops, and he does not ask you to sit." },
+        { "who": "halsey", "text": "Tier 2, effective the first of next month. Fastest probation-to-tier-2 I’ve signed. Keller’s office has noticed, which is a sentence I’d normally say as a warning. Take it as one anyway." },
+        { "who": "halsey", "text": "Your file has one deviation on it. I’ve read it. I’m not going to ask.", "requires": ["saved-farrow"] },
+        { "who": "halsey", "text": "Your file is clean. Keep it that way. Clean files get left alone.", "unless": ["saved-farrow"] }
+      ],
+      "choices": [
+        { "text": "“Thank you, Director. I won’t let you down.”", "goto": "lounge", "trust": { "halsey": 1 } },
+        { "text": "“What does Keller’s office want with a tier 2 courier?”", "goto": "keller-q", "cover": 4 }
+      ]
+    },
+    {
+      "id": "keller-q",
+      "lines": [
+        { "who": "halsey", "text": "Tonnage, Abbott. Keller wants tonnage, delivered quickly, by people who don’t ask what’s in it. Be one of those people where she can see you. Be whatever you like where she can’t." },
+        { "who": "n", "text": "It is the closest thing to advice he has ever given you. You take it with you to the lounge." }
+      ],
+      "next": "lounge"
+    },
+    {
+      "id": "lounge",
+      "lines": [
+        { "who": "n", "text": "The courier lounge on Callisto is the only room on the station where people sit down without a reason. You are nursing a cup of something that calls itself coffee when a man of about sixty, broad, grey, with the walk of someone who has spent decades in and out of airlocks, pulls out the chair opposite without asking." },
+        { "who": "frank", "text": "Abbott. Frank Kowalski. Thirty-four years with this outfit, so you can skip the part where you wonder if I’m allowed to be here. I watched your Meridian approach on the lounge feed last week. Two seconds to hold station. Nobody does two seconds." },
+        { "who": "jack", "text": "The ship does most of it." },
+        { "who": "frank", "text": "And modest! Look, I didn’t come over here just to compliment your flying. I’ve got a proposition." }
+      ],
+      "next": "offer"
+    },
+    {
+      "id": "offer",
+      "lines": [
+        { "who": "frank", "text": "Tier 2 is a different game. The distances are longer, the politics are trickier, and the consequences of a mistake are a lot worse. Most new tier 2 pilots take months to find their feet, and plenty wash out. I’m offering to mentor you. Show you the ropes. Keep you away from the obvious holes." },
+        { "who": "n", "text": "He laughs easily, which almost nobody on Callisto does. It is a real laugh, out of a real chest, and it makes three people at the next table look round." }
+      ],
+      "choices": [
+        { "text": "“That’s generous. What’s in it for you?”", "goto": "angle", "trust": { "frank": 2 } },
+        { "text": "“Why me?”", "goto": "why-me", "trust": { "frank": 1 } },
+        { "text": "“I’ll think about it.”", "goto": "think", "trust": { "frank": 0 } }
+      ]
+    },
+    {
+      "id": "angle",
+      "lines": [
+        { "who": "frank", "text": "Good question. Always look for the angle, son, even when someone seems to be helping. Especially then." },
+        { "who": "frank", "text": "The honest answer is that I’m three years from retiring, I’ve got a granddaughter who thinks I’m a dinosaur and a wife who thinks I ought to have retired already, and I’d like to leave something in this place that isn’t tonnage. You’ll do. Also, selfishly, I’d like to see how you fly up close before I’m too old to learn from it." }
+      ],
+      "next": "accept"
+    },
+    {
+      "id": "why-me",
+      "lines": [
+        { "who": "frank", "text": "Because you fly like it matters and you look like it doesn’t, and in this outfit that’s the whole trick. And because I’ve got three years left and I’d like to leave something in this place that isn’t tonnage." }
+      ],
+      "next": "accept"
+    },
+    {
+      "id": "think",
+      "lines": [
+        { "who": "frank", "text": "Do. Think fast, though. Tier 2 starts on the first and the holes don’t wait." },
+        { "who": "n", "text": "He leaves his contact code on the table. You pick it up before the cup is cold. You do not, in fact, need to think about it; you only needed a moment to be someone who might." }
+      ],
+      "next": "accept"
+    },
+    {
+      "id": "accept",
+      "lines": [
+        { "who": "jack", "text": "All right. Yes. Thank you, Frank." },
+        { "who": "frank", "text": "Don’t thank me yet. First rule: when I’m home, you come to dinner. Eleanor will want to look at you, and Eleanor’s looking is a thing you survive. Nexus-77, courier quarter. I’m home the week after next." },
+        { "who": "n", "text": "That night, on the private channel, you tell Aggie about Frank. She listens all the way through." },
+        { "who": "aggie", "text": "Thirty-four years. He’ll know every hole there is. I think that’s good, Jack. I think you should go to dinner." },
+        { "who": "n", "text": "It is the nearest she has come to an opinion in months. You hold onto it." }
+      ],
+      "end": true
+    }
+  ]
+}

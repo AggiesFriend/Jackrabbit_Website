@@ -1,0 +1,109 @@
+{
+  "format": 2,
+  "id": "t1-quiet-run",
+  "tier": 1,
+  "kind": "contract",
+  "mode": "both",
+  "ship": "alc",
+  "title": "The quiet run",
+  "subtitle": "Callisto to Oberon Station",
+  "brief": {
+    "client": "QuantumGrid Energy, field instrumentation division",
+    "route": "Callisto to Oberon Station, one jump",
+    "cargo": "Calibration instrumentation, one crate, 212 kg declared",
+    "fee": "Standard tier 1 rate",
+    "notes": "Hand to the consignee’s agent on the berth. No inspection expected."
+  },
+  "truths": [
+    { "id": "undeclared", "mode": "both", "text": "The crate is thirty-five kilos heavier than declared, because it isn’t instrumentation. QuantumGrid is moving a sealed data module under a label nobody will question." },
+    { "id": "prefix", "mode": "reader", "text": "The module’s routing tag carries a Vectarion-era prefix. The Starling trail runs through Aletheion’s own cargo bays, and Aggie has just carried a piece of it." }
+  ],
+  "understandings": [
+    { "id": "open", "mode": "both", "truth": "undeclared", "correct": true, "journal": "Weighed the QuantumGrid crate, found it heavy, and looked inside: a sealed data module in a cradle, not instruments." },
+    { "id": "loader-fault", "mode": "both", "truth": "undeclared", "correct": false, "journal": "Logged a thirty-five kilo discrepancy on the QuantumGrid crate with dispatch as a loader calibration fault." },
+    { "id": "not-my-business", "mode": "both", "truth": "undeclared", "correct": false, "journal": "Flew the QuantumGrid crate as declared. What a client puts in a box is the client’s business." },
+    { "id": "note-prefix", "mode": "reader", "truth": "prefix", "correct": true, "journal": "Copied the routing prefix from the module’s tag. VR-, then a string. The same style as the tag at Prometheus." }
+  ],
+  "start": "load",
+  "scenes": [
+    {
+      "id": "load",
+      "lines": [
+        { "who": "n", "text": "Three weeks and nine contracts in, you know the Callisto loading bays better than you ever knew the tunnels of Alpha-7. The work is easy. The ship is easy. The thing that is not easy is the quiet." },
+        { "who": "n", "text": "Aggie still answers. She reads you the board, confirms your windows, talks you through control’s moods. She has simply stopped offering. There was a time she couldn’t find a shipping stub without telling you what it meant, and now a QuantumGrid crate comes aboard and she says nothing at all." },
+        { "who": "aggie", "text": "Crate’s aboard. Oberon window opens in eleven minutes." },
+        { "who": "jack", "text": "That’s it?" },
+        { "who": "aggie", "text": "Did you check the manifest weight against the loader’s reading?", "kind": "question", "hint": "weight", "truth": "undeclared" },
+        { "who": "n", "text": "It is a strange thing for her to ask. She has the loader’s reading. She has everything. You read the tag on the crate while you think about it: QuantumGrid, field instrumentation, and a routing string beginning VR- that looks like it was printed on an older machine than the rest." },
+        { "who": "aggie", "text": "The loader’s done. Eleven minutes, Jack. Ten, now.", "kind": "deflect", "hint": "vr-deflect", "truth": "prefix", "mode": "reader" }
+      ],
+      "choices": [
+        { "text": "Check the weight.", "goto": "weigh" },
+        { "text": "“What do you think is in it?”", "goto": "ask" },
+        { "text": "Leave it. Fly the window.", "goto": "transit", "logs": ["not-my-business"], "cover": -3 }
+      ]
+    },
+    {
+      "id": "ask",
+      "lines": [
+        { "who": "aggie", "text": "I think the window closes in ten minutes.", "kind": "hesitate", "hint": "think-window", "truth": "undeclared" },
+        { "who": "n", "text": "There was a gap before she said it. Not a long one. Long enough that you heard it." }
+      ],
+      "choices": [
+        { "text": "Check the weight.", "goto": "weigh" },
+        { "text": "Leave it. Fly the window.", "goto": "transit", "logs": ["not-my-business"], "cover": -3 }
+      ]
+    },
+    {
+      "id": "weigh",
+      "lines": [
+        { "who": "n", "text": "The manifest says 212 kilos. The loader’s last reading, still on the bay display, says 247. Thirty-five kilos of something that isn’t on the paperwork." },
+        { "who": "aggie", "text": "Nine minutes." }
+      ],
+      "choices": [
+        { "text": "Open the crate.", "goto": "s-open", "logs": ["open"], "cover": 8 },
+        { "text": "Log the discrepancy with dispatch as a loader fault.", "goto": "s-loader-fault", "logs": ["loader-fault"], "cover": 4 },
+        { "text": "Leave it closed. Fly the window.", "goto": "transit", "logs": ["not-my-business"], "cover": -3 }
+      ]
+    },
+    {
+      "id": "s-loader-fault",
+      "lines": [
+        { "who": "dispatch", "text": "Noted, courier. Loader nine will be recalibrated. Please proceed to your window." },
+        { "who": "n", "text": "Nobody recalibrates loader nine. You will notice that, three contracts from now, and wonder why you expected otherwise." }
+      ],
+      "next": "transit"
+    },
+    {
+      "id": "s-open",
+      "lines": [
+        { "who": "n", "text": "The seals are standard. The crate is not. Inside, where calibration instruments should sit in foam, there is a single sealed data module in a shock cradle, cold to the touch, its status light a steady amber. It has a tag of its own, older than the crate’s." },
+        { "who": "aggie", "text": "Close it, please. Seven minutes.", "kind": "hesitate", "hint": "close-it", "truth": "undeclared" },
+        { "who": "n", "text": "The tag reads VR- and a string of digits in a typeface you last saw hanging from a cradle in a dead station.", "mode": "reader" }
+      ],
+      "choices": [
+        { "text": "Copy the routing string before you close it.", "goto": "transit", "logs": ["note-prefix"], "mode": "reader", "cover": 2 },
+        { "text": "Close it and fly.", "goto": "transit" }
+      ]
+    },
+    {
+      "id": "transit",
+      "jump": { "name": "Oberon crossing", "difficulty": 1 },
+      "lines": [
+        { "who": "n", "text": "The jump is clean. Oberon Station is a grey box with a dock on it, the sort of place that exists because something had to be in between two other places." },
+        { "who": "aggie", "text": "Berth four. The consignee’s agent is already there." }
+      ],
+      "next": "arrive"
+    },
+    {
+      "id": "arrive",
+      "lines": [
+        { "who": "agent", "text": "Courier. That the QuantumGrid consignment? Good." },
+        { "who": "n", "text": "He signs for it without reading the manifest. He does not weigh it. He does not look at the tag. He looks at you, once, the way people here look at everything that is not a procedure, and then the crate is gone into the station and so is he." },
+        { "who": "aggie", "text": "Closed and on time. Callisto has a window in forty minutes." },
+        { "who": "n", "text": "You sit in the pilot’s chair for a while with the engine ticking. Three weeks ago she would have had an opinion about that man. You would have liked to hear it." }
+      ],
+      "end": true
+    }
+  ]
+}

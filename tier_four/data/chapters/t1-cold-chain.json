@@ -1,0 +1,116 @@
+{
+  "format": 2,
+  "id": "t1-cold-chain",
+  "tier": 1,
+  "kind": "contract",
+  "mode": "both",
+  "ship": "alc",
+  "title": "Cold chain",
+  "subtitle": "Callisto to Farrow’s Reach",
+  "brief": {
+    "client": "HeliosMed Biotech, regional supply",
+    "route": "Callisto to Farrow’s Reach, an independent settlement, two jumps",
+    "cargo": "Refrigerated pharmaceuticals, one cold case",
+    "fee": "Standard tier 1 rate, plus cold-chain supplement",
+    "notes": "Client requests STANDARD transit. Do not expedite. Deliver within the contracted window, not before."
+  },
+  "truths": [
+    { "id": "timed-late", "mode": "both", "text": "The ‘do not expedite’ instruction is the point of the contract. HeliosMed has timed the delivery to land after the Reach’s clinic runs dry, so the settlement will sign whatever supply terms HeliosMed offers next." }
+  ],
+  "understandings": [
+    { "id": "fly-fast", "mode": "both", "truth": "timed-late", "correct": true, "journal": "Flew the HeliosMed cold case to Farrow’s Reach as fast as the ship would go, inside the window but a day ahead of the client’s ‘standard’ schedule." },
+    { "id": "standard", "mode": "both", "truth": "timed-late", "correct": false, "journal": "Flew the HeliosMed cold case on the client’s schedule. A client’s timetable is a client’s business." },
+    { "id": "ask-dispatch", "mode": "both", "truth": "timed-late", "correct": false, "journal": "Asked dispatch why a medical shipment carried a do-not-expedite note, and was told to fly the contract as written." }
+  ],
+  "start": "load",
+  "scenes": [
+    {
+      "id": "load",
+      "lines": [
+        { "who": "n", "text": "A single cold case, humming to itself, strapped into a hold built for forty. The HeliosMed clerk who hands it over reads you the instruction twice, as if you might otherwise be tempted to rush." },
+        { "who": "clerk", "text": "Standard transit, courier. The client has been specific. Not before the window. Not before." },
+        { "who": "aggie", "text": "Standard transit. Yes. Not before the window. The client was very clear about standard transit, and I have the standard schedule loaded, and it is entirely standard.", "kind": "over-comply", "hint": "standard-standard", "truth": "timed-late" },
+        { "who": "n", "text": "She says ‘standard’ four times. Aggie, who once told you that repetition was how corporate systems hid things in plain sight. You look at the cold case. It is going to a clinic." }
+      ],
+      "choices": [
+        { "text": "“What’s at Farrow’s Reach?”", "goto": "reach" },
+        { "text": "Load the schedule and go.", "goto": "transit-standard", "logs": ["standard"], "cover": -3 }
+      ]
+    },
+    {
+      "id": "reach",
+      "lines": [
+        { "who": "aggie", "text": "An independent settlement. Eleven hundred people, agricultural, no corporate charter. One clinic. Would you like me to confirm the clinic’s stock position? It publishes a supply bulletin on the public plane. Anyone can read it.", "kind": "question", "hint": "stock-position", "truth": "timed-late" },
+        { "who": "n", "text": "Anyone can read it. She is telling you, very precisely, that she has not." }
+      ],
+      "choices": [
+        { "text": "“Read it to me.”", "goto": "bulletin" },
+        { "text": "“It’s HeliosMed’s schedule, not mine.”", "goto": "transit-standard", "logs": ["standard"], "cover": -3 }
+      ]
+    },
+    {
+      "id": "bulletin",
+      "lines": [
+        { "who": "n", "text": "The bulletin is three days old. The Reach’s clinic has two days of the relevant stock left, and a note, in the tone of someone trying not to sound frightened, that a HeliosMed resupply is ‘expected imminently’." },
+        { "who": "n", "text": "You lay the client’s standard schedule alongside it. The cold case lands at the Reach a day and a half after the clinic runs out. Not a week. Not an hour. A day and a half: long enough to hurt, short enough to look like bad luck." },
+        { "who": "aggie", "text": "Two jumps. The schedule has you dwelling at the midpoint for nineteen hours. The ship doesn’t need nineteen hours. The ship doesn’t need nineteen minutes.", "kind": "hesitate", "hint": "nineteen-hours", "truth": "timed-late" }
+      ],
+      "choices": [
+        { "text": "Fly it fast. Skip the dwell.", "goto": "transit-fast", "logs": ["fly-fast"], "cover": 12, "set": ["saved-farrow"] },
+        { "text": "Ask dispatch why a medical shipment has a do-not-expedite note.", "goto": "dispatch", "logs": ["ask-dispatch"], "cover": 7 },
+        { "text": "Fly the schedule as written.", "goto": "transit-standard", "logs": ["standard"], "cover": -3 }
+      ]
+    },
+    {
+      "id": "dispatch",
+      "lines": [
+        { "who": "dispatch", "text": "The contract terms are as written, courier. Client scheduling is not a courier matter. Please proceed." },
+        { "who": "aggie", "text": "Proceeding.", "kind": "hesitate", "hint": "proceeding", "truth": "timed-late" }
+      ],
+      "choices": [
+        { "text": "Fly it fast anyway.", "goto": "transit-fast", "logs": ["fly-fast"], "cover": 10, "set": ["saved-farrow"] },
+        { "text": "Fly the schedule as written.", "goto": "transit-standard", "logs": ["standard"], "cover": -3 }
+      ]
+    },
+    {
+      "id": "transit-fast",
+      "jump": { "name": "Midpoint, no dwell", "difficulty": 2 },
+      "lines": [
+        { "who": "n", "text": "You take the midpoint without stopping, strands out before the ship has finished arriving, and ALC-7293, which has never been asked to hurry, discovers that it can." },
+        { "who": "aggie", "text": "Farrow’s Reach in forty minutes. Dispatch will see the timestamps. I can’t change the timestamps.", "kind": "hesitate", "hint": "timestamps", "truth": "timed-late" },
+        { "who": "jack", "text": "I know." }
+      ],
+      "next": "arrive-fast"
+    },
+    {
+      "id": "arrive-fast",
+      "lines": [
+        { "who": "n", "text": "Farrow’s Reach is a ring of hydroponics domes around a dock too small for the ship. You put her down on the apron instead. The clinic’s medic meets you at the ramp with a hand truck and the face of someone who had stopped expecting anything." },
+        { "who": "medic", "text": "You’re early. The bulletin said, they said, we’d be a day and a half short. You’re early." },
+        { "who": "jack", "text": "Standard transit." },
+        { "who": "medic", "text": "Then God bless standard transit. Help me get this inside." },
+        { "who": "n", "text": "On the way home, dispatch logs an ‘unauthorised schedule deviation’ against your name. Nobody calls. Somewhere, the deviation sits in a file, waiting to be worth something to someone." },
+        { "who": "aggie", "text": "Callisto in two hours. Jack. That was well flown." }
+      ],
+      "end": true
+    },
+    {
+      "id": "transit-standard",
+      "jump": { "name": "Midpoint dwell", "difficulty": 1 },
+      "lines": [
+        { "who": "n", "text": "Nineteen hours at the midpoint, drifting at a beacon with nothing to do. You sleep. You read the contract three more times. The cold case hums." },
+        { "who": "aggie", "text": "Window opens in ten minutes." }
+      ],
+      "next": "arrive-standard"
+    },
+    {
+      "id": "arrive-standard",
+      "lines": [
+        { "who": "n", "text": "Farrow’s Reach is a ring of hydroponics domes around a dock too small for the ship. The clinic’s medic takes the cold case without a word. There is a HeliosMed representative on the apron who was not on any manifest, with a contract on a datapad, waiting for the medic to finish." },
+        { "who": "aggie", "text": "Closed, inside the window. Callisto in two hours." },
+        { "who": "n", "text": "She does not say it was well flown. You find you had been waiting for her to." }
+      ],
+      "end": true
+    }
+  ]
+}

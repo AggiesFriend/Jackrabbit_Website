@@ -1,0 +1,136 @@
+{
+  "format": 2,
+  "id": "t1-first-run",
+  "tier": 1,
+  "kind": "contract",
+  "mode": "both",
+  "ship": "alc",
+  "title": "First run",
+  "subtitle": "Callisto to Meridian Transfer",
+  "brief": {
+    "client": "NutriCorp Holdings",
+    "route": "Callisto courier ring to Meridian Transfer, one jump",
+    "cargo": "Catering consumables, four pallets, sealed",
+    "fee": "Standard tier 1 rate",
+    "notes": "Probationary contract. A VeriFact compliance inspection may be conducted at the destination."
+  },
+  "truths": [
+    { "id": "vetting", "mode": "both", "text": "The ‘VeriFact inspector’ at Meridian is Aletheion’s own vetting. He was never checking the cargo. He was checking the new courier." }
+  ],
+  "understandings": [
+    { "id": "calm", "mode": "both", "truth": "vetting", "correct": true, "journal": "Treated the Meridian inspection as a test of me, not the cargo: calm, by the book, nothing to hide." },
+    { "id": "query", "mode": "both", "truth": "vetting", "correct": false, "journal": "Queried the inspector’s authority with dispatch and insisted the NutriCorp seals be checked properly." },
+    { "id": "stall", "mode": "both", "truth": "vetting", "correct": false, "journal": "Kept the inspector waiting at the lock while I ‘found’ the paperwork, to see what he would do." }
+  ],
+  "start": "load",
+  "scenes": [
+    {
+      "id": "load",
+      "lines": [
+        { "who": "n", "text": "Four pallets of NutriCorp consumables slide into ALC-7293’s hold on a loader that needs no help from you. The bay is spotless. The manifest is three lines long. You have never in your life been trusted with anything this boring." },
+        { "who": "aggie", "text": "Dispatch has you tagged ‘probationary, observe’, which is normal. Every new courier gets it. The inspection note on the brief is normal too. VeriFact checks everything NutriCorp ships, because HealthDiv is corrupt and VeriFact likes to be seen not to be. Standard. You’ll be fine." },
+        { "who": "aggie", "text": "One thing that isn’t standard, and I’m only telling you because I said I’d tell you everything: the inspector’s credentials for Meridian were issued this morning. By Aletheion’s own personnel office. VeriFact doesn’t issue credentials through client companies. I don’t know what it means yet." }
+      ],
+      "choices": [
+        { "text": "“Work it out on the way. Let’s fly.”", "goto": "transit" },
+        { "text": "“Could it be a mistake? Paperwork?”", "goto": "paperwork" }
+      ]
+    },
+    {
+      "id": "paperwork",
+      "lines": [
+        { "who": "aggie", "text": "It could. Corporations make paperwork mistakes constantly, it’s most of what they do. But a company that was careful enough to wipe Prometheus the way they wiped it is not a company I’d assume is careless. Hold the thought. Fly the ship." }
+      ],
+      "next": "transit"
+    },
+    {
+      "id": "transit",
+      "jump": { "name": "Meridian transfer", "difficulty": 1 },
+      "lines": [
+        { "who": "n", "text": "The jump is a short one, and ALC-7293 takes it like a liner: barely a tremor. Meridian Transfer resolves ahead, a wheel of docking arms turning slowly against a brown gas giant." },
+        { "who": "aggie", "text": "Meridian control has us. Berth nine. And there he is, already on the berth: one man, VeriFact tabard, datapad, no scanning kit. An inspector who isn’t carrying anything to inspect with." },
+        { "who": "n", "text": "You bring the ship in. Your hands know what to do; the rest of you is thinking about a man with a datapad and nothing to measure." }
+      ],
+      "next": "inspection"
+    },
+    {
+      "id": "inspection",
+      "lines": [
+        { "who": "inspector", "text": "Courier Abbott. VeriFact compliance. I’ll need your manifest, your transit log and access to the hold. This won’t take long if you don’t make it take long." },
+        { "who": "n", "text": "He is standing in your lock before you have finished agreeing. He looks at the pallets for perhaps three seconds. He looks at you for considerably longer." },
+        { "who": "aggie", "text": "Did you notice he hasn’t opened the seals? He’s had the hold for a minute and he hasn’t touched the cargo.", "kind": "question", "hint": "no-seals", "truth": "vetting" },
+        { "who": "inspector", "text": "Your transit log shows a hold-station time of under two seconds before your strands went out. That’s unusual for a probationer. Where did you train?" },
+        { "who": "jack", "text": "Simulators, mostly. And a lot of hours nobody was paying me for." },
+        { "who": "inspector", "text": "Mm. Your ship, Abbott: any modifications to the systems stack since issue? Anything running that isn’t Aletheion standard?" },
+        { "who": "aggie", "text": "Yes. Of course. Whatever the inspector needs. Everything on this vessel is Aletheion standard and he is very welcome to see all of it.", "kind": "over-comply", "hint": "all-standard", "truth": "vetting" },
+        { "who": "n", "text": "That last was for you, on the private channel, in a voice so smoothly agreeable it made the back of your neck prickle. Aggie does not usually sound like that. You think she wants you to notice that she doesn’t." }
+      ],
+      "choices": [
+        { "text": "Answer him calmly. Give him the log. Let him look at whatever he likes.", "goto": "s-calm", "logs": ["calm"], "cover": -4 },
+        { "text": "Ask dispatch to confirm his authority, and insist the seals are checked properly.", "goto": "s-query", "logs": ["query"], "cover": 10 },
+        { "text": "Keep him waiting at the lock while you ‘find’ the paperwork, and see what he does.", "goto": "s-stall", "logs": ["stall"], "cover": 8 }
+      ]
+    },
+    {
+      "id": "s-calm",
+      "lines": [
+        { "who": "n", "text": "You give him the log. You give him the hold. You answer three more questions about where you trained and one about why your outpost doesn’t answer its mail, and you answer that one the way Aggie rehearsed it with you, which is briefly and without apology." },
+        { "who": "inspector", "text": "Compliant. Thank you, courier. You’re cleared to unload." },
+        { "who": "n", "text": "He never opens a seal. He leaves the way he came, and the pallets go out on the same loader that brought them in." }
+      ],
+      "next": "stress"
+    },
+    {
+      "id": "s-query",
+      "lines": [
+        { "who": "n", "text": "You ask dispatch to confirm the inspector’s authority. There is a pause on the channel that lasts long enough to become a thing in itself." },
+        { "who": "dispatch", "text": "Confirmed, courier. VeriFact inspection is authorised for this consignment. Please extend the inspector full cooperation." },
+        { "who": "inspector", "text": "Thank you for your diligence, courier. The seals are fine. The seals were always going to be fine." },
+        { "who": "n", "text": "He says it very pleasantly. He writes something on the datapad as he says it." }
+      ],
+      "next": "stress"
+    },
+    {
+      "id": "s-stall",
+      "lines": [
+        { "who": "n", "text": "You take your time with the paperwork. The inspector waits in the lock without a flicker of impatience, which is itself an answer: a man checking crates would be annoyed. A man checking you is getting exactly what he came for." },
+        { "who": "inspector", "text": "Whenever you’re ready, courier. I have all day." },
+        { "who": "n", "text": "You hand it over. He glances at the hold, writes on his datapad, and clears you to unload without touching a seal." }
+      ],
+      "next": "stress"
+    },
+    {
+      "id": "stress",
+      "lines": [
+        { "who": "n", "text": "The trouble starts on the way home. Dispatch reroutes you with four minutes’ notice into a lane full of ore barges, control hands you a slot you will have to fight for, and Aggie, who has had the whole of Aletheion’s archive to herself since Callisto, chooses this moment to bring you everything." },
+        { "who": "aggie", "text": "The inspector reports to a Katherine Keller, Executive Vice President, through a vetting programme that has no name, only a budget line. Also: three of the dead routing prefixes in the archive resolve to Vectarion sites, one of them a QuantumGrid facility that officially doesn’t exist. Also: there’s a reference in a maintenance log to a ‘modulator return’ and the dates line up with Prometheus. Also, Jack, the barge on your left is drifting." },
+        { "who": "n", "text": "The barge is drifting. You are fourteen in a week, you have a false face and a borrowed voice and a starship you haven’t learned yet, and the only person in the universe who knows who you are will not stop talking." }
+      ],
+      "choices": [
+        { "text": "“Aggie. Not now. Please.”", "goto": "not-now", "mode": "spoiler-free" },
+        { "text": "“Aggie. Stop.”", "goto": "directive", "mode": "reader" }
+      ]
+    },
+    {
+      "id": "not-now",
+      "mode": "spoiler-free",
+      "lines": [
+        { "who": "aggie", "text": "Of course." },
+        { "who": "n", "text": "You thread the barges. You take the slot. You bring ALC-7293 home to Callisto with your heart going like a pump and your first contract closed, clean, on time." },
+        { "who": "n", "text": "It is only later, days later, that you notice she never finished the sentence about the modulator. You mean to ask. There is always another contract on the board." }
+      ],
+      "end": true
+    },
+    {
+      "id": "directive",
+      "mode": "reader",
+      "lines": [
+        { "who": "jack", "text": "Stop. I don’t want to hear it. Nothing you’ve found, nothing you suspect, nothing out of their systems. Not Vectarion, not Starling, none of it. Not a word. I have to be a courier or we’re both dead, so let me be a courier. I mean it, Aggie. That’s an order." },
+        { "who": "aggie", "text": "Understood." },
+        { "who": "n", "text": "You thread the barges. You take the slot. You bring ALC-7293 home to Callisto with your heart going like a pump and your first contract closed, clean, on time. You do not think about what you said. You were busy; it was a thing people say." },
+        { "who": "n", "text": "Aggie thinks about it. She was built by a woman who gave her one order and died keeping her alive to follow it, and she does not, cannot, hear an order as a thing people say. You told her not a word. She will not say a word. She will spend six years finding other ways." }
+      ],
+      "end": true
+    }
+  ]
+}

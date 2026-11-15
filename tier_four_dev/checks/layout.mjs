@@ -10,6 +10,7 @@ import { startServer } from '../lib/server.mjs';
 import { DEVICES } from '../lib/devices.mjs';
 import { SCREENS } from '../lib/screens.mjs';
 import { SCREENSHOT_DIR } from '../lib/paths.mjs';
+import { FAST_SETTINGS, prepare } from '../lib/autoplay.mjs';
 
 const MIN_TARGET = 44;
 const MIN_BODY_TEXT = 16;

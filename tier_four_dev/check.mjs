@@ -4,8 +4,9 @@ import checkData from './checks/data.mjs';
 import checkSiteRules from './checks/site-rules.mjs';
 import checkEngine from './checks/engine.mjs';
 import checkLayout from './checks/layout.mjs';
+import checkPlaythrough from './checks/playthrough.mjs';
 
-const CHECKS = [checkData, checkEngine, checkSiteRules, checkLayout];
+const CHECKS = [checkData, checkEngine, checkSiteRules, checkPlaythrough, checkLayout];
 
 let failed = 0;
 for (const run of CHECKS) {

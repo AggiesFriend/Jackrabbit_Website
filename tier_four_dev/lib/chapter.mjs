@@ -238,7 +238,7 @@ export function validateChapter(chapter, { speakers = null } = {}) {
     return problems;
 }
 
-const CAMPAIGN = { format: 'format', title: 'text', chapters: 'ids', reviews: ['object'], speakers: ['object'] };
+const CAMPAIGN = { format: 'format', title: 'text', chapters: 'ids', reviews: ['object'], speakers: ['object'], endings: ['object'] };
 
 // `entries`: [{ name, data }], one per chapter file, plus the campaign.
 // Chapter IDs must be unique across files, and the campaign must list

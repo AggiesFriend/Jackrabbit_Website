@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-labelledby="t">
+  <title id="t">A glass tank in a dark workshop, full of slow dark fluid, with a spiral galaxy forming inside it</title>
+  <defs>
+    <linearGradient id="room" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#090d1a"/>
+      <stop offset="1" stop-color="#121a30"/>
+    </linearGradient>
+    <linearGradient id="fluid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e1a36"/>
+      <stop offset="0.55" stop-color="#0a1328"/>
+      <stop offset="1" stop-color="#060b18"/>
+    </linearGradient>
+    <linearGradient id="glassEdge" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#bfe3ff" stop-opacity="0.55"/>
+      <stop offset="0.5" stop-color="#bfe3ff" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#bfe3ff" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.16"/>
+      <stop offset="0.3" stop-color="#ffffff" stop-opacity="0.03"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="core" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fff6dc"/>
+      <stop offset="0.25" stop-color="#ffd98a" stop-opacity="0.9"/>
+      <stop offset="0.6" stop-color="#8cc8ee" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#8cc8ee" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="armGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#9fd3f5" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#9fd3f5" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lamp" cx="0.5" cy="0" r="0.9">
+      <stop offset="0" stop-color="#ffe7a3" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#ffe7a3" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="tankClip"><rect x="610" y="190" width="440" height="470" rx="6"/></clipPath>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="softer" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="16"/></filter>
+    <filter id="haze" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="30"/></filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#room)"/>
+  <rect width="1200" height="800" fill="url(#lamp)"/>
+
+  <!-- other tanks, far back, out of focus -->
+  <g opacity="0.35" filter="url(#softer)">
+    <rect x="80" y="300" width="200" height="220" rx="4" fill="#0c1430" stroke="#5e86b8" stroke-width="1.5"/>
+    <rect x="330" y="260" width="230" height="260" rx="4" fill="#0c1430" stroke="#5e86b8" stroke-width="1.5"/>
+    <rect x="1090" y="320" width="150" height="200" rx="4" fill="#0c1430" stroke="#5e86b8" stroke-width="1.5"/>
+    <circle cx="180" cy="405" r="26" fill="#ffd98a" opacity="0.5"/>
+    <circle cx="445" cy="380" r="34" fill="#8cc8ee" opacity="0.45"/>
+  </g>
+
+  <!-- bench -->
+  <rect x="0" y="660" width="1200" height="140" fill="#0a0e1c"/>
+  <rect x="0" y="656" width="1200" height="6" fill="#1b2440"/>
+  <rect x="560" y="660" width="540" height="120" fill="#0d1225" opacity="0.9"/>
+
+  <!-- tank thirty-eight -->
+  <g>
+    <rect x="610" y="190" width="440" height="470" rx="6" fill="url(#fluid)"/>
+    <g clip-path="url(#tankClip)">
+      <!-- slow currents -->
+      <path d="M 560 330 C 700 300, 820 370, 1100 330" fill="none" stroke="#2b6699" stroke-width="2" opacity="0.25" filter="url(#soft)"/>
+      <path d="M 560 480 C 720 440, 900 520, 1100 470" fill="none" stroke="#2b6699" stroke-width="2" opacity="0.2" filter="url(#soft)"/>
+      <path d="M 560 590 C 740 560, 880 620, 1100 585" fill="none" stroke="#2b6699" stroke-width="2" opacity="0.15" filter="url(#soft)"/>
+      <!-- the spiral -->
+      <g transform="translate(830 420) rotate(-22) scale(1 0.62)">
+        <circle r="150" fill="url(#armGlow)" filter="url(#haze)"/>
+        <path d="M 0 0 C 40 -10, 90 10, 110 60 C 130 110, 100 170, 30 190 C -50 210, -140 170, -170 90" fill="none" stroke="#bfe3ff" stroke-width="22" stroke-linecap="round" opacity="0.28" filter="url(#softer)"/>
+        <path d="M 0 0 C -40 10, -90 -10, -110 -60 C -130 -110, -100 -170, -30 -190 C 50 -210, 140 -170, 170 -90" fill="none" stroke="#bfe3ff" stroke-width="22" stroke-linecap="round" opacity="0.28" filter="url(#softer)"/>
+        <path d="M 0 0 C 40 -10, 90 10, 110 60 C 130 110, 100 170, 30 190 C -50 210, -140 170, -170 90" fill="none" stroke="#e9f6ff" stroke-width="6" stroke-linecap="round" opacity="0.55" filter="url(#soft)"/>
+        <path d="M 0 0 C -40 10, -90 -10, -110 -60 C -130 -110, -100 -170, -30 -190 C 50 -210, 140 -170, 170 -90" fill="none" stroke="#e9f6ff" stroke-width="6" stroke-linecap="round" opacity="0.55" filter="url(#soft)"/>
+        <circle r="46" fill="url(#core)"/>
+        <circle r="14" fill="#fff8e6" filter="url(#soft)"/>
+      </g>
+      <!-- scattered knots of light -->
+      <g fill="#dff1ff">
+        <circle cx="690" cy="260" r="1.6" opacity="0.8"/>
+        <circle cx="730" cy="610" r="1.2" opacity="0.6"/>
+        <circle cx="990" cy="250" r="1.4" opacity="0.7"/>
+        <circle cx="1010" cy="560" r="1.1" opacity="0.5"/>
+        <circle cx="660" cy="470" r="1" opacity="0.5"/>
+        <circle cx="950" cy="630" r="1.5" opacity="0.65"/>
+        <circle cx="880" cy="230" r="1" opacity="0.5"/>
+        <circle cx="640" cy="360" r="1.3" opacity="0.6"/>
+        <circle cx="1020" cy="420" r="1" opacity="0.45"/>
+        <circle cx="760" cy="300" r="2.2" opacity="0.5" filter="url(#soft)"/>
+        <circle cx="960" cy="520" r="2.6" opacity="0.4" filter="url(#soft)"/>
+      </g>
+      <!-- surface of the fluid -->
+      <path d="M 610 232 C 720 222, 900 242, 1050 230 L 1050 190 L 610 190 Z" fill="#0b1226"/>
+      <path d="M 610 232 C 720 222, 900 242, 1050 230" fill="none" stroke="#9fd3f5" stroke-width="1.5" opacity="0.5"/>
+    </g>
+    <!-- glass -->
+    <rect x="610" y="190" width="440" height="470" rx="6" fill="url(#sheen)"/>
+    <rect x="610" y="190" width="440" height="470" rx="6" fill="none" stroke="url(#glassEdge)" stroke-width="3"/>
+    <line x1="628" y1="206" x2="628" y2="640" stroke="#ffffff" stroke-width="1.5" opacity="0.22"/>
+    <line x1="1034" y1="206" x2="1034" y2="640" stroke="#ffffff" stroke-width="1" opacity="0.12"/>
+    <!-- reflection on the bench -->
+    <rect x="610" y="662" width="440" height="60" fill="#8cc8ee" opacity="0.05"/>
+    <!-- small label -->
+    <rect x="622" y="612" width="34" height="18" rx="2" fill="#f6f3ec" opacity="0.7"/>
+    <text x="639" y="625" font-family="Consolas, 'Courier New', monospace" font-size="11" fill="#1a2030" text-anchor="middle" opacity="0.9">38</text>
+  </g>
+</svg>

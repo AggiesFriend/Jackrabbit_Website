@@ -210,10 +210,13 @@ export function runJump(host, spec, { reducedMotion = false, autoPlot = false, o
             }
             // Strands: fine lines from the bottom edge fanning to the region
             const strands = svgEl('g', { class: reducedMotion ? 'snap-strands still' : 'snap-strands' });
+            field.strands = { group: strands, paths: [] };
             for (let i = 0; i < 14; i++) {
                 const x0 = W / 2 + (i - 6.5) * 6;
                 const x1 = 20 + (i / 13) * (W - 40);
-                strands.append(svgEl('path', { d: `M${x0} ${H + 4} Q${W / 2} ${H / 2} ${x1} 14`, class: 'snap-strand' }));
+                const path = svgEl('path', { d: `M${x0} ${H + 4} Q${W / 2} ${H / 2} ${x1} 14`, class: 'snap-strand' });
+                strands.append(path);
+                field.strands.paths.push({ el: path, x0, x1 });
             }
             svg.append(strands);
             // Bodies, with arrival positions for the drifting ones
@@ -273,14 +276,51 @@ export function runJump(host, spec, { reducedMotion = false, autoPlot = false, o
             else setTimeout(reveal, 1400);
         };
 
-        const pick = (c, btn, letter) => {
+        // The probe strands sweep in from the survey fan and converge on the
+        // chosen anchor, each a moment after the last. Resolves when done.
+        const converge = c => new Promise(resolve => {
+            const { group, paths } = field.strands;
+            const curve = (p, t) => {
+                const ex = p.x1 + (c.x - p.x1) * t;
+                const ey = 14 + (c.y - 14) * t;
+                const qx = W / 2 + ((p.x0 + c.x) / 2 - W / 2) * t;
+                const qy = H / 2 + ((H + c.y) / 2 - H / 2) * t;
+                return `M${p.x0} ${H + 4} Q${qx.toFixed(1)} ${qy.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}`;
+            };
+            const finishUp = () => {
+                for (const p of paths) p.el.setAttribute('d', curve(p, 1));
+                group.classList.add('converged');
+                c.ring.classList.add('pulse');
+                resolve();
+            };
+            if (reducedMotion) return finishUp();
+            const length = 900;
+            const stagger = 35;
+            const start = performance.now();
+            const ease = t => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2);
+            const frame = now => {
+                let done = true;
+                paths.forEach((p, i) => {
+                    const t = Math.min(1, Math.max(0, (now - start - i * stagger) / length));
+                    if (t < 1) done = false;
+                    p.el.setAttribute('d', curve(p, ease(t)));
+                });
+                if (done) finishUp();
+                else requestAnimationFrame(frame);
+            };
+            requestAnimationFrame(frame);
+        });
+
+        const pick = async (c, btn, letter) => {
             tries++;
             onEvent('anchor', { letter, ok: c.ok, tries });
             if (c.ok) {
                 btn.classList.add('locked');
                 c.ring.classList.add('locked');
-                status.textContent = `Anchor ${letter} locked. ${tries === 1 ? 'A clean plot.' : tries <= deadline ? 'Plotted.' : 'Plotted, late.'}`;
                 for (const b of btn.parentNode.children) b.disabled = true;
+                status.textContent = `Anchor ${letter} chosen. Strands converging…`;
+                await converge(c);
+                status.textContent = `Anchor ${letter} locked. ${tries === 1 ? 'A clean plot.' : tries <= deadline ? 'Plotted.' : 'Plotted, late.'}`;
                 const jump = el('button', { type: 'button', class: 'primary', text: 'Jump', onclick: () => finish({ tries, late: tries > deadline, auto: false }) });
                 foot.replaceChildren(jump);
                 jump.focus();

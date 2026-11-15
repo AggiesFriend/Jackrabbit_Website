@@ -782,6 +782,37 @@ body[data-ship="jackrabbit"] .snap-map {
     animation: cast 1.4s ease-out forwards;
 }
 
+/* Converged on the chosen anchor: the strands brighten, and the anchor's
+   ring pulses once before the jump. */
+.snap-strands.converged .snap-strand {
+    opacity: 0.95;
+    stroke-width: 0.8;
+    stroke: var(--right);
+    transition: stroke 0.3s, opacity 0.3s;
+}
+
+.snap-ring.pulse {
+    animation: snap-pulse 0.7s ease-out 2;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .snap-ring.pulse {
+        animation: none;
+    }
+}
+
+:root[data-motion="reduced"] .snap-ring.pulse {
+    animation: none;
+}
+
+@keyframes snap-pulse {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.35); }
+    100% { transform: scale(1); }
+}
+
 .snap-strands.still .snap-strand {
     animation: none;
     stroke-dashoffset: 0;

@@ -4147,20 +4147,11 @@ Two voices, one from the old ship and one across the link from the new, and then
 
 **Aggie (Jackrabbit):** The project at Nexus-77 is CyberNexus going near the thing nobody is allowed to build, with a team that got frightened when they realised what they’d made. The destruct sequence is the containment. The people are the evidence.
 
-**Aggie (Jackrabbit):** And the Abbotts. This I can say now too, because I found it as part of Starling and it has been in the same locked drawer. There’s a personnel file. Two couriers named Abbott, contracted through Aletheion to carry the Regulator to the Array. Not your parents’ names. But the file was opened from Alpha-7’s records office, three years before you were born, and I don’t yet know why.
+**Aggie (Jackrabbit):** And the Abbotts. This I can say now too, because I found it as part of Starling and it has been in the same locked drawer. There’s a personnel file. Two couriers named Abbott, contracted through Aletheion to carry the Regulator to the Array. Not your parents’ names. Whether they were anything to you, I don’t know yet. When this is done, we will find out. Together. Out loud.
 
 You sit in the old chair in the old ship with the old voice telling you the thing you came for, which is not an answer and is more than you have ever had, and you find you cannot see the display, and that is all right, because she has stopped reading it to you and is simply waiting.
 
-Choices:
-
-- “Later. All of it, later. First Nexus.” → `plan`
-- “Alpha-7’s records office. Why would— tell me the rest. Now.” → `parents`
-
-### Scene `parents`
-
-**Aggie (Jackrabbit):** There is no rest, yet. A file opened from a mining colony’s records office, about two couriers who died carrying a Vectarion component, under your surname, when you were nine. It could be a clerk and a coincidence. I don’t believe it is, and I can’t prove it isn’t. When this is done, we will find out. Together. Out loud.
-
-It is not enough and it is more than you have ever had, and it will keep. Nexus will not.
+**Jack:** Later. All of it, later. First Nexus.
 
 *Continue → `plan`.*
 
@@ -4178,16 +4169,12 @@ You put your hands on the Jackrabbit’s controls. They are smaller than ALC-729
 
 *The chapter ends.*
 
-**Routes through this chapter (8)**
+**Routes through this chapter (4)**
 
 1. belt → what-order → wake → s-realise → starling → plan
-2. belt → what-order → wake → s-realise → starling → parents → plan
-3. belt → what-order → wake → s-hardware → starling → plan
-4. belt → what-order → wake → s-hardware → starling → parents → plan
-5. belt → wake → s-realise → starling → plan
-6. belt → wake → s-realise → starling → parents → plan
-7. belt → wake → s-hardware → starling → plan
-8. belt → wake → s-hardware → starling → parents → plan
+2. belt → what-order → wake → s-hardware → starling → plan
+3. belt → wake → s-realise → starling → plan
+4. belt → wake → s-hardware → starling → plan
 
 ## Tier 5: Morning Eclipse (The Jackrabbit to the Morning Eclipse, then Nexus-77)
 

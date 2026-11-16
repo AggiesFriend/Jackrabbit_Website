@@ -148,7 +148,9 @@ the check offered a choice):
   with Chen is face to face. The QComm is only for secure, point-to-point
   traffic between Jack and the Jackrabbit; it appears nowhere in the game.
 - **The parents** are not settled: a personnel file on two couriers named
-  Abbott, opened from Alpha-7's records office, is all Aggie has. The site
+  Abbott, not the parents' names, is all Aggie has, and she doesn't know
+  whether they were anything to Jack. No Alpha-7 link: the author ruled
+  it out as too far from canon (16 Nov 2026). The site
   19 stencil's date is "You would have been eight."
 - **Frank**: 29 years at first meeting, Tier 3 for the last twelve, 34 at
   retirement, eight years past standard retirement; the mechanical

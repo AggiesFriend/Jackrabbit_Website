@@ -81,19 +81,9 @@
       "lines": [
         { "who": "aggie-jr", "text": "Starling. I’ve known since your first week how to build another one. Not just the theory: the manufacturing method. And the machine we buried after Razer’s ambush can make nearly every part of it. One device freed Halcyon Fields, Jack. We could make enough to free everyone. That’s what I couldn’t say. That’s what sat in your forward hold under a shroud: the one part of it they still make themselves." },
         { "who": "aggie-jr", "text": "The project at Nexus-77 is CyberNexus going near the thing nobody is allowed to build, with a team that got frightened when they realised what they’d made. The destruct sequence is the containment. The people are the evidence." },
-        { "who": "aggie-jr", "text": "And the Abbotts. This I can say now too, because I found it as part of Starling and it has been in the same locked drawer. There’s a personnel file. Two couriers named Abbott, contracted through Aletheion to carry the Regulator to the Array. Not your parents’ names. But the file was opened from Alpha-7’s records office, three years before you were born, and I don’t yet know why." },
-        { "who": "n", "text": "You sit in the old chair in the old ship with the old voice telling you the thing you came for, which is not an answer and is more than you have ever had, and you find you cannot see the display, and that is all right, because she has stopped reading it to you and is simply waiting." }
-      ],
-      "choices": [
-        { "text": "“Later. All of it, later. First Nexus.”", "goto": "plan" },
-        { "text": "“Alpha-7’s records office. Why would— tell me the rest. Now.”", "goto": "parents" }
-      ]
-    },
-    {
-      "id": "parents",
-      "lines": [
-        { "who": "aggie-jr", "text": "There is no rest, yet. A file opened from a mining colony’s records office, about two couriers who died carrying a Vectarion component, under your surname, when you were nine. It could be a clerk and a coincidence. I don’t believe it is, and I can’t prove it isn’t. When this is done, we will find out. Together. Out loud." },
-        { "who": "n", "text": "It is not enough and it is more than you have ever had, and it will keep. Nexus will not." }
+        { "who": "aggie-jr", "text": "And the Abbotts. This I can say now too, because I found it as part of Starling and it has been in the same locked drawer. There’s a personnel file. Two couriers named Abbott, contracted through Aletheion to carry the Regulator to the Array. Not your parents’ names. Whether they were anything to you, I don’t know yet. When this is done, we will find out. Together. Out loud." },
+        { "who": "n", "text": "You sit in the old chair in the old ship with the old voice telling you the thing you came for, which is not an answer and is more than you have ever had, and you find you cannot see the display, and that is all right, because she has stopped reading it to you and is simply waiting." },
+        { "who": "jack", "text": "Later. All of it, later. First Nexus." }
       ],
       "next": "plan"
     },

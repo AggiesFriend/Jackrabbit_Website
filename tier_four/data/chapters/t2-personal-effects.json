@@ -21,7 +21,7 @@
   "understandings": [
     { "id": "read-labels", "mode": "both", "truth": "absorbed", "correct": true, "journal": "Read the container labels at Vantage: not furniture, but ledgers and drive cases marked Tethys Independent Carriage, a firm that no longer exists." },
     { "id": "relocation", "mode": "both", "truth": "absorbed", "correct": false, "journal": "Carried eleven containers of an executive’s belongings from Tethys to Hub Meridian. Relocations happen." },
-    { "id": "report-agent", "mode": "both", "truth": "absorbed", "correct": false, "journal": "Reported to dispatch that the consignor and consignee shared a registered agent, as a possible paperwork error." }
+    { "id": "report-agent", "mode": "both", "truth": "absorbed", "correct": false, "journal": "Asked dispatch why a private household move was routed through Aletheion’s legal office, as a possible paperwork error." }
   ],
   "start": "load",
   "scenes": [
@@ -30,12 +30,12 @@
       "lines": [
         { "who": "n", "text": "Tethys Yards used to be a working shipyard with a dozen independent carriers flying out of it. You know this because the signage is still up, and because the people loading your containers have the look of men whose names were on that signage once." },
         { "who": "n", "text": "Eleven containers, sealed, heavy for furniture. The manifest names the consignor as an Aletheion executive you have never heard of and the consignee as the same man, at a new address on Hub Meridian." },
-        { "who": "aggie", "text": "Loaded. Three jumps, with the dwell at Vantage. Have you noticed that the consignor and the consignee share a registered agent? It’s on the second page.", "kind": "question", "hint": "registered-agent", "truth": "absorbed" },
-        { "who": "n", "text": "It is on the second page. The registered agent is Aletheion’s own legal office. A man moving house does not usually route his furniture through his employer’s lawyers." }
+        { "who": "aggie", "text": "Loaded. Three jumps, with the dwell at Vantage. Have you looked at who the registered agent is? It’s on the second page.", "kind": "question", "hint": "registered-agent", "truth": "absorbed" },
+        { "who": "n", "text": "It is on the second page. The registered agent for a private household move is Aletheion’s own legal office. A man moving house does not usually route his furniture through his employer’s lawyers." }
       ],
       "choices": [
         { "text": "“Who was he, before he was an Aletheion executive?”", "goto": "who" },
-        { "text": "Report the shared agent to dispatch as a possible error.", "goto": "report", "logs": ["report-agent"], "cover": 5 },
+        { "text": "Ask dispatch why a household move is going through Aletheion’s legal office.", "goto": "report", "logs": ["report-agent"], "cover": 5 },
         { "text": "Fly the contract. People move house.", "goto": "jump-one", "logs": ["relocation"], "cover": -3 }
       ]
     },
@@ -47,7 +47,7 @@
       ],
       "choices": [
         { "text": "Fly, and look at the containers at Vantage.", "goto": "jump-one", "set": ["will-look"] },
-        { "text": "Report the shared agent to dispatch as a possible error.", "goto": "report", "logs": ["report-agent"], "cover": 5 }
+        { "text": "Ask dispatch why a household move is going through Aletheion’s legal office.", "goto": "report", "logs": ["report-agent"], "cover": 5 }
       ]
     },
     {

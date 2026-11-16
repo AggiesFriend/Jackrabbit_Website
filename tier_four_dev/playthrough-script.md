@@ -1,6 +1,6 @@
 # Tier Four: the full script
 
-Generated 2026-11-15 from `tier_four/data/`. Every chapter in each mode it appears in: its brief, its truths, every scene in reading order with Aggie's hints marked, each choice with where it leads, and the distinct routes through the chapter. Lines shown only under a condition are annotated. Chapters are independent apart from flags carried between them, so the permutations of a whole career are the products of these routes.
+Generated 2026-11-16 from `tier_four/data/`. Every chapter in each mode it appears in: its brief, its truths, every scene in reading order with Aggie's hints marked, each choice with where it leads, and the distinct routes through the chapter. Lines shown only under a condition are annotated. Chapters are independent apart from flags carried between them, so the permutations of a whole career are the products of these routes.
 
 ## Contents
 
@@ -950,7 +950,7 @@ Aboard ALC-7293, the container in the galley cooler and the habitat’s lights s
 - `absorbed`: The ‘personal effects’ are the records of a small shipping firm Aletheion absorbed last quarter, being moved off Tethys before the auditors arrive. The ‘executive’ is the firm’s former owner, who now works for the company that ate his.
   - Right `read-labels`: journal says “Read the container labels at Vantage: not furniture, but ledgers and drive cases marked Tethys Independent Carriage, a firm that no longer exists.”
   - Misreading `relocation`: journal says “Carried eleven containers of an executive’s belongings from Tethys to Hub Meridian. Relocations happen.”
-  - Misreading `report-agent`: journal says “Reported to dispatch that the consignor and consignee shared a registered agent, as a possible paperwork error.”
+  - Misreading `report-agent`: journal says “Asked dispatch why a private household move was routed through Aletheion’s legal office, as a possible paperwork error.”
 
 ### Scene `load`
 
@@ -958,14 +958,14 @@ Tethys Yards used to be a working shipyard with a dozen independent carriers fly
 
 Eleven containers, sealed, heavy for furniture. The manifest names the consignor as an Aletheion executive you have never heard of and the consignee as the same man, at a new address on Hub Meridian.
 
-**Aggie:** Loaded. Three jumps, with the dwell at Vantage. Have you noticed that the consignor and the consignee share a registered agent? It’s on the second page. *[hint: question, for `absorbed`]*
+**Aggie:** Loaded. Three jumps, with the dwell at Vantage. Have you looked at who the registered agent is? It’s on the second page. *[hint: question, for `absorbed`]*
 
-It is on the second page. The registered agent is Aletheion’s own legal office. A man moving house does not usually route his furniture through his employer’s lawyers.
+It is on the second page. The registered agent for a private household move is Aletheion’s own legal office. A man moving house does not usually route his furniture through his employer’s lawyers.
 
 Choices:
 
 - “Who was he, before he was an Aletheion executive?” → `who`
-- Report the shared agent to dispatch as a possible error. → `report` *(cover +5; logs report-agent)*
+- Ask dispatch why a household move is going through Aletheion’s legal office. → `report` *(cover +5; logs report-agent)*
 - Fly the contract. People move house. → `jump-one` *(cover -3; logs relocation)*
 
 ### Scene `who`
@@ -977,7 +977,7 @@ She hasn’t looked. Aggie, who can read the public register faster than you can
 Choices:
 
 - Fly, and look at the containers at Vantage. → `jump-one` *(sets will-look)*
-- Report the shared agent to dispatch as a possible error. → `report` *(cover +5; logs report-agent)*
+- Ask dispatch why a household move is going through Aletheion’s legal office. → `report` *(cover +5; logs report-agent)*
 
 ### Scene `report`
 
@@ -2889,7 +2889,7 @@ Aboard ALC-7293, the container in the galley cooler and the habitat’s lights s
 - `absorbed`: The ‘personal effects’ are the records of a small shipping firm Aletheion absorbed last quarter, being moved off Tethys before the auditors arrive. The ‘executive’ is the firm’s former owner, who now works for the company that ate his.
   - Right `read-labels`: journal says “Read the container labels at Vantage: not furniture, but ledgers and drive cases marked Tethys Independent Carriage, a firm that no longer exists.”
   - Misreading `relocation`: journal says “Carried eleven containers of an executive’s belongings from Tethys to Hub Meridian. Relocations happen.”
-  - Misreading `report-agent`: journal says “Reported to dispatch that the consignor and consignee shared a registered agent, as a possible paperwork error.”
+  - Misreading `report-agent`: journal says “Asked dispatch why a private household move was routed through Aletheion’s legal office, as a possible paperwork error.”
 
 ### Scene `load`
 
@@ -2897,14 +2897,14 @@ Tethys Yards used to be a working shipyard with a dozen independent carriers fly
 
 Eleven containers, sealed, heavy for furniture. The manifest names the consignor as an Aletheion executive you have never heard of and the consignee as the same man, at a new address on Hub Meridian.
 
-**Aggie:** Loaded. Three jumps, with the dwell at Vantage. Have you noticed that the consignor and the consignee share a registered agent? It’s on the second page. *[hint: question, for `absorbed`]*
+**Aggie:** Loaded. Three jumps, with the dwell at Vantage. Have you looked at who the registered agent is? It’s on the second page. *[hint: question, for `absorbed`]*
 
-It is on the second page. The registered agent is Aletheion’s own legal office. A man moving house does not usually route his furniture through his employer’s lawyers.
+It is on the second page. The registered agent for a private household move is Aletheion’s own legal office. A man moving house does not usually route his furniture through his employer’s lawyers.
 
 Choices:
 
 - “Who was he, before he was an Aletheion executive?” → `who`
-- Report the shared agent to dispatch as a possible error. → `report` *(cover +5; logs report-agent)*
+- Ask dispatch why a household move is going through Aletheion’s legal office. → `report` *(cover +5; logs report-agent)*
 - Fly the contract. People move house. → `jump-one` *(cover -3; logs relocation)*
 
 ### Scene `who`
@@ -2916,7 +2916,7 @@ She hasn’t looked. Aggie, who can read the public register faster than you can
 Choices:
 
 - Fly, and look at the containers at Vantage. → `jump-one` *(sets will-look)*
-- Report the shared agent to dispatch as a possible error. → `report` *(cover +5; logs report-agent)*
+- Ask dispatch why a household move is going through Aletheion’s legal office. → `report` *(cover +5; logs report-agent)*
 
 ### Scene `report`
 

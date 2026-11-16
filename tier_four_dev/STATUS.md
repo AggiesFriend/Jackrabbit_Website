@@ -15,8 +15,8 @@ Local only, nothing pushed. Not merged into `main`.
 ## What exists
 
 - `tier_four/index.html`, `game.css`, `js/`: the whole game, hand-written,
-  no build step. Entry page carries the umami snippet; it is `noindex` and
-  out of the sitemap until the author decides to release.
+  no build step. Entry page carries the umami snippet. Released 16 Nov 2026:
+  indexable, and in the sitemap.
 - `tier_four/data/campaign.json` and `data/chapters/*.json`: 20 chapters in
   the main sequence plus the compliance review. Format version 2, below.
 - `games.html` lists Tier Four (card image `images/games/tier-four.jpg`,
@@ -267,5 +267,3 @@ Narrowing a run while working: `TF_CHECKS=playthrough,layout`,
   on them.
 - Spelling check (en-GB) and the accessibility/performance scans from
   phase 2 are not written.
-- For release: remove `noindex` from `tier_four/index.html` and the
-  `tier_four` sitemap exclusion in `_config.yml`.

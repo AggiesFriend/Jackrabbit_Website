@@ -29,11 +29,6 @@ defaults:
       path: "Aggie_game/spectrum.html"
     values:
       sitemap: false
-  # Tier Four is in development: keep it out of the sitemap until release
-  - scope:
-      path: "tier_four"
-    values:
-      sitemap: false
   # Not pages for visitors
   - scope:
       path: "404.html"

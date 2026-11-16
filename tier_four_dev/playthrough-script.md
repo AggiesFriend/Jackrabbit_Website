@@ -1351,7 +1351,7 @@ Three things. For Aggie, these days, that is a speech.
 
 ### Scene `reception`
 
-Tier 3 comes with receptions. This one is on Hub Meridian, in a room with a real window and real wood on the walls, and the drink in your hand costs more than the Abbotts earned in a month. You are seventeen. You have a suit now, and a chronometer under the cuff that you wind every morning.
+Tier 3 comes with receptions. This one is on Hub Meridian, in a room with a real window and real wood on the walls, and the drink in your hand costs more than your parents earned in a month towards paying off their debt. You are seventeen. You have a suit now, and a chronometer under the cuff that you wind every morning.
 
 The tier 3 couriers stand in a loose circle near the window, the way people stand who are used to being the most dangerous thing in a room and are enjoying not being it. Okafor, who flies HeliosMed strategic. Lindqvist, who flies nothing she will name. Both of them have been here fifteen years longer than you.
 
@@ -3290,7 +3290,7 @@ Three things. For Aggie, these days, that is a speech.
 
 ### Scene `reception`
 
-Tier 3 comes with receptions. This one is on Hub Meridian, in a room with a real window and real wood on the walls, and the drink in your hand costs more than the Abbotts earned in a month. You are seventeen. You have a suit now, and a chronometer under the cuff that you wind every morning.
+Tier 3 comes with receptions. This one is on Hub Meridian, in a room with a real window and real wood on the walls, and the drink in your hand costs more than your parents earned in a month towards paying off their debt. You are seventeen. You have a suit now, and a chronometer under the cuff that you wind every morning.
 
 The tier 3 couriers stand in a loose circle near the window, the way people stand who are used to being the most dangerous thing in a room and are enjoying not being it. Okafor, who flies HeliosMed strategic. Lindqvist, who flies nothing she will name. Both of them have been here fifteen years longer than you.
 

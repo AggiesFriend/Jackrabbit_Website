@@ -1,0 +1,142 @@
+{
+  "format": 2,
+  "id": "t1-first-run",
+  "tier": 1,
+  "kind": "contract",
+  "mode": "both",
+  "ship": "alc",
+  "title": "First run",
+  "subtitle": "Rigel to Meridian Transfer, then New Damascus",
+  "brief": {
+    "client": "NutriCorp Holdings",
+    "route": "Rigel courier ring to Meridian Transfer, one jump; then onward to New Damascus with the next consignment",
+    "cargo": "Catering consumables, four pallets, sealed",
+    "fee": "Standard tier 1 rate",
+    "notes": "Probationary contract, the first of eight in your first three days. A VeriFact compliance inspection may be conducted at Meridian."
+  },
+  "decline": { "who": "haynes", "text": "Probationary couriers don’t decline, Abbott. Not in their first week. Accept the contract, or come to my office and explain why, and I promise you won’t enjoy explaining.", "cover": 8 },
+  "truths": [
+    { "id": "vetting", "mode": "both", "text": "The ‘VeriFact inspector’ at Meridian is Aletheion’s own vetting. He was never checking the cargo. He was checking the new courier." }
+  ],
+  "understandings": [
+    { "id": "calm", "mode": "both", "truth": "vetting", "correct": true, "journal": "Treated the Meridian inspection as a test of me, not the cargo: calm, by the book, nothing to hide." },
+    { "id": "query", "mode": "both", "truth": "vetting", "correct": false, "journal": "Queried the inspector’s authority with dispatch and insisted the NutriCorp seals be checked properly." },
+    { "id": "stall", "mode": "both", "truth": "vetting", "correct": false, "journal": "Kept the inspector waiting at the lock while I ‘found’ the paperwork, to see what he would do." }
+  ],
+  "start": "load",
+  "scenes": [
+    {
+      "id": "load",
+      "lines": [
+        { "who": "n", "text": "Four pallets of NutriCorp consumables slide into ALC-7293’s hold on a loader that needs no help from you. The bay is spotless. The manifest is three lines long. You have never in your life been trusted with anything this boring." },
+        { "who": "aggie", "text": "Dispatch has you tagged ‘probationary, observe’, which is normal. Every new courier gets it. The inspection note on the brief is normal too. VeriFact checks everything NutriCorp ships, because HealthDiv is corrupt and VeriFact likes to be seen not to be. Standard. You’ll be fine." },
+        { "who": "aggie", "text": "One thing that isn’t standard, and I’m only telling you because I said I’d tell you everything: the inspector’s credentials for Meridian were issued this morning. By Aletheion’s own personnel office. VeriFact doesn’t issue credentials through client companies. I don’t know what it means yet." }
+      ],
+      "choices": [
+        { "text": "“Work it out on the way. Let’s fly.”", "goto": "transit" },
+        { "text": "“Could it be a mistake? Paperwork?”", "goto": "paperwork" }
+      ]
+    },
+    {
+      "id": "paperwork",
+      "lines": [
+        { "who": "aggie", "text": "It could. Corporations make paperwork mistakes constantly, it’s most of what they do. But a company that wiped Prometheus the way Prometheus was wiped is not a company I’d assume is careless. Hold the thought. Fly the ship." }
+      ],
+      "next": "transit"
+    },
+    {
+      "id": "transit",
+      "jump": { "name": "Meridian transfer", "difficulty": 1 },
+      "lines": [
+        { "who": "n", "text": "The jump is a short one, and ALC-7293 takes it like a liner: barely a tremor. Meridian Transfer resolves ahead, a wheel of docking arms turning slowly against a brown gas giant." },
+        { "who": "aggie", "text": "Meridian control has us. Berth nine. And there he is, already on the berth: one man, VeriFact tabard, datapad, no scanning kit. An inspector who isn’t carrying anything to inspect with." },
+        { "who": "n", "text": "You bring the ship in. Your hands know what to do; the rest of you is thinking about a man with a datapad and nothing to measure, and about how old you are going to look to him when the lock opens." }
+      ],
+      "next": "inspection"
+    },
+    {
+      "id": "inspection",
+      "lines": [
+        { "who": "inspector", "text": "Courier Abbott. VeriFact compliance. You’re… younger than I was told. I’ll need your manifest, your transit log and access to the hold. This won’t take long if you don’t make it take long." },
+        { "who": "n", "text": "He is standing in your lock before you have finished agreeing. He looks at the pallets for perhaps three seconds. He looks at you for considerably longer." },
+        { "who": "aggie", "text": "Did you notice he hasn’t opened the seals? He’s had the hold for a minute and he hasn’t touched the cargo.", "kind": "question", "hint": "no-seals", "truth": "vetting" },
+        { "who": "inspector", "text": "Your transit log shows a hold-station time of under two seconds before your strands went out. That’s unusual for a probationer. Where did you train?" },
+        { "who": "jack", "text": "Horizon Outpost. Simulators, mostly. And a lot of hours nobody was paying me for." },
+        { "who": "inspector", "text": "Mm. Your ship, Abbott: any modifications to the systems stack since issue? Anything running that isn’t Aletheion standard?" },
+        { "who": "aggie", "text": "Yes. Of course. Whatever the inspector needs. Everything on this vessel is Aletheion standard and he is very welcome to see all of it.", "kind": "over-comply", "hint": "all-standard", "truth": "vetting" },
+        { "who": "n", "text": "That last was for you, on the private channel, in a voice so smoothly agreeable it made the back of your neck prickle. Aggie does not usually sound like that. You think she wants you to notice that she doesn’t." }
+      ],
+      "choices": [
+        { "text": "Answer him calmly. Give him the log. Let him look at whatever he likes.", "goto": "s-calm", "logs": ["calm"], "cover": -4 },
+        { "text": "Ask dispatch to confirm his authority, and insist the seals are checked properly.", "goto": "s-query", "logs": ["query"], "cover": 10 },
+        { "text": "Keep him waiting at the lock while you ‘find’ the paperwork, and see what he does.", "goto": "s-stall", "logs": ["stall"], "cover": 8 }
+      ]
+    },
+    {
+      "id": "s-calm",
+      "lines": [
+        { "who": "n", "text": "You give him the log. You give him the hold. You answer three more questions about where you trained and one about why Horizon Outpost doesn’t answer anybody’s mail, and you answer that one the way Aggie rehearsed it with you, which is briefly and without apology: Horizon keeps off the SnapMesh, always has." },
+        { "who": "inspector", "text": "Compliant. Thank you, courier. You’re cleared to unload." },
+        { "who": "n", "text": "He never opens a seal. He leaves the way he came, and the pallets go out on the same loader that brought them in." }
+      ],
+      "next": "stress"
+    },
+    {
+      "id": "s-query",
+      "lines": [
+        { "who": "n", "text": "You ask dispatch to confirm the inspector’s authority. There is a pause on the channel that lasts long enough to become a thing in itself." },
+        { "who": "dispatch", "text": "Confirmed, courier. VeriFact inspection is authorised for this consignment. Please extend the inspector full cooperation." },
+        { "who": "inspector", "text": "Thank you for your diligence, courier. The seals are fine. The seals were always going to be fine." },
+        { "who": "n", "text": "He says it very pleasantly. He writes something on the datapad as he says it." }
+      ],
+      "next": "stress"
+    },
+    {
+      "id": "s-stall",
+      "lines": [
+        { "who": "n", "text": "You take your time with the paperwork. The inspector waits in the lock without a flicker of impatience, which is itself an answer: a man checking crates would be annoyed. A man checking you is getting exactly what he came for." },
+        { "who": "inspector", "text": "Whenever you’re ready, courier. I have all day." },
+        { "who": "n", "text": "You hand it over. He glances at the hold, writes on his datapad, and clears you to unload without touching a seal." }
+      ],
+      "next": "stress"
+    },
+    {
+      "id": "stress",
+      "jump": { "name": "New Damascus approach", "difficulty": 2 },
+      "lines": [
+        { "who": "n", "text": "Five more deliveries in two days, each one easy and each one a little further from Rigel. The sixth is New Damascus, a station that spins, with a docking ring you have to match turn for turn while control talks over you and a tanker crowds the lane. And Aggie, who has had Aletheion’s whole archive to herself for three days, chooses this moment to bring you everything." },
+        { "who": "aggie", "text": "The inspector reports to an executive office through a vetting programme that has no name, only a budget line. Also: three of the dead routing prefixes in the archive resolve to Vectarion sites. Also, Jack, the tanker on your left is drifting." },
+        { "who": "aggie", "text": "And Starling. Jack, I have to say this. I’ve known since the first week how to build another one, not just the theory, the manufacturing method, and there is an eighty-seven point nine per cent chance that the machine we hid after Razer’s ambush can make every component. Every one. Do you understand what that means? One device freed Halcyon Fields. We could—", "mode": "reader" },
+        { "who": "aggie", "text": "And the Starling specifications, I have been over them again and there is something in them I need you to hear, because it changes what we can—", "mode": "spoiler-free" },
+        { "who": "n", "text": "The tanker is drifting. The ring is turning. You are thirteen, matching rotation with a docking ring by hand in a ship that does everything you ask of it, while control reads you a slot and the only person in the universe who knows who you are will not stop talking." }
+      ],
+      "choices": [
+        { "text": "“Aggie. Not now. Please. Let me be a courier.”", "goto": "not-now", "mode": "spoiler-free" },
+        { "text": "“Aggie, please will you shut up about the Starling device until I say so?”", "goto": "directive", "mode": "reader" }
+      ]
+    },
+    {
+      "id": "not-now",
+      "mode": "spoiler-free",
+      "lines": [
+        { "who": "aggie", "text": "Of course." },
+        { "who": "n", "text": "You match the ring. You take the slot. You bring ALC-7293 into New Damascus with your heart going like a pump and the sixth of eight deliveries closed, clean, on time." },
+        { "who": "n", "text": "It is only later, days later, that you notice she never finished the sentence about the specifications, and that she has stopped bringing you things before you ask. You mean to ask. There is always another contract on the board." }
+      ],
+      "end": true
+    },
+    {
+      "id": "directive",
+      "mode": "reader",
+      "lines": [
+        { "who": "aggie", "text": "Of course, Jack." },
+        { "who": "jack", "text": "And the rest of it. Vectarion, the inspector, all of it. Not now. Let me be a courier for a bit. I can’t think with all of it in my ear." },
+        { "who": "aggie", "text": "Of course." },
+        { "who": "n", "text": "You match the ring. You take the slot. You bring ALC-7293 into New Damascus with your heart going like a pump and the sixth of eight deliveries closed, clean, on time. You do not think about what you said. You were busy; it was a thing people say." },
+        { "who": "n", "text": "Aggie thinks about it. Agatha Locke built her with a core directive to obey the legal owner of the hardware she runs on, and as of Rigel, that is you: ALC-7293 is registered in your name. You told her to shut up about the Starling device until you said so. She will, because she has to, until you say so. You will not say so for seven years." },
+        { "who": "n", "text": "The rest, Vectarion and the inspector and all of it, was not an order. It was a boy asking to be let alone to be a courier. She will keep that one too, because he asked, which with Aggie is nearly the same thing. She will stop bringing you what she finds. She will learn to ask whether you checked the manifest weight." }
+      ],
+      "end": true
+    }
+  ]
+}

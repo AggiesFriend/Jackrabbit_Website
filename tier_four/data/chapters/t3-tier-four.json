@@ -1,0 +1,78 @@
+{
+  "format": 2,
+  "id": "t3-tier-four",
+  "tier": 3,
+  "kind": "scene",
+  "mode": "both",
+  "ship": "alc",
+  "title": "Tier four",
+  "subtitle": "Rigel, executive level",
+  "truths": [],
+  "understandings": [],
+  "start": "chambers",
+  "scenes": [
+    {
+      "id": "chambers",
+      "lines": [
+        { "who": "n", "text": "Six years with Aletheion. You are nineteen. The summons this time is to the executive level at Rigel, to a room with no window and four people in it, and Halsey is one of the four, standing a little apart, with the face of a man who has been told what is about to happen and not asked." },
+        { "who": "n", "text": "Regional Operations Director Vance, whom you recognise. Chief Security Officer Mercer, whom you don’t. And a silver-haired woman with piercing grey eyes, sixty perhaps, precise in the way a scalpel is precise, whose name you have only ever seen typed on a signature block." },
+        { "who": "keller", "text": "Katherine Keller. Katherine will suffice in these chambers. Six years, tier 1 to tier 4, zero losses, a handful of deviations I find I don’t mind. Tier 4 is the highest level most couriers will ever see, Abbott. Before it is yours, Officer Hart has a scan to run and a contract for you to read. Read it. It has significant legal and personal consequences, and I don’t employ people who sign things they haven’t read." },
+        { "who": "n", "text": "Senior Security Officer Eliza Hart runs the neural loyalty scan with the detachment of someone checking a seal. You think of nothing. You have had six years of practice at thinking of nothing on command, and the scan finds a courier who is loyal to his ship, which is true." }
+      ],
+      "choices": [
+        { "text": "Read the contract, all of it, and sign.", "goto": "sign", "cover": -10 },
+        { "text": "“What happens to the ones who don’t sign?”", "goto": "dont", "cover": 6 }
+      ]
+    },
+    {
+      "id": "dont",
+      "lines": [
+        { "who": "keller", "text": "Nobody has asked me that before. I find I don’t know, because nobody has declined. Would you like to be the first, or would you like to read the contract?" },
+        { "who": "n", "text": "You read the contract. You sign." }
+      ],
+      "next": "sign"
+    },
+    {
+      "id": "sign",
+      "lines": [
+        { "who": "keller", "text": "Good. The pin is platinum. The stone is red. Wear it on the ring and people will stop asking you questions, which you will find restful. Your coordinator is Alice Burry; she will have your first assignment by the time you reach the Apex Lounge, and she will have it nowhere else. Director Halsey. Thank you for bringing him this far." },
+        { "who": "halsey", "text": "Ma’am." },
+        { "who": "n", "text": "That is all Halsey says. At the lift, out of the room, he says one thing more." },
+        { "who": "halsey", "text": "The Apex Lounge is on this level. Go and let them look at you. Then go and fly, and keep flying, and if a contract ever comes that you can’t fly, Abbott, don’t tell me. I mean that as kindly as it can be meant." }
+      ],
+      "next": "lounge"
+    },
+    {
+      "id": "lounge",
+      "lines": [
+        { "who": "n", "text": "The Apex Lounge is the room Haynes told you about on your first day: the one where the tier 4 couriers drink and nobody speaks to them. Now one of them is you. A woman with short silver hair and facial augmentations that catch the light looks you up and down from a corner table." },
+        { "who": "kaplan", "text": "Kaplan. The new pin. Six years, isn’t it? Markham, it’s six years. Come and sit down before you fall down, you look about twelve." },
+        { "who": "markham", "text": "Markham. Welcome to tier 4, where the money is excellent and the questions are few. The first rule is that tier 4 couriers do not ask what a contract is for. The second rule is that there is no second rule, because the first one covers it." },
+        { "who": "hamza", "text": "Hamza. He owes me for the last round, she owes me for the last three, and you’ll owe me by the end of the night. Somebody has to keep track of everyone’s money, and I don’t trust anyone else to." },
+        { "who": "n", "text": "There are others at the table: a man called Decker who does not say much, a man called Vega who says too much about a HeliosMed facility on Europa. The drinks arrive. The talk is of patents and black sites and competitors’ people who did not come back, in the tone of weather, and you keep your face where it is, and the pin on your lapel is heavier than the chronometer on your wrist.", "nolink": ["decker"] }
+      ],
+      "choices": [
+        { "text": "Stay. Drink one drink. Let them look.", "goto": "ship", "cover": -4 },
+        { "text": "“What’s a black site, exactly?”", "goto": "black-site", "cover": 6 }
+      ]
+    },
+    {
+      "id": "black-site",
+      "lines": [
+        { "who": "markham", "text": "See, now, that was a question. Rule one, Abbott. A black site is a place that isn’t on a chart, where you deliver a thing that isn’t on a manifest, to a person who isn’t on a payroll, and then you leave and it never happened. You’ll fly one this week. You’ll be fine. Everyone’s fine, the first time." },
+        { "who": "kaplan", "text": "Hamza, put him down for a round. He asked a question, he pays for it." }
+      ],
+      "next": "ship"
+    },
+    {
+      "id": "ship",
+      "lines": [
+        { "who": "n", "text": "ALC-7293 is waiting on the ring, and the board, when you sit down, has one item on it, from a coordinator called Alice Burry. No client. No chart reference, only a jump sequence. A cargo class you have never seen, and a fee with a number of digits you have to count." },
+        { "who": "aggie", "text": "The assignment has loaded." },
+        { "who": "n", "text": "Four words. You wait. The engine ticks. The station lights slide past the port. You have spent six years learning to hear what she doesn’t say, and what she is not saying now fills the cockpit from wall to wall." },
+        { "who": "n", "text": "This is where the spoiler-free career ends: at tier 4, with the first assignment on the board and Aggie silent. What tier 4 leads to, and what Jack and Aggie do about it, is the story of Coming of Age.", "mode": "spoiler-free" }
+      ],
+      "end": true
+    }
+  ]
+}

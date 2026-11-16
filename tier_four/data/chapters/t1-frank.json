@@ -1,0 +1,103 @@
+{
+  "format": 2,
+  "id": "t1-frank",
+  "tier": 1,
+  "kind": "scene",
+  "mode": "both",
+  "ship": "alc",
+  "title": "The mentor’s offer",
+  "subtitle": "Rigel, administrative level",
+  "truths": [],
+  "understandings": [],
+  "start": "halsey",
+  "scenes": [
+    {
+      "id": "halsey",
+      "lines": [
+        { "who": "n", "text": "Eleven months. Two hundred and some contracts, all closed, most of them on time. The quarterly review promised a ‘comprehensive evaluation’, and the evaluation turns out to be a summons to Regional Operations, and a lean man with close-cropped grey hair who looks at you the way Solberg did, and then keeps looking." },
+        { "who": "halsey", "text": "Halsey. Regional Operations Director. Sit down, Abbott. I read everything that crosses this desk, and your file crosses it more than most." },
+        { "who": "halsey", "text": "Your file has a deviation on it. Farrow’s Reach. You delivered a standard-transit consignment a day ahead of schedule, and Dispatch Scheduling has raised it: early delivery is a priority service, and priority is paid for. I am required to warn you that deviations are logged, that they count, and that a courier who makes a habit of them does not stay a courier. Consider yourself warned.", "requires": ["saved-farrow"] },
+        { "who": "halsey", "text": "I am also, off this desk, aware that a clinic on Farrow’s Reach did not run dry. I have no further comment on that.", "requires": ["saved-farrow"] },
+        { "who": "halsey", "text": "Your file has one declined contract on it. Side work, the HeliosMed cold case, and nobody came to harm that I know of. I am required to tell you that couriers who decline work are noticed, and not by me. The review panel has you up for tier 2 in under a year anyway, which has not happened in my sixteen years with this company. Don’t make a habit of it.", "requires": ["declined:t1-cold-chain"], "unless": ["saved-farrow"] },
+        { "who": "halsey", "text": "Your file is clean. Not a deviation on it. The review panel has you up for tier 2 in under a year, which has not happened in my sixteen years with this company, and clean files get left alone. Keep it that way.", "unless": ["saved-farrow", "declined:t1-cold-chain"] }
+      ],
+      "choices": [
+        { "text": "“Understood, Director. Thank you.”", "goto": "panel", "trust": { "halsey": 1 } },
+        { "text": "“Early isn’t usually a problem, Director. Who was harmed?”", "goto": "pushback", "cover": 4, "requires": ["saved-farrow"] },
+        { "text": "“Why tell me yourself?”", "goto": "why", "trust": { "halsey": 1 }, "unless": ["saved-farrow"] }
+      ]
+    },
+    {
+      "id": "pushback",
+      "lines": [
+        { "who": "halsey", "text": "Nobody, Abbott. That’s the trouble. If standard can arrive early, nobody pays for priority, and Scheduling exists to make sure nobody finds out that it can. The clinic would like to thank you. It can’t, because officially you didn’t do it. Don’t make me have this conversation twice." },
+        { "who": "n", "text": "It is a warning. It is also, you think, something else, delivered in the only shape the desk allows." }
+      ],
+      "next": "panel"
+    },
+    {
+      "id": "why",
+      "lines": [
+        { "who": "halsey", "text": "Because the people above me measure couriers in delivered tonnage, and the people below me are human beings, and most days I can’t make those two things add up. A courier who’s quick and clean helps. Don’t make me regret saying so." }
+      ],
+      "next": "panel"
+    },
+    {
+      "id": "panel",
+      "lines": [
+        { "who": "n", "text": "The review panel is three people in a room: a logistics director, a senior pilot supervisor and an efficiency analyst, who between them say the word ‘unprecedented’ four times and promote you to tier 2 in under a year. There is a reception that evening, in the corporate lounge on the administrative level, which is the only room on Rigel where people sit down without a reason." },
+        { "who": "n", "text": "You are nursing a cup of something that calls itself coffee when a man of about sixty, broad, grey, with the walk of someone who has spent decades in and out of airlocks, pulls out the chair opposite without asking." },
+        { "who": "frank", "text": "Abbott. Frank Kowalski. Twenty-nine years with this outfit, so you can skip the part where you wonder if I’m allowed to be here. I watched your Meridian approach on the lounge feed. Two seconds to hold station. Nobody does two seconds." },
+        { "who": "jack", "text": "The ship does most of it." },
+        { "who": "frank", "text": "And modest! Look, I didn’t come over here just to compliment your flying. I’ve got a proposition for you." }
+      ],
+      "next": "offer"
+    },
+    {
+      "id": "offer",
+      "lines": [
+        { "who": "frank", "text": "Tier 2 is a different game from tier 1. The distances are greater, the politics trickier, the consequences of mistakes far more severe. Most new tier 2 pilots take months to adjust, and many wash out entirely. I’m offering to mentor you. Show you the ropes, help you avoid the common pitfalls." },
+        { "who": "n", "text": "He laughs easily, which almost nobody on Rigel does. It is a real laugh, out of a real chest, and it makes three people at the next table look round." }
+      ],
+      "choices": [
+        { "text": "“That’s generous. But what’s in it for you?”", "goto": "angle", "trust": { "frank": 2 } },
+        { "text": "“Why me?”", "goto": "why-me", "trust": { "frank": 1 } },
+        { "text": "“I’ll think about it.”", "goto": "think", "trust": { "frank": 0 } }
+      ]
+    },
+    {
+      "id": "angle",
+      "lines": [
+        { "who": "frank", "text": "Good question. Always look for the angle, even when someone seems helpful. Especially then." },
+        { "who": "frank", "text": "The honest answer is that I’m eight years past the age they’d like me to retire at, I’ve got a granddaughter who thinks I’m a dinosaur and a wife who thinks I ought to have retired already, and I’d like to leave something in this place that isn’t tonnage. You’ll do. Also, selfishly, I’d like to see how you fly up close before I’m too old to learn from it." }
+      ],
+      "next": "accept"
+    },
+    {
+      "id": "why-me",
+      "lines": [
+        { "who": "frank", "text": "Because you fly like it matters and you look like it doesn’t, and in this outfit that’s the whole trick. And because I’ve got a few years left and I’d like to leave something in this place that isn’t tonnage." }
+      ],
+      "next": "accept"
+    },
+    {
+      "id": "think",
+      "lines": [
+        { "who": "frank", "text": "Do. Think fast, though. Tier 2 starts Monday and the holes don’t wait." },
+        { "who": "n", "text": "He leaves his contact code on the table. You pick it up before the cup is cold. You do not, in fact, need to think about it; you only needed a moment to be someone who might." }
+      ],
+      "next": "accept"
+    },
+    {
+      "id": "accept",
+      "lines": [
+        { "who": "jack", "text": "All right. Yes. Thank you, Frank." },
+        { "who": "frank", "text": "Don’t thank me yet. First rule: when I’m home, you come to dinner. Eleanor will want to look at you, and Eleanor’s looking is a thing you survive. Nexus-77, Residential 12-B. Your birthday’s coming up, isn’t it? It said so in your file. We’ll do it then." },
+        { "who": "n", "text": "That night, on the private channel, you tell Aggie about Frank. She listens all the way through." },
+        { "who": "aggie", "text": "Twenty-nine years. He’ll know every hole there is. I think that’s good, Jack. I think you should go to dinner." },
+        { "who": "n", "text": "It is the nearest she has come to volunteering an opinion in months. You hold onto it." }
+      ],
+      "end": true
+    }
+  ]
+}

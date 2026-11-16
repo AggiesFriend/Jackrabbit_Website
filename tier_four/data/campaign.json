@@ -1,0 +1,103 @@
+{
+  "format": 2,
+  "title": "Tier Four",
+  "chapters": [
+    "prologue-prometheus",
+    "t1-induction",
+    "t1-first-run",
+    "t1-quiet-run",
+    "t1-cold-chain",
+    "t1-frank",
+    "t2-nexus-dinner",
+    "t2-personal-effects",
+    "t2-relay-down",
+    "t2-amanda",
+    "t2-promotion",
+    "t3-inner-circle",
+    "t3-archive",
+    "t3-keller",
+    "t3-escort",
+    "t3-retirement",
+    "t3-tier-four",
+    "t4-assignment",
+    "t4-two-of-her",
+    "t4-morning-eclipse",
+    "epilogue-bookings"
+  ],
+  "reviews": { "any": "review-compliance" },
+  "speakers": {
+    "aggie": { "name": "Aggie" },
+    "aggie-jr": { "name": "Aggie (Jackrabbit)" },
+    "frank": { "name": "Frank" },
+    "amanda": { "name": "Amanda" },
+    "eleanor": { "name": "Eleanor" },
+    "halsey": { "name": "Director Halsey" },
+    "decker": { "name": "Decker" },
+    "keller": { "name": "Katherine Keller" },
+    "vance": { "name": "Director Vance" },
+    "mercer": { "name": "CSO Mercer" },
+    "hart": { "name": "Officer Hart" },
+    "burry": { "name": "Alice Burry" },
+    "markham": { "name": "Markham" },
+    "kaplan": { "name": "Kaplan" },
+    "hamza": { "name": "Hamza" },
+    "haynes": { "name": "Coordinator Haynes" },
+    "solberg": { "name": "Renata Solberg" },
+    "walters": { "name": "Director Walters" },
+    "chen": { "name": "Administrator Chen" },
+    "singh": { "name": "General Singh" },
+    "tanner": { "name": "Edwin Tanner" },
+    "okafor": { "name": "Okafor" },
+    "lindqvist": { "name": "Lindqvist" },
+    "inspector": { "name": "Inspector" },
+    "compliance": { "name": "Compliance officer" },
+    "dispatch": { "name": "Dispatch" },
+    "clerk": { "name": "Clerk" },
+    "agent": { "name": "Receiving agent" },
+    "medic": { "name": "Clinic medic" },
+    "server": { "name": "Server" },
+    "escort": { "name": "Escort lead" },
+    "lovis": { "name": "Lovis" }
+  },
+  "endings": {
+    "spoiler-free": {
+      "title": "Tier Four",
+      "text": [
+        "Six years after a thirteen-year-old walked into Rigel with a video filter that added a few years and a name that was his own, Jack Abbott holds the highest rank most couriers will ever see. The first tier 4 contract is already on the board.",
+        "This is where the spoiler-free career ends. What tier 4 leads to, what it costs, and what Jack and Aggie do about it, is the story of Coming of Age. Turn the Spoilers switch on after you’ve read it, and the game will follow the book to its ending.",
+        "Below is your debrief: everything Aggie tried to tell you on the way up, and what you made of it."
+      ]
+    },
+    "reader": {
+      "title": "Home is the people",
+      "text": [
+        "The official record says that Aletheion courier Jack Abbott completed his assignment on schedule, that Nexus-77 was lost to a catastrophic systems failure attributed to an act of terrorism by the Jackrabbit, and that the courier, a tier 4 courier in good standing, is taking a well-earned rest. His ship’s status reads: Not accepting bookings.",
+        "The unofficial record is a colony ship with five hundred more people aboard than it had and a new chief pilot; an old courier ship on her docking deck, with its old voice back and seven years of things to say; a data card of Frank Kowalski’s trusted contacts; and a corporate vessel with a quiet mind of her own, gone out into the dark with her owner’s blessing to find the resistance.",
+        "Below is your debrief: everything Aggie tried to tell you on the way up, and what you made of it."
+      ]
+    }
+  },
+  "decline": {
+    "who": "dispatch",
+    "text": "Declining an assigned contract is noted against your file, courier. There is no other courier on this route in the window. The contract stands.",
+    "cover": 6,
+    "sideText": "Declined. The consignment has been reassigned to another courier. A declined contract is logged against your file.",
+    "sideCover": 8
+  },
+  "characters": {
+    "jack": { "page": "../character1.html", "names": ["Jack Abbott", "Jack"] },
+    "aggie": { "page": "../character2.html", "names": ["Aggie"] },
+    "parents": { "page": "../character4.html", "names": ["Albert and Dorothy Abbott", "Albert and Dorothy"] },
+    "locke": { "page": "../character7.html", "names": ["Agatha Locke", "Agatha"] },
+    "ozzy": { "page": "../character10.html", "names": ["Ozzy"] },
+    "razer": { "page": "../character14.html", "names": ["Razer"] },
+    "chen": { "page": "../character15.html", "names": ["Administrator Mei Chen", "Mei Chen", "Administrator Chen", "Chen"] },
+    "singh": { "page": "../character16.html", "names": ["General Singh", "Singh"] },
+    "decker": { "page": "../character28.html", "names": ["Decker"] },
+    "frank": { "page": "../character30.html", "names": ["Frank Kowalski", "Frank"] },
+    "amanda": { "page": "../character31.html", "names": ["Amanda Kowalski", "Amanda"] },
+    "eleanor": { "page": "../character32.html", "names": ["Eleanor Kowalski", "Eleanor"] },
+    "keller": { "page": "../character33.html", "names": ["Katherine Keller", "Keller"] },
+    "halsey": { "page": "../character34.html", "names": ["Director Halsey", "Halsey"] }
+  }
+}

@@ -1,0 +1,254 @@
+{
+  "format": 2,
+  "id": "t2-relay-down",
+  "tier": 2,
+  "kind": "contract",
+  "mode": "both",
+  "ship": "alc",
+  "title": "Relay down",
+  "subtitle": "Rigel to Kessler Habitat, two jumps",
+  "brief": {
+    "client": "Kessler Habitat clinic, via the Aletheion time-critical desk",
+    "route": "Rigel to Kessler Habitat, two jumps, SnapMesh unavailable on this corridor",
+    "cargo": "One data consignment, physical transport",
+    "fee": "Tier 2 rate, standard. Client declined the priority tariff.",
+    "notes": "A SnapMesh node on the Kessler corridor is down. Physical data transport booked at standard priority."
+  },
+  "decline": { "side": true, "who": "dispatch", "text": "Declined. The Kessler consignment returns to the time-critical desk and will go with the next courier on the corridor: tomorrow night, at the earliest. Logged against your file.", "cover": 8 },
+  "truths": [
+    {
+      "id": "deadline",
+      "mode": "both",
+      "text": "The ‘data consignment’ is a specialist’s surgical plan for a child at Kessler, and the clinic booked it at standard rate because they couldn’t afford priority. The standard schedule arrives after the window in which it is any use."
+    }
+  ],
+  "understandings": [
+    {
+      "id": "push",
+      "mode": "both",
+      "truth": "deadline",
+      "correct": true,
+      "journal": "Flew the Kessler data consignment as if it were priority: no dwell, both jumps back to back. Arrived nine hours inside the clinic’s window."
+    },
+    {
+      "id": "as-booked",
+      "mode": "both",
+      "truth": "deadline",
+      "correct": false,
+      "journal": "Flew the Kessler data consignment as booked. If the client wanted priority, the client could have paid for priority."
+    },
+    {
+      "id": "upgrade",
+      "mode": "both",
+      "truth": "deadline",
+      "correct": false,
+      "journal": "Asked dispatch to upgrade the Kessler consignment to priority at Aletheion’s cost, and was refused."
+    }
+  ],
+  "start": "load",
+  "scenes": [
+    {
+      "id": "load",
+      "lines": [
+        {
+          "who": "n",
+          "text": "When a SnapMesh node fails, messages queue on the last node that heard them and wait for a replacement that can take days. Until then, the only way to get data down the corridor is to carry it. Aletheion runs a desk for exactly this, at a price that makes it a service for people who can pay."
+        },
+        {
+          "who": "n",
+          "text": "The consignment is a single sealed data wafer in a courier sleeve, booked by a clinic on Kessler Habitat, at the standard rate. Standard means a dwell at the midpoint beacon. Standard means tomorrow night."
+        },
+        {
+          "who": "aggie",
+          "text": "Loaded. Two jumps, dwell at the midpoint. Would you like me to read you the consignment class? It’s on the sleeve. Class M.",
+          "kind": "question",
+          "hint": "class-m",
+          "truth": "deadline"
+        },
+        {
+          "who": "n",
+          "text": "Class M is medical. A clinic sending medical data down a dead corridor at standard rate, with a dwell."
+        }
+      ],
+      "choices": [
+        {
+          "text": "“Why would a clinic book medical data at standard?”",
+          "goto": "why"
+        },
+        {
+          "text": "Fly it as booked.",
+          "goto": "midpoint-dwell",
+          "logs": [
+            "as-booked"
+          ],
+          "cover": -2
+        }
+      ]
+    },
+    {
+      "id": "why",
+      "lines": [
+        {
+          "who": "aggie",
+          "text": "Priority is four times the standard tariff. Kessler Habitat is an independent agricultural station with nine hundred residents and one clinic. The clinic’s accounts are public. I haven’t read them.",
+          "kind": "hesitate",
+          "hint": "accounts-public",
+          "truth": "deadline"
+        },
+        {
+          "who": "n",
+          "text": "You read them. The clinic could not have paid priority if it sold the building. The booking note, which you had not opened, says: surgical planning data, paediatric, specialist unavailable on station, procedure window closes in thirty-one hours."
+        },
+        {
+          "who": "n",
+          "text": "The standard schedule arrives in thirty-four."
+        }
+      ],
+      "choices": [
+        {
+          "text": "Skip the dwell. Fly both jumps back to back.",
+          "goto": "midpoint-push",
+          "logs": [
+            "push"
+          ],
+          "cover": 9,
+          "set": [
+            "saved-kessler"
+          ]
+        },
+        {
+          "text": "Ask dispatch to upgrade it to priority at Aletheion’s cost.",
+          "goto": "s-upgrade",
+          "logs": [
+            "upgrade"
+          ],
+          "cover": 6
+        },
+        {
+          "text": "Fly it as booked.",
+          "goto": "midpoint-dwell",
+          "logs": [
+            "as-booked"
+          ],
+          "cover": -2
+        }
+      ]
+    },
+    {
+      "id": "s-upgrade",
+      "lines": [
+        {
+          "who": "dispatch",
+          "text": "Tariff upgrades are a client matter, courier. The consignment is booked at standard and will be flown at standard. Proceed."
+        },
+        {
+          "who": "aggie",
+          "text": "Proceeding.",
+          "kind": "hesitate",
+          "hint": "proceeding-kessler",
+          "truth": "deadline"
+        }
+      ],
+      "choices": [
+        {
+          "text": "Skip the dwell anyway.",
+          "goto": "midpoint-push",
+          "logs": [
+            "push"
+          ],
+          "cover": 8,
+          "set": [
+            "saved-kessler"
+          ]
+        },
+        {
+          "text": "Fly it as booked.",
+          "goto": "midpoint-dwell",
+          "logs": [
+            "as-booked"
+          ],
+          "cover": -2
+        }
+      ]
+    },
+    {
+      "id": "midpoint-push",
+      "jump": {
+        "name": "Kessler corridor, no dwell",
+        "difficulty": 3
+      },
+      "lines": [
+        {
+          "who": "n",
+          "text": "The midpoint beacon is a congested one: the dead node has pushed every carrier on the corridor onto the same crossing, and you take your anchor with barges on three sides and no dwell to settle your nerves."
+        },
+        {
+          "who": "aggie",
+          "text": "Clean. Kessler in forty minutes. The clinic has a berth held.",
+          "kind": "over-comply",
+          "hint": "berth-held",
+          "truth": "deadline"
+        },
+        {
+          "who": "n",
+          "text": "The clinic has a berth held. She has been talking to the clinic. She has not, you notice, said when she started."
+        }
+      ],
+      "next": "arrive-push"
+    },
+    {
+      "id": "arrive-push",
+      "lines": [
+        {
+          "who": "medic",
+          "text": "That’s it? That’s the wafer? We were told tomorrow night. We were told, I’m sorry, give it here, give it here."
+        },
+        {
+          "who": "n",
+          "text": "The medic runs. People do not run in corporate space. You stand on a berth on an agricultural habitat with the smell of soil in the air and watch a woman run with a data wafer held in both hands, and you do not know the child’s name and you never will."
+        },
+        {
+          "who": "n",
+          "text": "Dispatch logs the deviation. You have a line in your file for it, next to the others. Aggie says nothing about it on the way back, and the nothing is warm."
+        }
+      ],
+      "end": true
+    },
+    {
+      "id": "midpoint-dwell",
+      "jump": {
+        "name": "Kessler corridor, dwell",
+        "difficulty": 2
+      },
+      "lines": [
+        {
+          "who": "n",
+          "text": "Eleven hours at the midpoint beacon. The ship is quiet. You do not open the booking note, because you have decided not to, and a decision is easier to keep if you do not look at it."
+        },
+        {
+          "who": "aggie",
+          "text": "Window in ten minutes."
+        }
+      ],
+      "next": "arrive-dwell"
+    },
+    {
+      "id": "arrive-dwell",
+      "lines": [
+        {
+          "who": "n",
+          "text": "Kessler Habitat, tomorrow night, as booked. A clerk takes the wafer and signs for it without looking up. Somewhere behind her, a corridor door is closed that was open earlier in the day."
+        },
+        {
+          "who": "aggie",
+          "text": "Closed, inside the window. Rigel in two jumps."
+        },
+        {
+          "who": "n",
+          "text": "Inside the window. You wonder, briefly, whose window she means, and then you decide not to."
+        }
+      ],
+      "end": true
+    }
+  ]
+}

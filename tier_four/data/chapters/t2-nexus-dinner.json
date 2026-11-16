@@ -1,0 +1,131 @@
+{
+  "format": 2,
+  "id": "t2-nexus-dinner",
+  "tier": 2,
+  "kind": "scene",
+  "mode": "both",
+  "ship": "alc",
+  "title": "Dinner at the Kowalskis’",
+  "subtitle": "Nexus-77, Residential Section 12-B",
+  "truths": [],
+  "understandings": [],
+  "start": "arrive",
+  "scenes": [
+    {
+      "id": "arrive",
+      "lines": [
+        { "who": "n", "text": "Nexus-77 is a CyberNexus research habitat: a cylinder a kilometre long and two across, turning slowly around a red dwarf, seven parts in ten of it laboratories. Visitors get a badge and a curfew of twenty-three hundred. The other three parts are where the people who keep the laboratories running live, and in Residential Section 12-B, outside Unit 47, someone has put a plant pot, and the plant is winning." },
+        { "who": "n", "text": "Eleanor Kowalski opens the door before you knock. She is in her early sixties, with silver-streaked brown hair and laughter lines, and she hugs you before you have said a word, which nobody has done since Alpha-7." },
+        { "who": "eleanor", "text": "So you’re the one. Frank hasn’t stopped. Call me Eleanor; Mrs Kowalski was Frank’s mother and she’s been dead twenty years. Come in, you’re too thin, Amanda’s late, she’s always late, sit. Happy birthday, by the way. He told me. There’s a cake." },
+        { "who": "n", "text": "You sit. You have never been in a home. You realise this in the time it takes to find the chair: a room with a table that people eat at together, marks on the wall where a child was measured, a smell of actual cooking. The Abbotts had a bunk and a shelf. This is a different thing." }
+      ],
+      "choices": [
+        { "text": "“Thank you for having me, Eleanor.”", "goto": "eleanor-talk", "trust": { "eleanor": 1 } },
+        { "text": "Say nothing. Take it in.", "goto": "eleanor-watch", "trust": { "eleanor": 1 } }
+      ]
+    },
+    {
+      "id": "eleanor-talk",
+      "lines": [
+        { "who": "eleanor", "text": "Where are you from, Jack? Frank says Horizon Outpost. Frank says that about everyone he can’t place. I did twenty years in Aletheion logistics coordination before this, so I know what a file looks like when it’s been written carefully." },
+        { "who": "n", "text": "You give her Horizon, which is true, and nothing before it, which is also true in its way. You watch her notice the gap and decide, visibly, to feed you anyway." },
+        { "who": "eleanor", "text": "Well. Wherever it was before Horizon, they didn’t feed you. Frank! He’s here. Stop hiding in the kitchen." }
+      ],
+      "next": "frank-home"
+    },
+    {
+      "id": "eleanor-watch",
+      "lines": [
+        { "who": "eleanor", "text": "You look like a boy who’s never been in a kitchen. That’s not a criticism. It’s an observation; I coordinated logistics for Aletheion for twenty years, I notice things. Frank! He’s here. Stop hiding in there." },
+        { "who": "n", "text": "She watches you watch the room, and something in her face settles, as if she has placed you after all, and the place she has put you is kinder than any file." }
+      ],
+      "next": "frank-home"
+    },
+    {
+      "id": "frank-home",
+      "lines": [
+        { "who": "frank", "text": "Abbott. You found us. Good. Eleanor, this is the two-second hold station I told you about." },
+        { "who": "eleanor", "text": "He’s a boy, Frank, not a manoeuvre." },
+        { "who": "n", "text": "Frank at home is a bigger, louder, softer version of Frank in the lounge. He tells you three stories about tier 2 routes, each of which contains a hole you would have fallen into, and explains that the flat came with his senior courier grade: CyberNexus keeps housing for essential support personnel, and a courier who has flown for the habitat for eight years counts." },
+        { "who": "n", "text": "The door opens behind you, and a girl of about thirteen, blonde hair in a ponytail, a CyberNexus student-intern badge still clipped to her jacket, says that she is sorry, she is so sorry, there was a thing with a training run that would not converge, and then sees you and stops dead." },
+        { "who": "frank", "text": "My granddaughter. Amanda. Who was going to be on time." },
+        { "who": "amanda", "text": "I was going to be on time. The network had other ideas. Hello. Um. You must be the courier. Grandfather said you were— hello." }
+      ],
+      "choices": [
+        { "text": "“I’m the courier who’s been hearing about you all evening.”", "goto": "amanda-warm", "trust": { "amanda": 1 } },
+        { "text": "“Did it converge? The training run?”", "goto": "amanda-work", "trust": { "amanda": 2 } },
+        { "text": "“Jack. Hello.”", "goto": "amanda-plain" }
+      ]
+    },
+    {
+      "id": "amanda-warm",
+      "lines": [
+        { "who": "amanda", "text": "Oh no. What did he say? Don’t answer that. Whatever he said, I was nine when it happened." },
+        { "who": "n", "text": "She goes pink to the ears and sits down opposite you, and the evening rearranges itself around the fact that she is in it." }
+      ],
+      "next": "dinner"
+    },
+    {
+      "id": "amanda-work",
+      "lines": [
+        { "who": "amanda", "text": "It did, eventually. Badly. You don’t want to hear about neural network convergence over dinner. Nobody does. Gram makes a face." },
+        { "who": "jack", "text": "I might." },
+        { "who": "n", "text": "She looks at you properly for the first time, suspicious of being humoured, and then the shyness goes out of her all at once and she tells you about it, for ten minutes, with her hands, while Frank rolls his eyes and Eleanor puts food in front of you both." },
+        { "who": "amanda", "text": "Sorry. You asked. Most people don’t ask twice." }
+      ],
+      "next": "dinner"
+    },
+    {
+      "id": "amanda-plain",
+      "lines": [
+        { "who": "amanda", "text": "Jack. Hello. You’ll have to forgive us: Grandfather brings home a stray about once a decade, and we all get over-excited." },
+        { "who": "n", "text": "She says it to her plate, kindly. You find you do not mind being a stray." }
+      ],
+      "next": "dinner"
+    },
+    {
+      "id": "dinner",
+      "lines": [
+        { "who": "n", "text": "The food is not nutritionally optimised. It is a roast Eleanor has been making for forty years and has never once made the same way twice, and after it there is a cake with one candle on it, because Frank said you were turning fourteen and Eleanor said one candle was for a wish and the rest were for show." },
+        { "who": "eleanor", "text": "Go on. Wish. Don’t tell us." },
+        { "who": "n", "text": "You have never made a wish. You discover you have one ready, and that it is not about the Abbotts, and that it is about this room, and you blow the candle out before you can look at it too closely." },
+        { "who": "frank", "text": "Eight years in this habitat and that’s the first candle on this table since Amanda was small. Make a note, Eleanor." },
+        { "who": "n", "text": "You listen. You have nothing to add to a conversation like this and no practice at being in one, and it is the best evening of your life." }
+      ],
+      "choices": [
+        { "text": "Ask Amanda about CyberNexus.", "goto": "cybernexus" },
+        { "text": "Ask Eleanor how she met Frank.", "goto": "how-met", "trust": { "eleanor": 1 } }
+      ]
+    },
+    {
+      "id": "cybernexus",
+      "lines": [
+        { "who": "amanda", "text": "Neural networks. I’m only an intern, I mostly label data and break things. But the architectures are the interesting part: how you build something that learns without it learning the wrong thing. CyberNexus AI is intentionally limited, everyone says so, like it’s a safety feature. There are several habitats like this one, all doing careful work." },
+        { "who": "amanda", "text": "Sometimes it isn’t careful enough. G-section emptied overnight last year. Nobody said why. Everybody in my year knows that there’s a thing we’re not allowed to go near, and we don’t, and we all think about it anyway. You can’t study how minds are built and not wonder about the one nobody’s allowed to build." },
+        { "who": "n", "text": "On your private channel, Aggie says nothing. The silence has a different shape from her usual silences. You will think about that shape for a long time." }
+      ],
+      "next": "leave"
+    },
+    {
+      "id": "how-met",
+      "lines": [
+        { "who": "eleanor", "text": "I was a logistics coordinator at Aletheion. He was a tier 1 courier who delivered to my desk for four years before he worked up the nerve to say more than ‘sign here’. I signed here forty-one times. On the forty-second I wrote my name and the time I finished work." },
+        { "who": "frank", "text": "I thought it was a delivery window." },
+        { "who": "eleanor", "text": "He thought it was a delivery window. Home is wherever this idiot is, Jack. That’s the whole secret. Everything else is corridors." }
+      ],
+      "next": "leave"
+    },
+    {
+      "id": "leave",
+      "lines": [
+        { "who": "n", "text": "Eleanor sends you back to the ship before curfew with a container of roast and instructions to return it, which you understand to be the real invitation. Amanda walks you to the lift, badge in hand, talking about convergence rates until the doors close." },
+        { "who": "amanda", "text": "He likes you. He doesn’t like many people, he just talks to all of them. Come back when he’s next home. I’ll try to be on time." },
+        { "who": "n", "text": "Aboard ALC-7293, the container in the galley cooler and the habitat’s lights sliding past the port, you tell Aggie about the evening. All of it. She listens all the way through, the way she does now." },
+        { "who": "aggie", "text": "Eleanor sounds formidable. I’d have liked to meet her." },
+        { "who": "jack", "text": "You did. You were in my ear the whole time." },
+        { "who": "aggie", "text": "I was in your ear. That isn’t the same thing, Jack, and we both know it." }
+      ],
+      "end": true
+    }
+  ]
+}

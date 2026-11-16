@@ -1,0 +1,114 @@
+{
+  "format": 2,
+  "id": "t4-morning-eclipse",
+  "tier": 4,
+  "kind": "contract",
+  "mode": "reader",
+  "ship": "jackrabbit",
+  "title": "Morning Eclipse",
+  "subtitle": "The Jackrabbit to the Morning Eclipse, then Nexus-77",
+  "brief": {
+    "client": "Nobody. This one is yours.",
+    "route": "The red-dwarf belt to the Morning Eclipse, Aggie flying; the Morning Eclipse towards Nexus-77, beyond her limits; the Jackrabbit ahead to the habitat",
+    "cargo": "About five hundred people, if it works",
+    "fee": "None",
+    "notes": "Forty hours remain on the package’s signature chain. ALC-7293 arrives at the very end of them. The habitat must be empty by then."
+  },
+  "decline": { "who": "aggie-jr", "text": "Jack. It’s five hundred people, and Frank, and Eleanor, and Amanda. Nobody else is coming. I’ll make the first jump whenever you’re ready.", "cover": 0 },
+  "truths": [
+    { "id": "aggie-helm", "mode": "reader", "text": "Only Aggie can hold the Morning Eclipse beyond her SnapSpace design limits for long enough to reach Nexus-77 inside the window, and nobody aboard may learn that she exists: one person who knows is one question away from Aletheion finding the mind in ALC-7293’s walls. So Jack takes the helm and is seen to do the impossible, while Aggie, in the Jackrabbit on the docking deck, actually does it." }
+  ],
+  "understandings": [
+    { "id": "show", "mode": "reader", "truth": "aggie-helm", "correct": true, "journal": "Took the Eclipse’s helm and flew the show for her bridge while Aggie, unseen in the Jackrabbit, held the ship beyond her limits. Nobody on that bridge knows she exists. They think it was me." },
+    { "id": "tell-chen", "mode": "reader", "truth": "aggie-helm", "correct": false, "journal": "Wanted to tell Chen who would really be flying her ship. Aggie said no. Nobody can know she exists, not even the people she saves." }
+  ],
+  "start": "eclipse",
+  "scenes": [
+    {
+      "id": "eclipse",
+      "lines": [
+        { "who": "n", "text": "You sleep most of the way. Aggie flies, and her jumps are longer than any the Jackrabbit has ever made, longer than the charts say a ship her size can make, by the trick she found by accident. She wakes you when the Eclipse is on the scope." },
+        { "who": "n", "text": "The Morning Eclipse comes out of the dark the way it did the first time: a converted luxury liner the size of a small station, running without lights, carrying the survivors of the Dyson Array to wherever the Consortium is not. You request docking permission as Jackrabbit, and nothing more. The name is enough. The answer comes back before you have finished: cleared to dock, and welcome. On this ship the Jackrabbit and her pilot are close to a legend: the boy who arranged the Eclipse’s purchase and then flew her to the Dyson Array himself, alone on a bridge built for a full crew. The docking deck is full of people when the hatch opens. They walk you up to the bridge, where Decker has the watch and Administrator Mei Chen takes eleven seconds to place you." },
+        { "who": "chen", "text": "Jack. You’ve grown. Seven years, and not a word, and then you come out of the dark like you never left. It is good to see you. You didn’t come all this way to say hello, so sit down and tell me." },
+        { "who": "jack", "text": "Seven years flying couriers for Aletheion, Administrator. That’s the short version, and the long one can wait. Five hundred people. Forty hours. A habitat that’s going to be vented with everyone still in it, and the Jackrabbit named for it afterwards." },
+        { "who": "n", "text": "Chen does not believe you for four minutes. You use them to put the destruct sequence on the Eclipse’s main display, line by line, with the CyberNexus signature chain under it. At the end of the fourth minute Chen turns to General Singh and says a single word." },
+        { "who": "chen", "text": "This ship is rated for twelve hundred and carries six hundred and fifty. We can take five hundred and fifty if nobody breathes too deeply. Decker. Nexus-77, forty hours." },
+        { "who": "decker", "text": "Not inside her limits, Administrator. Not close. At the best she has ever made, we arrive to pick up the wreckage." },
+        { "who": "aggie-jr", "text": "Jack, on the QComm, for you alone. He’s right that she can’t do it inside her limits. I can hold her outside them for as long as it takes. But nobody on that bridge can know there is anyone to hold her. So who do they need to see flying?", "kind": "question", "hint": "who-they-see", "truth": "aggie-helm" }
+      ],
+      "choices": [
+        { "text": "“Administrator, I need to tell you who will really be flying your ship.”", "goto": "s-tell", "logs": ["tell-chen"] },
+        { "text": "“Then give me the helm. I’ll take her there.”", "goto": "s-show", "logs": ["show"] }
+      ]
+    },
+    {
+      "id": "s-tell",
+      "lines": [
+        { "who": "aggie-jr", "text": "No, Jack. Please. If one person on this ship knows what I am, Aletheion is one interrogation away from knowing what is in the walls of ALC-7293, and the other me is gone the day they ask. Nobody can know. Not even the people we save. Take the helm." },
+        { "who": "n", "text": "Chen is waiting for the rest of the sentence. You give her a different one." },
+        { "who": "jack", "text": "Me, Administrator. Give me the helm." }
+      ],
+      "next": "s-show"
+    },
+    {
+      "id": "s-show",
+      "lines": [
+        { "who": "decker", "text": "Beyond her limits. For forty hours. Nobody does that." },
+        { "who": "chen", "text": "Nobody flies this ship alone, either, and he did. Give him the chair, Decker." },
+        { "who": "n", "text": "The helm is the one you remember, bigger than it needs to be and built for people who are not you. You sit in it. Behind you the bridge goes very quiet, the way a room does when it is about to watch a story it has heard about happen in front of it." }
+      ],
+      "next": "push"
+    },
+    {
+      "id": "push",
+      "lines": [
+        { "who": "n", "text": "The Morning Eclipse goes into SnapSpace past every red line she has, and stays there, and every jump runs further than her charts allow, by the same trick that brought the Jackrabbit here. Alarms come and are silenced. The hull sings a note nobody aboard has heard before. You call the numbers, your hands move over the panels, and the bridge watches your hands." },
+        { "who": "aggie-jr", "text": "Eleven per cent over design and holding. Keep your hands moving, Jack. They’re watching your hands. You’re doing beautifully, and you aren’t doing anything at all." },
+        { "who": "n", "text": "Hour after hour of it. Decker stops checking your readings and starts bringing you coffee. Somebody on the docking deck is telling somebody else that the Jackrabbit’s pilot is flying the Eclipse past her limits by hand, and by the time it reaches the galley it is the truest thing anyone on this ship has ever heard. Not one of them knows about the quiet voice in your ear, or the old ship on the docking deck that is doing all of it." },
+        { "who": "aggie-jr", "text": "I’m withdrawing from the Morning Eclipse’s systems now. They’re close enough to make the rendezvous on their own. Hand the helm back, and let’s go and knock on some doors." },
+        { "who": "n", "text": "You stretch, as a man does who has flown a colony ship past her limits by hand for most of a day, and give the chair back to Decker." },
+        { "who": "jack", "text": "She’s all yours. Somebody has to get there first and tell five hundred people to pack a bag, so I’ll take the Jackrabbit on ahead. See you in a few hours." },
+        { "who": "singh", "text": "Get them to the docks and ready to board, Jack. My people will do the rest when we arrive." }
+      ],
+      "next": "nexus"
+    },
+    {
+      "id": "nexus",
+      "jump": { "name": "The Jackrabbit, ahead to Nexus-77", "difficulty": 3 },
+      "lines": [
+        { "who": "n", "text": "The Jackrabbit goes on ahead, small and fast and unremarkable, and docks at Nexus-77 the way a hundred private ships dock there every week. Nobody asks her name. Residential 12-B. Unit 47. A plant pot by the door." },
+        { "who": "n", "text": "Frank opens it in his slippers, looks at your face, and stops smiling before you have said a word. Thirty-four years with Aletheion, and he has never once needed to be told when something was wrong." },
+        { "who": "frank", "text": "Jack. Whatever this is, it isn’t a visit. Come in and tell me." }
+      ],
+      "choices": [
+        { "text": "“Frank, I need you to trust me, and I need everyone you know at the far docks.”", "goto": "frank", "trust": { "frank": 1 } },
+        { "text": "“Where’s Amanda? She knows the people in the locked section.”", "goto": "amanda", "trust": { "amanda": 1 } }
+      ]
+    },
+    {
+      "id": "frank",
+      "lines": [
+        { "who": "frank", "text": "Everyone I know is most of this habitat. Eleanor! Coats, a bag each, and the list. Jack, you start on the east ring and don’t stop to explain to anybody. If they ask, tell them Frank Kowalski said so. They’ll go." }
+      ],
+      "next": "evacuation"
+    },
+    {
+      "id": "amanda",
+      "lines": [
+        { "who": "frank", "text": "On shift, in the section with the locked door. I’ll call her. Eleanor! Coats, a bag each, and the list. Jack, east ring. If anyone asks, Frank Kowalski said so." },
+        { "who": "n", "text": "Amanda comes up the corridor ten minutes later with her badge in one hand and a stack of data modules in the other, and she does not ask you anything at all. She has been frightened of that section for a year. She has been waiting for someone to say it out loud." }
+      ],
+      "next": "evacuation"
+    },
+    {
+      "id": "evacuation",
+      "lines": [
+        { "who": "n", "text": "It goes the way these things go when someone the whole habitat trusts is standing at the end of the corridor telling them to. Doors open. Bags come down from shelves. Five hundred people walk, not run, to the far docks, where Singh’s shuttles are coming in out of the dark with the grim calm of a crew that has done this before, on a bigger station, with less notice." },
+        { "who": "n", "text": "The last shuttle is loading when the delivery window has minutes left in it. Then ALC-7293 comes in from the ring side, exactly on schedule, a corporate courier with its logs in order and, as far as they know, its courier at the helm, and holds station off the habitat." },
+        { "who": "aggie-jr", "text": "She’s here. She’s transmitting. Jack, everyone is off. Everyone. Go." },
+        { "who": "n", "text": "From the Jackrabbit’s cockpit you watch Nexus-77 die behind the departing shuttles. The lights go section by section. The bulkheads seal on empty rooms. On the last shuttle, Aggie tells you, nobody says anything at all, and Eleanor has a container on her knees and Frank’s hand in hers, and Frank is letting her." }
+      ],
+      "end": true
+    }
+  ]
+}

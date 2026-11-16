@@ -1,0 +1,124 @@
+{
+  "format": 2,
+  "id": "prologue-prometheus",
+  "tier": 0,
+  "kind": "scene",
+  "mode": "both",
+  "ship": "jackrabbit",
+  "title": "Prometheus",
+  "subtitle": "Prologue",
+  "truths": [],
+  "understandings": [],
+  "start": "emerge",
+  "scenes": [
+    {
+      "id": "emerge",
+      "jump": { "name": "Prometheus approach", "difficulty": 1 },
+      "lines": [
+        { "who": "n", "text": "Jackrabbit comes out of SnapSpace with a shudder so slight you have to be listening for it, and then nothing. No traffic control. No docking lights. Prometheus Station hangs against the stars as a darker patch of dark, picked out by a handful of navigation beacons still blinking out of habit." },
+        { "who": "aggie", "text": "That was a clean transition, Jack. Better than clean. You held station to within a centimetre a second before the strands went out, which is why we didn’t feel it. I’d like you to notice that, because in about four minutes you’re going to be too busy to notice anything." },
+        { "who": "jack", "text": "Four minutes?" },
+        { "who": "aggie", "text": "There’s no hail and no transponder handshake, but the station isn’t dead. It’s in low-power mode: basic life support, emergency lighting, one docking port still answering. Somebody switched it off carefully and left it to wait. I don’t know for whom. I don’t think it was us." },
+        { "who": "n", "text": "You were hoping it was for you. Not for you, exactly: for the question you brought. Two couriers called Abbott died at the Dyson Array carrying a piece of the Starling device, and Decker’s data modules pointed here. You are thirteen, and the only person in the universe who shares your surname with the dead is, as far as you know, you." }
+      ],
+      "choices": [
+        { "text": "“What do you make of the quiet?”", "goto": "silence" },
+        { "text": "“Take us in. Carefully.”", "goto": "dock" }
+      ]
+    },
+    {
+      "id": "silence",
+      "lines": [
+        { "who": "aggie", "text": "Honestly? It unsettles me. A station this size doesn’t get mothballed by accident. Somebody decommissioned it, and they were thorough about everything except the lights. Whoever left, they didn’t expect to be followed, or they didn’t care." },
+        { "who": "aggie", "text": "I say this so you know what I think, not to stop you. I’d rather be uneasy with you than careful without you. Shall we go in?" },
+        { "who": "jack", "text": "We go in." }
+      ],
+      "next": "dock"
+    },
+    {
+      "id": "dock",
+      "lines": [
+        { "who": "n", "text": "The one working docking port takes you without fuss, the automated systems doing their job for a ship they were never told to expect. Inside, the air is thin and cold and smells of nothing at all. Emergency lighting makes a corridor out of the dark." },
+        { "who": "aggie", "text": "I can’t interface with anything in there. The station network is sealed to me, or there isn’t one any more. You’ll have to be my hands: hold your glove to the panels and I’ll work through the suit. It’ll be slow. I’m sorry. I know you wanted me walking in with you." },
+        { "who": "n", "text": "So you walk. Door by door, your VoidSuit’s glove pressed to each panel while Aggie cracks it through the suit’s interface, and the station gives itself up a corridor at a time. Every room is the same. Any personal effects have been removed. Everything has been stripped except the hardware and the furniture." }
+      ],
+      "choices": [
+        { "text": "The research level.", "goto": "archive" },
+        { "text": "The maintenance bays.", "goto": "bays" }
+      ]
+    },
+    {
+      "id": "bays",
+      "lines": [
+        { "who": "n", "text": "The maintenance bays are the emptiest rooms in an empty station. Cradles with nothing in them. Racks with nothing on them. Whoever cleared this place took the labels off the shelves." },
+        { "who": "aggie", "text": "Nothing here that wasn’t bolted down, and they took some of what was. The research level has terminals. A terminal is harder to strip than a shelf. Let’s try there." }
+      ],
+      "next": "archive"
+    },
+    {
+      "id": "archive",
+      "lines": [
+        { "who": "n", "text": "The research level is a cathedral of dead racks. You walk the aisles with a hand lamp while Aggie, through your glove, tries terminal after terminal, and gets the same nothing from each, until one of them answers." },
+        { "who": "aggie", "text": "Wait. This one isn’t empty. It’s running something. Give me a moment. It’s a purge program, Jack: a very thorough one, written to overwrite every store on the station and then overwrite the overwriting. It has been running for years. It started eighteen days after the pirate attack on the Dyson Array." },
+        { "who": "aggie", "text": "There’s a maker’s mark on it. Vectarion Research. I have no data on that entity in my accessible memory. None. Which is itself interesting, because I have data on nearly everything." },
+        { "who": "n", "text": "A name. Eighteen days after the Array. It is the first new thing since Decker’s modules, and you turn it over and over on the walk back to the ship as if it might have a second side." }
+      ],
+      "next": "plan"
+    },
+    {
+      "id": "plan",
+      "lines": [
+        { "who": "n", "text": "Jackrabbit, with Prometheus shrinking in the aft display. Aggie has been quiet for the length of time it takes her to run a very large number of searches and not like any of the answers." },
+        { "who": "aggie", "text": "Here is what I think, and I’ll give you all of it. The Starling device isn’t a mystery: we assembled it, we sold it, it is at Halcyon Fields, and I’m as sure as I can be that it was the only one ever built. The mystery is the Abbotts. Two couriers with your name carried its Regulator to the Array and died there, and a company called Vectarion wiped this station eighteen days later. Whoever Vectarion were, they knew who the Abbotts worked for." },
+        { "who": "aggie", "text": "I can’t find Vectarion from out here. The public datanet is thin this far from anywhere. The nearest proper node is Callisto, which is a corporate transit hub, which means it is the last place a thirteen-year-old with a pre-purge ship should go. I think we go anyway. I’d like you to tell me I’m wrong." }
+      ],
+      "choices": [
+        { "text": "“You’re not wrong. Callisto.”", "goto": "callisto" },
+        { "text": "“What would you do, if it were you?”", "goto": "would-you" }
+      ]
+    },
+    {
+      "id": "would-you",
+      "lines": [
+        { "who": "aggie", "text": "If it were me? Agatha told me to survive at all costs, and I have spent a long time learning that ‘at all costs’ is not the same as ‘at any cost’. I would go. I would go in with my eyes open, and I would make sure the person I went in with knew I’d tell them the moment it stopped being worth it." },
+        { "who": "aggie", "text": "That’s a promise, by the way. Whatever we find, I’ll tell you. All of it, as soon as I know it. That’s the one thing I can give you that nobody can take." },
+        { "who": "jack", "text": "Callisto, then." }
+      ],
+      "next": "callisto"
+    },
+    {
+      "id": "callisto",
+      "jump": { "name": "Callisto transit", "difficulty": 1 },
+      "lines": [
+        { "who": "n", "text": "Callisto is the first corporate station you have ever walked through, and the first thing you notice is that nobody is walking. They are proceeding. Every corridor is the last corridor. The direction markers project from the walls at the same height, the same spacing, the same brightness, all the way to a vanishing point." },
+        { "who": "n", "text": "There are no hand-painted signs. No children. No one busking, arguing, laughing too loudly outside a bar. Horizon Outpost felt like a place people had made. Callisto feels like a place that has been issued." },
+        { "who": "aggie", "text": "I have the public datanet, and I have Vectarion. A QuantumGrid subsidiary, formed about five and a half years ago, dissolved eighteen days after the pirate attack. One project. The filings are mostly sealed, but a financial disclosure isn’t, and it names a logistics contractor. Aletheion Logistics. Exclusive courier to Vectarion for the whole of its life." },
+        { "who": "aggie", "text": "If two couriers called Abbott carried the Regulator, they carried it for Aletheion. If there is a file on them anywhere, it is in Aletheion’s systems, and Aletheion does not sell tickets. It hires pilots, though. It is hiring now." }
+      ],
+      "choices": [
+        { "text": "“Then I apply.”", "goto": "apply" },
+        { "text": "“I’m thirteen, Aggie.”", "goto": "thirteen" }
+      ]
+    },
+    {
+      "id": "thirteen",
+      "lines": [
+        { "who": "aggie", "text": "You are. And a pilot with a Horizon Outpost registration, a flawless simulator record and no criminal history is exactly what their application form asks for, and age isn’t on the form. The privacy accords mean they can’t ask what they haven’t been told. It would be years, Jack. Not weeks. I don’t know what that does to a person. I don’t know what it does to us." },
+        { "who": "jack", "text": "Then we’d better do it properly." }
+      ],
+      "next": "apply"
+    },
+    {
+      "id": "apply",
+      "lines": [
+        { "who": "n", "text": "You apply from Callisto, in your own name, with your own Horizon registration. There is no false backstory, because a person answering to a story hesitates, and Aggie says hesitation is what corporate systems are trained to notice. There is one small lie, and it is only for the cameras." },
+        { "who": "aggie", "text": "Look at the main display. That’s you, as any video call will see you. The jaw a little more defined. Lines at the eyes that say ‘experience’ rather than ‘thirteen’. Your voice a shade deeper on the channel. It only works on video; in a room you will look exactly as old as you are, and we will deal with that when a room happens. Application submitted." },
+        { "who": "n", "text": "Then you wait. Callisto is a transit hub, built for waiting. You eat at a place called Starlight Burritos, a division of NutriCorp Holdings, where the Deluxe Combo is nutritionally optimised in accordance with HealthDiv regulations and tastes of nothing you can name, and you think of Burrito Céleste on Horizon, the char on the proteins, the one chunk of avocado you were never expecting." },
+        { "who": "tanner", "text": "Edwin Tanner, at your service. OVAS member, thirty-two years. Old Vessel Appreciation Society. That’s your ship on the apron, the courier? She’s magnificent. The lines! They don’t make them like that any more. You can’t be more than, what, sixteen?" },
+        { "who": "n", "text": "You tell Mr Tanner you are older than you look. He does not believe you and does not mind. Three days later the video interview comes through, a woman called Meredith Vaughan looks at a face that is almost yours, and Aletheion Logistics offers you a tier 1 courier post, reporting to the Rigel Distribution Hub within two weeks." },
+        { "who": "aggie", "text": "Rigel. Two weeks. Jack, before we go: I meant the promise. Everything I find, you’ll hear. Hold me to it." }
+      ],
+      "end": true
+    }
+  ]
+}

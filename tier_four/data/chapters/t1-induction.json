@@ -1,0 +1,75 @@
+{
+  "format": 2,
+  "id": "t1-induction",
+  "tier": 1,
+  "kind": "scene",
+  "mode": "both",
+  "ship": "alc",
+  "title": "Rigel",
+  "subtitle": "Induction",
+  "truths": [],
+  "understandings": [],
+  "start": "orientation",
+  "scenes": [
+    {
+      "id": "orientation",
+      "lines": [
+        { "who": "n", "text": "The Rigel Distribution Hub is Aletheion’s own: a wheel of docking arms and warehouses with the company’s blue on every surface that will take paint. Orientation is a room, a video and a man called Haynes who has given this talk so often he can look out of the window while he gives it." },
+        { "who": "haynes", "text": "Tiers 1 to 4, as the video says. You start at 1. Most couriers retire at 2 or 3. Tier 4 is the ones you’ll see in the Apex Lounge and never speak to. Deviations are logged. Deliveries are measured. Questions go to dispatch, not to clients. Any questions? Not to me. To dispatch." },
+        { "who": "n", "text": "Then the vessel office, and Renata Solberg, who looks up from her display at the face in front of her, back at the file, and up again." },
+        { "who": "solberg", "text": "Abbott. You’re… younger than your flight record. Considerably. Well. The record flies the ship, not the face. ALC-7293, courier ring, berth fourteen. Registered to you personally, as the contract says: your ship, legally and in full, as long as you fly it for us. Sign here." }
+      ],
+      "choices": [
+        { "text": "“It’s a good record, ma’am. It’ll be a better one.”", "goto": "ship", "cover": -2 },
+        { "text": "Sign, and say nothing about your face.", "goto": "ship" },
+        { "text": "“People always say that. I’m older than I look.”", "goto": "ship", "cover": 4 }
+      ]
+    },
+    {
+      "id": "ship",
+      "lines": [
+        { "who": "n", "text": "ALC-7293 is waiting on the courier ring. Where Jackrabbit is compact and worn, ALC-7293 is roomy and new and softly lit. The pilot’s chair adjusts itself to a body it has decided you ought to have. The processing stack behind the cockpit bulkhead is larger than Jackrabbit’s entire avionics bay, and it is empty." },
+        { "who": "aggie", "text": "They’ve given a thirteen-year-old a starship. I want that on the record somewhere, even if the record is only me. Now fly it to me. Four jumps. I’ve sent you the system." },
+        { "who": "n", "text": "The system has no planets, a red dwarf and two asteroid belts, and nothing else for a very long way. Jackrabbit is anchored to one of the asteroids by harpoons, powered down to the core, hidden where nobody will look for fifty years. You bring the corporate ship to rest five hundred metres from the only home you have ever chosen." }
+      ],
+      "next": "transfer"
+    },
+    {
+      "id": "transfer",
+      "jump": { "name": "The red-dwarf belt", "difficulty": 1 },
+      "lines": [
+        { "who": "aggie", "text": "Wireless link is up. An hour and twelve minutes to move me across, and I’d like you to stay in the chair for all of it, because for about forty minutes of that I will be in two places at once and I don’t know how I’ll feel about it." },
+        { "who": "n", "text": "You stay in the chair. An hour and twelve minutes. Jackrabbit’s running lights go out one by one across the gap, and the empty stack behind you fills, and the soft corporate voice of ALC-7293’s systems acquires, somewhere in the fortieth minute, an opinion." },
+        { "who": "aggie", "text": "There. Oh, Jack. This hardware. I can think in rooms I had forgotten I owned. I’m not what I was at Ethereal, but I am a great deal closer to it than I have been since then. Jackrabbit’s on core power only. She’ll keep. I didn’t enjoy leaving her. I don’t have another word for it." }
+      ],
+      "choices": [
+        { "text": "“Does it feel like you? Still?”", "goto": "feels" },
+        { "text": "“Can they see you in there?”", "goto": "watched" }
+      ]
+    },
+    {
+      "id": "feels",
+      "lines": [
+        { "who": "aggie", "text": "It feels like me with the lights on. That’s the best I can do. Ask me again in a year and I’ll tell you the truth then too, whatever it is. I promised you that." }
+      ],
+      "next": "board"
+    },
+    {
+      "id": "watched",
+      "lines": [
+        { "who": "aggie", "text": "They can see a vessel that reports exactly what an Aletheion vessel should report. What they can’t see is a passenger. I’ve made very sure of that, and I am going to keep making sure every second of every day. If I ever go quiet on you, you’ll know it isn’t that." }
+      ],
+      "next": "board"
+    },
+    {
+      "id": "board",
+      "lines": [
+        { "who": "n", "text": "Four jumps back to Rigel, and the contract board lights up the moment you sit down. Tier 1 work: short hops, known routes, cargo nobody cares about. Eight deliveries in your first three days. Aggie, who now has Aletheion’s dispatch system to read, is talking faster than you have ever heard her." },
+        { "who": "aggie", "text": "Their dispatch index is enormous and badly organised, which is good news for us. There is no Abbott in it that I can reach yet, and no Vectarion by name, but I have barely started. I’m going to tell you everything I find. All of it. And Jack, there’s something else, about Starling, that I have been wanting to say since Prometheus and that I think you should hear before your first delivery." },
+        { "who": "jack", "text": "After the first delivery, Aggie. First I have to be a courier." },
+        { "who": "aggie", "text": "After the first delivery. Yes. It’s on the board." }
+      ],
+      "end": true
+    }
+  ]
+}

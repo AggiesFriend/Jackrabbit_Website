@@ -1,0 +1,10 @@
+{
+  "format": 2,
+  "title": "Sample campaign",
+  "chapters": ["sample-contract", "sample-scene"],
+  "reviews": { "any": "sample-review" },
+  "speakers": {
+    "aggie": { "name": "Aggie" },
+    "frank": { "name": "Frank" }
+  }
+}

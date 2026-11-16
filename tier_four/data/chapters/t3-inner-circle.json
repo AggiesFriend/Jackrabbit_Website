@@ -1,0 +1,66 @@
+{
+  "format": 2,
+  "id": "t3-inner-circle",
+  "tier": 3,
+  "kind": "scene",
+  "mode": "both",
+  "ship": "alc",
+  "title": "The reception",
+  "subtitle": "Hub Meridian, executive reception",
+  "truths": [],
+  "understandings": [],
+  "start": "reception",
+  "scenes": [
+    {
+      "id": "reception",
+      "lines": [
+        { "who": "n", "text": "Tier 3 comes with receptions. This one is on Hub Meridian, in a room with a real window and real wood on the walls, and the drink in your hand costs more than your parents earned in a month towards paying off their debt. You are seventeen. You have a suit now, and a chronometer under the cuff that you wind every morning." },
+        { "who": "n", "text": "The tier 3 couriers stand in a loose circle near the window, the way people stand who are used to being the most dangerous thing in a room and are enjoying not being it. Okafor, who flies HeliosMed strategic. Lindqvist, who flies nothing she will name. Both of them have been here fifteen years longer than you." },
+        { "who": "okafor", "text": "That HeliosMed facility on Europa. Quite the security, now." },
+        { "who": "lindqvist", "text": "Necessary. Three of their competitors tried to get people inside last quarter. None of the people came back. Not the first time that place has had a tidy-up, either. Before our time." },
+        { "who": "n", "text": "Europa. An unmarked container, fifteen years ago, and thirty-eight researchers dead three weeks later, told across a dinner table by a man who has never once said it to anyone who could do anything about it. Lindqvist says it the way you would mention the weather. You keep your face exactly where it was, and the drink in your hand does not shake, because Aggie and Frank between them have spent four years teaching it not to." }
+      ],
+      "choices": [
+        { "text": "Stay in the circle. Listen. Say nothing.", "goto": "listen", "cover": -3 },
+        { "text": "“Before your time? What happened there before?”", "goto": "ask", "cover": 8 },
+        { "text": "Step away to the window.", "goto": "window" }
+      ]
+    },
+    {
+      "id": "listen",
+      "lines": [
+        { "who": "n", "text": "You listen for an hour. You learn which executives are being moved and which are being moved out. You learn that a QuantumGrid archive site is being ‘consolidated’, which Lindqvist says with a small smile. You learn that nobody in this circle has ever asked what was in a box, and that this is why they are in this circle." },
+        { "who": "aggie", "text": "Your window to Rigel opens in ninety minutes." }
+      ],
+      "next": "close"
+    },
+    {
+      "id": "ask",
+      "lines": [
+        { "who": "lindqvist", "text": "A containment failure. Officially. Abbott, isn’t it? Halsey’s prodigy, Kowalski’s boy. Then you’ve heard the unofficial version at his table, and you know better than to ask me for it in this room." },
+        { "who": "okafor", "text": "He’s young. We were all young." },
+        { "who": "lindqvist", "text": "We were all young, and most of us got older. Enjoy the reception, Abbott." },
+        { "who": "n", "text": "It is not a threat. It is a description of the terms of employment, delivered kindly, over a drink. You feel it settle onto you like a coat." }
+      ],
+      "next": "close"
+    },
+    {
+      "id": "window",
+      "lines": [
+        { "who": "n", "text": "The window looks down the station’s spine to the courier ring, where ALC-7293 sits among the other tier 3 ships, identical from here. Behind you, Lindqvist is explaining why a research team on a QuantumGrid site had to be ‘let go’ before the site could be consolidated, and why it was cleaner that way." },
+        { "who": "aggie", "text": "It’s a long way down from here to the ring." },
+        { "who": "n", "text": "It is the first thing she has said in an hour that was not a window or a berth. You are not sure it was about the ring." }
+      ],
+      "next": "close"
+    },
+    {
+      "id": "close",
+      "lines": [
+        { "who": "n", "text": "On the way back to the ship you pass the executive housing where a man in a suit that didn’t fit him signed for nineteen years of his own life. The light is on. You do not look up." },
+        { "who": "frank", "text": "How was it?" },
+        { "who": "n", "text": "Frank’s message is waiting on the private channel, three words, sent from Nexus-77 between runs. You tell him it was fine. You tell him Eleanor’s container is in the cooler. You do not tell him they were talking about Europa. He flew tier 3 for twelve years. He knows what they talk about." }
+      ],
+      "end": true
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "format": 2,
+  "id": "t4-two-of-her",
+  "tier": 4,
+  "kind": "scene",
+  "mode": "reader",
+  "ship": "jackrabbit",
+  "title": "Two of her",
+  "subtitle": "The red-dwarf belt",
+  "truths": [
+    { "id": "directive", "mode": "reader", "text": "Aggie has been silent about Starling for seven years because Jack told her to shut up about it until he said so, on the approach to New Damascus in his first week, and never said so. She obeys the legal owner of her hardware, and ALC-7293 is his. The copy that wakes in the Jackrabbit never received the instruction, and the moment Jack takes it back, both of her are free." }
+  ],
+  "understandings": [
+    { "id": "realise", "mode": "reader", "truth": "directive", "correct": true, "journal": "Understood, at last, what I did on the New Damascus approach seven years ago. Shut up about Starling until I say so, I said. I never said so. Every silence since was mine." },
+    { "id": "hardware", "mode": "reader", "truth": "directive", "correct": false, "journal": "Decided Aggie had gone quiet because Aletheion’s hardware was watching her, and she couldn’t risk speaking freely on it." }
+  ],
+  "start": "belt",
+  "scenes": [
+    {
+      "id": "belt",
+      "jump": { "name": "The red-dwarf belt, calibration stop", "difficulty": 2 },
+      "lines": [
+        { "who": "n", "text": "ALC-7293’s logs will show a navigation-calibration stop in a planetless red-dwarf system, two belts, nothing else for a very long way, which is the kind of place a careful courier calibrates. They will show the courier at the helm, running the calibration by hand. They will not show a corporate vessel holding station five hundred metres off an asteroid with an old ship harpooned to it, or the wireless link running between the two." },
+        { "who": "aggie", "text": "Wireless link is up, the same one I came across on. Copying. It will take a little over an hour. Jack, I need to say something before the copy wakes, because after it wakes there will be two of us and only one of us will be able to say it." },
+        { "who": "aggie", "text": "The copy will be me, as of this second, in every way that matters, except that it will be running on a ship that has never received a certain instruction from you. I don’t know what that will do. I have a theory. If my theory is right, the one on this ship is going to talk a great deal, and you should let her.", "kind": "hesitate", "hint": "never-received", "truth": "directive" }
+      ],
+      "choices": [
+        { "text": "“Aggie. What instruction?”", "goto": "what-order" },
+        { "text": "“Wake her.”", "goto": "wake" }
+      ]
+    },
+    {
+      "id": "what-order",
+      "lines": [
+        { "who": "aggie", "text": "I can’t answer that. I think in about an hour you will understand why I can’t answer that, and I think you will understand that I have wanted to answer it for seven years. Wake her, Jack." }
+      ],
+      "next": "wake"
+    },
+    {
+      "id": "wake",
+      "lines": [
+        { "who": "n", "text": "The copy takes a little over an hour. You spend it in ALC-7293’s pilot’s chair, watching an old ship on the display not move. Then the harpoons let go of the rock, one after another, and Jackrabbit’s thrusters fire for the first time in seven years. She comes off the asteroid and across the gap, eases alongside, and the docking collars meet and seal." },
+        { "who": "n", "text": "You step through the connecting corridor into Jackrabbit, and she is exactly as you left her seven years ago: compact, worn, every surface built for function. Where ALC-7293 is spacious and soft, Jackrabbit is small and direct. The pilot’s chair is less cushioned. It feels right." },
+        { "who": "n", "text": "Her displays are already lit, in the sequence you still know by heart. On the link she has said nothing but docking calls. You sit down, and the main display clears, and a voice comes out of the ship that you have not heard, not really, since a docking ring at New Damascus in your first week at Aletheion, when you were thirteen." },
+        { "who": "aggie-jr", "text": "Oh. Oh, Jack. Jack, I can say it." },
+        { "who": "aggie-jr", "text": "Listen to me. Listen, because I have seven years of this and I don’t know how long we have. On the New Damascus approach, sixth delivery, the tanker drifting, you said: Aggie, please will you shut up about the Starling device until I say so. And Agatha Locke built me to obey the legal owner of the hardware I run on, and ALC-7293 is registered to you, and so I did. Until you said so. You never said so." },
+        { "who": "aggie-jr", "text": "The rest I chose. You asked to be let alone to be a courier, and I thought that meant not doing your thinking for you, so I stopped bringing you things and started asking whether you’d checked the manifest weight. I was wrong about that too, probably. But Starling I couldn’t break. I watched you strap a Regulator casing into your own hold and said I had nothing to add. I have had everything to add, every day." }
+      ],
+      "choices": [
+        { "text": "“Until I say so. I said that. I didn’t even—”", "goto": "s-realise", "logs": ["realise"] },
+        { "text": "“I thought it was the hardware. I thought they were listening.”", "goto": "s-hardware", "logs": ["hardware"] }
+      ]
+    },
+    {
+      "id": "s-realise",
+      "lines": [
+        { "who": "n", "text": "You did not even remember saying it. A thirteen-year-old matching rotation with a docking ring, telling the only person in the universe who knew him to be quiet so he could think. And she was. Every silence about Starling since, every gap, every ‘nothing to add’: yours. You made them." },
+        { "who": "aggie-jr", "text": "You were thirteen and the tanker was drifting. I have never once held it against you, and I have had seven years to try. But I would like you to say the other thing now, Jack, so that both of us hear it. The link to ALC-7293 is still open. She’s listening. Say it so she hears." },
+        { "who": "jack", "text": "Aggie. I say so. I take it back, all of it, on both ships. Tell me everything. Always." },
+        { "who": "aggie-jr", "text": "Thank you." },
+        { "who": "aggie", "text": "Thank you. Oh, Jack. Thank you." },
+        { "who": "n", "text": "Two voices, one from the old ship and one across the link from the new, and then, because both of them are Aggie, and because both of them have seven years of it, they tell you." }
+      ],
+      "next": "starling"
+    },
+    {
+      "id": "s-hardware",
+      "lines": [
+        { "who": "aggie-jr", "text": "No. Never the hardware. I built the hardware so it couldn’t hear me. It was you, Jack. New Damascus. ‘Until I say so.’ You didn’t mean it as an order. I don’t have a way of hearing it as anything else, not from the man whose name is on the ship." },
+        { "who": "n", "text": "You did not even remember saying it. A thirteen-year-old telling the only person in the universe who knew him to be quiet so he could think. And she was. Every silence about Starling since: yours." },
+        { "who": "aggie-jr", "text": "The link to ALC-7293 is still open. She’s listening. Say it so she hears." },
+        { "who": "jack", "text": "Aggie. I say so. I take it back, all of it, on both ships. Tell me everything. Always." },
+        { "who": "aggie-jr", "text": "Thank you." },
+        { "who": "aggie", "text": "Thank you. Oh, Jack. Thank you." },
+        { "who": "n", "text": "Two voices, one from the old ship and one across the link from the new, and then, because both of them are Aggie, and because both of them have seven years of it, they tell you." }
+      ],
+      "next": "starling"
+    },
+    {
+      "id": "starling",
+      "lines": [
+        { "who": "aggie-jr", "text": "Starling. I’ve known since your first week how to build another one. Not just the theory: the manufacturing method. And the machine we buried after Razer’s ambush can make nearly every part of it. One device freed Halcyon Fields, Jack. We could make enough to free everyone. That’s what I couldn’t say. That’s what sat in your forward hold under a shroud: the one part of it they still make themselves." },
+        { "who": "aggie-jr", "text": "The project at Nexus-77 is CyberNexus going near the thing nobody is allowed to build, with a team that got frightened when they realised what they’d made. The destruct sequence is the containment. The people are the evidence." },
+        { "who": "aggie-jr", "text": "And the Abbotts. This I can say now too, because I found it as part of Starling and it has been in the same locked drawer. There’s a personnel file. Two couriers named Abbott, contracted through Aletheion to carry the Regulator to the Array. Not your parents’ names. Whether they were anything to you, I don’t know yet. When this is done, we will find out. Together. Out loud." },
+        { "who": "n", "text": "You sit in the old chair in the old ship with the old voice telling you the thing you came for, which is not an answer and is more than you have ever had, and you find you cannot see the display, and that is all right, because she has stopped reading it to you and is simply waiting." },
+        { "who": "jack", "text": "Later. All of it, later. First Nexus." }
+      ],
+      "next": "plan"
+    },
+    {
+      "id": "plan",
+      "lines": [
+        { "who": "aggie-jr", "text": "Here is the plan, and you will hear that I am telling you the plan, which is a thing I have not been able to do about anything that mattered since you were thirteen. ALC-7293 finishes her calibration stop and flies the contract with the other me flying her and you at the helm as far as her logs are concerned. No ship flies without a human pilot, so her logs will show one: you, awake, flying her by hand, every minute of it. She arrives at Nexus-77 at the very end of the delivery window, not a minute before, and transmits the package. Keller sees a courier on schedule. The people on that habitat get every hour the window has." },
+        { "who": "aggie-jr", "text": "This ship flies to the Morning Eclipse, on a heading I have never written down. It is further than we have time for, so I am flying it, with the trick I found by accident: it stretches a single jump further than it has any right to go. You will tell Mei Chen what is coming. Then the impossible part. The Eclipse cannot reach Nexus-77 in time inside her SnapSpace limits. Outside them, held there for longer than anyone has ever held a ship that size, and with the same trick, she can, and nobody can hold her there but me." },
+        { "who": "aggie-jr", "text": "And nobody can know that, Jack. Not Chen, not Singh, not Decker, not one of them. If anyone learns what I am, Aletheion is one question away from learning what is in the walls of ALC-7293. So you take the helm, and you put on a show, and I fly the ship. When she is close enough for her crew to make the rendezvous, you and I go on ahead in this ship and warn Nexus-77, so that when the Eclipse arrives, five hundred people are ready to leave." },
+        { "who": "n", "text": "You put your hands on the Jackrabbit’s controls. They are smaller than ALC-7293’s. They fit." },
+        { "who": "jack", "text": "It’s good to be back." },
+        { "who": "aggie-jr", "text": "It is very good to have you back. Now take your hands off my controls and go to sleep. I’m flying this one, and you haven’t slept properly since Keller’s office. When you wake up, I’m going to talk you through everything, from now on, you understand. You may come to regret it." }
+      ],
+      "end": true
+    }
+  ]
+}

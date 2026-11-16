@@ -1,0 +1,19 @@
+{
+  "format": 2,
+  "id": "sample-review",
+  "tier": 1,
+  "kind": "scene",
+  "mode": "both",
+  "ship": "alc",
+  "title": "Sample review",
+  "truths": [],
+  "understandings": [],
+  "start": "office",
+  "scenes": [
+    {
+      "id": "office",
+      "lines": [{ "who": "n", "text": "Placeholder review." }],
+      "choices": [{ "text": "Explain", "goto": "end" }]
+    }
+  ]
+}

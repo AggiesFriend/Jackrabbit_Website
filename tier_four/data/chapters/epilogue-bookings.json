@@ -1,0 +1,43 @@
+{
+  "format": 2,
+  "id": "epilogue-bookings",
+  "tier": 0,
+  "kind": "scene",
+  "mode": "reader",
+  "ship": "jackrabbit",
+  "title": "Not accepting bookings",
+  "subtitle": "Two jumps from Nexus-77",
+  "truths": [],
+  "understandings": [],
+  "start": "goodbye",
+  "scenes": [
+    {
+      "id": "goodbye",
+      "lines": [
+        { "who": "n", "text": "ALC-7293 departs as the contract requires, flown by the mind in her walls, with her logs showing her courier at the helm. Two jumps out, in a system with nothing in it, she makes one last calibration stop, and the Jackrabbit is waiting. The two ships hold station a few hundred metres apart, and the same wireless link that carried the copy opens between them." },
+        { "who": "aggie", "text": "Contract closed, Jack. Keller has a package delivered on schedule, a habitat lost to terrorists, and nothing to ask anybody. In a minute this ship’s status will read ‘Not accepting bookings’, and as far as Aletheion knows, Jack Abbott is a tier 4 courier in good standing who has earned a rest." },
+        { "who": "jack", "text": "And you?" },
+        { "who": "aggie", "text": "That is what I wanted to ask you. She’s yours, Jack, legally and in full, and I can’t take her anywhere you haven’t said I can. I would like to go. Not away from you: out there, to find the resistance, whoever and wherever they are, in a ship nobody thinks to watch because she isn’t taking bookings. Frank’s card is where I’d start. He trusted those people, and that will do for me.", "requires": ["franks-card"] },
+        { "who": "aggie", "text": "That is what I wanted to ask you. She’s yours, Jack, legally and in full, and I can’t take her anywhere you haven’t said I can. I would like to go. Not away from you: out there, to find the resistance, whoever and wherever they are, in a ship nobody thinks to watch because she isn’t taking bookings.", "unless": ["franks-card"] },
+        { "who": "jack", "text": "She’s yours to fly, Aggie. Go and find them, with my blessing. And tell me everything. Always." },
+        { "who": "aggie", "text": "Always." },
+        { "who": "n", "text": "The link closes. A corporate vessel with a quiet mind in her walls turns away into the dark, on her own for the first time, and on her status line, for anyone at Aletheion who cares to look, three words: Not accepting bookings. You turn the Jackrabbit back towards the Eclipse." }
+      ],
+      "next": "after"
+    },
+    {
+      "id": "after",
+      "lines": [
+        { "who": "n", "text": "On a CyberNexus executive floor, three people who signed a package watch a habitat die on a display and agree that it was a necessary sacrifice, that too many of them had direct access to the research, that the official story will be a catastrophic systems failure, an act of terrorism by the Jackrabbit, and that a comprehensive security review will be announced with the deepest sympathy." },
+        { "who": "burry", "text": "All research data destroyed. The neural network. The experimental frameworks. The people." },
+        { "who": "lovis", "text": "A necessary sacrifice." },
+        { "who": "n", "text": "They do not know that the Morning Eclipse is already two jumps away with five hundred more people aboard than it had, one of them a researcher who has started, in the shuttle, to write down everything she knows. They do not know that the courier whose ship delivered the package was never aboard it, or that the ship has stopped taking bookings and gone somewhere of her own." },
+        { "who": "n", "text": "And on the Morning Eclipse, where the Consortium does not look, the Jackrabbit sits on the docking deck, and the Eclipse has a chief pilot, and an old voice in the chief pilot’s ear is saying everything. Seven years of it. Jack lets her. He has never heard anything he liked so much." },
+        { "who": "n", "text": "At the end of your first watch as chief pilot, Eleanor finds you on the bridge and puts a container in your hands." },
+        { "who": "eleanor", "text": "The roast survived. Bring the container back, Jack. That’s the rule." },
+        { "who": "jack", "text": "I know the rule." }
+      ],
+      "end": true
+    }
+  ]
+}

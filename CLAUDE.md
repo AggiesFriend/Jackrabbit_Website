@@ -23,8 +23,8 @@ immediately before `</head>`:
 "Standalone" means any page a visitor can land on directly. That includes the
 pages at the root, everything under `encyclopaedia/`, `trust-us/` and `short-stories/`,
 `404.html`, and the entry page of each game — `Gilbert_s Quest.html`,
-`stolen_freedom/index.html`, `Jackrabbit_hunt/index.html` and
-`Aggie_game/index.html`. New pages get it too.
+`stolen_freedom/index.html`, `Jackrabbit_hunt/index.html`,
+`Aggie_game/index.html` and `tier_four/index.html`. New pages get it too.
 
 Do **not** add it to:
 
@@ -76,3 +76,8 @@ chevron button (`.submenu-toggle`) for touch and keyboard. The styles are in
 their own projects. Anything hand-edited there — the umami snippet above
 especially — is lost the next time the game is rebuilt and copied over, so
 re-add it after each copy, and ideally keep it in the game's own source.
+
+`tier_four/` is the exception: Tier Four is hand-written in this repo, so
+edit it directly. Its development tools, checks and notes live in
+`tier_four_dev/`, which is excluded from the published site; see
+`tier_four_dev/STATUS.md`.

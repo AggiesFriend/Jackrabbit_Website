@@ -1,0 +1,65 @@
+{
+  "format": 2,
+  "id": "review-compliance",
+  "tier": 1,
+  "kind": "scene",
+  "mode": "both",
+  "ship": "alc",
+  "title": "Compliance review",
+  "subtitle": "Rigel administrative ring",
+  "truths": [],
+  "understandings": [],
+  "start": "summons",
+  "scenes": [
+    {
+      "id": "summons",
+      "lines": [
+        { "who": "n", "text": "The summons arrives as a calendar entry, which is how Aletheion does everything it would rather not say out loud. Compliance review. Room 4-112. Attendance is not optional, and the entry has already accepted itself on your behalf." },
+        { "who": "aggie", "text": "Room 4-112 is on the administrative ring. Director Halsey will be present. So will a compliance officer from Keller’s side of the building. I’ve been through your file as it stands. I’d like you to answer slowly." },
+        { "who": "n", "text": "Room 4-112 has no window. The compliance officer has a datapad and no first name. Halsey sits to one side, looking at the wall as if it had let him down." },
+        { "who": "compliance", "text": "Courier Abbott. Your file shows a pattern: schedule deviations, queries to dispatch about client instructions, and an unusual interest in the contents of sealed consignments. Individually, nothing. Together, a pattern. Explain the pattern." }
+      ],
+      "choices": [
+        { "text": "“Caution. I’d rather ask a question than lose a consignment. I can ask fewer.”", "goto": "caution", "trust": { "halsey": 1 } },
+        { "text": "“I follow dispatch. If dispatch gives contradictory instructions, that’s a dispatch problem.”", "goto": "blame" },
+        { "text": "Say as little as possible.", "goto": "silent" }
+      ]
+    },
+    {
+      "id": "caution",
+      "lines": [
+        { "who": "compliance", "text": "Caution. Noted. Caution that slows a consignment is a cost, courier. Caution that opens a client’s crate is a liability. You will confine yours to the flying." },
+        { "who": "halsey", "text": "He’s my best-performing tier pilot and his loss rate is zero. The pattern you’re describing is a courier who cares whether the cargo arrives. I’ll take ten of him." },
+        { "who": "compliance", "text": "You have one, Director, and he is on notice." }
+      ],
+      "next": "outcome"
+    },
+    {
+      "id": "blame",
+      "lines": [
+        { "who": "compliance", "text": "Dispatch does not have problems, courier. Couriers have problems. I am looking at one." },
+        { "who": "halsey", "text": "Abbott’s loss rate is zero. Put whatever you like in the file. Just don’t put him on the ground, because I haven’t got anyone to replace him with." },
+        { "who": "n", "text": "Halsey does not look at you while he says it. You have the sense he is spending something on your behalf that he will not get back." }
+      ],
+      "next": "outcome"
+    },
+    {
+      "id": "silent",
+      "lines": [
+        { "who": "n", "text": "You say that you understand the concern, and nothing else, for eleven minutes. The officer asks the same question four ways. You give the same answer four ways. It is, Aggie tells you afterwards, the most corporate you have ever sounded." },
+        { "who": "halsey", "text": "He’s a pilot, not a presenter. His loss rate is zero. Write him up and let me have him back." },
+        { "who": "compliance", "text": "Written up. On notice." }
+      ],
+      "next": "outcome"
+    },
+    {
+      "id": "outcome",
+      "lines": [
+        { "who": "n", "text": "You keep your post. You keep your ship. You acquire a line in your file that will be read by everyone who ever reads your file, and a month of short, dull contracts while someone decides whether you have learned anything." },
+        { "who": "aggie", "text": "They’re watching the deviations, Jack. Not the cargo. They don’t care what’s in the boxes. They care whether you do." },
+        { "who": "n", "text": "It is almost advice. You hear what she didn’t say in it: be quieter. Not better. Quieter." }
+      ],
+      "end": true
+    }
+  ]
+}

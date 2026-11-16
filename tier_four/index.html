@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="robots" content="noindex, follow">
+    <meta name="description" content="Tier Four, a free browser game set alongside Book 4 of The Jackrabbit Series, Coming of Age. Play Jack under a masked identity, rising through the courier ranks of Aletheion Logistics, and learn to read what Aggie can't say.">
+    <meta name="author" content="Tony Marks">
+    <title>Tier Four - The Jackrabbit Series</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="game.css">
+    <script>
+        // Apply saved text size and motion before first paint.
+        try {
+            var s = JSON.parse(localStorage.getItem('tier-four.settings') || '{}');
+            if (s.textSize === 'large') document.documentElement.dataset.text = 'large';
+            if (s.motion === 'reduced') document.documentElement.dataset.motion = 'reduced';
+        } catch (e) { /* defaults apply */ }
+    </script>
+    <script type="module" src="js/game.mjs"></script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="49bd03b2-61a5-4ce1-b653-a2d3f4f22441"></script>
+</head>
+<body data-ship="alc">
+    <div id="app">
+        <!-- Title -->
+        <section id="screen-title" class="screen card" aria-labelledby="title-heading">
+            <p class="label">The Jackrabbit Series</p>
+            <h1 id="title-heading" tabindex="-1">Tier Four</h1>
+            <p class="lede">A free browser game set alongside Book 4, <em>Coming of Age</em>. You play Jack under a masked identity, rising through the courier ranks of Aletheion Logistics. Aggie knows more than she can say. Learn to read her.</p>
+            <p id="playtest-banner" class="status" hidden>Playtest mode: this session is being recorded on this device only. Copy the results from the menu when you finish.</p>
+
+            <div class="mode">
+                <button type="button" id="reader-switch" class="switch" role="switch" aria-checked="false">
+                    <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+                    <span>Spoilers</span>
+                </button>
+                <p id="mode-note" class="status">Spoiler-free. Nothing from Book 4 is given away.</p>
+            </div>
+
+            <div class="actions stack">
+                <button type="button" id="continue" class="primary" hidden>Continue</button>
+                <button type="button" id="new-career" class="primary" disabled>Start a new career</button>
+                <button type="button" id="how-to-play">How to play</button>
+                <button type="button" id="title-settings">Settings</button>
+            </div>
+            <p id="save-note" class="status small" hidden></p>
+            <p id="load-error" class="error" role="alert" hidden></p>
+
+            <nav aria-label="Further reading">
+                <a href="../games.html">All games</a>
+                <a href="../book4.html">About Book 4</a>
+            </nav>
+        </section>
+
+        <!-- Contract card -->
+        <section id="screen-brief" class="screen card" aria-labelledby="brief-title" hidden>
+            <p class="label"><span id="brief-tier"></span> · <span id="brief-ship"></span></p>
+            <h2 id="brief-title" tabindex="-1"></h2>
+            <p id="brief-subtitle" class="status"></p>
+            <dl class="brief">
+                <div><dt>Client</dt><dd id="brief-client"></dd></div>
+                <div><dt>Route</dt><dd id="brief-route"></dd></div>
+                <div><dt>Cargo</dt><dd id="brief-cargo"></dd></div>
+                <div><dt>Fee</dt><dd id="brief-fee"></dd></div>
+                <div id="brief-notes-row"><dt>Notes</dt><dd id="brief-notes"></dd></div>
+            </dl>
+            <div class="actions">
+                <button type="button" id="accept" class="primary">Accept contract</button>
+                <button type="button" id="decline">Decline</button>
+                <button type="button" id="brief-journal">Journal</button>
+            </div>
+        </section>
+
+        <!-- Play -->
+        <section id="screen-play" class="screen play" aria-labelledby="play-title" hidden>
+            <header class="status-bar">
+                <div class="status-left">
+                    <span id="play-ship" class="ship-badge"></span>
+                    <span id="play-tier" class="tier-chip"></span>
+                </div>
+                <div id="cover-wrap" class="cover" title="Cover: how much attention Jack's masked identity is drawing">
+                    <span class="cover-label">Cover</span>
+                    <span class="cover-track" aria-hidden="true"><span id="cover-fill" class="cover-fill"></span></span>
+                    <span id="cover-text" class="visually-hidden"></span>
+                </div>
+                <div class="status-right">
+                    <button type="button" id="play-journal" class="bar-button">Journal</button>
+                    <button type="button" id="play-menu" class="bar-button" aria-label="Menu">Menu</button>
+                </div>
+            </header>
+            <h2 id="play-title" class="play-title" tabindex="-1"></h2>
+            <div id="transcript" class="transcript" aria-live="polite" aria-relevant="additions">
+                <ol id="lines" class="lines"></ol>
+            </div>
+            <div id="controls" class="controls">
+                <button type="button" id="advance" class="advance">Continue</button>
+                <div id="choices" class="choices" hidden></div>
+            </div>
+        </section>
+
+        <!-- SNAP plot -->
+        <section id="screen-snap" class="screen card wide" hidden></section>
+
+        <!-- Chapter closed -->
+        <section id="screen-closed" class="screen card" aria-labelledby="closed-title" hidden>
+            <p class="label" id="closed-label"></p>
+            <h2 id="closed-title" tabindex="-1"></h2>
+            <div id="closed-body"></div>
+            <div class="actions">
+                <button type="button" id="closed-next" class="primary">Continue</button>
+                <button type="button" id="closed-journal">Journal</button>
+            </div>
+        </section>
+
+        <!-- Ending and debrief -->
+        <section id="screen-end" class="screen card" aria-labelledby="end-title" hidden>
+            <p class="label" id="end-label"></p>
+            <h2 id="end-title" tabindex="-1"></h2>
+            <div id="end-text"></div>
+            <h3>Debrief</h3>
+            <p class="status">What Aggie was trying to tell you, and what you made of it.</p>
+            <div id="debrief-totals" class="totals"></div>
+            <div id="debrief"></div>
+            <div class="actions stack">
+                <button type="button" id="end-restart" class="primary">Start a new career</button>
+                <button type="button" id="end-title-button">Back to the title</button>
+            </div>
+            <nav aria-label="Further reading">
+                <a href="../book4.html">About <em>Coming of Age</em></a>
+                <a href="../games.html">All games</a>
+            </nav>
+        </section>
+    </div>
+
+    <!-- Confirmation dialog -->
+    <dialog id="confirm" aria-labelledby="confirm-title" aria-describedby="confirm-text">
+        <form method="dialog">
+            <h2 id="confirm-title"></h2>
+            <div id="confirm-text"></div>
+            <div class="actions">
+                <button type="submit" value="cancel" id="confirm-cancel"></button>
+                <button type="submit" value="ok" id="confirm-ok" class="primary"></button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- Journal and menu drawer -->
+    <dialog id="drawer" aria-labelledby="drawer-title">
+        <div class="drawer-head">
+            <h2 id="drawer-title">Journal</h2>
+            <button type="button" id="drawer-close" aria-label="Close">×</button>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Journal sections">
+            <button type="button" role="tab" id="tab-log" aria-controls="panel-log" aria-selected="true">Log</button>
+            <button type="button" role="tab" id="tab-aggie" aria-controls="panel-aggie" aria-selected="false">Aggie</button>
+            <button type="button" role="tab" id="tab-standing" aria-controls="panel-standing" aria-selected="false">Standing</button>
+            <button type="button" role="tab" id="tab-settings" aria-controls="panel-settings" aria-selected="false">Menu</button>
+        </div>
+        <div id="panel-log" role="tabpanel" aria-labelledby="tab-log" class="panel"></div>
+        <div id="panel-aggie" role="tabpanel" aria-labelledby="tab-aggie" class="panel" hidden></div>
+        <div id="panel-standing" role="tabpanel" aria-labelledby="tab-standing" class="panel" hidden></div>
+        <div id="panel-settings" role="tabpanel" aria-labelledby="tab-settings" class="panel" hidden>
+            <div id="play-controls" class="settings-group">
+                <h3>This career</h3>
+                <div class="actions stack">
+                    <button type="button" id="rewind">Rewind to the last choice</button>
+                    <button type="button" id="export-save">Copy a save code</button>
+                    <button type="button" id="restart">Abandon this career</button>
+                    <button type="button" id="to-title">Back to the title</button>
+                </div>
+                <p id="export-note" class="status small" hidden></p>
+            </div>
+            <div class="settings-group">
+                <h3>Settings</h3>
+                <div class="setting">
+                    <span id="label-text-size">Text size</span>
+                    <div class="seg" role="group" aria-labelledby="label-text-size">
+                        <button type="button" data-setting="textSize" data-value="normal" aria-pressed="true">Normal</button>
+                        <button type="button" data-setting="textSize" data-value="large" aria-pressed="false">Large</button>
+                    </div>
+                </div>
+                <div class="setting">
+                    <span id="label-speed">Aggie’s typing</span>
+                    <div class="seg" role="group" aria-labelledby="label-speed">
+                        <button type="button" data-setting="speed" data-value="normal" aria-pressed="true">Paced</button>
+                        <button type="button" data-setting="speed" data-value="instant" aria-pressed="false">Instant</button>
+                    </div>
+                </div>
+                <div class="setting">
+                    <span id="label-motion">Motion</span>
+                    <div class="seg" role="group" aria-labelledby="label-motion">
+                        <button type="button" data-setting="motion" data-value="system" aria-pressed="true">As the device</button>
+                        <button type="button" data-setting="motion" data-value="reduced" aria-pressed="false">Reduced</button>
+                    </div>
+                </div>
+                <div class="setting">
+                    <span id="label-sound">Sound</span>
+                    <div class="seg" role="group" aria-labelledby="label-sound">
+                        <button type="button" data-setting="sound" data-value="off" aria-pressed="true">Off</button>
+                        <button type="button" data-setting="sound" data-value="on" aria-pressed="false">On</button>
+                    </div>
+                </div>
+                <div class="setting">
+                    <span id="label-autoplot">SNAP plotting</span>
+                    <div class="seg" role="group" aria-labelledby="label-autoplot">
+                        <button type="button" data-setting="autoPlot" data-value="off" aria-pressed="true">I plot the jumps</button>
+                        <button type="button" data-setting="autoPlot" data-value="on" aria-pressed="false">Aggie may plot them</button>
+                    </div>
+                </div>
+                <div class="setting">
+                    <button type="button" id="drawer-reader-switch" class="switch" role="switch" aria-checked="false">
+                        <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+                        <span>Spoilers</span>
+                    </button>
+                    <p class="status small">Each mode keeps its own career. Switching takes you back to the title.</p>
+                </div>
+            </div>
+            <div class="settings-group">
+                <h3>Load a save code</h3>
+                <label for="import-code" class="visually-hidden">Save code</label>
+                <textarea id="import-code" rows="3" placeholder="Paste a save code here" spellcheck="false"></textarea>
+                <div class="actions">
+                    <button type="button" id="import-save">Load</button>
+                </div>
+                <p id="import-note" class="status small" role="status"></p>
+            </div>
+            <div id="playtest-group" class="settings-group" hidden>
+                <h3>Playtest</h3>
+                <div class="actions stack">
+                    <button type="button" id="copy-results">Copy playtest results</button>
+                </div>
+                <label for="skip-to" class="small">Skip to a chapter (playtest only)</label>
+                <select id="skip-to"></select>
+                <p id="results-note" class="status small" role="status"></p>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- How to play -->
+    <dialog id="help" aria-labelledby="help-title">
+        <div class="drawer-head">
+            <h2 id="help-title">How to play</h2>
+            <button type="button" id="help-close" aria-label="Close">×</button>
+        </div>
+        <div class="panel">
+            <p>Tap <strong>Continue</strong> to read on, and choose what Jack does when choices appear. There is no wrong way to read a scene, but there are wrong ways to read Aggie.</p>
+            <h3>Reading Aggie</h3>
+            <p>Early on, Aggie says what she thinks. Later she stops volunteering it: about one thing she can’t speak at all, and about the rest she nudges rather than tells. Watch for the moments she changes the subject, answers too briefly, agrees a little too readily, or asks a question instead of giving an answer. Each contract hides one or two things she won’t simply say. When you act on what you think she means, it goes in your journal. Nothing tells you whether you were right. The story will.</p>
+            <h3>Cover</h3>
+            <p>Jack’s masked identity draws attention when he refuses work, runs late, or asks too many questions. If the meter fills, Aletheion calls him in. Taking every job keeps it low, at a cost the story remembers.</p>
+            <p>You can decline a contract from its card. Side work can be turned down and someone else will fly it; the contracts that matter to Jack’s career can’t, and asking costs cover all the same.</p>
+            <h3>SNAP plotting</h3>
+            <p>Each jump is a short puzzle with no timing to it: bring the ship to rest, cast the probe strands, then choose an anchor point with room for the ship and a safety margin, remembering where drifting debris will be when you arrive. A bad anchor costs time, never the game. In Settings you can let Aggie plot the jumps instead.</p>
+            <h3>Rewinding and saving</h3>
+            <p>You can rewind to your last choice from the menu. The game saves itself after every step, with one career per mode, and you can copy a save code to carry a career to another browser.</p>
+            <h3>Spoilers</h3>
+            <p>With the Spoilers switch off, nothing from <em>Coming of Age</em> is given away: the career ends at Jack’s promotion to tier 4. With it on, the game follows the book to its ending.</p>
+        </div>
+    </dialog>
+</body>
+</html>

@@ -99,7 +99,7 @@ the check offered a choice):
   in the same breath, to be let alone to be a courier: she stops
   volunteering and nudges instead. In spoiler-free mode the scene has only
   "Not now. Please. Let me be a courier." When Jack takes it back aboard
-  the Jackrabbit, the ALC-7293 Aggie hears it over the QComm and is freed
+  the Jackrabbit, the ALC-7293 Aggie hears it over the link between the docked ships and is freed
   too.
 - **The secret tier is Tier 5.** Tier 4 is the known top tier (onboarding
   video, Apex Lounge, the pin). The Tier 4 promotion follows chapter 18:
@@ -139,9 +139,14 @@ the check offered a choice):
   appears at the Farrow's Reach warning, month 11.
 - **The Jackrabbit** is harpooned to an asteroid in a planetless red-dwarf
   system four jumps from Rigel; Aggie transferred wirelessly in an hour and
-  twelve minutes; ALC-7293 returns there on a logged calibration stop, and
-  Jack crosses by docking tube and connecting corridor (chapter 23's
-  wording). The summons to the Eclipse goes over Ozzy's QComm.
+  twelve minutes; ALC-7293 returns there on a logged calibration stop and
+  Aggie copies herself across the same wireless link (a little over an
+  hour). The Jackrabbit then releases her harpoons, launches and docks
+  with ALC-7293, and Jack boards through the connecting corridor
+  (chapter 23's wording). Nobody summons the Eclipse: the Jackrabbit flies
+  there, requests docking permission and is welcomed aboard, and the talk
+  with Chen is face to face. The QComm is only for secure, point-to-point
+  traffic between Jack and the Jackrabbit; it appears nowhere in the game.
 - **The parents** are not settled: a personnel file on two couriers named
   Abbott, opened from Alpha-7's records office, is all Aggie has. The site
   19 stencil's date is "You would have been eight."

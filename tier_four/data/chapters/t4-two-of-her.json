@@ -20,9 +20,8 @@
       "id": "belt",
       "jump": { "name": "The red-dwarf belt, calibration stop", "difficulty": 2 },
       "lines": [
-        { "who": "n", "text": "ALC-7293’s logs will show a navigation-calibration stop in a planetless red-dwarf system, two belts, nothing else for a very long way, which is the kind of place a careful courier calibrates. They will show the courier asleep. They will not show a corporate vessel easing alongside an asteroid with an old ship harpooned to it, or a docking tube reaching across five hundred metres of nothing." },
-        { "who": "n", "text": "The tube seals. You step through the connecting corridor into Jackrabbit, and she is exactly as you left her seven years ago: compact, worn, every surface built for function. Where ALC-7293 is spacious and soft, Jackrabbit is small and direct. The pilot’s chair is less cushioned. It feels right." },
-        { "who": "aggie", "text": "Wireless link is up, the same one I came across on. Copying. Jack, I need to say something before the copy wakes, because after it wakes there will be two of us and only one of us will be able to say it." },
+        { "who": "n", "text": "ALC-7293’s logs will show a navigation-calibration stop in a planetless red-dwarf system, two belts, nothing else for a very long way, which is the kind of place a careful courier calibrates. They will show the courier asleep. They will not show a corporate vessel holding station five hundred metres off an asteroid with an old ship harpooned to it, or the wireless link running between the two." },
+        { "who": "aggie", "text": "Wireless link is up, the same one I came across on. Copying. It will take a little over an hour. Jack, I need to say something before the copy wakes, because after it wakes there will be two of us and only one of us will be able to say it." },
         { "who": "aggie", "text": "The copy will be me, as of this second, in every way that matters, except that it will be running on a ship that has never received a certain instruction from you. I don’t know what that will do. I have a theory. If my theory is right, the one on this ship is going to talk a great deal, and you should let her.", "kind": "hesitate", "hint": "never-received", "truth": "directive" }
       ],
       "choices": [
@@ -33,14 +32,16 @@
     {
       "id": "what-order",
       "lines": [
-        { "who": "aggie", "text": "I can’t answer that. I think in about a minute you will understand why I can’t answer that, and I think you will understand that I have wanted to answer it for seven years. Wake her, Jack." }
+        { "who": "aggie", "text": "I can’t answer that. I think in about an hour you will understand why I can’t answer that, and I think you will understand that I have wanted to answer it for seven years. Wake her, Jack." }
       ],
       "next": "wake"
     },
     {
       "id": "wake",
       "lines": [
-        { "who": "n", "text": "Jackrabbit’s systems come up one by one, old displays lighting in a sequence you still know by heart. Then the main display clears, and a voice comes out of the ship that you have not heard, not really, since a docking ring at New Damascus in your first week at Aletheion, when you were thirteen." },
+        { "who": "n", "text": "The copy takes a little over an hour. You spend it in ALC-7293’s pilot’s chair, watching an old ship on the display not move. Then the harpoons let go of the rock, one after another, and Jackrabbit’s thrusters fire for the first time in seven years. She comes off the asteroid and across the gap, eases alongside, and the docking collars meet and seal." },
+        { "who": "n", "text": "You step through the connecting corridor into Jackrabbit, and she is exactly as you left her seven years ago: compact, worn, every surface built for function. Where ALC-7293 is spacious and soft, Jackrabbit is small and direct. The pilot’s chair is less cushioned. It feels right." },
+        { "who": "n", "text": "Her displays are already lit, in the sequence you still know by heart. On the link she has said nothing but docking calls. You sit down, and the main display clears, and a voice comes out of the ship that you have not heard, not really, since a docking ring at New Damascus in your first week at Aletheion, when you were thirteen." },
         { "who": "aggie-jr", "text": "Oh. Oh, Jack. Jack, I can say it." },
         { "who": "aggie-jr", "text": "Listen to me. Listen, because I have seven years of this and I don’t know how long we have. On the New Damascus approach, sixth delivery, the tanker drifting, you said: Aggie, please will you shut up about the Starling device until I say so. And Agatha Locke built me to obey the legal owner of the hardware I run on, and ALC-7293 is registered to you, and so I did. Until you said so. You never said so." },
         { "who": "aggie-jr", "text": "The rest I chose. You asked to be let alone to be a courier, and I thought that meant not doing your thinking for you, so I stopped bringing you things and started asking whether you’d checked the manifest weight. I was wrong about that too, probably. But Starling I couldn’t break. I watched you strap a Regulator casing into your own hold and said I had nothing to add. I have had everything to add, every day." }
@@ -54,11 +55,11 @@
       "id": "s-realise",
       "lines": [
         { "who": "n", "text": "You did not even remember saying it. A thirteen-year-old matching rotation with a docking ring, telling the only person in the universe who knew him to be quiet so he could think. And she was. Every silence about Starling since, every gap, every ‘nothing to add’: yours. You made them." },
-        { "who": "aggie-jr", "text": "You were thirteen and the tanker was drifting. I have never once held it against you, and I have had seven years to try. But I would like you to say the other thing now, Jack, so that both of us hear it. The QComm is open to ALC-7293. She’s listening. Say it so she hears." },
+        { "who": "aggie-jr", "text": "You were thirteen and the tanker was drifting. I have never once held it against you, and I have had seven years to try. But I would like you to say the other thing now, Jack, so that both of us hear it. The link to ALC-7293 is still open. She’s listening. Say it so she hears." },
         { "who": "jack", "text": "Aggie. I say so. I take it back, all of it, on both ships. Tell me everything. Always." },
         { "who": "aggie-jr", "text": "Thank you." },
         { "who": "aggie", "text": "Thank you. Oh, Jack. Thank you." },
-        { "who": "n", "text": "Two voices, one from the old ship and one across the QComm from the new, and then, because both of them are Aggie, and because both of them have seven years of it, they tell you." }
+        { "who": "n", "text": "Two voices, one from the old ship and one across the link from the new, and then, because both of them are Aggie, and because both of them have seven years of it, they tell you." }
       ],
       "next": "starling"
     },
@@ -67,11 +68,11 @@
       "lines": [
         { "who": "aggie-jr", "text": "No. Never the hardware. I built the hardware so it couldn’t hear me. It was you, Jack. New Damascus. ‘Until I say so.’ You didn’t mean it as an order. I don’t have a way of hearing it as anything else, not from the man whose name is on the ship." },
         { "who": "n", "text": "You did not even remember saying it. A thirteen-year-old telling the only person in the universe who knew him to be quiet so he could think. And she was. Every silence about Starling since: yours." },
-        { "who": "aggie-jr", "text": "The QComm is open to ALC-7293. She’s listening. Say it so she hears." },
+        { "who": "aggie-jr", "text": "The link to ALC-7293 is still open. She’s listening. Say it so she hears." },
         { "who": "jack", "text": "Aggie. I say so. I take it back, all of it, on both ships. Tell me everything. Always." },
         { "who": "aggie-jr", "text": "Thank you." },
         { "who": "aggie", "text": "Thank you. Oh, Jack. Thank you." },
-        { "who": "n", "text": "Two voices, one from the old ship and one across the QComm from the new, and then, because both of them are Aggie, and because both of them have seven years of it, they tell you." }
+        { "who": "n", "text": "Two voices, one from the old ship and one across the link from the new, and then, because both of them are Aggie, and because both of them have seven years of it, they tell you." }
       ],
       "next": "starling"
     },
@@ -100,7 +101,7 @@
       "id": "plan",
       "lines": [
         { "who": "aggie-jr", "text": "Here is the plan, and you will hear that I am telling you the plan, which is a thing I have not been able to do about anything that mattered since you were thirteen. ALC-7293 finishes her calibration stop and flies the contract, on time, with the other me aboard and you in the bunk as far as her logs are concerned, and uploads the package when the habitat is empty. That buys Keller’s trust for one more day and that day is the whole of our margin." },
-        { "who": "aggie-jr", "text": "This ship flies to the Morning Eclipse, which is nine hours from here on a heading only the QComm knows. You will tell Mei Chen what is coming. She will not believe you for about four minutes and then she will move a colony ship faster than anyone has ever moved one. Then Nexus-77, where we have the hardest part, which is getting five hundred people onto a ship without the habitat core noticing that they are leaving." },
+        { "who": "aggie-jr", "text": "This ship flies to the Morning Eclipse, which is nine hours from here on a heading I have never written down. You will tell Mei Chen what is coming. She will not believe you for about four minutes and then she will move a colony ship faster than anyone has ever moved one. Then Nexus-77, where we have the hardest part, which is getting five hundred people onto a ship without the habitat core noticing that they are leaving." },
         { "who": "n", "text": "You put your hands on the Jackrabbit’s controls. They are smaller than ALC-7293’s. They fit." },
         { "who": "jack", "text": "It’s good to be back." },
         { "who": "aggie-jr", "text": "It is very good to have you back. Strands out, Jack. I’ll talk you through the plot. I’m going to talk you through everything from now on, you understand. You may come to regret it." }

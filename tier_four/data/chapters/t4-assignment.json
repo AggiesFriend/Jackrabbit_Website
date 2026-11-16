@@ -1,7 +1,7 @@
 {
   "format": 2,
   "id": "t4-assignment",
-  "tier": 5,
+  "tier": 4,
   "kind": "contract",
   "mode": "reader",
   "ship": "alc",
@@ -11,7 +11,7 @@
     "client": "None recorded",
     "route": "Rigel to Nexus-77, direct, two jumps",
     "cargo": "One data package, class unlisted, to be uploaded to the Nexus-77 habitat core on arrival by the courier in person",
-    "fee": "Tier 5 rate",
+    "fee": "Unlisted",
     "notes": "Upload on arrival. Depart within one hour of upload. Do not remain on station. Do not discuss."
   },
   "decline": { "who": "keller", "text": "Tier 5 couriers do not decline, Abbott. If you would like to be the first, I will want to hear why, in this office, today. I don’t think you would like to be the first.", "cover": 15 },
@@ -154,7 +154,7 @@
       "lines": [
         { "who": "aggie", "text": "Thank you. Here is what I think, and I will give you all of it, as far as I am able, and you will hear in a moment why I say ‘as far as I am able’." },
         { "who": "aggie", "text": "One: the people on Nexus-77 can only be saved if they leave before the habitat dies, and they can only leave on something that can carry five hundred people and does not answer to the Consortium. There is one such ship in reach that owes you, and you know its administrator. The Morning Eclipse has room. Not much. Enough." },
-        { "who": "aggie", "text": "Two: the Eclipse cannot be summoned from this ship. Aletheion sees every packet ALC-7293 sends. It can be summoned from the Jackrabbit, which is powered down on an asteroid four jumps from here, and which carries Ozzy’s QComm: illegal, unhackable, and never once intercepted." },
+        { "who": "aggie", "text": "Two: the Eclipse cannot be reached from this ship. Aletheion sees every packet ALC-7293 sends and every heading she flies. It can be reached by the Jackrabbit, which is powered down on an asteroid four jumps from here, which Aletheion has never heard of, and which the Eclipse will remember." },
         { "who": "aggie", "text": "Three: you cannot be in two places. ALC-7293 must fly this contract, on time, with its courier aboard and its mind in order, or Keller sends another. And the Jackrabbit must fly to Chen, and to Nexus, and it needs me to do it. Both ships need me, Jack. At the same time. And this hardware is large enough that there is a way." },
         { "who": "n", "text": "You understand her a beat before she says it. There is enough of her, now, in ALC-7293’s processing stack, to be two." }
       ],

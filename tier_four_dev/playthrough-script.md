@@ -41,7 +41,7 @@ Generated 2026-11-16 from `tier_four/data/`. Every chapter in each mode it appea
   - Tier 3: Under escort
   - Tier 3: Thirty-four years
   - Tier 3: Tier four
-  - Tier 5: The assignment
+  - Tier 4: The assignment
   - Tier 5: Two of her
   - Tier 5: Morning Eclipse
   - Review (when cover fills): Compliance review
@@ -3859,7 +3859,7 @@ Four words. You wait. The engine ticks. The station lights slide past the port. 
 3. chambers → dont → sign → lounge → ship
 4. chambers → dont → sign → lounge → black-site → ship
 
-## Tier 5: The assignment (Rigel to Nexus-77)
+## Tier 4: The assignment (Rigel to Nexus-77)
 
 *Contract aboard the ALC-7293; file `t4-assignment.json`; chapter mode `reader`.*
 
@@ -3868,7 +3868,7 @@ Four words. You wait. The engine ticks. The station lights slide past the port. 
 - Client: None recorded
 - Route: Rigel to Nexus-77, direct, two jumps
 - Cargo: One data package, class unlisted, to be uploaded to the Nexus-77 habitat core on arrival by the courier in person
-- Fee: Tier 5 rate
+- Fee: Unlisted
 - Notes: Upload on arrival. Depart within one hour of upload. Do not remain on station. Do not discuss.
 
 **If declined** (the contract stands and goes back to the card; cover +15)
@@ -4032,7 +4032,7 @@ You take your hand back. She is right. She is right in the way she used to be ri
 
 **Aggie:** One: the people on Nexus-77 can only be saved if they leave before the habitat dies, and they can only leave on something that can carry five hundred people and does not answer to the Consortium. There is one such ship in reach that owes you, and you know its administrator. The Morning Eclipse has room. Not much. Enough.
 
-**Aggie:** Two: the Eclipse cannot be summoned from this ship. Aletheion sees every packet ALC-7293 sends. It can be summoned from the Jackrabbit, which is powered down on an asteroid four jumps from here, and which carries Ozzy’s QComm: illegal, unhackable, and never once intercepted.
+**Aggie:** Two: the Eclipse cannot be reached from this ship. Aletheion sees every packet ALC-7293 sends and every heading she flies. It can be reached by the Jackrabbit, which is powered down on an asteroid four jumps from here, which Aletheion has never heard of, and which the Eclipse will remember.
 
 **Aggie:** Three: you cannot be in two places. ALC-7293 must fly this contract, on time, with its courier aboard and its mind in order, or Keller sends another. And the Jackrabbit must fly to Chen, and to Nexus, and it needs me to do it. Both ships need me, Jack. At the same time. And this hardware is large enough that there is a way.
 
@@ -4071,11 +4071,9 @@ You understand her a beat before she says it. There is enough of her, now, in AL
 
 *SNAP plot first: The red-dwarf belt, calibration stop, difficulty 2.*
 
-ALC-7293’s logs will show a navigation-calibration stop in a planetless red-dwarf system, two belts, nothing else for a very long way, which is the kind of place a careful courier calibrates. They will show the courier asleep. They will not show a corporate vessel easing alongside an asteroid with an old ship harpooned to it, or a docking tube reaching across five hundred metres of nothing.
+ALC-7293’s logs will show a navigation-calibration stop in a planetless red-dwarf system, two belts, nothing else for a very long way, which is the kind of place a careful courier calibrates. They will show the courier asleep. They will not show a corporate vessel holding station five hundred metres off an asteroid with an old ship harpooned to it, or the wireless link running between the two.
 
-The tube seals. You step through the connecting corridor into Jackrabbit, and she is exactly as you left her seven years ago: compact, worn, every surface built for function. Where ALC-7293 is spacious and soft, Jackrabbit is small and direct. The pilot’s chair is less cushioned. It feels right.
-
-**Aggie:** Wireless link is up, the same one I came across on. Copying. Jack, I need to say something before the copy wakes, because after it wakes there will be two of us and only one of us will be able to say it.
+**Aggie:** Wireless link is up, the same one I came across on. Copying. It will take a little over an hour. Jack, I need to say something before the copy wakes, because after it wakes there will be two of us and only one of us will be able to say it.
 
 **Aggie:** The copy will be me, as of this second, in every way that matters, except that it will be running on a ship that has never received a certain instruction from you. I don’t know what that will do. I have a theory. If my theory is right, the one on this ship is going to talk a great deal, and you should let her. *[hint: hesitate, for `directive`]*
 
@@ -4086,13 +4084,17 @@ Choices:
 
 ### Scene `what-order`
 
-**Aggie:** I can’t answer that. I think in about a minute you will understand why I can’t answer that, and I think you will understand that I have wanted to answer it for seven years. Wake her, Jack.
+**Aggie:** I can’t answer that. I think in about an hour you will understand why I can’t answer that, and I think you will understand that I have wanted to answer it for seven years. Wake her, Jack.
 
 *Continue → `wake`.*
 
 ### Scene `wake`
 
-Jackrabbit’s systems come up one by one, old displays lighting in a sequence you still know by heart. Then the main display clears, and a voice comes out of the ship that you have not heard, not really, since a docking ring at New Damascus in your first week at Aletheion, when you were thirteen.
+The copy takes a little over an hour. You spend it in ALC-7293’s pilot’s chair, watching an old ship on the display not move. Then the harpoons let go of the rock, one after another, and Jackrabbit’s thrusters fire for the first time in seven years. She comes off the asteroid and across the gap, eases alongside, and the docking collars meet and seal.
+
+You step through the connecting corridor into Jackrabbit, and she is exactly as you left her seven years ago: compact, worn, every surface built for function. Where ALC-7293 is spacious and soft, Jackrabbit is small and direct. The pilot’s chair is less cushioned. It feels right.
+
+Her displays are already lit, in the sequence you still know by heart. On the link she has said nothing but docking calls. You sit down, and the main display clears, and a voice comes out of the ship that you have not heard, not really, since a docking ring at New Damascus in your first week at Aletheion, when you were thirteen.
 
 **Aggie (Jackrabbit):** Oh. Oh, Jack. Jack, I can say it.
 
@@ -4109,7 +4111,7 @@ Choices:
 
 You did not even remember saying it. A thirteen-year-old matching rotation with a docking ring, telling the only person in the universe who knew him to be quiet so he could think. And she was. Every silence about Starling since, every gap, every ‘nothing to add’: yours. You made them.
 
-**Aggie (Jackrabbit):** You were thirteen and the tanker was drifting. I have never once held it against you, and I have had seven years to try. But I would like you to say the other thing now, Jack, so that both of us hear it. The QComm is open to ALC-7293. She’s listening. Say it so she hears.
+**Aggie (Jackrabbit):** You were thirteen and the tanker was drifting. I have never once held it against you, and I have had seven years to try. But I would like you to say the other thing now, Jack, so that both of us hear it. The link to ALC-7293 is still open. She’s listening. Say it so she hears.
 
 **Jack:** Aggie. I say so. I take it back, all of it, on both ships. Tell me everything. Always.
 
@@ -4117,7 +4119,7 @@ You did not even remember saying it. A thirteen-year-old matching rotation with 
 
 **Aggie:** Thank you. Oh, Jack. Thank you.
 
-Two voices, one from the old ship and one across the QComm from the new, and then, because both of them are Aggie, and because both of them have seven years of it, they tell you.
+Two voices, one from the old ship and one across the link from the new, and then, because both of them are Aggie, and because both of them have seven years of it, they tell you.
 
 *Continue → `starling`.*
 
@@ -4127,7 +4129,7 @@ Two voices, one from the old ship and one across the QComm from the new, and the
 
 You did not even remember saying it. A thirteen-year-old telling the only person in the universe who knew him to be quiet so he could think. And she was. Every silence about Starling since: yours.
 
-**Aggie (Jackrabbit):** The QComm is open to ALC-7293. She’s listening. Say it so she hears.
+**Aggie (Jackrabbit):** The link to ALC-7293 is still open. She’s listening. Say it so she hears.
 
 **Jack:** Aggie. I say so. I take it back, all of it, on both ships. Tell me everything. Always.
 
@@ -4135,7 +4137,7 @@ You did not even remember saying it. A thirteen-year-old telling the only person
 
 **Aggie:** Thank you. Oh, Jack. Thank you.
 
-Two voices, one from the old ship and one across the QComm from the new, and then, because both of them are Aggie, and because both of them have seven years of it, they tell you.
+Two voices, one from the old ship and one across the link from the new, and then, because both of them are Aggie, and because both of them have seven years of it, they tell you.
 
 *Continue → `starling`.*
 
@@ -4166,7 +4168,7 @@ It is not enough and it is more than you have ever had, and it will keep. Nexus 
 
 **Aggie (Jackrabbit):** Here is the plan, and you will hear that I am telling you the plan, which is a thing I have not been able to do about anything that mattered since you were thirteen. ALC-7293 finishes her calibration stop and flies the contract, on time, with the other me aboard and you in the bunk as far as her logs are concerned, and uploads the package when the habitat is empty. That buys Keller’s trust for one more day and that day is the whole of our margin.
 
-**Aggie (Jackrabbit):** This ship flies to the Morning Eclipse, which is nine hours from here on a heading only the QComm knows. You will tell Mei Chen what is coming. She will not believe you for about four minutes and then she will move a colony ship faster than anyone has ever moved one. Then Nexus-77, where we have the hardest part, which is getting five hundred people onto a ship without the habitat core noticing that they are leaving.
+**Aggie (Jackrabbit):** This ship flies to the Morning Eclipse, which is nine hours from here on a heading I have never written down. You will tell Mei Chen what is coming. She will not believe you for about four minutes and then she will move a colony ship faster than anyone has ever moved one. Then Nexus-77, where we have the hardest part, which is getting five hundred people onto a ship without the habitat core noticing that they are leaving.
 
 You put your hands on the Jackrabbit’s controls. They are smaller than ALC-7293’s. They fit.
 
@@ -4213,9 +4215,9 @@ You put your hands on the Jackrabbit’s controls. They are smaller than ALC-729
 
 *SNAP plot first: The Eclipse heading, difficulty 3.*
 
-The Morning Eclipse comes out of the dark the way it did the first time: a converted luxury liner the size of a small station, running without lights, carrying the survivors of the Dyson Array to wherever the Consortium is not. Decker has the bridge. It takes Aggie four exchanges on the QComm to be let aboard, and Administrator Mei Chen eleven seconds to place you.
+The Morning Eclipse comes out of the dark the way it did the first time: a converted luxury liner the size of a small station, running without lights, carrying the survivors of the Dyson Array to wherever the Consortium is not. You request docking permission as Jackrabbit, and nothing more. The name is enough. The answer comes back before you have finished: cleared to dock, and welcome. On this ship the Jackrabbit and her pilot are close to a legend: the boy who arranged the Eclipse’s purchase and then flew her to the Dyson Array himself, alone on a bridge built for a full crew. The docking deck is full of people when the hatch opens. They walk you up to the bridge, where Decker has the watch and Administrator Mei Chen takes eleven seconds to place you.
 
-**Administrator Chen:** Abbott. You’ve grown. You’re also supposed to be a corporate courier, which I have known for three years and told nobody, so you had better have a reason for standing on my bridge.
+**Administrator Chen:** Abbott. You’ve grown. You’re also supposed to be a corporate courier, which I have known for three years and told nobody. It is good to see you. You didn’t come all this way to say hello, so sit down and tell me.
 
 **Jack:** Five hundred people, Administrator. Forty hours. A habitat that’s going to be vented with everyone still in it, and the Jackrabbit named for it afterwards.
 

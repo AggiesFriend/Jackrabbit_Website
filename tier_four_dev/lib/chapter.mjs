@@ -23,7 +23,7 @@ const isObject = v => v && typeof v === 'object' && !Array.isArray(v);
 const TYPES = {
     format: v => v === FORMAT ? null : `must be ${FORMAT}`,
     id: v => typeof v === 'string' && ID.test(v) ? null : 'must be a lower-case kebab-case ID',
-    tier: v => Number.isInteger(v) && v >= 0 && v <= 5 ? null : 'must be a whole number from 0 to 5',
+    tier: v => Number.isInteger(v) && v >= 0 && v <= 4 ? null : 'must be a whole number from 0 to 4',
     difficulty: v => Number.isInteger(v) && v >= 1 && v <= 4 ? null : 'must be a whole number from 1 to 4',
     count: v => Number.isInteger(v) && v >= 1 ? null : 'must be a whole number of at least 1',
     integer: v => Number.isInteger(v) ? null : 'must be a whole number',

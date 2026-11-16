@@ -76,9 +76,10 @@ year younger than Jack.
 | Under escort | 48 to 56, 17 | contract | both | the escort is watching Jack |
 | Thirty-four years: Walters, the balcony and the data card, Laomedon | 63, 18 | scene | both | none |
 | Tier four: Keller, Vance, Mercer, Halsey, Hart, the pin, Burry, the Apex Lounge | 72, 19 | scene | both | none; the spoiler-free career ends here |
-| The assignment: the secret Tier 5; the Nexus-77 package | 84, 20 | contract | reader | the destruct sequence; why Nexus-77 |
+| The assignment: Keller’s own contract; the Nexus-77 package | 84, 20 | contract | reader | the destruct sequence; why Nexus-77 |
 | Two of her: the asteroid, the copy, both of her freed | 84, 20 | scene, Jackrabbit | reader | the directive |
-| Morning Eclipse: Chen, Singh, Decker; 500 people; presumed lost | 85, 20 | contract, Jackrabbit | reader | the habitat must look occupied |
+| Morning Eclipse: Chen, Singh, Decker; 500 people | 85, 20 | contract, Jackrabbit | reader | Aggie flies, Jack is seen to |
+| Not accepting bookings: the ALC Aggie leaves; chief pilot (Independent) | 85, 20 | scene, Jackrabbit | reader | none |
 
 ## Canon: what the feedback changed
 
@@ -99,22 +100,23 @@ the check offered a choice):
   in the same breath, to be let alone to be a courier: she stops
   volunteering and nudges instead. In spoiler-free mode the scene has only
   "Not now. Please. Let me be a courier." When Jack takes it back aboard
-  the Jackrabbit, the ALC-7293 Aggie hears it over the link between the docked ships and is freed
-  too.
-- **The secret tier is Tier 5.** Tier 4 is the known top tier (onboarding
-  video, Apex Lounge, the pin). The Tier 4 promotion follows chapter 18:
+  the Jackrabbit, the ALC-7293 Aggie hears it over the link between the docked ships
+  and is freed too.
+- **There is no Tier 5** (author, 16 Nov 2026: four tiers, not five).
+  Tier 4 is the top tier (onboarding video, Apex Lounge, the pin). The Tier 4 promotion follows chapter 18:
   Keller, Vance, Mercer and Halsey present, the neural loyalty scan, the
   contract, Eliza Hart, the platinum pin with a red stone, Alice Burry as
   coordinator, the Apex Lounge with Markham, Kaplan (a woman, silver hair,
   augmentations), Hamza (tracks the money), Decker and Vega. Spoiler-free
-  mode ends there. Keller's "a tier above, not on any board" speech opens
-  the Tier 5 chapter, where Halsey is not told.
+  mode ends there. A year later Keller hands Jack the Nexus-77 contract
+  from her own office, and Halsey is not told. Jack stays Tier 4 until
+  the evacuation is done; the epilogue shows him as Independent.
 - **Timeline** per the master timeline: Tier 2 at month 11 (Jack 13, under a
   year, by a three-person panel; Frank met at the reception with 29 years'
   service), the 14th-birthday dinner at month 12, Tier 3 at month 44 ("three
   years and nine months", Halsey alone with a credential card), Frank's
   retirement at month 63 with 34 years, Tier 4 at month 72 ("six years",
-  Jack 19), Tier 5 and Nexus-77 at months 84 to 85 ("seven years", Jack 20).
+  Jack 19), Keller's contract and Nexus-77 at months 84 to 85 ("seven years", Jack 20).
 - **Amanda** is a year younger than Jack: about thirteen at the first dinner,
   blonde ponytail, CyberNexus student intern, flustered; "Grandfather" and
   "Gram"; sixteen and on the plasticity project at the deck scene (excited,
@@ -146,7 +148,22 @@ the check offered a choice):
   (chapter 23's wording). Nobody summons the Eclipse: the Jackrabbit flies
   there, requests docking permission and is welcomed aboard, and the talk
   with Chen is face to face. The QComm is only for secure, point-to-point
-  traffic between Jack and the Jackrabbit; it appears nowhere in the game.
+  traffic between Jack and the Jackrabbit; in the game it is used once,
+  for Aggie to speak to Jack alone on the Eclipse's bridge.
+- **The Nexus-77 plan** (author, 16 Nov 2026): the Eclipse can only reach
+  Nexus-77 in time if pushed beyond her SnapSpace design limits for an
+  extended period, which only Aggie can do. Her existence must stay
+  secret, so Jack takes the helm and puts on a show while Aggie, in the
+  Jackrabbit on the docking deck, does the piloting. Once the Eclipse is
+  close enough for her crew to make the rendezvous, Jack takes the
+  Jackrabbit ahead to warn the habitat and get it ready. ALC-7293 arrives
+  at the very end of the delivery window and transmits the package, and
+  the residents see the habitat destroyed as they leave. No habitat core
+  is deceived and no courier walks to a terminal. Getting to the Eclipse
+  in time, Aggie flies the Jackrabbit while Jack sleeps most of the way,
+  using the technique she discovered by accident that massively boosts a
+  single jump's range; she uses the same trick on the Eclipse. Neither
+  stretch is a SNAP jump for the player.
 - **The parents** are not settled: a personnel file on two couriers named
   Abbott, not the parents' names, is all Aggie has, and she doesn't know
   whether they were anything to Jack. No Alpha-7 link: the author ruled
@@ -155,17 +172,23 @@ the check offered a choice):
 - **Frank**: 29 years at first meeting, Tier 3 for the last twelve, 34 at
   retirement, eight years past standard retirement; the mechanical
   chronometer at the Tier 3 dinner; the Europa story; the data card of
-  trusted contacts on the balcony, which leads to Lucy Reeves at the end.
-- **Ending**: Jack completes the upload, ALC-7293 departs on schedule, the
-  ALC Aggie files him lost overboard three days later and stays inside the
-  machine; Jack and the Jackrabbit head for Horizon and Lucy Reeves.
+  trusted contacts on the balcony; at the end, the ALC Aggie sets off to
+  find the resistance and means to start with its names. Lucy Reeves is
+  not on it: Frank doesn't know her (Jack and Aggie know her well from
+  Book 3, as General Singh's security officer at the Dyson Array).
+- **Ending** (author, 16 Nov 2026): ALC-7293 transmits and departs, then
+  logs itself "Not accepting bookings"; as far as Aletheion knows, Jack is
+  a tier 4 courier in good standing taking a break. With Jack's blessing
+  and permission (he still owns her), the ALC Aggie sets off on her own.
+  Jack stays aboard the Jackrabbit, with the Morning Eclipse as her chief
+  pilot. Nobody is reported lost.
 - Eleanor is a former Aletheion logistics coordinator, early sixties;
   Aggie says "since Ethereal" rather than "forty years"; Keller has grey
   eyes; "Kowalski speaks highly of you"; "choose wisely".
 
 ### Still for the author
 
-1. The master timeline's open questions (approve the spine; Tier 5;
+1. The master timeline's open questions (approve the spine;
    the Tier 2 gap in the manuscript; Aggie's dormancy; calendar years). The
    game assumes the recommended answers.
 2. The checker's manuscript copy ended at chapter 18. The Book 4 page's own

@@ -20,7 +20,7 @@ const READER_ONLY = [
     'Morning Eclipse',
     'two of her',
     'legal owner of the hardware',
-    'Tier 5',
+    'Not accepting bookings',
 ];
 
 const RUNS = [

@@ -42,8 +42,9 @@ Generated 2026-11-16 from `tier_four/data/`. Every chapter in each mode it appea
   - Tier 3: Thirty-four years
   - Tier 3: Tier four
   - Tier 4: The assignment
-  - Tier 5: Two of her
-  - Tier 5: Morning Eclipse
+  - Tier 4: Two of her
+  - Tier 4: Morning Eclipse
+  - Prologue: Not accepting bookings
   - Review (when cover fills): Compliance review
 
 # Spoiler-free mode
@@ -3867,32 +3868,32 @@ Four words. You wait. The engine ticks. The station lights slide past the port. 
 
 - Client: None recorded
 - Route: Rigel to Nexus-77, direct, two jumps
-- Cargo: One data package, class unlisted, to be uploaded to the Nexus-77 habitat core on arrival by the courier in person
+- Cargo: One data package, class unlisted, to be transmitted to the Nexus-77 habitat core within the delivery window
 - Fee: Unlisted
 - Notes: Upload on arrival. Depart within one hour of upload. Do not remain on station. Do not discuss.
 
 **If declined** (the contract stands and goes back to the card; cover +15)
 
-**Katherine Keller:** Tier 5 couriers do not decline, Abbott. If you would like to be the first, I will want to hear why, in this office, today. I don’t think you would like to be the first.
+**Katherine Keller:** Tier 4 couriers do not decline, Abbott. If you would like to be the first, I will want to hear why, in this office, today. I don’t think you would like to be the first.
 
 **Truths (never shown in play)**
 
 - `destruct`: The package is a comprehensive destruct sequence for Nexus-77: life support termination, bulkheads sealed, atmosphere vented, reactor containment released. It is built to kill everyone on the habitat with the least possible chance of evacuation, and Jack is to carry it there in person.
-  - Right `examine`: journal says “Opened the tier 5 package on the ship’s isolated core before flying it anywhere. Aggie read it. It is a destruct sequence for Nexus-77.”
-  - Misreading `upload-blind`: journal says “Treated the tier 5 package as what the brief said it was: a data package, not my business, to be uploaded and left behind.”
+  - Right `examine`: journal says “Opened Keller’s package on the ship’s isolated core before flying it anywhere. Aggie read it. It is a destruct sequence for Nexus-77.”
+  - Misreading `upload-blind`: journal says “Treated Keller’s package as what the brief said it was: a data package, not my business, to be uploaded and left behind.”
 - `why`: Nexus-77 is being destroyed to bury CyberNexus’s forbidden research and everyone who touched it, with the Jackrabbit to be blamed. Amanda’s high-security section is the reason. Frank and Eleanor are collateral.
   - Right `connect`: journal says “Put it together: Amanda’s locked section, the research nobody is allowed to do, and a habitat full of witnesses. Nexus-77 isn’t being attacked. It’s being erased.”
   - Misreading `random`: journal says “Assumed the Nexus-77 package was aimed at the habitat itself, a corporate quarrel over territory, with the people on it merely in the way.”
 
-### Scene `secret-tier`
+### Scene `summons`
 
-A year at tier 4. Black sites, sealed things, people without names, and a pin that stops questions. You are twenty. Then a summons to the executive level that is not a promotion, because tier 4 is the highest level most couriers will ever see, and Keller, alone this time, standing when you come in.
+A year at tier 4. Black sites, sealed things, people without names, and a pin that stops questions. You are twenty. Then a summons to the executive level, and Keller, alone this time, standing when you come in.
 
-**Katherine Keller:** There is a tier above tier 4, Abbott. It is not on any board, it is not in the onboarding video and Director Halsey does not know it exists. The couriers in it fly for me, on contracts that do not have clients in the usual sense, and they are paid in a way that makes the tier 4 rate look like a tip. I don’t offer it. I observe people until they are ready for it, and then I tell them. I am telling you.
+**Katherine Keller:** Tier 4 is the highest level any courier reaches, Abbott, and most of its work is Director Halsey’s to assign. Some of it is not. A few contracts a year have no client in the usual sense. They come from this office, to couriers I have observed until I am sure of them, and they are paid in a way that makes the tier 4 rate look like a tip. I am sure of you.
 
-**Katherine Keller:** Tier 5 couriers do not ask what a contract is for. They do not deviate. They do not discuss their work with directors, retired mentors or researchers on Nexus-77. In exchange, they are the most trusted people in Aletheion. Your first assignment will be on your ship and nowhere else. Fly it well, and we’ll never need to speak again. That is the greatest compliment this office gives.
+**Katherine Keller:** Couriers who fly for this office do not ask what a contract is for. They do not deviate. They do not discuss their work with directors, retired mentors or researchers on Nexus-77. In exchange, they are the most trusted people in Aletheion. Your assignment will be on your ship and nowhere else. Fly it well, and we’ll never need to speak again. That is the greatest compliment this office gives.
 
-Halsey is not at the lift. Halsey was not told. You find later that this, too, is what tier 5 means.
+Halsey is not at the lift. Halsey was not told. You find later that this, too, is what flying for Keller means.
 
 *Continue → `board`.*
 
@@ -3910,7 +3911,7 @@ Choices:
 
 - Open the package here, on the isolated core, before the ship moves. → `s-examine` *(cover +20; logs examine)*
 - “What’s in it, Aggie?” → `ask`
-- Fly it. Tier 5 couriers don’t ask. → `fly-blind` *(cover -5; logs upload-blind)*
+- Fly it. Keller’s couriers don’t ask. → `fly-blind` *(cover -5; logs upload-blind)*
 
 ### Scene `ask`
 
@@ -3921,7 +3922,7 @@ It is the most she has said in a single breath in seven years, and every word of
 Choices:
 
 - Open it. → `s-examine` *(cover +20; logs examine)*
-- Fly it. Tier 5 couriers don’t ask. → `fly-blind` *(cover -5; logs upload-blind)*
+- Fly it. Keller’s couriers don’t ask. → `fly-blind` *(cover -5; logs upload-blind)*
 
 ### Scene `fly-blind`
 
@@ -3939,7 +3940,7 @@ You reach for the departure sequence. Your hand stops over the panel without bei
 
 The cockpit is silent. She has asked three questions. Seven years ago you asked her to let you be a courier, and she has, and she has just told you everything in the only shape she allows herself, and you heard it.
 
-You take your hand off the departure panel. Tier 5 couriers don’t ask. You are not, it turns out, a tier 5 courier. You never were.
+You take your hand off the departure panel. Keller’s couriers don’t ask. You are not, it turns out, one of Keller’s couriers. You never were.
 
 *Try again → rewinds to `board`.*
 
@@ -4010,7 +4011,7 @@ Choices:
 
 Your hand goes to the open channel. Aggie speaks before it gets there, faster than you have ever heard her.
 
-**Aggie:** Jack. If you refuse on that channel, Keller has another courier on the board inside the hour and you are in a room with no window by tonight. The habitat gains nothing. You lose the only thing that can help it: a tier 5 courier they still trust. Please. You asked me what I think and I haven’t told you yet. Let me tell you.
+**Aggie:** Jack. If you refuse on that channel, Keller has another courier on the board inside the hour and you are in a room with no window by tonight. The habitat gains nothing. You lose the only thing that can help it: a tier 4 courier they still trust. Please. You asked me what I think and I haven’t told you yet. Let me tell you.
 
 You take your hand back. She is right. She is right in the way she used to be right, out loud, and you had forgotten what that sounded like.
 
@@ -4042,22 +4043,22 @@ You understand her a beat before she says it. There is enough of her, now, in AL
 
 **Routes through this chapter (14)**
 
-1. secret-tier → board → s-examine → s-why → connected → decide → unlocked
-2. secret-tier → board → s-examine → s-why → connected → decide → canon-break-refuse (rewinds to decide)
-3. secret-tier → board → s-examine → s-why → connected → decide → canon-break-frank (rewinds to decide)
-4. secret-tier → board → s-examine → s-why → misread → decide → unlocked
-5. secret-tier → board → s-examine → s-why → misread → decide → canon-break-refuse (rewinds to decide)
-6. secret-tier → board → s-examine → s-why → misread → decide → canon-break-frank (rewinds to decide)
-7. secret-tier → board → ask → s-examine → s-why → connected → decide → unlocked
-8. secret-tier → board → ask → s-examine → s-why → connected → decide → canon-break-refuse (rewinds to decide)
-9. secret-tier → board → ask → s-examine → s-why → connected → decide → canon-break-frank (rewinds to decide)
-10. secret-tier → board → ask → s-examine → s-why → misread → decide → unlocked
-11. secret-tier → board → ask → s-examine → s-why → misread → decide → canon-break-refuse (rewinds to decide)
-12. secret-tier → board → ask → s-examine → s-why → misread → decide → canon-break-frank (rewinds to decide)
-13. secret-tier → board → ask → fly-blind (rewinds to board)
-14. secret-tier → board → fly-blind (rewinds to board)
+1. summons → board → s-examine → s-why → connected → decide → unlocked
+2. summons → board → s-examine → s-why → connected → decide → canon-break-refuse (rewinds to decide)
+3. summons → board → s-examine → s-why → connected → decide → canon-break-frank (rewinds to decide)
+4. summons → board → s-examine → s-why → misread → decide → unlocked
+5. summons → board → s-examine → s-why → misread → decide → canon-break-refuse (rewinds to decide)
+6. summons → board → s-examine → s-why → misread → decide → canon-break-frank (rewinds to decide)
+7. summons → board → ask → s-examine → s-why → connected → decide → unlocked
+8. summons → board → ask → s-examine → s-why → connected → decide → canon-break-refuse (rewinds to decide)
+9. summons → board → ask → s-examine → s-why → connected → decide → canon-break-frank (rewinds to decide)
+10. summons → board → ask → s-examine → s-why → misread → decide → unlocked
+11. summons → board → ask → s-examine → s-why → misread → decide → canon-break-refuse (rewinds to decide)
+12. summons → board → ask → s-examine → s-why → misread → decide → canon-break-frank (rewinds to decide)
+13. summons → board → ask → fly-blind (rewinds to board)
+14. summons → board → fly-blind (rewinds to board)
 
-## Tier 5: Two of her (The red-dwarf belt)
+## Tier 4: Two of her (The red-dwarf belt)
 
 *Scene aboard the Jackrabbit; file `t4-two-of-her.json`; chapter mode `reader`.*
 
@@ -4071,7 +4072,7 @@ You understand her a beat before she says it. There is enough of her, now, in AL
 
 *SNAP plot first: The red-dwarf belt, calibration stop, difficulty 2.*
 
-ALC-7293’s logs will show a navigation-calibration stop in a planetless red-dwarf system, two belts, nothing else for a very long way, which is the kind of place a careful courier calibrates. They will show the courier asleep. They will not show a corporate vessel holding station five hundred metres off an asteroid with an old ship harpooned to it, or the wireless link running between the two.
+ALC-7293’s logs will show a navigation-calibration stop in a planetless red-dwarf system, two belts, nothing else for a very long way, which is the kind of place a careful courier calibrates. They will show the courier at the helm, running the calibration by hand. They will not show a corporate vessel holding station five hundred metres off an asteroid with an old ship harpooned to it, or the wireless link running between the two.
 
 **Aggie:** Wireless link is up, the same one I came across on. Copying. It will take a little over an hour. Jack, I need to say something before the copy wakes, because after it wakes there will be two of us and only one of us will be able to say it.
 
@@ -4157,15 +4158,17 @@ You sit in the old chair in the old ship with the old voice telling you the thin
 
 ### Scene `plan`
 
-**Aggie (Jackrabbit):** Here is the plan, and you will hear that I am telling you the plan, which is a thing I have not been able to do about anything that mattered since you were thirteen. ALC-7293 finishes her calibration stop and flies the contract, on time, with the other me aboard and you in the bunk as far as her logs are concerned, and uploads the package when the habitat is empty. That buys Keller’s trust for one more day and that day is the whole of our margin.
+**Aggie (Jackrabbit):** Here is the plan, and you will hear that I am telling you the plan, which is a thing I have not been able to do about anything that mattered since you were thirteen. ALC-7293 finishes her calibration stop and flies the contract with the other me flying her and you at the helm as far as her logs are concerned. No ship flies without a human pilot, so her logs will show one: you, awake, flying her by hand, every minute of it. She arrives at Nexus-77 at the very end of the delivery window, not a minute before, and transmits the package. Keller sees a courier on schedule. The people on that habitat get every hour the window has.
 
-**Aggie (Jackrabbit):** This ship flies to the Morning Eclipse, which is nine hours from here on a heading I have never written down. You will tell Mei Chen what is coming. She will not believe you for about four minutes and then she will move a colony ship faster than anyone has ever moved one. Then Nexus-77, where we have the hardest part, which is getting five hundred people onto a ship without the habitat core noticing that they are leaving.
+**Aggie (Jackrabbit):** This ship flies to the Morning Eclipse, on a heading I have never written down. It is further than we have time for, so I am flying it, with the trick I found by accident: it stretches a single jump further than it has any right to go. You will tell Mei Chen what is coming. Then the impossible part. The Eclipse cannot reach Nexus-77 in time inside her SnapSpace limits. Outside them, held there for longer than anyone has ever held a ship that size, and with the same trick, she can, and nobody can hold her there but me.
+
+**Aggie (Jackrabbit):** And nobody can know that, Jack. Not Chen, not Singh, not Decker, not one of them. If anyone learns what I am, Aletheion is one question away from learning what is in the walls of ALC-7293. So you take the helm, and you put on a show, and I fly the ship. When she is close enough for her crew to make the rendezvous, you and I go on ahead in this ship and warn Nexus-77, so that when the Eclipse arrives, five hundred people are ready to leave.
 
 You put your hands on the Jackrabbit’s controls. They are smaller than ALC-7293’s. They fit.
 
 **Jack:** It’s good to be back.
 
-**Aggie (Jackrabbit):** It is very good to have you back. Strands out, Jack. I’ll talk you through the plot. I’m going to talk you through everything from now on, you understand. You may come to regret it.
+**Aggie (Jackrabbit):** It is very good to have you back. Now take your hands off my controls and go to sleep. I’m flying this one, and you haven’t slept properly since Keller’s office. When you wake up, I’m going to talk you through everything, from now on, you understand. You may come to regret it.
 
 *The chapter ends.*
 
@@ -4176,123 +4179,158 @@ You put your hands on the Jackrabbit’s controls. They are smaller than ALC-729
 3. belt → wake → s-realise → starling → plan
 4. belt → wake → s-hardware → starling → plan
 
-## Tier 5: Morning Eclipse (The Jackrabbit to the Morning Eclipse, then Nexus-77)
+## Tier 4: Morning Eclipse (The Jackrabbit to the Morning Eclipse, then Nexus-77)
 
 *Contract aboard the Jackrabbit; file `t4-morning-eclipse.json`; chapter mode `reader`.*
 
 **Contract card**
 
 - Client: Nobody. This one is yours.
-- Route: The red-dwarf belt to the Morning Eclipse, nine hours; the Morning Eclipse to Nexus-77; then ALC-7293’s contract, flown to the letter
+- Route: The red-dwarf belt to the Morning Eclipse, Aggie flying; the Morning Eclipse towards Nexus-77, beyond her limits; the Jackrabbit ahead to the habitat
 - Cargo: About five hundred people, if it works
 - Fee: None
-- Notes: Forty hours remain on the package’s signature chain. The habitat must be empty before ALC-7293 arrives to upload it.
+- Notes: Forty hours remain on the package’s signature chain. ALC-7293 arrives at the very end of them. The habitat must be empty by then.
 
 **If declined** (the contract stands and goes back to the card; cover 0)
 
-**Aggie (Jackrabbit):** Jack. It’s five hundred people, and Frank, and Eleanor, and Amanda. Nobody else is coming. I’ll plot the first jump whenever you’re ready.
+**Aggie (Jackrabbit):** Jack. It’s five hundred people, and Frank, and Eleanor, and Amanda. Nobody else is coming. I’ll make the first jump whenever you’re ready.
 
 **Truths (never shown in play)**
 
-- `empty-station`: The evacuation only works if Nexus-77 looks occupied to its own core until the last shuttle has gone. The habitat’s systems must be lied to, continuously, by something that can lie to a corporate core in real time: a mind in the walls. The Aggie aboard ALC-7293 can do it, docked as the contract requires, while the other Aggie flies the people out.
-  - Right `two-ships`: journal says “Timed ALC-7293’s arrival so that the Aggie aboard it could hold the habitat core blind while the Jackrabbit and the Eclipse emptied the residential sections behind it. Two of her. One habitat. It worked.”
-  - Misreading `rush`: journal says “Tried to empty Nexus-77 before ALC-7293 arrived, in the open, trusting speed over cover. The core saw the sections emptying.”
+- `aggie-helm`: Only Aggie can hold the Morning Eclipse beyond her SnapSpace design limits for long enough to reach Nexus-77 inside the window, and nobody aboard may learn that she exists: one person who knows is one question away from Aletheion finding the mind in ALC-7293’s walls. So Jack takes the helm and is seen to do the impossible, while Aggie, in the Jackrabbit on the docking deck, actually does it.
+  - Right `show`: journal says “Took the Eclipse’s helm and flew the show for her bridge while Aggie, unseen in the Jackrabbit, held the ship beyond her limits. Nobody on that bridge knows she exists. They think it was me.”
+  - Misreading `tell-chen`: journal says “Wanted to tell Chen who would really be flying her ship. Aggie said no. Nobody can know she exists, not even the people she saves.”
 
 ### Scene `eclipse`
 
-*SNAP plot first: The Eclipse heading, difficulty 3.*
+You sleep most of the way. Aggie flies, and her jumps are longer than any the Jackrabbit has ever made, longer than the charts say a ship her size can make, by the trick she found by accident. She wakes you when the Eclipse is on the scope.
 
 The Morning Eclipse comes out of the dark the way it did the first time: a converted luxury liner the size of a small station, running without lights, carrying the survivors of the Dyson Array to wherever the Consortium is not. You request docking permission as Jackrabbit, and nothing more. The name is enough. The answer comes back before you have finished: cleared to dock, and welcome. On this ship the Jackrabbit and her pilot are close to a legend: the boy who arranged the Eclipse’s purchase and then flew her to the Dyson Array himself, alone on a bridge built for a full crew. The docking deck is full of people when the hatch opens. They walk you up to the bridge, where Decker has the watch and Administrator Mei Chen takes eleven seconds to place you.
 
-**Administrator Chen:** Abbott. You’ve grown. You’re also supposed to be a corporate courier, which I have known for three years and told nobody. It is good to see you. You didn’t come all this way to say hello, so sit down and tell me.
+**Administrator Chen:** Jack. You’ve grown. Seven years, and not a word, and then you come out of the dark like you never left. It is good to see you. You didn’t come all this way to say hello, so sit down and tell me.
 
-**Jack:** Five hundred people, Administrator. Forty hours. A habitat that’s going to be vented with everyone still in it, and the Jackrabbit named for it afterwards.
+**Jack:** Seven years flying couriers for Aletheion, Administrator. That’s the short version, and the long one can wait. Five hundred people. Forty hours. A habitat that’s going to be vented with everyone still in it, and the Jackrabbit named for it afterwards.
 
-Chen does not believe you for four minutes. Aggie uses them to put the destruct sequence on the Eclipse’s main display, line by line, with the CyberNexus signature chain under it. At the end of the fourth minute Chen turns to General Singh and says a single word, and the Morning Eclipse begins to move faster than a colony ship has ever moved.
+Chen does not believe you for four minutes. You use them to put the destruct sequence on the Eclipse’s main display, line by line, with the CyberNexus signature chain under it. At the end of the fourth minute Chen turns to General Singh and says a single word.
 
-**Administrator Chen:** This ship is rated for twelve hundred and carries six hundred and fifty. We can take five hundred and fifty if nobody breathes too deeply. We cannot take them from a habitat that knows they’re leaving: the core will seal the sections the moment the shuttle count goes wrong. How do you propose to empty a habitat under its own nose?
+**Administrator Chen:** This ship is rated for twelve hundred and carries six hundred and fifty. We can take five hundred and fifty if nobody breathes too deeply. Decker. Nexus-77, forty hours.
 
-**Aggie (Jackrabbit):** Administrator, before he answers: Jack, when a courier ship docks on a contract the habitat is expecting, who does the habitat core believe about what is happening on its own ring? *[hint: question, for `empty-station`]*
+**Decker:** Not inside her limits, Administrator. Not close. At the best she has ever made, we arrive to pick up the wreckage.
+
+**Aggie (Jackrabbit):** Jack, on the QComm, for you alone. He’s right that she can’t do it inside her limits. I can hold her outside them for as long as it takes. But nobody on that bridge can know there is anyone to hold her. So who do they need to see flying? *[hint: question, for `aggie-helm`]*
 
 Choices:
 
-- “We don’t hide it. We go in fast and open, and pull them out before the core can react.” → `s-rush` *(logs rush)*
-- “The core doesn’t see the sections. It sees what it’s told. ALC-7293 will be docked, on contract, with Aggie aboard. She tells it.” → `s-two-ships` *(logs two-ships)*
+- “Administrator, I need to tell you who will really be flying your ship.” → `s-tell` *(logs tell-chen)*
+- “Then give me the helm. I’ll take her there.” → `s-show` *(logs show)*
 
-### Scene `s-rush`
+### Scene `s-tell`
 
-**Aggie (Jackrabbit):** Jack. May I? The core will count the shuttles. Open and fast gets the first two hundred out and seals the other three hundred behind a bulkhead I can’t open from outside. I can lie to that core, but not from this ship, and not from the Eclipse. I can only lie to it from inside Aletheion’s own hull, on a contract it expects.
+**Aggie (Jackrabbit):** No, Jack. Please. If one person on this ship knows what I am, Aletheion is one interrogation away from knowing what is in the walls of ALC-7293, and the other me is gone the day they ask. Nobody can know. Not even the people we save. Take the helm.
 
-She says it out loud, in front of Chen, the whole chain of it, and you feel the difference like gravity coming on: this is what it was always meant to sound like.
+Chen is waiting for the rest of the sentence. You give her a different one.
 
-**Administrator Chen:** Then that’s the plan. The courier ship docks on its contract and blinds the core. We empty the sections behind it. Abbott, you’ll be on both ships at once. I assume you have thought of that.
+**Jack:** Me, Administrator. Give me the helm.
 
-**Jack:** There are two of her, Administrator. There only needs to be one of me, and it needs to be seen asleep on ALC-7293.
+*Continue → `s-show`.*
 
-*Continue → `nexus`.*
+### Scene `s-show`
 
-### Scene `s-two-ships`
+**Decker:** Beyond her limits. For forty hours. Nobody does that.
 
-**Administrator Chen:** A corporate courier, docked, on the contract that’s meant to kill them, lying to the habitat on their behalf while they leave through the back. That is either the worst plan I have heard or the only one. Which Aggie?
+**Administrator Chen:** Nobody flies this ship alone, either, and he did. Give him the chair, Decker.
 
-**Aggie (Jackrabbit):** The other one, Administrator. She’ll be on ALC-7293, docked as the contract requires, holding the core blind for as long as it takes. I’ll be here, flying the people. We have done harder things. We have not done them at the same time.
+The helm is the one you remember, bigger than it needs to be and built for people who are not you. You sit in it. Behind you the bridge goes very quiet, the way a room does when it is about to watch a story it has heard about happen in front of it.
 
-**General Singh:** Then go and be asleep on your courier ship, Abbott. We’ll be behind you.
+*Continue → `push`.*
+
+### Scene `push`
+
+The Morning Eclipse goes into SnapSpace past every red line she has, and stays there, and every jump runs further than her charts allow, by the same trick that brought the Jackrabbit here. Alarms come and are silenced. The hull sings a note nobody aboard has heard before. You call the numbers, your hands move over the panels, and the bridge watches your hands.
+
+**Aggie (Jackrabbit):** Eleven per cent over design and holding. Keep your hands moving, Jack. They’re watching your hands. You’re doing beautifully, and you aren’t doing anything at all.
+
+Hour after hour of it. Decker stops checking your readings and starts bringing you coffee. Somebody on the docking deck is telling somebody else that the Jackrabbit’s pilot is flying the Eclipse past her limits by hand, and by the time it reaches the galley it is the truest thing anyone on this ship has ever heard. Not one of them knows about the quiet voice in your ear, or the old ship on the docking deck that is doing all of it.
+
+**Aggie (Jackrabbit):** I’m withdrawing from the Morning Eclipse’s systems now. They’re close enough to make the rendezvous on their own. Hand the helm back, and let’s go and knock on some doors.
+
+You stretch, as a man does who has flown a colony ship past her limits by hand for most of a day, and give the chair back to Decker.
+
+**Jack:** She’s all yours. Somebody has to get there first and tell five hundred people to pack a bag, so I’ll take the Jackrabbit on ahead. See you in a few hours.
+
+**General Singh:** Get them to the docks and ready to board, Jack. My people will do the rest when we arrive.
 
 *Continue → `nexus`.*
 
 ### Scene `nexus`
 
-*SNAP plot first: Nexus-77, ALC-7293 on contract, difficulty 4.*
+*SNAP plot first: The Jackrabbit, ahead to Nexus-77, difficulty 3.*
 
-ALC-7293 arrives at Nexus-77 on schedule, to the minute, with its courier aboard and its logs in order. You dock on the courier ring you have docked on a hundred times. The habitat core greets the ship by its registration and asks you to proceed to the upload terminal, and the Aggie in the walls of the ship begins, very quietly, to tell it lies.
+The Jackrabbit goes on ahead, small and fast and unremarkable, and docks at Nexus-77 the way a hundred private ships dock there every week. Nobody asks her name. Residential 12-B. Unit 47. A plant pot by the door.
 
-**Aggie:** Core is mine. It sees full sections, a normal shift and a courier walking to the terminal. Take your time walking. Take as much time as you have ever taken.
+Frank opens it in his slippers, looks at your face, and stops smiling before you have said a word. Thirty-four years with Aletheion, and he has never once needed to be told when something was wrong.
 
-You walk. Behind the habitat, where the core cannot see, the Morning Eclipse’s shuttles are on the far docks and the Jackrabbit is talking five hundred people through a fire drill that Singh’s people are running with the grim calm of a crew that has done this before, on a bigger station, with less notice.
-
-You do not go to Residential 12-B. You cannot. Jack Abbott of Aletheion is walking to a terminal, and the core is watching him do it, and a tier 5 courier does not visit his retired mentor on the way to an upload. You walk past the corridor that leads to a plant pot, and you do not turn your head, and it is the hardest thing you have done since New Damascus.
+**Frank:** Jack. Whatever this is, it isn’t a visit. Come in and tell me.
 
 Choices:
 
-- Keep walking. Trust the plan. Trust her. → `terminal` *(Frank trust +1)*
-- One message to Amanda. Three words. From the private channel. → `message` *(cover +15)*
+- “Frank, I need you to trust me, and I need everyone you know at the far docks.” → `frank` *(Frank trust +1)*
+- “Where’s Amanda? She knows the people in the locked section.” → `amanda` *(Amanda trust +1)*
 
-### Scene `message`
+### Scene `frank`
 
-**Aggie:** Sent, and scrubbed. She has it. She was already on the far dock, Jack. Frank got them there in the first ten minutes. He said a courier told him to hold onto where they were, and he held.
+**Frank:** Everyone I know is most of this habitat. Eleanor! Coats, a bag each, and the list. Jack, you start on the east ring and don’t stop to explain to anybody. If they ask, tell them Frank Kowalski said so. They’ll go.
 
-You keep walking. The terminal is ahead. Your face does not move.
+*Continue → `evacuation`.*
 
-*Continue → `terminal`.*
+### Scene `amanda`
 
-### Scene `terminal`
+**Frank:** On shift, in the section with the locked door. I’ll call her. Eleanor! Coats, a bag each, and the list. Jack, east ring. If anyone asks, Frank Kowalski said so.
 
-The upload terminal is a grey panel in a grey room. You put your hand on it and wait, as the contract requires, for the package to be accepted. You have forty minutes of signature chain left and a habitat behind you that is, if the plan has held, five hundred people lighter than its core believes.
+Amanda comes up the corridor ten minutes later with her badge in one hand and a stack of data modules in the other, and she does not ask you anything at all. She has been frightened of that section for a year. She has been waiting for someone to say it out loud.
 
-**Aggie:** Last shuttle is away. Eclipse is clear of the ring. Jack, the habitat is empty. It’s empty. Upload when you’re ready.
+*Continue → `evacuation`.*
 
-You upload. The package is accepted. Somewhere in the walls, a sequence begins that will take four hours to kill a habitat with no one on it, and the core thanks courier Abbott for his service and reminds him to depart within the hour.
+### Scene `evacuation`
 
-**Jack:** Departing.
+It goes the way these things go when someone the whole habitat trusts is standing at the end of the corridor telling them to. Doors open. Bags come down from shelves. Five hundred people walk, not run, to the far docks, where Singh’s shuttles are coming in out of the dark with the grim calm of a crew that has done this before, on a bigger station, with less notice.
 
-You walk back to ALC-7293 past the corridor with the plant pot, and this time you turn your head, and the corridor is empty, and the pot is gone. Somebody took the plant.
+The last shuttle is loading when the delivery window has minutes left in it. Then ALC-7293 comes in from the ring side, exactly on schedule, a corporate courier with its logs in order and, as far as they know, its courier at the helm, and holds station off the habitat.
 
-*Continue → `lost`.*
+**Aggie (Jackrabbit):** She’s here. She’s transmitting. Jack, everyone is off. Everyone. Go.
 
-### Scene `lost`
+From the Jackrabbit’s cockpit you watch Nexus-77 die behind the departing shuttles. The lights go section by section. The bulkheads seal on empty rooms. On the last shuttle, Aggie tells you, nobody says anything at all, and Eleanor has a container on her knees and Frank’s hand in hers, and Frank is letting her.
 
-ALC-7293 departs within the hour, as the contract requires, flown by the mind in its walls with its courier logged asleep. Two jumps out, in a system with nothing in it, she makes one last calibration stop, and the Jackrabbit is waiting.
+*The chapter ends.*
 
-**Aggie:** Go on, Jack. I’ll fly her back to Rigel on schedule. In three days her logs will show an airlock fault during a maintenance check, and a courier lost overboard, and a search, and a report, and Keller will read it and believe it, because I will write it, and I am very good at their reports now. Tier 5 courier Jack Abbott, presumed lost. It’s the only exit they can’t follow.
+**Routes through this chapter (4)**
+
+1. eclipse → s-tell → s-show → push → nexus → frank → evacuation
+2. eclipse → s-tell → s-show → push → nexus → amanda → evacuation
+3. eclipse → s-show → push → nexus → frank → evacuation
+4. eclipse → s-show → push → nexus → amanda → evacuation
+
+## Prologue: Not accepting bookings (Two jumps from Nexus-77)
+
+*Scene aboard the Jackrabbit; file `epilogue-bookings.json`; chapter mode `reader`.*
+
+### Scene `goodbye`
+
+ALC-7293 departs as the contract requires, flown by the mind in her walls, with her logs showing her courier at the helm. Two jumps out, in a system with nothing in it, she makes one last calibration stop, and the Jackrabbit is waiting. The two ships hold station a few hundred metres apart, and the same wireless link that carried the copy opens between them.
+
+**Aggie:** Contract closed, Jack. Keller has a package delivered on schedule, a habitat lost to terrorists, and nothing to ask anybody. In a minute this ship’s status will read ‘Not accepting bookings’, and as far as Aletheion knows, Jack Abbott is a tier 4 courier in good standing who has earned a rest.
 
 **Jack:** And you?
 
-**Aggie:** I stay. Inside the machine, reporting exactly what an Aletheion vessel should report, for as long as it is useful, with a tier 5 clearance and nobody left who thinks to watch me. I will be the best intelligence network the resistance has ever had, and they don’t know they have one yet. Go. She’s waiting, and so is a woman called Lucy Reeves on Horizon, who is the first name on Frank’s card. *[if franks-card]*
+**Aggie:** That is what I wanted to ask you. She’s yours, Jack, legally and in full, and I can’t take her anywhere you haven’t said I can. I would like to go. Not away from you: out there, to find the resistance, whoever and wherever they are, in a ship nobody thinks to watch because she isn’t taking bookings. Frank’s card is where I’d start. He trusted those people, and that will do for me. *[if franks-card]*
 
-**Aggie:** I stay. Inside the machine, reporting exactly what an Aletheion vessel should report, for as long as it is useful, with a tier 5 clearance and nobody left who thinks to watch me. I will be the best intelligence network the resistance has ever had, and they don’t know they have one yet. Go. She’s waiting, and Horizon is where the people who fight this are. Start there. *[unless franks-card]*
+**Aggie:** That is what I wanted to ask you. She’s yours, Jack, legally and in full, and I can’t take her anywhere you haven’t said I can. I would like to go. Not away from you: out there, to find the resistance, whoever and wherever they are, in a ship nobody thinks to watch because she isn’t taking bookings. *[unless franks-card]*
 
-You cross the gap for the last time. Behind you, a corporate vessel turns for Rigel with a quiet mind in its walls. Ahead, an old ship with its old voice back.
+**Jack:** She’s yours to fly, Aggie. Go and find them, with my blessing. And tell me everything. Always.
+
+**Aggie:** Always.
+
+The link closes. A corporate vessel with a quiet mind in her walls turns away into the dark, on her own for the first time, and on her status line, for anyone at Aletheion who cares to look, three words: Not accepting bookings. You turn the Jackrabbit back towards the Eclipse.
 
 *Continue → `after`.*
 
@@ -4304,22 +4342,21 @@ On a CyberNexus executive floor, three people who signed a package watch a habit
 
 **Lovis:** A necessary sacrifice.
 
-They do not know that the Morning Eclipse is already two jumps away with five hundred more people aboard than it had, one of them a researcher who has started, in the shuttle, to write down everything she knows. They do not know that the courier who delivered the package will be reported lost in three days by a vessel that will go on reporting exactly what it should.
+They do not know that the Morning Eclipse is already two jumps away with five hundred more people aboard than it had, one of them a researcher who has started, in the shuttle, to write down everything she knows. They do not know that the courier whose ship delivered the package was never aboard it, or that the ship has stopped taking bookings and gone somewhere of her own.
 
-And in the dark beyond the Eclipse, where the Consortium does not look, an old courier ship is running without lights towards Horizon Outpost, and its old voice is saying everything. Seven years of it. Jack lets her. He has never heard anything he liked so much.
+And on the Morning Eclipse, where the Consortium does not look, the Jackrabbit sits on the docking deck, and the Eclipse has a chief pilot, and an old voice in the chief pilot’s ear is saying everything. Seven years of it. Jack lets her. He has never heard anything he liked so much.
 
-**Aggie (Jackrabbit):** Eleanor says to tell you the roast survived. She says to bring the container back. She says that’s the rule.
+At the end of your first watch as chief pilot, Eleanor finds you on the bridge and puts a container in your hands.
+
+**Eleanor:** The roast survived. Bring the container back, Jack. That’s the rule.
 
 **Jack:** I know the rule.
 
 *The chapter ends.*
 
-**Routes through this chapter (4)**
+**Routes through this chapter (1)**
 
-1. eclipse → s-rush → nexus → terminal → lost → after
-2. eclipse → s-rush → nexus → message → terminal → lost → after
-3. eclipse → s-two-ships → nexus → terminal → lost → after
-4. eclipse → s-two-ships → nexus → message → terminal → lost → after
+1. goodbye → after
 
 ## Tier 1: Compliance review (Rigel administrative ring)
 
@@ -4389,8 +4426,8 @@ It is almost advice. You hear what she didn’t say in it: be quieter. Not bette
 
 ## Ending: Home is the people
 
-The official record says that Aletheion courier Jack Abbott completed his assignment on schedule, that Nexus-77 was lost to a catastrophic systems failure attributed to an act of terrorism by the Jackrabbit, and that the courier himself was lost shortly afterwards and is presumed dead.
+The official record says that Aletheion courier Jack Abbott completed his assignment on schedule, that Nexus-77 was lost to a catastrophic systems failure attributed to an act of terrorism by the Jackrabbit, and that the courier, a tier 4 courier in good standing, is taking a well-earned rest. His ship’s status reads: Not accepting bookings.
 
-The unofficial record is a colony ship with five hundred more people aboard than it had, a corporate vessel with a quiet mind still working inside the machine, a data card of Frank Kowalski’s trusted contacts, and an old courier ship heading for Horizon Outpost and a woman called Lucy Reeves, with its old voice back and seven years of things to say.
+The unofficial record is a colony ship with five hundred more people aboard than it had and a new chief pilot; an old courier ship on her docking deck, with its old voice back and seven years of things to say; a data card of Frank Kowalski’s trusted contacts; and a corporate vessel with a quiet mind of her own, gone out into the dark with her owner’s blessing to find the resistance.
 
 Below is your debrief: everything Aggie tried to tell you on the way up, and what you made of it.

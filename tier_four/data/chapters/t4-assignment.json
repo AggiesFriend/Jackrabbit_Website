@@ -10,30 +10,30 @@
   "brief": {
     "client": "None recorded",
     "route": "Rigel to Nexus-77, direct, two jumps",
-    "cargo": "One data package, class unlisted, to be uploaded to the Nexus-77 habitat core on arrival by the courier in person",
+    "cargo": "One data package, class unlisted, to be transmitted to the Nexus-77 habitat core within the delivery window",
     "fee": "Unlisted",
     "notes": "Upload on arrival. Depart within one hour of upload. Do not remain on station. Do not discuss."
   },
-  "decline": { "who": "keller", "text": "Tier 5 couriers do not decline, Abbott. If you would like to be the first, I will want to hear why, in this office, today. I don’t think you would like to be the first.", "cover": 15 },
+  "decline": { "who": "keller", "text": "Tier 4 couriers do not decline, Abbott. If you would like to be the first, I will want to hear why, in this office, today. I don’t think you would like to be the first.", "cover": 15 },
   "truths": [
     { "id": "destruct", "mode": "reader", "text": "The package is a comprehensive destruct sequence for Nexus-77: life support termination, bulkheads sealed, atmosphere vented, reactor containment released. It is built to kill everyone on the habitat with the least possible chance of evacuation, and Jack is to carry it there in person." },
     { "id": "why", "mode": "reader", "text": "Nexus-77 is being destroyed to bury CyberNexus’s forbidden research and everyone who touched it, with the Jackrabbit to be blamed. Amanda’s high-security section is the reason. Frank and Eleanor are collateral." }
   ],
   "understandings": [
-    { "id": "examine", "mode": "reader", "truth": "destruct", "correct": true, "journal": "Opened the tier 5 package on the ship’s isolated core before flying it anywhere. Aggie read it. It is a destruct sequence for Nexus-77." },
-    { "id": "upload-blind", "mode": "reader", "truth": "destruct", "correct": false, "journal": "Treated the tier 5 package as what the brief said it was: a data package, not my business, to be uploaded and left behind." },
+    { "id": "examine", "mode": "reader", "truth": "destruct", "correct": true, "journal": "Opened Keller’s package on the ship’s isolated core before flying it anywhere. Aggie read it. It is a destruct sequence for Nexus-77." },
+    { "id": "upload-blind", "mode": "reader", "truth": "destruct", "correct": false, "journal": "Treated Keller’s package as what the brief said it was: a data package, not my business, to be uploaded and left behind." },
     { "id": "connect", "mode": "reader", "truth": "why", "correct": true, "journal": "Put it together: Amanda’s locked section, the research nobody is allowed to do, and a habitat full of witnesses. Nexus-77 isn’t being attacked. It’s being erased." },
     { "id": "random", "mode": "reader", "truth": "why", "correct": false, "journal": "Assumed the Nexus-77 package was aimed at the habitat itself, a corporate quarrel over territory, with the people on it merely in the way." }
   ],
-  "start": "secret-tier",
+  "start": "summons",
   "scenes": [
     {
-      "id": "secret-tier",
+      "id": "summons",
       "lines": [
-        { "who": "n", "text": "A year at tier 4. Black sites, sealed things, people without names, and a pin that stops questions. You are twenty. Then a summons to the executive level that is not a promotion, because tier 4 is the highest level most couriers will ever see, and Keller, alone this time, standing when you come in." },
-        { "who": "keller", "text": "There is a tier above tier 4, Abbott. It is not on any board, it is not in the onboarding video and Director Halsey does not know it exists. The couriers in it fly for me, on contracts that do not have clients in the usual sense, and they are paid in a way that makes the tier 4 rate look like a tip. I don’t offer it. I observe people until they are ready for it, and then I tell them. I am telling you." },
-        { "who": "keller", "text": "Tier 5 couriers do not ask what a contract is for. They do not deviate. They do not discuss their work with directors, retired mentors or researchers on Nexus-77. In exchange, they are the most trusted people in Aletheion. Your first assignment will be on your ship and nowhere else. Fly it well, and we’ll never need to speak again. That is the greatest compliment this office gives." },
-        { "who": "n", "text": "Halsey is not at the lift. Halsey was not told. You find later that this, too, is what tier 5 means." }
+        { "who": "n", "text": "A year at tier 4. Black sites, sealed things, people without names, and a pin that stops questions. You are twenty. Then a summons to the executive level, and Keller, alone this time, standing when you come in." },
+        { "who": "keller", "text": "Tier 4 is the highest level any courier reaches, Abbott, and most of its work is Director Halsey’s to assign. Some of it is not. A few contracts a year have no client in the usual sense. They come from this office, to couriers I have observed until I am sure of them, and they are paid in a way that makes the tier 4 rate look like a tip. I am sure of you." },
+        { "who": "keller", "text": "Couriers who fly for this office do not ask what a contract is for. They do not deviate. They do not discuss their work with directors, retired mentors or researchers on Nexus-77. In exchange, they are the most trusted people in Aletheion. Your assignment will be on your ship and nowhere else. Fly it well, and we’ll never need to speak again. That is the greatest compliment this office gives." },
+        { "who": "n", "text": "Halsey is not at the lift. Halsey was not told. You find later that this, too, is what flying for Keller means." }
       ],
       "next": "board"
     },
@@ -48,7 +48,7 @@
       "choices": [
         { "text": "Open the package here, on the isolated core, before the ship moves.", "goto": "s-examine", "logs": ["examine"], "cover": 20 },
         { "text": "“What’s in it, Aggie?”", "goto": "ask" },
-        { "text": "Fly it. Tier 5 couriers don’t ask.", "goto": "fly-blind", "logs": ["upload-blind"], "cover": -5 }
+        { "text": "Fly it. Keller’s couriers don’t ask.", "goto": "fly-blind", "logs": ["upload-blind"], "cover": -5 }
       ]
     },
     {
@@ -59,7 +59,7 @@
       ],
       "choices": [
         { "text": "Open it.", "goto": "s-examine", "logs": ["examine"], "cover": 20 },
-        { "text": "Fly it. Tier 5 couriers don’t ask.", "goto": "fly-blind", "logs": ["upload-blind"], "cover": -5 }
+        { "text": "Fly it. Keller’s couriers don’t ask.", "goto": "fly-blind", "logs": ["upload-blind"], "cover": -5 }
       ]
     },
     {
@@ -72,7 +72,7 @@
         { "who": "jack", "text": "Depart within the hour. Don’t remain on station." },
         { "who": "aggie", "text": "Yes. Would you tell me who lives on Nexus-77?" },
         { "who": "n", "text": "The cockpit is silent. She has asked three questions. Seven years ago you asked her to let you be a courier, and she has, and she has just told you everything in the only shape she allows herself, and you heard it." },
-        { "who": "n", "text": "You take your hand off the departure panel. Tier 5 couriers don’t ask. You are not, it turns out, a tier 5 courier. You never were." }
+        { "who": "n", "text": "You take your hand off the departure panel. Keller’s couriers don’t ask. You are not, it turns out, one of Keller’s couriers. You never were." }
       ],
       "rewindTo": "board"
     },
@@ -135,7 +135,7 @@
       "id": "canon-break-refuse",
       "lines": [
         { "who": "n", "text": "Your hand goes to the open channel. Aggie speaks before it gets there, faster than you have ever heard her." },
-        { "who": "aggie", "text": "Jack. If you refuse on that channel, Keller has another courier on the board inside the hour and you are in a room with no window by tonight. The habitat gains nothing. You lose the only thing that can help it: a tier 5 courier they still trust. Please. You asked me what I think and I haven’t told you yet. Let me tell you." },
+        { "who": "aggie", "text": "Jack. If you refuse on that channel, Keller has another courier on the board inside the hour and you are in a room with no window by tonight. The habitat gains nothing. You lose the only thing that can help it: a tier 4 courier they still trust. Please. You asked me what I think and I haven’t told you yet. Let me tell you." },
         { "who": "n", "text": "You take your hand back. She is right. She is right in the way she used to be right, out loud, and you had forgotten what that sounded like." }
       ],
       "rewindTo": "decide"

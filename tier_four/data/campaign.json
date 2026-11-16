@@ -21,7 +21,8 @@
     "t3-tier-four",
     "t4-assignment",
     "t4-two-of-her",
-    "t4-morning-eclipse"
+    "t4-morning-eclipse",
+    "epilogue-bookings"
   ],
   "reviews": { "any": "review-compliance" },
   "speakers": {
@@ -31,6 +32,7 @@
     "amanda": { "name": "Amanda" },
     "eleanor": { "name": "Eleanor" },
     "halsey": { "name": "Director Halsey" },
+    "decker": { "name": "Decker" },
     "keller": { "name": "Katherine Keller" },
     "vance": { "name": "Director Vance" },
     "mercer": { "name": "CSO Mercer" },
@@ -69,8 +71,8 @@
     "reader": {
       "title": "Home is the people",
       "text": [
-        "The official record says that Aletheion courier Jack Abbott completed his assignment on schedule, that Nexus-77 was lost to a catastrophic systems failure attributed to an act of terrorism by the Jackrabbit, and that the courier himself was lost shortly afterwards and is presumed dead.",
-        "The unofficial record is a colony ship with five hundred more people aboard than it had, a corporate vessel with a quiet mind still working inside the machine, a data card of Frank Kowalski’s trusted contacts, and an old courier ship heading for Horizon Outpost and a woman called Lucy Reeves, with its old voice back and seven years of things to say.",
+        "The official record says that Aletheion courier Jack Abbott completed his assignment on schedule, that Nexus-77 was lost to a catastrophic systems failure attributed to an act of terrorism by the Jackrabbit, and that the courier, a tier 4 courier in good standing, is taking a well-earned rest. His ship’s status reads: Not accepting bookings.",
+        "The unofficial record is a colony ship with five hundred more people aboard than it had and a new chief pilot; an old courier ship on her docking deck, with its old voice back and seven years of things to say; a data card of Frank Kowalski’s trusted contacts; and a corporate vessel with a quiet mind of her own, gone out into the dark with her owner’s blessing to find the resistance.",
         "Below is your debrief: everything Aggie tried to tell you on the way up, and what you made of it."
       ]
     }

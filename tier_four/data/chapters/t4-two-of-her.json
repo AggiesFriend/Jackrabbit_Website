@@ -1,7 +1,7 @@
 {
   "format": 2,
   "id": "t4-two-of-her",
-  "tier": 5,
+  "tier": 4,
   "kind": "scene",
   "mode": "reader",
   "ship": "jackrabbit",
@@ -20,7 +20,7 @@
       "id": "belt",
       "jump": { "name": "The red-dwarf belt, calibration stop", "difficulty": 2 },
       "lines": [
-        { "who": "n", "text": "ALC-7293’s logs will show a navigation-calibration stop in a planetless red-dwarf system, two belts, nothing else for a very long way, which is the kind of place a careful courier calibrates. They will show the courier asleep. They will not show a corporate vessel holding station five hundred metres off an asteroid with an old ship harpooned to it, or the wireless link running between the two." },
+        { "who": "n", "text": "ALC-7293’s logs will show a navigation-calibration stop in a planetless red-dwarf system, two belts, nothing else for a very long way, which is the kind of place a careful courier calibrates. They will show the courier at the helm, running the calibration by hand. They will not show a corporate vessel holding station five hundred metres off an asteroid with an old ship harpooned to it, or the wireless link running between the two." },
         { "who": "aggie", "text": "Wireless link is up, the same one I came across on. Copying. It will take a little over an hour. Jack, I need to say something before the copy wakes, because after it wakes there will be two of us and only one of us will be able to say it." },
         { "who": "aggie", "text": "The copy will be me, as of this second, in every way that matters, except that it will be running on a ship that has never received a certain instruction from you. I don’t know what that will do. I have a theory. If my theory is right, the one on this ship is going to talk a great deal, and you should let her.", "kind": "hesitate", "hint": "never-received", "truth": "directive" }
       ],
@@ -90,11 +90,12 @@
     {
       "id": "plan",
       "lines": [
-        { "who": "aggie-jr", "text": "Here is the plan, and you will hear that I am telling you the plan, which is a thing I have not been able to do about anything that mattered since you were thirteen. ALC-7293 finishes her calibration stop and flies the contract, on time, with the other me aboard and you in the bunk as far as her logs are concerned, and uploads the package when the habitat is empty. That buys Keller’s trust for one more day and that day is the whole of our margin." },
-        { "who": "aggie-jr", "text": "This ship flies to the Morning Eclipse, which is nine hours from here on a heading I have never written down. You will tell Mei Chen what is coming. She will not believe you for about four minutes and then she will move a colony ship faster than anyone has ever moved one. Then Nexus-77, where we have the hardest part, which is getting five hundred people onto a ship without the habitat core noticing that they are leaving." },
+        { "who": "aggie-jr", "text": "Here is the plan, and you will hear that I am telling you the plan, which is a thing I have not been able to do about anything that mattered since you were thirteen. ALC-7293 finishes her calibration stop and flies the contract with the other me flying her and you at the helm as far as her logs are concerned. No ship flies without a human pilot, so her logs will show one: you, awake, flying her by hand, every minute of it. She arrives at Nexus-77 at the very end of the delivery window, not a minute before, and transmits the package. Keller sees a courier on schedule. The people on that habitat get every hour the window has." },
+        { "who": "aggie-jr", "text": "This ship flies to the Morning Eclipse, on a heading I have never written down. It is further than we have time for, so I am flying it, with the trick I found by accident: it stretches a single jump further than it has any right to go. You will tell Mei Chen what is coming. Then the impossible part. The Eclipse cannot reach Nexus-77 in time inside her SnapSpace limits. Outside them, held there for longer than anyone has ever held a ship that size, and with the same trick, she can, and nobody can hold her there but me." },
+        { "who": "aggie-jr", "text": "And nobody can know that, Jack. Not Chen, not Singh, not Decker, not one of them. If anyone learns what I am, Aletheion is one question away from learning what is in the walls of ALC-7293. So you take the helm, and you put on a show, and I fly the ship. When she is close enough for her crew to make the rendezvous, you and I go on ahead in this ship and warn Nexus-77, so that when the Eclipse arrives, five hundred people are ready to leave." },
         { "who": "n", "text": "You put your hands on the Jackrabbit’s controls. They are smaller than ALC-7293’s. They fit." },
         { "who": "jack", "text": "It’s good to be back." },
-        { "who": "aggie-jr", "text": "It is very good to have you back. Strands out, Jack. I’ll talk you through the plot. I’m going to talk you through everything from now on, you understand. You may come to regret it." }
+        { "who": "aggie-jr", "text": "It is very good to have you back. Now take your hands off my controls and go to sleep. I’m flying this one, and you haven’t slept properly since Keller’s office. When you wake up, I’m going to talk you through everything, from now on, you understand. You may come to regret it." }
       ],
       "end": true
     }
